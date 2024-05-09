@@ -16,7 +16,6 @@ import { AuthRequest, Session, User } from 'lucia';
 import { initializeLucia } from './cms/auth/lucia';
 
 
-https://www.twitch.tv/
 export type Variables = {
   authRequest: AuthRequest;
   session?: Session;
