@@ -4,8 +4,6 @@ import { Bindings } from '../../types/bindings';
 import { Layout } from '../theme';
 
 
-import App from './../App';
-
 
 
 
