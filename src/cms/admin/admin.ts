@@ -29,59 +29,6 @@ import { drizzle } from 'drizzle-orm/d1';
 import { isNotNull } from 'drizzle-orm';
 import { hasUser } from '../auth/auth-helpers';
 
-
-import * as React from 'react';
-import GjsEditor, {
-  AssetsProvider,
-  Canvas,
-  ModalProvider,
-} from '@grapesjs/react';
-import type { Editor, EditorConfig } from 'grapesjs';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { MAIN_BORDER_COLOR } from './components/common';
-import CustomModal from './components/CustomModal';
-import CustomAssetManager from './components/CustomAssetManager';
-import Topbar from './components/Topbar';
-import RightSidebar from './components/RightSidebar';
-import './style.css';
-
-
-
-const theme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
-
-
-
-const gjsOptions: EditorConfig = {
-  height: '100vh',
-  storageManager: false,
-  undoManager: { trackSelection: false },
-  selectorManager: { componentFirst: true },
-  projectData: {
-    assets: [
-      'https://via.placeholder.com/350x250/78c5d6/fff',
-      'https://via.placeholder.com/350x250/459ba8/fff',
-      'https://via.placeholder.com/350x250/79c267/fff',
-      'https://via.placeholder.com/350x250/c5d647/fff',
-      'https://via.placeholder.com/350x250/f28c33/fff',
-    ],
-    pages: [
-      {
-        name: 'Home page',
-        component: `<h1>GrapesJS React Custom UI</h1>`,
-      },
-    ],
-  },
-};
-
-
-
-
-
-
 const admin = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
 admin.use('*', async (ctx, next) => {
@@ -156,7 +103,6 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 admin.get('/prueba', async (ctx) => {
   return ctx.html(await prueba(ctx));
 });
-
 
 
 
