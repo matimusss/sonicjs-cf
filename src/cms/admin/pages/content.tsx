@@ -619,6 +619,10 @@ export async function prueba(ctx) {
   
  
   return (
+    <Layout
+
+  >
+    <div>
     // @ts-ignore
     <ThemeProvider theme={theme}>
       <GjsEditor
@@ -666,7 +670,10 @@ export async function prueba(ctx) {
         </AssetsProvider>
       </GjsEditor>
     </ThemeProvider>
+    </div>
+    </Layout>
   );
+
 }
 
 
