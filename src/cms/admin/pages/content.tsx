@@ -15,7 +15,7 @@ import CustomModal from './../components/CustomModal';
 import CustomAssetManager from './../components/CustomAssetManager';
 import Topbar from './../components/Topbar';
 import RightSidebar from './../components/RightSidebar';
-import './style.css';
+import './../style.css';
 
 
 const theme = createTheme({
