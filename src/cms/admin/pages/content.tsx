@@ -4,7 +4,7 @@ import { Bindings } from '../../types/bindings';
 import { Layout } from '../theme';
 
 
-
+import App from './../App';
 
 
 
@@ -583,7 +583,7 @@ export async function prueba(ctx) {
     >
   
       <div>
-        DIV DE PRUEBA  . ASD
+        <App />
       </div>
     </Layout>
   );
