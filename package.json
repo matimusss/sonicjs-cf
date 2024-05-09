@@ -37,16 +37,26 @@
     "wrangler": "^3.25.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@grapesjs/react": "^1.0.0",
     "@lucia-auth/adapter-sqlite": "^2.0.0",
+    "@mdi/js": "^7.4.47",
+    "@mdi/react": "^1.6.1",
+    "@mui/material": "^5.15.17",
     "@tussle/core": "^0.7.0",
     "@tussle/middleware-cloudflareworker": "^0.7.3",
     "@tussle/state-memory": "^0.7.1",
     "@tussle/storage-r2": "^0.7.4",
+    "@types/backbone": "^1.4.19",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
     "@uppy/core": "^3.8.0",
     "@uppy/dashboard": "^3.7.1",
     "@uppy/tus": "^3.5.0",
     "date-fns": "^2.30.0",
     "drizzle-orm": "^0.29.3",
+    "grapesjs": "^0.21.10",
     "gridjs": "^6.0.6",
     "gridjs-react": "^6.0.1",
     "hono": "^3.11.7",
@@ -55,6 +65,7 @@
     "lokijs": "^1.5.12",
     "lucia": "^2.7.4",
     "qs": "^6.11.2",
+    "react-dom": "^18.3.1",
     "uuid": "^9.0.0"
   }
 }
