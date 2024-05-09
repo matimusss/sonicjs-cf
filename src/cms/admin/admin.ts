@@ -107,7 +107,8 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 
 
 admin.get('/prueba', async (ctx) => {
-  return ctx.html(await prueba());
+ // return ctx.html(await prueba());
+  return ctx.redirect(`/App.tsx`, 301);
 });
 
 
