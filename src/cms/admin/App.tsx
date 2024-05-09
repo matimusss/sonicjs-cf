@@ -41,7 +41,7 @@ const gjsOptions: EditorConfig = {
   },
 };
 
-export default function App() {
+export  function App() {
   const onEditor = (editor: Editor) => {
     console.log('Editor loaded');
     (window as any).editor = editor;
