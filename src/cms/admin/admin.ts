@@ -35,6 +35,7 @@ import { tableSchemas } from '../../db/routes';
 import { drizzle } from 'drizzle-orm/d1';
 import { isNotNull } from 'drizzle-orm';
 import { hasUser } from '../auth/auth-helpers';
+import { getTestingContext } from '../util/testing';
 
 const admin = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
@@ -109,7 +110,7 @@ admin.get('/prueba', async (ctx) => {
  // return ctx.html(await prueba());
  return ctx.html(
   
-  await prueba()
+  await prueba(ctx)
 
 
 );
