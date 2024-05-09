@@ -10,7 +10,7 @@ import { status } from './cms/api/status';
 import { log } from './cms/util/logger';
 import { tusAPI } from './cms/api/tus';
 
-import { App } from './cms/admin/App2';
+import { App } from './cms/admin/App2.tsx';
 
 import { AuthRequest, Session, User } from 'lucia';
 import { initializeLucia } from './cms/auth/lucia';
