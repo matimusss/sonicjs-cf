@@ -103,11 +103,6 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 });
 
 
-admin.get('/ruta', async (ctx) => {
-  const html = ReactDOMServer.renderToString(<App></App>); /
-  return ctx.html(html);
-});
-
 
 
 admin.get('/prueba', async (ctx) => {
