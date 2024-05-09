@@ -273,7 +273,7 @@ export const Layout: FC<{
                     </a>
                   </li>
                   <li class='nav-item'>
-                    <a class='nav-link' href='/admin/prueba'>
+                    <a class='nav-link' href='/public/grapes/index.html'>
                       Editor de horarios
                     </a>
                   </li>

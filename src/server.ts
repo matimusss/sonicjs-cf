@@ -78,6 +78,18 @@ app.get('/', async (ctx) => {
   return ctx.redirect('/admin');
 });
 
+
+app.get('/mi-ruta', async (ctx) => {
+  try {
+    // Envía el archivo HTML como respuesta
+    await ctx.sendFile(path.join(__dirname, 'public', 'mi-archivo.html'));
+  } catch (error) {
+    console.error('Error al enviar el archivo HTML:', error);
+    ctx.status(500).text('Error interno del servidor');
+  }
+});
+
+
 app.get('/public/*', async (ctx) => {
   return await ctx.env.ASSETS.fetch(ctx.req.raw);
 });
