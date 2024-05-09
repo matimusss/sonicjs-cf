@@ -3,20 +3,14 @@ import { getDataListByPrefix } from '../../data/kv-data';
 import { Bindings } from '../../types/bindings';
 import { Layout } from '../theme';
 
-import * as React from 'react';
-import GjsEditor, {
-  AssetsProvider,
-  Canvas,
-  ModalProvider,
-} from '@grapesjs/react';
-import type { Editor, EditorConfig } from 'grapesjs';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { MAIN_BORDER_COLOR } from './components/common';
-import CustomModal from './components/CustomModal';
-import CustomAssetManager from './components/CustomAssetManager';
-import Topbar from './components/Topbar';
-import RightSidebar from './components/RightSidebar';
-import './style.css';
+
+
+import grapesjs, { Editor } from 'grapesjs';
+import GjsEditor from '@grapesjs/react';
+
+
+
+
 
 
 
@@ -580,24 +574,28 @@ export const TopContentTable = (props: {
 
 
 
+export async function prueba() {
+  const onEditor = (editor: Editor) => {
+    console.log('Editor loaded', { editor });
+  };
 
-export async function prueba(ctx) {
-
-
-
-  
   return (
-    <Layout
-      env={ctx.env}
-      username={ctx.get('user')?.email}
-      screenTitle={'PRUEBA'}
-    >
-  
-      <div>
-        <App />
-      </div>
-    </Layout>
+    <GjsEditor
+      // Pass the core GrapesJS library to the wrapper (required).
+      // You can also pass the CDN url (eg. "https://unpkg.com/grapesjs")
+      grapesjs={grapesjs}
+      // Load the GrapesJS CSS file asynchronously from URL.
+      // This is an optional prop, you can always import the CSS directly in your JS if you wish.
+      grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
+      // GrapesJS init options
+      options={{
+        height: '100vh',
+        storageManager: false,
+      }}
+      onEditor={onEditor}
+    />
   );
+
 }
 
 
