@@ -261,7 +261,32 @@ export const Layout: FC<{
                       Clear All Caches
                     </a>
                   </li>
+           
+           
+
+                  <h6 class='sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'>
+                    <span>Agregados</span>
+                  </h6>
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/api/prueba'>
+                      Editor de paginas
+                    </a>
+                  </li>
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/api/prueba'>
+                      Editor de horarios
+                    </a>
+                  </li>
+
+            
+           
+
+
+
+           
                 </ul>
+           
+           
               </div>
             </nav>
 

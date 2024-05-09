@@ -11,7 +11,8 @@ import {
   loadKVCacheDetail,
   loadKVCacheTable,
   loadNewContent,
-  loadTableData
+  loadTableData,
+  prueba
 } from './pages/content';
 
 import { loadApis } from './pages/api';
@@ -94,6 +95,19 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
   return ctx.html(await loadEditContent(ctx, route, id, 'users'));
 });
 
+
+
+
+
+
+admin.get('/api/prueba', async (ctx) => {
+  return ctx.html(await prueba(ctx));
+});
+
+
+
+
+
 admin.get('/tables/:route', async (ctx) => {
   const route = ctx.req.param('route');
   if (route === 'users') {
@@ -153,6 +167,12 @@ admin.get('/api/in-memory-cache', async (ctx) => {
     executionTime
   });
 });
+
+
+
+
+
+
 
 admin.get('/api/kv-cache', async (ctx) => {
   const start = Date.now();

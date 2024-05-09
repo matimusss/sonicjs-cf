@@ -554,3 +554,19 @@ export const TopContentTable = (props: {
     </Layout>
   );
 };
+
+
+export async function prueba(ctx) {
+  return (
+    <Layout
+      env={ctx.env}
+      username={ctx.get('user')?.email}
+      screenTitle={'PRUEBA'}
+    >
+  
+      <div>
+        DIV DE PRUEBA  . ASD
+      </div>
+    </Layout>
+  );
+}
