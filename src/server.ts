@@ -10,13 +10,13 @@ import { status } from './cms/api/status';
 import { log } from './cms/util/logger';
 import { tusAPI } from './cms/api/tus';
 
-import { App } from './cms/admin/App2.tsx';
+
 
 import { AuthRequest, Session, User } from 'lucia';
 import { initializeLucia } from './cms/auth/lucia';
 
 
-
+https://www.twitch.tv/
 export type Variables = {
   authRequest: AuthRequest;
   session?: Session;
@@ -93,5 +93,4 @@ app.route('/admin', admin);
 app.route('v1/example', example);
 app.route('/status', status);
 app.route('/tus', tusAPI);
-app.route('/App', App);
 export default app;
