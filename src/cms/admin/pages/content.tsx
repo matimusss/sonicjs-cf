@@ -3,9 +3,20 @@ import { getDataListByPrefix } from '../../data/kv-data';
 import { Bindings } from '../../types/bindings';
 import { Layout } from '../theme';
 
-
-import App from './../App';
-
+import * as React from 'react';
+import GjsEditor, {
+  AssetsProvider,
+  Canvas,
+  ModalProvider,
+} from '@grapesjs/react';
+import type { Editor, EditorConfig } from 'grapesjs';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { MAIN_BORDER_COLOR } from './components/common';
+import CustomModal from './components/CustomModal';
+import CustomAssetManager from './components/CustomAssetManager';
+import Topbar from './components/Topbar';
+import RightSidebar from './components/RightSidebar';
+import './style.css';
 
 
 
