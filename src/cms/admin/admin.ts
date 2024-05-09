@@ -7,7 +7,7 @@ import { Context, Hono } from 'hono';
 import grapesjs, { Editor } from 'grapesjs';
 import GjsEditor from '@grapesjs/react';
 import ReactDOMServer from 'react-dom/server';
-import  App  from './App'; // Importa tu componente de React
+
 
 
 import { Bindings } from '../types/bindings';
@@ -107,7 +107,12 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 
 admin.get('/prueba', async (ctx) => {
  // return ctx.html(await prueba());
- return ctx.html(await App());
+ return ctx.html(
+  
+  await App()
+
+
+);
 
 });
 

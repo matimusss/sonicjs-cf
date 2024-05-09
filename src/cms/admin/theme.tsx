@@ -296,6 +296,9 @@ export const Layout: FC<{
               </div>
 
               {props.children}
+
+
+              
             </main>
           </div>
         </div>
