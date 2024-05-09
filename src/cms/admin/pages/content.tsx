@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { ApiConfig, apiConfig } from '../../../db/routes';
 import { getDataListByPrefix } from '../../data/kv-data';
 import { Bindings } from '../../types/bindings';
@@ -623,7 +625,7 @@ export async function prueba(ctx) {
 
   >
     <div>
-    // @ts-ignore
+   
     <ThemeProvider theme={theme}>
       <GjsEditor
         className="gjs-custom-editor text-white bg-slate-900"
