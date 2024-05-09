@@ -109,7 +109,7 @@ admin.get('/prueba', async (ctx) => {
  // return ctx.html(await prueba());
  return ctx.html(
   
-  await App()
+  await prueba()
 
 
 );
