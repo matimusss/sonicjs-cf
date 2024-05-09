@@ -92,6 +92,4 @@ app.route('/admin', admin);
 app.route('v1/example', example);
 app.route('/status', status);
 app.route('/tus', tusAPI);
-
-app.route('/ok', prueba);
 export default app;
