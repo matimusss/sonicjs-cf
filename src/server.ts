@@ -15,6 +15,8 @@ import { App } from './cms/admin/App2.tsx';
 import { AuthRequest, Session, User } from 'lucia';
 import { initializeLucia } from './cms/auth/lucia';
 
+
+
 export type Variables = {
   authRequest: AuthRequest;
   session?: Session;
@@ -79,15 +81,6 @@ app.get('/', async (ctx) => {
 });
 
 
-app.get('/mi-ruta', async (ctx) => {
-  try {
-    // Envía el archivo HTML como respuesta
-    await ctx.sendFile(path.join(__dirname, 'public', 'mi-archivo.html'));
-  } catch (error) {
-    console.error('Error al enviar el archivo HTML:', error);
-    ctx.status(500).text('Error interno del servidor');
-  }
-});
 
 
 app.get('/public/*', async (ctx) => {
