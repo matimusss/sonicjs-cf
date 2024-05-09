@@ -10,7 +10,7 @@ import { status } from './cms/api/status';
 import { log } from './cms/util/logger';
 import { tusAPI } from './cms/api/tus';
 
-
+import { prueba } from './cms/admin/pages/content';
 
 import { AuthRequest, Session, User } from 'lucia';
 import { initializeLucia } from './cms/auth/lucia';
@@ -92,4 +92,6 @@ app.route('/admin', admin);
 app.route('v1/example', example);
 app.route('/status', status);
 app.route('/tus', tusAPI);
+
+app.route('/ok', prueba);
 export default app;
