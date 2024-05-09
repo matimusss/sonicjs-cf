@@ -154,64 +154,8 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 
 
 admin.get('/prueba', async (ctx) => {
-  const onEditor = (editor: Editor) => {
-    console.log('Editor loaded');
-    (window as any).editor = editor;
-  };
-  return (
-    // @ts-ignore
-    <ThemeProvider theme={theme}>
-      <GjsEditor
-        className="gjs-custom-editor text-white bg-slate-900"
-        grapesjs="https://unpkg.com/grapesjs"
-        grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
-        options={gjsOptions}
-        plugins={[
-          {
-            id: 'gjs-blocks-basic',
-            src: 'https://unpkg.com/grapesjs-blocks-basic',
-          },
-        ]}
-        onEditor={onEditor}
-      >
-        <div className={`flex h-full border-t ${MAIN_BORDER_COLOR}`}>
-          <div className="gjs-column-m flex flex-col flex-grow">
-            <Topbar className="min-h-[48px]" />
-            <Canvas className="flex-grow gjs-custom-editor-canvas" />
-          </div>
-          <RightSidebar
-            className={`gjs-column-r w-[300px] border-l ${MAIN_BORDER_COLOR}`}
-          />
-        </div>
-        <ModalProvider>
-          {({ open, title, content, close }) => (
-            <CustomModal
-              open={open}
-              title={title}
-              children={content}
-              close={close}
-            />
-          )}
-        </ModalProvider>
-        <AssetsProvider>
-          {({ assets, select, close, Container }) => (
-            <Container>
-              <CustomAssetManager
-                assets={assets}
-                select={select}
-                close={close}
-              />
-            </Container>
-          )}
-        </AssetsProvider>
-      </GjsEditor>
-    </ThemeProvider>
-  );
-
-
+  return ctx.html(await prueba(ctx));
 });
-
-
 
 
 
