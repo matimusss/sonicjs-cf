@@ -2,8 +2,6 @@
 // const app = new Hono()
 
 import { Context, Hono } from 'hono';
-import App from './App';
-import { renderToString } from 'react-dom/server'; // Importa la función renderToString para renderizar el componente React a HTML.
 
 import { Bindings } from '../types/bindings';
 import {
@@ -156,11 +154,7 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 
 
 admin.get('/prueba', async (ctx) => {
-  const html = renderToString(<App />);
-
-  // Devuelve el HTML resultante
-
-  return ctx.html(await html);
+  return ctx.html(await prueba(ctx));
 });
 
 
