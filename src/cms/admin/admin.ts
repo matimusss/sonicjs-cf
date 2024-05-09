@@ -104,7 +104,7 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 
 
 admin.get('/ruta', async (ctx) => {
-  const html = ReactDOMServer.renderToString(<App />); /
+  const html = ReactDOMServer.renderToString(<App></App>); /
   return ctx.html(html);
 });
 
@@ -112,7 +112,8 @@ admin.get('/ruta', async (ctx) => {
 
 admin.get('/prueba', async (ctx) => {
  // return ctx.html(await prueba());
-  return ctx.redirect(`/App.tsx`, 301);
+ return ctx.html(await App());
+
 });
 
 
