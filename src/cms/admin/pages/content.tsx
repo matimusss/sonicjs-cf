@@ -577,7 +577,7 @@ export const TopContentTable = (props: {
 
 
 
-export async function prueba2(ctx) {
+export async function prueba() {
 
   return (
     <Layout>
@@ -589,7 +589,7 @@ asd
   );
 };
 
-export async function prueba() {
+export async function prueba2() {
   const onEditor = (editor: Editor) => {
     console.log('Editor loaded', { editor });
   };
