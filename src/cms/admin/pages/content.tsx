@@ -590,7 +590,7 @@ export async function prueba() {
         <div class="gjs-logo-version">asdasd</div>
       </div>
     </div>
-    <div id="gjs" style="height:0px; overflow:hidden">
+    <div id="gjs" style="height:100%; width: 100%">
     </div>
     </div>
     </Layout>
