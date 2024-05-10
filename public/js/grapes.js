@@ -1,3 +1,14 @@
+const loadScript = () => {
+  setTimeout(() => {
+    var newScript = document.createElement('script');
+    newScript.type = 'text/javascript';
+    newScript.src = 'public/js/grapes.js';
+    document.body.appendChild(newScript);
+  }, 1000); // Espera un segundo (1000 milisegundos) antes de cargar el script
+};
+
+
+
 
 
 
