@@ -472,7 +472,3 @@ editor.on('load', function() {
   $('#gjs').append($('.ad-cont'));
 });
 
-
-
-ga('create', 'UA-74284223-1', 'auto');
-ga('send', 'pageview');
