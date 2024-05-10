@@ -529,6 +529,13 @@ export const TopContentTable = (props: {
       <div class='row'>
         <div class='col-md-12'>
           <div class='pb-2 mb-3'>
+
+
+
+
+
+
+            
             {/* <!-- Button trigger modal --> */}
             <a
               href={'/admin/content/new/' + props.route}

@@ -1,4 +1,5 @@
 
+function grapeInit() {
 
 
 
@@ -322,6 +323,7 @@ var editor  = grapesjs.init({
       modalImportTitle: 'Import Template',
       modalImportLabel: '<div style="margin-bottom: 10px; font-size: 13px;">Paste here your HTML/CSS and click Import</div>',
       modalImportContent: function(editor) {
+      
         return editor.getHtml() + '<style>'+editor.getCss()+'</style>'
       },
     },
@@ -476,3 +478,5 @@ editor.on('load', function() {
   $('#gjs').append($('.ad-cont'));
 });
 
+
+}
