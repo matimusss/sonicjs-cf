@@ -54,21 +54,7 @@ export const Head = () => {
 
 
 
-
-
-    </head>
-  );
-};
-
-
-
-
-
-export const Script = () => {
-  return (
-    <>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/toastr.min.js"></script>
     <script src="js/grapes.min.js?v0.21.10"></script>
     <script src="https://unpkg.com/grapesjs-preset-webpage@1.0.2"></script>
@@ -85,6 +71,20 @@ export const Script = () => {
     <script src="https://unpkg.com/grapesjs-typed@1.0.5"></script>
     <script src="https://unpkg.com/grapesjs-style-bg@2.0.1"></script>
 
+
+
+
+    </head>
+  );
+};
+
+
+
+
+
+export const Script = () => {
+  return (
+    <>
 
       <script
         src='https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js'
