@@ -1,3 +1,6 @@
+
+
+
 var lp = './img/';
 var plp = 'https://via.placeholder.com/350x250/';
 var images = [
