@@ -14,12 +14,24 @@ export const Head = () => {
       <title>SonicJs Admin</title>
       <link rel='icon' type='image/x-icon' href='/public/images/favicon.ico' />
 
+
+
+
+      <link rel="stylesheet" href="stylesheets/toastr.min.css"></link>
+    <link rel="stylesheet" href="stylesheets/grapes.min.css?v0.21.10"></link>
+    <link rel="stylesheet" href="stylesheets/grapesjs-preset-webpage.min.css"></link>
+    <link rel="stylesheet" href="stylesheets/tooltip.css"></link>
+    <link rel="stylesheet" href="stylesheets/demos.css?v3"></link>
+    <link href="https://unpkg.com/grapick/dist/grapick.min.css" rel="stylesheet"></link>
+
       <link
         href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css'
         rel='stylesheet'
         integrity='sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN'
         crossorigin='anonymous'
       ></link>
+
+
       <link
         rel='stylesheet'
         href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css'
@@ -37,12 +49,122 @@ export const Head = () => {
       <link href='/public/css/gridjs.css' rel='stylesheet' />
       <link href='/public/css/uppy.css' rel='stylesheet' />
       <link href='/public/css/gallery.css' rel='stylesheet' />
+
+      <style type="text/css">
+        .icons-flex {
+          background-size: 70% 65% !important;
+          height: 15px;
+          width: 17px;
+          opacity: 0.9;
+        }
+        .icon-dir-row {
+          background: url("./img/flex-dir-row.png") no-repeat center;
+        }
+        .icon-dir-row-rev {
+          background: url("./img/flex-dir-row-rev.png") no-repeat center;
+        }
+        .icon-dir-col {
+          background: url("./img/flex-dir-col.png") no-repeat center;
+        }
+        .icon-dir-col-rev {
+          background: url("./img/flex-dir-col-rev.png") no-repeat center;
+        }
+        .icon-just-start{
+         background: url("./img/flex-just-start.png") no-repeat center;
+        }
+        .icon-just-end{
+         background: url("./img/flex-just-end.png") no-repeat center;
+        }
+        .icon-just-sp-bet{
+         background: url("./img/flex-just-sp-bet.png") no-repeat center;
+        }
+        .icon-just-sp-ar{
+         background: url("./img/flex-just-sp-ar.png") no-repeat center;
+        }
+        .icon-just-sp-cent{
+         background: url("./img/flex-just-sp-cent.png") no-repeat center;
+        }
+        .icon-al-start{
+         background: url("./img/flex-al-start.png") no-repeat center;
+        }
+        .icon-al-end{
+         background: url("./img/flex-al-end.png") no-repeat center;
+        }
+        .icon-al-str{
+         background: url("./img/flex-al-str.png") no-repeat center;
+        }
+        .icon-al-center{
+         background: url("./img/flex-al-center.png") no-repeat center;
+        }
+
+         [data-tooltip]::after {
+           background: rgba(51, 51, 51, 0.9);
+         }
+
+         .gjs-pn-commands {
+           min-height: 40px;
+         }
+
+         #gjs-sm-float {
+            display: none;
+         }
+
+         .gjs-logo-version {
+           background-color: #756467;
+         }
+
+        .gjs-pn-btn.gjs-pn-active {
+          box-shadow: none;
+        }
+
+        .CodeMirror {
+          min-height: 450px;
+          margin-bottom: 8px;
+        }
+        .grp-handler-close {
+          background-color: transparent;
+          color: #ddd;
+        }
+
+        .grp-handler-cp-wrap {
+          border-color: transparent;
+        }
+    </style>
+
+
+
+
+
     </head>
   );
 };
+
+
+
+
+
 export const Script = () => {
   return (
     <>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/toastr.min.js"></script>
+    <script src="js/grapes.min.js?v0.21.10"></script>
+    <script src="https://unpkg.com/grapesjs-preset-webpage@1.0.2"></script>
+    <script src="https://unpkg.com/grapesjs-blocks-basic@1.0.1"></script>
+    <script src="https://unpkg.com/grapesjs-plugin-forms@2.0.5"></script>
+    <script src="https://unpkg.com/grapesjs-component-countdown@1.0.1"></script>
+    <script src="https://unpkg.com/grapesjs-plugin-export@1.0.11"></script>
+    <script src="https://unpkg.com/grapesjs-tabs@1.0.6"></script>
+    <script src="https://unpkg.com/grapesjs-custom-code@1.0.1"></script>
+    <script src="https://unpkg.com/grapesjs-touch@0.1.1"></script>
+    <script src="https://unpkg.com/grapesjs-parser-postcss@1.0.1"></script>
+    <script src="https://unpkg.com/grapesjs-tooltip@0.1.7"></script>
+    <script src="https://unpkg.com/grapesjs-tui-image-editor@0.1.3"></script>
+    <script src="https://unpkg.com/grapesjs-typed@1.0.5"></script>
+    <script src="https://unpkg.com/grapesjs-style-bg@2.0.1"></script>
+
+
       <script
         src='https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js'
         integrity='sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE'
@@ -74,14 +196,24 @@ export const Script = () => {
       <script src='/public/js/grid.js'></script>
       <script src='/public/js/grid-in-memory-cache.js'></script>
       <script src='/public/js/grid-kv-cache.js'></script>
+      <script src='./grapes.js'></script>
+
       <script
         src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'
         integrity='sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL'
         crossorigin='anonymous'
       ></script>
+
+
+
+      
     </>
   );
 };
+
+
+
+
 export const ToggleTheme = () => {
   return (
     <div class='dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle'>
@@ -148,6 +280,11 @@ export const ToggleTheme = () => {
     </div>
   );
 };
+
+
+
+
+
 export const Layout: FC<{
   formComponents?: any[];
   screenTitle?: string;
@@ -309,6 +446,8 @@ export const Layout: FC<{
   );
 };
 
+
+
 export const Top = (props: {
   items: object[];
   screenTitle: string;
@@ -335,7 +474,7 @@ export const Top = (props: {
       </div>
 
       <ul>
-        {props.items.map((item: any) => {
+          {props.items.map((item: any) => {
           return (
             <li>
               <a class='' href={item.path}>
@@ -348,6 +487,9 @@ export const Top = (props: {
     </Layout>
   );
 };
+
+
+
 
 export const Detail = (props: {
   item: any;
@@ -365,6 +507,16 @@ export const Detail = (props: {
     </Layout>
   );
 };
+
+
+
+
+
+
+
+
+
+
 
 export const FormBuilder = (props: {
   title: string;
@@ -394,6 +546,17 @@ export const FormBuilder = (props: {
     </Layout>
   );
 };
+
+
+
+
+
+
+
+
+
+
+
 
 export const Form = (props: {
   title: string;

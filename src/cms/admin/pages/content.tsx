@@ -23,6 +23,8 @@ import GjsEditor from '@grapesjs/react';
 
 
 
+
+
 export async function loadAdminTable(ctx) {
   // await saveKVData(ctx.env.KVDATA, 'site1', 'content', {title: '20230508a'});
 
@@ -581,13 +583,20 @@ export async function prueba() {
 
   return (
     <Layout>
-      <div> 
-
-asd
+    <div style="display: none">
+      <div class="gjs-logo-cont">
+        <a href="https://grapesjs.com">grapa</a>
+        <div class="gjs-logo-version">asdasd</div>
       </div>
+    </div>
+    <div id="gjs" style="height:0px; overflow:hidden">
+    </div>
     </Layout>
   );
 };
+
+
+
 
 export async function prueba2() {
   const onEditor = (editor: Editor) => {
