@@ -17,11 +17,11 @@ export const Head = () => {
 
 
 
-      <link rel="stylesheet" href="stylesheets/toastr.min.css"></link>
-    <link rel="stylesheet" href="stylesheets/grapes.min.css?v0.21.10"></link>
-    <link rel="stylesheet" href="stylesheets/grapesjs-preset-webpage.min.css"></link>
-    <link rel="stylesheet" href="stylesheets/tooltip.css"></link>
-    <link rel="stylesheet" href="stylesheets/demos.css?v3"></link>
+      <link rel="stylesheet" href="/public/css/toastr.min.css"></link>
+    <link rel="stylesheet" href="/public/css/grapes.min.css?v0.21.10"></link>
+    <link rel="stylesheet" href="/public/css/grapesjs-preset-webpage.min.css"></link>
+    <link rel="stylesheet" href="/public/css/tooltip.css"></link>
+    <link rel="stylesheet" href="/public/css/demos.css?v3"></link>
     <link href="https://unpkg.com/grapick/dist/grapick.min.css" rel="stylesheet"></link>
 
       <link
@@ -55,8 +55,8 @@ export const Head = () => {
 
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="js/toastr.min.js"></script>
-    <script src="js/grapes.min.js?v0.21.10"></script>
+    <script src="/public/js/toastr.min.js"></script>
+    <script src="/public/js/grapes.min.js?v0.21.10"></script>
     <script src="https://unpkg.com/grapesjs-preset-webpage@1.0.2"></script>
     <script src="https://unpkg.com/grapesjs-blocks-basic@1.0.1"></script>
     <script src="https://unpkg.com/grapesjs-plugin-forms@2.0.5"></script>
