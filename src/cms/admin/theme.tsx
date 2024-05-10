@@ -117,7 +117,7 @@ export const Script = () => {
       <script src='/public/js/grid.js'></script>
       <script src='/public/js/grid-in-memory-cache.js'></script>
       <script src='/public/js/grid-kv-cache.js'></script>
-      <script src='public/js/grapes.js'></script>
+      <script src='/public/js/grapes.js'></script>
 
       <script
         src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'
