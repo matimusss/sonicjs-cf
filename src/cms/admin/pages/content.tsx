@@ -583,6 +583,7 @@ export async function prueba() {
 
   return (
     <Layout>
+      <div>
     <div style="display: none">
       <div class="gjs-logo-cont">
         <a href="https://grapesjs.com">grapa</a>
@@ -590,6 +591,7 @@ export async function prueba() {
       </div>
     </div>
     <div id="gjs" style="height:0px; overflow:hidden">
+    </div>
     </div>
     </Layout>
   );
