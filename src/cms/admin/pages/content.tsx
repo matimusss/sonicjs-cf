@@ -583,15 +583,7 @@ export async function prueba() {
 
   return (
     <Layout>
-      <div>
-    <div style="display: none">
-      <div class="gjs-logo-cont">
-        <a href="https://grapesjs.com">grapa</a>
-        <div class="gjs-logo-version">asdasd</div>
-      </div>
-    </div>
     <div id="gjs" style="height:100%; width: 100%">
-    </div>
     </div>
     </Layout>
   );
