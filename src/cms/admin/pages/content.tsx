@@ -583,7 +583,7 @@ export async function prueba() {
 
   return (
     <Layout>
-    <div id="gjs" style="height:100%; width: 100%">
+    <div id="gjs" style="height:300px ; width: 1800px">
     </div>
     </Layout>
   );
