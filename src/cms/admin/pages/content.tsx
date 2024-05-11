@@ -591,8 +591,12 @@ export async function prueba() {
 
 
   return (
-    <Layout>
-    <div id="gjs" style="height:100vh" class="row">
+    <Layout      env={"asd"}
+    username={"asd"}
+    screenTitle={'In Memory Item Detail'}
+    
+    >
+    <div id="gjs">
     </div>
     </Layout>
   );
