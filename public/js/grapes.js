@@ -1,5 +1,5 @@
 
-function grapeInit() {
+//function grapeInit() {
 
 
 
@@ -479,4 +479,4 @@ editor.on('load', function() {
 });
 
 
-}
+//}
