@@ -591,7 +591,7 @@ export async function prueba(ctx) {
 
 
   return (
-    <Layout>  <div id="gjs">
+    <Layout>  <div id="gjs" class="gjs-editor-cont">
    
     </div>    </Layout>
   );
