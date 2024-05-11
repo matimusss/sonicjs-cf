@@ -586,16 +586,14 @@ export const TopContentTable = (props: {
 
 
 
-export async function prueba() {
+export async function prueba(ctx) {
 
 
 
   return (
-    <Layout      env={"asd"}
-    username={"asd"}
-    screenTitle={'In Memory Item Detail'}
-    
-    >
+    <Layout          env={ctx.env}
+    username={ctx.get('user')?.email}
+    screenTitle={'In Memory Cache'}>
     <div id="gjs">
     </div>
     </Layout>
