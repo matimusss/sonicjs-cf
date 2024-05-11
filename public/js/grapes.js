@@ -22,7 +22,7 @@ var images = [
 ];
 
 var editor  = grapesjs.init({
-  height: '100%',
+  height: '100vh',
   container : '#gjs',
   fromElement: true,
   showOffsets: true,
@@ -438,10 +438,10 @@ editor.on('load', function() {
   });
 
   // Show logo with the version
-  var logoCont = document.querySelector('.gjs-logo-cont');
-  document.querySelector('.gjs-logo-version').innerHTML = 'v' + grapesjs.version;
-  var logoPanel = document.querySelector('.gjs-pn-commands');
-  logoPanel.appendChild(logoCont);
+  //var logoCont = document.querySelector('.gjs-logo-cont');
+ // document.querySelector('.gjs-logo-version').innerHTML = 'v' + grapesjs.version;
+  //var logoPanel = document.querySelector('.gjs-pn-commands');
+  //logoPanel.appendChild(logoCont);
 
 
   // Load and show settings and style manager
