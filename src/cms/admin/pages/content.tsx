@@ -591,10 +591,8 @@ export async function prueba(ctx) {
 
 
   return (
-    <Layout          env={ctx.env}
-    username={ctx.get('user')?.email}
-    screenTitle={'In Memory Cache'}>
-    <div id="gjs">
+    <Layout >
+    <div id="gjs" style="height:0px; overflow:hidden">
     </div>
     </Layout>
   );
