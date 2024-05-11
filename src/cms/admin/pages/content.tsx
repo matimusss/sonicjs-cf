@@ -591,9 +591,9 @@ export async function prueba(ctx) {
 
 
   return (
-    <Layout id="gjs">
+    <div id="gjs">
    
-    </Layout>
+    </div>
   );
 };
 
