@@ -1,6 +1,8 @@
 
 //function grapeInit() {
 
+setTimeout(function() {
+  // Código que quieres ejecutar después de 1 segundo
 
 
 var lp = './img/';
@@ -486,8 +488,7 @@ editor.on('load', function() {
   var openBlocksBtn = editor.Panels.getButton('views', 'open-blocks');
   openBlocksBtn && openBlocksBtn.set('active', 1);
 
-  // Move Ad
-  $('#gjs').append($('.ad-cont'));
-});
 
+});
+}, 1000);
 //}

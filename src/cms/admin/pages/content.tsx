@@ -591,8 +591,9 @@ export async function prueba(ctx) {
 
 
   return (
+    
     <Layout>  
-      
+            <script src='/public/js/grapes.js'></script>
       <div id="gjs" class="gjs-editor-cont">
       
     </div>  
