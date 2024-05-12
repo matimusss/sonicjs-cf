@@ -427,7 +427,7 @@ editor.on('storage:load', function(e) { console.log('Loaded ', e) });
 editor.on('storage:store', function(e) { console.log('Stored ', e) });
 
 
-editor.on('storage:store', function() { console.log(editor.getHTML()) });
+editor.on('storage:store', function() { console.log(editor.getHTML) });
 
 
 
@@ -440,7 +440,7 @@ editor.on('storage:store', function() { console.log(editor.getHTML()) });
 // Do stuff on load
 editor.on('load', function() {
   var $ = grapesjs.$;
-  console.log(editor.getHTML());
+  console.log(editor.getHTML);
   // Show borders by default
   pn.getButton('options', 'sw-visibility').set({
     command: 'core:component-outline',
