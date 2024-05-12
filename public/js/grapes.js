@@ -426,7 +426,7 @@ for (var i = 0; i < titles.length; i++) {
 editor.on('storage:load', function(e) { console.log('Loaded ', e) });
 editor.on('storage:store', function(e) { console.log('Stored ', e) });
 
-const toreto = editor.getHtml; 
+const toreto = editor.getHtml(); 
 
 editor.on('storage:store', function() { console.log(toreto) });
 
@@ -442,7 +442,7 @@ editor.on('storage:store', function() { console.log(toreto) });
 editor.on('load', function() {
   var $ = grapesjs.$;
   console.log(toreto);
-  // Show borders by default
+  // Show borders by defaultaaaaaaaaaaaaaaaaaaaaa
   pn.getButton('options', 'sw-visibility').set({
     command: 'core:component-outline',
     'active': true,
