@@ -425,15 +425,21 @@ for (var i = 0; i < titles.length; i++) {
 }
 
 
+
+
+function probando(editor) {
+  const toreto = editor.getHtml(); 
+console.log(toreto);
+}
+
+
+
+
 // Store and load events
 editor.on('storage:load', function(e) { console.log('Loaded ', e) });
-editor.on('storage:store', function(e) { console.log('Stored ', e) });
+editor.on('storage:store', function(e) { console.log('Stored ', e  ) });
 
-const toreto = editor.getHtml(); 
-
-editor.on('storage:store', function() { console.log(toreto) });
-
-
+editor.on('storage:store', function(e) { console.log("new: " +  probando(editor)+ ".") });
 
 
 
