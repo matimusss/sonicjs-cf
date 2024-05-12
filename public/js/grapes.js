@@ -24,7 +24,8 @@ var images = [
 var editor  = grapesjs.init({
   height: '100vh',
   container : '#gjs',
-  fromElement: true,
+  //fromElement: true,
+  components: '<h1>Hello World Component!</h1>',
   showOffsets: true,
   assetManager: {
     embedAsBase64: true,
