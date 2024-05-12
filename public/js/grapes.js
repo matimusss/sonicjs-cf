@@ -424,7 +424,7 @@ for (var i = 0; i < titles.length; i++) {
   el.setAttribute('title', '');
 }
 
-1
+
 // Store and load events
 editor.on('storage:load', function(e) { console.log('Loaded ', e) });
 editor.on('storage:store', function(e) { console.log('Stored ', e) });
@@ -442,9 +442,11 @@ editor.on('storage:store', function() { console.log(toreto) });
 
 
 // Do stuff on load
-editor.on('load', function() {
+editor.on('load', function(editor) {
   var $ = grapesjs.$;
-  console.log(toreto);
+  const toreto2 = editor.getHtml(); 
+
+  console.log(toreto2);
   // Show borders by defaultaaaaaaaaaaaaaaaaaaaaa
   pn.getButton('options', 'sw-visibility').set({
     command: 'core:component-outline',
