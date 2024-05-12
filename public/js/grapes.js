@@ -427,6 +427,17 @@ editor.on('storage:load', function(e) { console.log('Loaded ', e) });
 editor.on('storage:store', function(e) { console.log('Stored ', e) });
 
 
+const soroto = editor.getHTML();  
+editor.on('storage:store', function() { console.log(soroto) });
+
+
+
+
+
+
+
+
+
 // Do stuff on load
 editor.on('load', function() {
   var $ = grapesjs.$;
@@ -477,6 +488,5 @@ editor.on('load', function() {
   // Move Ad
   $('#gjs').append($('.ad-cont'));
 });
-
 
 //}
