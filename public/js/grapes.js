@@ -369,25 +369,25 @@ cmdm.add('canvas-clear', function() {
 
 
 // Add info command
-var mdlClass = 'gjs-mdl-dialog-sm';
-var infoContainer = document.getElementById('info-panel');
 
-cmdm.add('open-info', function() {
+cmdm.add('open-info', function() {    
 console.log(editor.getHtml());
 });
 
-pn.addButton('options', {
-  id: 'open-info',
-  className: 'fa fa-question-circle',
-  command: function() { editor.runCommand('open-info') },
-  attributes: {
-    'title': 'About',
-    'data-tooltip-pos': 'bottom',
-  },
-});
 
 
-pn.addButton('options2', {  
+  pn.addButton('options', {
+    id: 'open-info',
+    className: 'fa fa-question-circle',
+    command: function() { editor.runCommand('open-info') },
+    attributes: {
+      'title': 'About',
+      'data-tooltip-pos': 'bottom',
+    },
+  });
+
+
+pn.addButton('options', {  
   id: 'open-info2',
   className: 'fa fa-question-circle', 
   command: function() { editor.runCommand('open-info') },
@@ -432,7 +432,9 @@ console.warn = function (msg) {
 .forEach(function(item) {
   pn.getButton('options', item[0]).set('attributes', {title: item[1], 'data-tooltip-pos': 'bottom'});
 });
+
 [['open-sm', 'Style Manager'], ['open-layers', 'Layers'], ['open-blocks', 'Blocks']]
+
 .forEach(function(item) {
   pn.getButton('views', item[0]).set('attributes', {title: item[1], 'data-tooltip-pos': 'bottom'});
 });
