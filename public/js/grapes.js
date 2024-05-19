@@ -389,7 +389,7 @@ console.log(editor.getHtml());
 
 pn.addButton('options', {  
   id: 'open-info2',
-  className: 'fa fa-question-circle', 
+  className: 'fa fa-floppy-o', 
   command: function() { editor.runCommand('open-info') },
   attributes: {
     'title': 'About2  ',
