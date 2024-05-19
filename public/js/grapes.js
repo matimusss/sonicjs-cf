@@ -1,7 +1,7 @@
 
 //function grapeInit() {
 
-setTimeout(function() {
+//setTimeout(function() {
   // Código que quieres ejecutar después de 1 segundo
 
 
@@ -494,5 +494,5 @@ editor.on('load', function(editor) {
 
 
 });
-}, 1000);
+//}, 1000);
 //}
