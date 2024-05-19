@@ -387,6 +387,35 @@ console.log(editor.getHtml());
   });
 
 
+
+
+
+
+
+cmdm.add('open-info3', function() {    
+  editor.addComponents(`<div>
+  <img src="https://path/image" />
+  <span title="foo">Hello world!!!</span>
+</div>`);
+  });
+  
+
+  pn.addButton('options', {  
+    id: 'open-info3',
+    className: 'fa fa-floppy-o', 
+    command: function() { editor.runCommand('open-info3') },
+    attributes: {
+      'title': 'Add component',
+      'data-tooltip-pos': 'bottom',
+    },
+  });   
+  
+
+
+
+
+
+
 pn.addButton('options', {  
   id: 'open-info2',
   className: 'fa fa-floppy-o', 
