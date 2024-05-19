@@ -333,6 +333,10 @@ var editor  = grapesjs.init({
   },
 });
 
+
+
+
+
 editor.I18n.addMessages({
   en: {
     styleManager: {
@@ -357,6 +361,7 @@ cmdm.add('canvas-clear', function() {
     setTimeout(function(){ localStorage.clear()}, 0)
   }
 });
+
 
 // Add info command
 var mdlClass = 'gjs-mdl-dialog-sm';
@@ -431,9 +436,19 @@ for (var i = 0; i < titles.length; i++) {
 
 // Store and load events
 editor.on('storage:load', function(e) { console.log('Loaded ', e) });
-editor.on('storage:store', function(editor) { console.log('Stored ' + editor.getHtml()  +"." ) });
+editor.on('storage:store', function(e) { console.log('Stored ', e   ) });
+  
+ 
+console.log(probando);
 
 
+
+
+editor.on('update', function(editor) {
+
+  const toreto3 = editor.getHtml(); 
+  console.log(toreto3);
+});
 
 // Do stuff on load
 editor.on('load', function(editor) {
@@ -442,7 +457,7 @@ editor.on('load', function(editor) {
 
   console.log(toreto2);
   // Show borders by defaultaaaaaaaaaaaaaaaaaaaaa
-  pn.getButton('options', 'sw-visibility').set({
+  pn.getButton('options', 'sw-visibility').set({  
     command: 'core:component-outline',
     'active': true,
   });
