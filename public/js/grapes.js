@@ -446,7 +446,6 @@ editor.on('storage:store', function(e) { console.log('Stored ', e   ) });
 
 editor.on('update', function(editor) {
   var $ = grapesjs.$;
-
   const toreto3 = editor.getHtml(); 
   console.log(toreto3);
 });
@@ -456,7 +455,6 @@ editor.on('update', function(editor) {
 editor.on('load', function(editor) {
   var $ = grapesjs.$;
   const toreto2 = editor.getHtml(); 
-
   console.log(toreto2);
   // Show borders by defaultaaaaaaaaaaaaaaaaaaaaa
   pn.getButton('options', 'sw-visibility').set({  
