@@ -445,10 +445,12 @@ editor.on('storage:store', function(e) { console.log('Stored ', e   ) });
 
 
 editor.on('update', function(editor) {
+  var $ = grapesjs.$;
 
   const toreto3 = editor.getHtml(); 
   console.log(toreto3);
 });
+
 
 // Do stuff on load
 editor.on('load', function(editor) {
