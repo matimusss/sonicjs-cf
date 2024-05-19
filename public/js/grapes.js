@@ -289,8 +289,7 @@ var editor  = grapesjs.init({
     'grapesjs-tui-image-editor',
     'grapesjs-typed',
     'grapesjs-style-bg',
-    'grapesjs-preset-webpage',    'grapesjs-preset-webpage2',
-
+    'grapesjs-preset-webpage',
   ],
   pluginsOpts: {
     'gjs-blocks-basic': { flexGrid: true },
@@ -331,13 +330,6 @@ var editor  = grapesjs.init({
       },
     },
 
-    'grapesjs-preset-webpage2': {
-      modalImportTitle: 'Import Template222',
-      modalImportLabel: '<div style="margin-bottom: 10px; font-size: 13px;">Paste here your HTML/CSS and click Import</div>',
-      modalImportContent: function(editor) {
-        return editor.getHtml() + '<style>'   +editor.getCss()+'</style>'
-      },
-    },
 
 
     
@@ -399,6 +391,18 @@ pn.addButton('options', {
     'data-tooltip-pos': 'bottom',
   },
 });
+
+pn.addButton('options2', {
+  id: 'open-info2',
+  className: 'fa fa-question-circle',
+  command: function() { editor.runCommand('open-info') },
+  attributes: {
+    'title': 'About222',
+    'data-tooltip-pos': 'bottom',
+  },
+});
+
+
 
 
 // Simple warn notifier
