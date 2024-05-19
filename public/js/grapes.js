@@ -392,18 +392,6 @@ pn.addButton('options', {
   },
 });
 
-pn.addButton('options2', {
-  id: 'open-info2',
-  className: 'fa fa-question-circle',
-  command: function() { editor.runCommand('open-info') },
-  attributes: {
-    'title': 'About222',
-    'data-tooltip-pos': 'bottom',
-  },
-});
-
-
-
 
 // Simple warn notifier
   var origWarn = console.warn;
