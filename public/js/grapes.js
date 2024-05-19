@@ -289,7 +289,8 @@ var editor  = grapesjs.init({
     'grapesjs-tui-image-editor',
     'grapesjs-typed',
     'grapesjs-style-bg',
-    'grapesjs-preset-webpage',
+    'grapesjs-preset-webpage',    'grapesjs-preset-webpage2',
+
   ],
   pluginsOpts: {
     'gjs-blocks-basic': { flexGrid: true },
@@ -334,7 +335,7 @@ var editor  = grapesjs.init({
       modalImportTitle: 'Import Template222',
       modalImportLabel: '<div style="margin-bottom: 10px; font-size: 13px;">Paste here your HTML/CSS and click Import</div>',
       modalImportContent: function(editor) {
-        return editor.getHtml() + '<style>'+editor.getCss()+'</style>'
+        return editor.getHtml() + '<style>'   +editor.getCss()+'</style>'
       },
     },
 
