@@ -430,6 +430,7 @@ for (var i = 0; i < titles.length; i++) {
 
 // Store and load events
 editor.on('storage:load', function(e) { console.log('Loaded ', e) });
+
 editor.on('storage:store', function(e) { console.log('Stored ', e  ) });
 
 editor.on('storage:store', function(editor) { console.log(editor.getHtml()) });
