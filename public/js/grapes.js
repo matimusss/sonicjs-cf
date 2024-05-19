@@ -1,7 +1,7 @@
 
 //function grapeInit() {
 
-//setTimeout(function() {
+setTimeout(function() {
   // Código que quieres ejecutar después de 1 segundo
 
 
@@ -433,12 +433,6 @@ for (var i = 0; i < titles.length; i++) {
 editor.on('storage:load', function(e) { console.log('Loaded ', e) });
 editor.on('storage:store', function(e) { console.log('Stored ', e  ) });
 
-editor.on('update', function(editor) { 
-  const toreto3 = editor.getHtml(); 
-  console.log(toreto3); });
-
-
-
 
 
 
@@ -494,5 +488,5 @@ editor.on('load', function(editor) {
 
 
 });
-//}, 1000);
+}, 1000);
 //}
