@@ -366,6 +366,15 @@ cmdm.add('canvas-clear', function() {
 });
 
 
+cmdm.add('canvas-clear', function() {
+  if(confirm('Are you sure to clean the canvas?')) {
+    editor.runCommand('core:canvas-clear')
+    setTimeout(function(){ localStorage.clear()}, 0)
+  }
+});
+
+
+
 // Add info command
 var mdlClass = 'gjs-mdl-dialog-sm';
 var infoContainer = document.getElementById('info-panel');
@@ -393,6 +402,27 @@ pn.addButton('options', {
 });
 
 
+pn.addButton('options2', {
+  id: 'open-info2',
+  className: 'fa fa-question-circle',
+  command: function() { editor.runCommand('open-info') },
+  attributes: {
+    'title': 'About2',
+    'data-tooltip-pos': 'bottom',
+  },
+});   
+
+
+pn.addButton('options', {
+  id: 'open-info',
+  className: 'fa fa-question-circle',
+  command: function() { editor.runCommand('open-info') },
+  attributes: {
+    'title': 'About',
+    'data-tooltip-pos': 'bottom',
+  },
+});   
+
 // Simple warn notifier
   var origWarn = console.warn;
 toastr.options = {
@@ -413,6 +443,7 @@ console.warn = function (msg) {
 [['sw-visibility', 'Show Borders'], ['preview', 'Preview'], ['fullscreen', 'Fullscreen'],
  ['export-template', 'Export'], ['undo', 'Undo'], ['redo', 'Redo'],
  ['gjs-open-import-webpage', 'Import'], ['canvas-clear', 'Clear canvas']]
+ 
 .forEach(function(item) {
   pn.getButton('options', item[0]).set('attributes', {title: item[1], 'data-tooltip-pos': 'bottom'});
 });
