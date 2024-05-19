@@ -441,7 +441,9 @@ editor.on('update', function(editor) {
 
 
 
-
+  function mostrar(editor) {
+    const toreto2 = editor.getHtml(); 
+    console.log(toreto2);}
 
 
 // Do stuff on load
