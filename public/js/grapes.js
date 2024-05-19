@@ -435,15 +435,12 @@ editor.on('storage:store', function(e) { console.log('Stored ', e  ) });
 
 editor.on('update', function(editor) { 
   const toreto3 = editor.getHtml(); 
-
   console.log(toreto3); });
 
 
 
 
-  function mostrar(editor) {
-    const toreto2 = editor.getHtml(); 
-    console.log(toreto2);}
+
 
 
 // Do stuff on load
