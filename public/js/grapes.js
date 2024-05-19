@@ -439,7 +439,7 @@ editor.on('storage:load', function(e) { console.log('Loaded ', e) });
 editor.on('storage:store', function(e) { console.log('Stored ', e   ) });
   
  
-console.log(probando);
+
 
 
 
