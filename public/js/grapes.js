@@ -366,13 +366,6 @@ cmdm.add('canvas-clear', function() {
 });
 
 
-cmdm.add('canvas-clear', function() {
-  if(confirm('Are you sure to clean the canvas?')) {
-    editor.runCommand('core:canvas-clear')
-    setTimeout(function(){ localStorage.clear()}, 0)
-  }
-});
-
 
 
 // Add info command
@@ -380,14 +373,7 @@ var mdlClass = 'gjs-mdl-dialog-sm';
 var infoContainer = document.getElementById('info-panel');
 
 cmdm.add('open-info', function() {
-  var mdlDialog = document.querySelector('.gjs-mdl-dialog');
-  mdlDialog.className += ' ' + mdlClass;
-  infoContainer.style.display = 'block';
-  modal.setTitle('About this demo');
-  modal.setContent(infoContainer);
-  modal.open();
-  modal.getModel().once('change:open', function() {
-    mdlDialog.className = mdlDialog.className.replace(mdlClass, '');
+console.log(editor.getHtml());
   })
 });
 
@@ -402,12 +388,12 @@ pn.addButton('options', {
 });
 
 
-pn.addButton('options2', {
+pn.addButton('options2', {  
   id: 'open-info2',
-  className: 'fa fa-question-circle',
+  className: 'fa fa-question-circle', 
   command: function() { editor.runCommand('open-info') },
   attributes: {
-    'title': 'About2',
+    'title': 'About2  ',
     'data-tooltip-pos': 'bottom',
   },
 });   
