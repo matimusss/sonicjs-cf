@@ -433,7 +433,13 @@ for (var i = 0; i < titles.length; i++) {
 editor.on('storage:load', function(e) { console.log('Loaded ', e) });
 editor.on('storage:store', function(e) { console.log('Stored ', e  ) });
 
-editor.on('storage:store', function(editor) { console.log('Stored HTML ', editor.getHTML()  ) });
+editor.on('storage:store', function(editor) 
+{
+  
+    const toreto3 = editor.getHtml(); 
+    console.log(toreto3);
+  
+  });
 
 
 
