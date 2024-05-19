@@ -326,10 +326,20 @@ var editor  = grapesjs.init({
       modalImportTitle: 'Import Template',
       modalImportLabel: '<div style="margin-bottom: 10px; font-size: 13px;">Paste here your HTML/CSS and click Import</div>',
       modalImportContent: function(editor) {
-      
         return editor.getHtml() + '<style>'+editor.getCss()+'</style>'
       },
     },
+
+    'grapesjs-preset-webpage2': {
+      modalImportTitle: 'Import Template222',
+      modalImportLabel: '<div style="margin-bottom: 10px; font-size: 13px;">Paste here your HTML/CSS and click Import</div>',
+      modalImportContent: function(editor) {
+        return editor.getHtml() + '<style>'+editor.getCss()+'</style>'
+      },
+    },
+
+
+    
   },
 });
 
@@ -391,7 +401,7 @@ pn.addButton('options', {
 
 
 // Simple warn notifier
-var origWarn = console.warn;
+  var origWarn = console.warn;
 toastr.options = {
   closeButton: true,
   preventDuplicates: true,
@@ -445,6 +455,8 @@ editor.on('storage:store', function(e) { console.log('Stored ', e   ) });
 
 
 editor.on('update', function(editor) {
+
+
 });
 
 
