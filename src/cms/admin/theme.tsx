@@ -72,7 +72,6 @@ export const Head = () => {
     <script src="https://unpkg.com/grapesjs-style-bg@2.0.1"></script>
 
 
-    <script src='/public/js/grapes.js'></script>
 
     </head>
   );
