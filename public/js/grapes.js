@@ -374,7 +374,6 @@ var infoContainer = document.getElementById('info-panel');
 
 cmdm.add('open-info', function() {
 console.log(editor.getHtml());
-  })
 });
 
 pn.addButton('options', {
