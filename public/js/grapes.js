@@ -427,12 +427,6 @@ for (var i = 0; i < titles.length; i++) {
 
 
 
-function probando(editor) {
-  const toreto = editor.getHtml(); 
-console.log(toreto);
-}
-
-
 
 
 // Store and load events
