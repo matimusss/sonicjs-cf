@@ -1,13 +1,13 @@
 /** @jsx jsx */
 /** @jsxImportSource hono/jsx */
 import type { FC } from 'hono/jsx'
+import { jsx } from 'hono/jsx'
 
 // import { Hono } from 'hono'
 // const app = new Hono()
 import { Context, Hono } from 'hono';
 import { getDataListByPrefix } from '../data/kv-data';
 import { Layout } from './theme';
-import { jsx, Fragment } from 'https://deno.land/x/hono/middleware.ts'
 import { Editor } from 'grapesjs';
 import grapesjs  from 'grapesjs';
 import ReactDOMServer from 'react-dom/server';
@@ -109,6 +109,12 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 });
 
 
+
+
+
+
+
+
 admin.get('/prueba', async (ctx) => {
  // return ctx.html(await prueba());
  return ctx.html(  
@@ -125,8 +131,10 @@ admin.get('/prueba', async (ctx) => {
 
 
 
-admin.get('/pruebaReact', async (ctx) => {
-  return ctx.html(editor());
+admin.get('/pruebaReact', (ctx) => {
+  
+  return ctx.html(<Layout> asdasd </Layout>);
+
 });
 
 
