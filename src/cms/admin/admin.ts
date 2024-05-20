@@ -126,7 +126,7 @@ admin.get('/prueba', async (ctx) => {
 
 
 admin.get('/pruebaReact', async (ctx) => {
-  return ctx.html(<editor />;
+  return ctx.html(editor());
 });
 
 
