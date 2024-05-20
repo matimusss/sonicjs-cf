@@ -129,6 +129,25 @@ admin.get('/pruebaReact', async (ctx) => {
 
 
 
+
+
+
+const View = () => {
+  return (
+<Layout>asdasd<Layout>
+)
+}
+
+
+app.get('/page', (c) => {
+  return c.html(<View />)
+})
+
+
+
+
+
+
  
 
 
