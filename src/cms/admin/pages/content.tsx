@@ -634,7 +634,8 @@ const   GjsComponent  = () => {
       onEditor={onEditor}
     />
   );
-}
+};
+
 
 
 
@@ -645,7 +646,7 @@ const   GjsComponent  = () => {
 export async function pruebaReact(ctx) {
   return (  
     <Layout>  
-<GjsComponent> </GjsComponent>  
+<GjsComponent /> 
     </Layout>
   );
 };
