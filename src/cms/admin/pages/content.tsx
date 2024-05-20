@@ -610,10 +610,8 @@ export async function pruebaReact(ctx) {
   const onEditor = (editor: Editor) => {
     console.log('Editor loaded', { editor });
   };
-  return (  
-    <Layout>  
+  return (   
   <GjsEditor>  </GjsEditor>
-    </Layout>
   );
 };
 
