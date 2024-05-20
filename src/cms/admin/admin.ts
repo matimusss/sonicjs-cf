@@ -122,9 +122,7 @@ admin.get('/pruebaReact', async (ctx) => {
   return ctx.html(  
    await pruebaReact(ctx)
  
- 
  );
- 
  });
  
 

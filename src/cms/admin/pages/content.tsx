@@ -5,17 +5,8 @@ import { Layout } from '../theme';
 import * as React from 'react';
 
 
-import GjsEditor, {
-  AssetsProvider,
-  Canvas,
-  ModalProvider,
-} from '@grapesjs/react';
-
-import type { Editor, EditorConfig } from 'grapesjs';
-import grapesjs, { Editor } from 'grapesjs';
+import { Editor } from 'grapesjs';
 import GjsEditor from '@grapesjs/react';
-import type { Editor } from 'grapesjs';
-
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { MAIN_BORDER_COLOR } from './../components/common';
@@ -625,20 +616,13 @@ export async function prueba(ctx) {
 
 
 
-
-
-
 export async function pruebaReact(ctx) {
   const onEditor = (editor: Editor) => {
     console.log('Editor loaded REACTjs', { editor });
   };
-  return (
-    <Layout      env={ctx.env}
-    username={ctx.get('user')?.email}
-    screenTitle={'Editor de paginas REACTjs'}
-    
-    >  
 
+  return (
+    <Layout >  
     <GjsEditor
       grapesjs="https://unpkg.com/grapesjs"
       grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
@@ -653,12 +637,6 @@ export async function pruebaReact(ctx) {
         },
       ]}
       onEditor={onEditor}
-    />
-
-
-      </Layout>
+    />      </Layout>
   );
 };
-
-
-
