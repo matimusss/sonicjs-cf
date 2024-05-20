@@ -14,7 +14,6 @@ export const Head = () => {
       <title>SonicJs Admin</title>
       <link rel='icon' type='image/x-icon' href='/public/images/favicon.ico' />
 
-      <script src='/public/js/grapes.js'></script>
 
 
       <link rel="stylesheet" href="/public/css/toastr.min.css"></link>
