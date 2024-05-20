@@ -140,7 +140,7 @@ const View = () => {
 
 
 app.get('/page', (c) => {
-  return c.html(<View />)
+  return c.html(<View></View>)
 })
 
 
