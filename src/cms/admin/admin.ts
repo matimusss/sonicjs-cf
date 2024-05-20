@@ -19,7 +19,8 @@ import {
   loadKVCacheTable,
   loadNewContent,
   loadTableData,
-  prueba
+  prueba,
+  pruebaReact
 } from './pages/content';
 
 import { loadApis } from './pages/api';
@@ -104,12 +105,9 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 });
 
 
-
-
 admin.get('/prueba', async (ctx) => {
  // return ctx.html(await prueba());
- return ctx.html(
-  
+ return ctx.html(  
   await prueba(ctx)
 
 
@@ -119,6 +117,16 @@ admin.get('/prueba', async (ctx) => {
 
 
 
+admin.get('/pruebaReact', async (ctx) => {
+  // return ctx.html(await prueba());
+  return ctx.html(  
+   await pruebaReact(ctx)
+ 
+ 
+ );
+ 
+ });
+ 
 
 
 admin.get('/tables/:route', async (ctx) => {

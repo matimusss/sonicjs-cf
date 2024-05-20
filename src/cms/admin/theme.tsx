@@ -329,8 +329,8 @@ export const Layout: FC<{
                     </a>
                   </li>
                   <li class='nav-item'>
-                    <a class='nav-link' href='/'>
-                      Editor de horarios
+                    <a class='nav-link' href='/pruebaReact'>
+                      Editor de paginas REACT
                     </a>
                   </li>
 
