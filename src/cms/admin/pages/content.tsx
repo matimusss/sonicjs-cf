@@ -612,15 +612,7 @@ export async function pruebaReact(ctx) {
   };
   return (  
     <Layout>  
-  <GjsEditor
-      grapesjs={grapesjs}
-      grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
-      options={{
-        height: '100vh',
-        storageManager: false,
-      }}
-      onEditor={onEditor}
-    >  </GjsEditor>
+  <GjsEditor>  </GjsEditor>
     </Layout>
   );
 };
