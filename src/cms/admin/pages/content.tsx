@@ -4,8 +4,8 @@ import { Bindings } from '../../types/bindings';
 import { Layout } from '../theme';
 import * as React from 'react';
 import { jsx } from 'hono/jsx';
-import grapesjs, { Editor } from 'grapesjs';
 import GjsEditor from '@grapesjs/react';
+import {grapesjs, Editor } from 'grapesjs';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { MAIN_BORDER_COLOR } from './../components/common';
@@ -587,18 +587,11 @@ export const TopContentTable = (props: {
 
 
 export async function prueba(ctx) {
-
-
-
   return (
-    
     <Layout>  
-        
       <div id="gjs" class="gjs-editor-cont">
       <script src='/public/js/grapes.js'></script>
     </div>  
-    
-    
       </Layout>
   );
 };
@@ -612,14 +605,18 @@ export async function prueba(ctx) {
 
 
 
-const   GjsComponent  = () => {
 
-  const onEditor = (editor: Editor) => {
-    console.log('Editor loaded', { editor });
-  };
 
-  return (
-    <GjsEditor
+
+
+
+
+
+
+export async function pruebaReact(ctx) {
+  return (  
+    <Layout>  
+  <GjsEditor
       // Pass the core GrapesJS library to the wrapper (required).
       // You can also pass the CDN url (eg. "https://unpkg.com/grapesjs")
       grapesjs={grapesjs}
@@ -633,26 +630,9 @@ const   GjsComponent  = () => {
       }}
       onEditor={onEditor}
     />
-  );
-};
-
-
-
-
-
-
-
-
-export async function pruebaReact(ctx) {
-  return (  
-    <Layout>  
-<GjsComponent /> 
     </Layout>
   );
 };
-
-
-
 
 
 
