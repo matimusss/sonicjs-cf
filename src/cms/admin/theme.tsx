@@ -10,7 +10,7 @@ export const Head = () => {
       <meta charset='utf-8' />
       <meta name='viewport' content='width=device-width, initial-scale=1' />
       <meta name='description' content='' />
-
+74
       <title>SonicJs Admin</title>
       <link rel='icon' type='image/x-icon' href='/public/images/favicon.ico' />
 

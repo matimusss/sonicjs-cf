@@ -5,10 +5,13 @@ import { Context, Hono } from 'hono';
 
 
 import grapesjs, { Editor } from 'grapesjs';
-import GjsEditor from '@grapesjs/react';
 import ReactDOMServer from 'react-dom/server';
 
+import * as React from 'react';
 
+
+
+import GjsEditor from '@grapesjs/react';
 
 import { Bindings } from '../types/bindings';
 import {
@@ -117,13 +120,42 @@ admin.get('/prueba', async (ctx) => {
 
 
 
-admin.get('/pruebaReact', async (ctx) => {
-  // return ctx.html(await prueba());
-  return ctx.html(  
-   await pruebaReact(ctx)
  
- );
- });
+
+
+
+
+
+
+
+
+admin.get('/pruebaReact', async (ctx) => {
+  const onEditor = (editor: Editor) => {
+    console.log('Editor loaded REACTjs', { editor });
+  };
+  return (
+    <GjsEditor
+      grapesjs="https://unpkg.com/grapesjs"
+      grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
+      options={{
+        height: '100vh',
+        storageManager: false,
+      }}
+      plugins={[
+        {
+          id: 'gjs-blocks-basic',
+          src: 'https://unpkg.com/grapesjs-blocks-basic',
+        },
+      ]}
+      onEditor={onEditor}
+    />
+  );
+});
+
+
+
+
+
  
 
 
