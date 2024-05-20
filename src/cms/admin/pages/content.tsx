@@ -621,8 +621,7 @@ export async function pruebaReact(ctx) {
     console.log('Editor loaded REACTjs', { editor });
   };
 
-  return (
-    <Layout >  
+  return (  
     <GjsEditor
       grapesjs="https://unpkg.com/grapesjs"
       grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
@@ -637,6 +636,5 @@ export async function pruebaReact(ctx) {
         },
       ]}
       onEditor={onEditor}
-    />      </Layout>
-  );
+    />     );
 };
