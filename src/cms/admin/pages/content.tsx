@@ -3,6 +3,7 @@ import { getDataListByPrefix } from '../../data/kv-data';
 import { Bindings } from '../../types/bindings';
 import { Layout } from '../theme';
 import * as React from 'react';
+import { jsx } from 'hono/jsx';
 
 
 import { Editor } from 'grapesjs';
@@ -610,19 +611,11 @@ export async function prueba(ctx) {
 
 
 
-
-
-
-
-
-
-export async function pruebaReact(ctx) {
-  const onEditor = (editor: Editor) => {
+const   GjsComponent  = () => {
+  const onEditor = (editor) => {
     console.log('Editor loaded REACTjs', { editor });
   };
-
-  return (  
-  
+  return (
     <GjsEditor
       grapesjs="https://unpkg.com/grapesjs"
       grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
@@ -637,8 +630,15 @@ export async function pruebaReact(ctx) {
         },
       ]}
       onEditor={onEditor}
-    />   
-  
-  
+    />
+  );
+};
+
+
+export async function pruebaReact(ctx) {
+  return (  
+    <Layout>  
+<GjsComponent> </GjsComponent>  
+    </Layout>
   );
 };
