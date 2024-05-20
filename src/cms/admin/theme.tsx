@@ -329,7 +329,7 @@ export const Layout: FC<{
                     </a>
                   </li>
                   <li class='nav-item'>
-                    <a class='nav-link' href='/pruebaReact'>
+                    <a class='nav-link' href='/admin/pruebaReact'>
                       Editor de paginas REACT
                     </a>
                   </li>
