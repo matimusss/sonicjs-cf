@@ -12,8 +12,8 @@ import { Editor } from 'grapesjs';
 import grapesjs  from 'grapesjs';
 import ReactDOMServer from 'react-dom/server';
 import * as React from 'react';
-import GjsEditor from '@grapesjs/react';
 import { Bindings } from '../types/bindings';
+import GjsEditor from '@grapesjs/react';
 import {
   loadEditContent,
   loadInMemoryCacheDetail,
@@ -23,7 +23,8 @@ import {
   loadNewContent,
   loadTableData,
   prueba,
-  pruebaReact
+  pruebaReact,
+  editor
 } from './pages/content';
 
 import { loadApis } from './pages/api';
@@ -124,35 +125,8 @@ admin.get('/prueba', async (ctx) => {
 
 
 
-const   GjsComponente  = () => {
-
-  const onEditor = (editor: Editor) => {
-    console.log('Editor loaded', { editor });
-  };
-
-  return (
-    <GjsEditor
-      // Pass the core GrapesJS library to the wrapper (required).
-      // You can also pass the CDN url (eg. "https://unpkg.com/grapesjs")
-      grapesjs={grapesjs}
-      // Load the GrapesJS CSS file asynchronously from URL.
-      // This is an optional prop, you can always import the CSS directly in your JS if you wish.
-      grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
-      // GrapesJS init options
-      options={{
-        height: '100vh',
-        storageManager: false,
-      }}
-      onEditor={onEditor}
-    />
-  );
-};
-
-
-
-
 admin.get('/pruebaReact', async (ctx) => {
-  return ctx.html(<GjsComponente />;
+  return ctx.html(<editor />;
 });
 
 
