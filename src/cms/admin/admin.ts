@@ -6,21 +6,12 @@ import { Context, Hono } from 'hono';
 import { getDataListByPrefix } from '../data/kv-data';
 import { Layout } from './theme';
 import { jsx, Fragment } from 'https://deno.land/x/hono/middleware.ts'
-
-
-
 import { Editor } from 'grapesjs';
-
 import './../style.css';
 import grapesjs  from 'grapesjs';
 import ReactDOMServer from 'react-dom/server';
-
 import * as React from 'react';
-
-
-
 import GjsEditor from '@grapesjs/react';
-
 import { Bindings } from '../types/bindings';
 import {
   loadEditContent,
@@ -128,38 +119,13 @@ admin.get('/prueba', async (ctx) => {
 
 
 
- 
-
-
-
-
-
-
 
 
 admin.get('/pruebaReact', async (ctx) => {
   const onEditor = (editor: Editor) => {
     console.log('Editor loaded REACTjs', { editor });
   };
-  return ctx.html(
-    <Layout>
-    <GjsEditor
-   grapesjs="https://unpkg.com/grapesjs"
-      grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
-      options={{
-        height: '100vh',
-        storageManager: false,
-      }}
-      plugins={[
-        {
-          id: 'gjs-blocks-basic',
-          src: 'https://unpkg.com/grapesjs-blocks-basic',
-        },
-      ]}
-      onEditor={onEditor}
-    />
-    </Layout>
-  )
+  return ctx.html(await pruebaReact(ctx));
 });
 
 
