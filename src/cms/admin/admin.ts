@@ -1,3 +1,7 @@
+/** @jsx jsx */
+/** @jsxImportSource hono/jsx */
+import type { FC } from 'hono/jsx'
+
 // import { Hono } from 'hono'
 // const app = new Hono()
 import { Context, Hono } from 'hono';
@@ -130,18 +134,6 @@ admin.get('/pruebaReact', async (ctx) => {
 
 
 
-
-
-const View = () => {
-  return (
-<Layout>asdasd<Layout>
-)
-}
-
-
-app.get('/page', (c) => {
-  return c.html(<View></View>)
-})
 
 
 
