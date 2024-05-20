@@ -22,27 +22,20 @@ import './../style.css';
 
 
 export async function loadAdminTable(ctx) {
-  // await saveKVData(ctx.env.KVDATA, 'site1', 'content', {title: '20230508a'});
-
-  // const content = await getAllContent(ctx.env.D1DATA);
-  // const content = await getAllContent(ctx.env.D1DATA);
-
   let content = await getDataListByPrefix(ctx.env.KVDATA);
 
   content.keys.reverse();
 
   console.log('content==>', JSON.stringify(content, null, 2));
 
-  // console.log("load admin data", content);
 
   const contentList = content.keys.map((item) => {
     const id = item.metadata.id;
     const route = item.metadata.route;
-    // const table = item.name.split('::')[1];
-    // console.log("item-->", JSON.stringify(item, null, 2));
+
 
     const updatedOn = item.metadata.updatedOn;
-    // console.log("updatedOn-->", updatedOn);
+
 
     return {
       id: item.name,
@@ -629,11 +622,10 @@ export async function pruebaReact(ctx) {
         storageManager: false,
       }}
       onEditor={onEditor}
-    />
+    >  </GjsEditor>
     </Layout>
   );
 };
-
 
 
 

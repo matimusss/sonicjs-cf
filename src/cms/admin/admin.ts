@@ -132,10 +132,8 @@ admin.get('/prueba', async (ctx) => {
 
 
 admin.get('/pruebaReact', (ctx) => {
-  
-  return ctx.html(<Layout> asdasd </Layout>);
+  return ctx.html(pruebaReact(ctx) );});
 
-});
 
 
 
