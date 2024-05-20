@@ -4,8 +4,7 @@ import { FC } from 'hono/jsx';
 import * as React from 'react';
 import GjsEditor from '@grapesjs/react';
 import './style.css';
-import type { Editor } from 'grapesjs';
-
+import grapesjs, { Editor } from 'grapesjs';
 
 
 export const Head = () => {
@@ -359,6 +358,7 @@ export const Layout: FC<{
               </div>
 
               {props.children}
+
               <GjsEditor
       grapesjs="https://unpkg.com/grapesjs"
       grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
@@ -373,7 +373,7 @@ export const Layout: FC<{
         },
       ]}
       onEditor={onEditor}
-    />
+    /> 
 
               
             </main>
