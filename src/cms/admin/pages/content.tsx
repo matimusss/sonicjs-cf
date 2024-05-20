@@ -1,16 +1,24 @@
-// @ts-nocheck
+grapes// @ts-nocheck
 
 import { ApiConfig, apiConfig } from '../../../db/routes';
 import { getDataListByPrefix } from '../../data/kv-data';
 import { Bindings } from '../../types/bindings';
 import { Layout } from '../theme';
 import * as React from 'react';
+
+
 import GjsEditor, {
   AssetsProvider,
   Canvas,
   ModalProvider,
 } from '@grapesjs/react';
+
 import type { Editor, EditorConfig } from 'grapesjs';
+import grapesjs, { Editor } from 'grapesjs';
+import GjsEditor from '@grapesjs/react';
+import type { Editor } from 'grapesjs';
+
+
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { MAIN_BORDER_COLOR } from './../components/common';
 import CustomModal from './../components/CustomModal';
@@ -18,9 +26,10 @@ import CustomAssetManager from './../components/CustomAssetManager';
 import Topbar from './../components/Topbar';
 import RightSidebar from './../components/RightSidebar';
 import './../style.css';
-import grapesjs, { Editor } from 'grapesjs';
-import GjsEditor from '@grapesjs/react';
-import type { Editor } from 'grapesjs';
+
+
+
+
 
 
 
@@ -626,8 +635,12 @@ export async function pruebaReact(ctx) {
     console.log('Editor loaded REACTjs', { editor });
   };
   return (
+    <Layout      env={ctx.env}
+    username={ctx.get('user')?.email}
+    screenTitle={'Editor de paginas REACTjs'}
     
-    <Layout>  
+    >  
+
     <GjsEditor
       grapesjs="https://unpkg.com/grapesjs"
       grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
@@ -643,7 +656,8 @@ export async function pruebaReact(ctx) {
       ]}
       onEditor={onEditor}
     />
-  
+
+
       </Layout>
   );
 };
