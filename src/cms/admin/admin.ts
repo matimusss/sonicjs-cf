@@ -1,13 +1,10 @@
 // import { Hono } from 'hono'
 // const app = new Hono()
-
 import { Context, Hono } from 'hono';
-
 import { getDataListByPrefix } from '../data/kv-data';
 import { Layout } from './theme';
 import { jsx, Fragment } from 'https://deno.land/x/hono/middleware.ts'
 import { Editor } from 'grapesjs';
-import './../style.css';
 import grapesjs  from 'grapesjs';
 import ReactDOMServer from 'react-dom/server';
 import * as React from 'react';
