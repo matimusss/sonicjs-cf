@@ -1,5 +1,3 @@
-grapes// @ts-nocheck
-
 import { ApiConfig, apiConfig } from '../../../db/routes';
 import { getDataListByPrefix } from '../../data/kv-data';
 import { Bindings } from '../../types/bindings';
