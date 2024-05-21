@@ -1,4 +1,4 @@
-export const resultados = [
+const resultados = [
   {
     "ID": 1,
     "CATEGORIA": "Blog",
