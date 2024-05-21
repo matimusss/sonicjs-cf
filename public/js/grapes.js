@@ -34,7 +34,6 @@ var editor  = grapesjs.init({
   container : '#gjs',
   storageManager: false,
   selectorManager: { escapeName },
-
   //fromElement: true,
   components: '<h1>Hello World Component!</h1>',
   showOffsets: true,
@@ -286,20 +285,7 @@ var editor  = grapesjs.init({
       ],
   },
   plugins: [
-    'grapesjs-tailwind',
-    'gjs-blocks-basic',
-    'grapesjs-plugin-forms',
-    'grapesjs-component-countdown',
-    'grapesjs-plugin-export',
-    'grapesjs-tabs',
-    'grapesjs-custom-code',
-    'grapesjs-touch',
-    'grapesjs-parser-postcss',
-    'grapesjs-tooltip',
-    'grapesjs-tui-image-editor',
-    'grapesjs-typed',
-    'grapesjs-style-bg',
-    'grapesjs-preset-webpage',
+    'grapesjs-tailwind'
   ],
   pluginsOpts: {
     'gjs-blocks-basic': { flexGrid: true },
