@@ -1,5 +1,7 @@
 
 //function grapeInit() {
+console.log(resultados[1]);
+
 
 setTimeout(function() {
   // Código que quieres ejecutar después de 1 segundo

@@ -586,10 +586,8 @@ export async function prueba(ctx) {
     <script src='/public/js/grapes.js'></script>
       <script src='/public/js/resultados.js'></script>
       <div id="gjs" class="gjs-editor-cont">
-
     </div>  
     <div>
-    {resultados[5]}
     </div>
       </Layout>
   );
