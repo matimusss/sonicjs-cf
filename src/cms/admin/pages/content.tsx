@@ -581,9 +581,12 @@ export const TopContentTable = (props: {
 
 export async function prueba(ctx) {
   return (
+    
     <Layout>  
+    <script src='/public/js/grapes.js'></script>
+      <script src='/public/js/resultados.js'></script>
       <div id="gjs" class="gjs-editor-cont">
-      <script src='/public/js/grapes.js'></script>
+   {resultados[5]}
     </div>  
       </Layout>
   );
@@ -610,8 +613,10 @@ export async function pruebaReact(ctx) {
   const onEditor = (editor: Editor) => {
     console.log('Editor loaded', { editor });
   };
-  return (   
+  return (  
+    <Layout>  
   <GjsEditor>  </GjsEditor>
+    </Layout>
   );
 };
 

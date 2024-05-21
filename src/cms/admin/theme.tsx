@@ -5,8 +5,6 @@ import * as React from 'react';
 import GjsEditor from '@grapesjs/react';
 import './style.css';
 import grapesjs, { Editor } from 'grapesjs';
-// @ts-ignore
-const resultados = require('./resultados');
 
 
 
@@ -363,8 +361,7 @@ export const Layout: FC<{
 
               {props.children}
 
-          asd
-              {resultados[1]}
+   
             </main>
           </div>
         </div>
