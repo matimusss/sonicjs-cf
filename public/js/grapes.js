@@ -391,11 +391,10 @@ console.log(editor.getHtml());
 
 
 
-cmdm.add('open-info3', function() {    
-  editor.addComponents(`<div>
-  <img src="https://path/image" />
-  <span title="foo">Hello world!!!</span>
-</div>`);
+cmdm.add('open-info3', function() {
+  var codigo = resultados[3].codigo;
+
+  editor.addComponents(codigo);
   });
   
 
@@ -549,5 +548,5 @@ editor.on('load', function(editor) {
 
 
 });
-}, 4000);
+}, 3000);
 //}
