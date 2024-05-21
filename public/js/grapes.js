@@ -36,6 +36,31 @@ setTimeout(function() {
       "data-tooltip-pos": "bottom"
     }
   });
+
+
+  
+  var pn = editor.Panels;
+  var modal = editor.Modal;
+  var cmdm = editor.Commands;
+  cmdm.add('open-info3', function() {
+    var codigo = resultados[3].codigo;
+  
+    editor.addComponents(codigo);
+    });
+    
+  
+    pn.addButton('options', {  
+      id: 'open-info3',
+      className: 'fa fa-floppy-o', 
+      command: function() { editor.runCommand('open-info3') },
+      attributes: {
+        'title': 'Add component',
+        'data-tooltip-pos': 'bottom',
+      },
+    });   
+    
+
+
   
 }, 3000);
 //}
