@@ -38,17 +38,17 @@ setTimeout(function() {
   });
 
 
-  
+
   var pn = editor.Panels;
   var modal = editor.Modal;
   var cmdm = editor.Commands;
+
+
+
   cmdm.add('open-info3', function() {
     var codigo = resultados[3].codigo;
-  
     editor.addComponents(codigo);
     });
-    
-  
     pn.addButton('options', {  
       id: 'open-info3',
       className: 'fa fa-floppy-o', 
@@ -59,6 +59,69 @@ setTimeout(function() {
       },
     });   
     
+
+
+
+  cmdm.add('open-info4', function() {
+    var codigo = resultados[102].codigo;
+    editor.addComponents(codigo);
+    });
+    pn.addButton('options', {  
+      id: 'open-info4',
+      className: 'fa fa-floppy-o', 
+      command: function() { editor.runCommand('open-info3') },
+      attributes: {
+        'title': 'Add component4',
+        'data-tooltip-pos': 'bottom',
+      },
+    });   
+
+
+
+
+
+    cmdm.add('open-info5', function() {
+      var codigo = resultados[33].codigo;
+      editor.addComponents(codigo);
+      });
+      pn.addButton('options', {  
+        id: 'open-info5',
+        className: 'fa fa-floppy-o', 
+        command: function() { editor.runCommand('open-info5') },
+        attributes: {
+          'title': 'Add component',
+          'data-tooltip-pos': 'bottom',
+        },
+      });   
+
+
+
+
+
+
+
+      cmdm.add('open-info6', function() {
+        var randomIndex = Math.floor(Math.random() * 251); // Genera un número aleatorio entre 0 y 250
+        var codigo = resultados[randomIndex].codigo;
+        editor.addComponents(codigo);
+      });
+      
+      pn.addButton('options', {  
+        id: 'open-info6',
+        className: 'fa fa-floppy-o', 
+        command: function() { editor.runCommand('open-info6') },
+        attributes: {
+          'title': 'Add component RANDOM',
+          'data-tooltip-pos': 'bottom',
+        },
+      });
+      
+
+
+
+
+
+
 
 
   
