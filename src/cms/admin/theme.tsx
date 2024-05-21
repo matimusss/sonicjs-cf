@@ -5,6 +5,8 @@ import * as React from 'react';
 import GjsEditor from '@grapesjs/react';
 import './style.css';
 import grapesjs, { Editor } from 'grapesjs';
+import { resultados } from './resultados';
+
 
 
 export const Head = () => {
@@ -359,23 +361,8 @@ export const Layout: FC<{
 
               {props.children}
 
-              <GjsEditor
-      grapesjs="https://unpkg.com/grapesjs"
-      grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
-      options={{
-        height: '100vh',
-        storageManager: false,
-      }}
-      plugins={[
-        {
-          id: 'gjs-blocks-basic',
-          src: 'https://unpkg.com/grapesjs-blocks-basic',
-        },
-      ]}
-      onEditor={onEditor}
-    /> 
-
-              
+            
+              {resultados[1]}
             </main>
           </div>
         </div>
