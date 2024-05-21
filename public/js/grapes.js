@@ -1,11 +1,8 @@
-
-//function grapeInit() {
-console.log(resultados[1]);
-
-
 setTimeout(function() {
   // Código que quieres ejecutar después de 1 segundo
 
+//function grapeInit() {
+  console.log(resultados[1]);
 
 var lp = './img/';
 var plp = 'https://via.placeholder.com/350x250/';
@@ -552,5 +549,5 @@ editor.on('load', function(editor) {
 
 
 });
-}, 1000);
+}, 4000);
 //}
