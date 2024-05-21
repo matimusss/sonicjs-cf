@@ -583,7 +583,10 @@ export async function prueba(ctx) {
   return (
     
     <Layout>  
+      <script src="https://unpkg.com/grapesjs-component-twitch"></script>
       <script src="https://unpkg.com/grapesjs-tailwind"></script>
+      <script src="https://unpkg.com/grapesjs-ga"></script>
+      <script src="https://unpkg.com/grapesjs-plugin-forms"></script>
     <script src='/public/js/grapes.js'></script>
       <script src='/public/js/resultados.js'></script>
       <div id="gjs" class="gjs-editor-cont">

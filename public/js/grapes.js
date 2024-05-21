@@ -15,6 +15,7 @@ setTimeout(function() {
       "grapesjs-component-twitch",
       "grapesjs-plugin-forms",
       "grapesjs-tailwind"
+
     ],
     pluginsOpts: {
       "grapesjs-ga": {
