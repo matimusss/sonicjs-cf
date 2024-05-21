@@ -583,7 +583,6 @@ export async function prueba(ctx) {
   return (
     
     <Layout>  
-      <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <script src='/public/js/grapes.js'></script>
       <script src='/public/js/resultados.js'></script>
       <div id="gjs" class="gjs-editor-cont">
