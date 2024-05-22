@@ -1,6 +1,6 @@
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
-
+import { auditSchema } from './audit';
 
 // Nombre de la tabla
 export const tableName = 'pages';
@@ -16,7 +16,10 @@ export const definition = {
 };
 
 // Creación de la tabla
-export const table = sqliteTable(tableName, definition);
+export const table = sqliteTable(tableName,   {
+  ...definition,
+  ...auditSchema
+});
 
 // Relaciones (si es necesario)
 export const relation = relations(table, (/* Define tus relaciones aquí si es necesario */) => ({}));
