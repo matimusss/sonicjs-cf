@@ -3,7 +3,7 @@ setTimeout(function() {
     `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, "-");
   
   window.editor = grapesjs.init({
-    height: "90%",
+    height: "85vh",
     container: "#gjs",
     showOffsets: true,
     fromElement: true,
