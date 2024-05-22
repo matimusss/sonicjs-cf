@@ -3,6 +3,7 @@ import { relations } from 'drizzle-orm';
 
 // Nombre de la tabla
 export const tableName = 'pages';
+export const route = 'pages';
 
 // Definición de la estructura de la tabla
 export const definition = {
