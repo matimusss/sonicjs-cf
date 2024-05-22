@@ -198,7 +198,8 @@ export const tableSchemas = {
   categories,
   categoriesToPosts,
   userKeys,
-  userSessions
+  userSessions,
+  pages
 };
 
 for (const key of Object.keys(tableSchemas)) {
