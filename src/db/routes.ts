@@ -5,7 +5,7 @@ import * as categories from './schema/categories';
 import * as categoriesToPosts from './schema/categoriesToPosts';
 import * as userKeys from './schema/userKeys';
 import * as userSessions from './schema/userSessions';
-
+import * as pages from './schema/pages';
 import { AppContext } from '../server';
 import { isAdminOrEditor } from './config-helpers';
 

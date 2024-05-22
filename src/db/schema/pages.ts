@@ -1,6 +1,7 @@
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
 
+
 // Nombre de la tabla
 export const tableName = 'pages';
 export const route = 'pages';
