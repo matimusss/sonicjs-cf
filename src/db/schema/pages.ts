@@ -27,7 +27,10 @@ export const relation = relations(table, (/* Define tus relaciones aquí si es n
 // Configuración de acceso (si es necesario)
 export const access = {
   operation: {
-    read: true,
+      read: true,
+        create: true,
+        update: true,
+        delete: true,  
     // Define las reglas de acceso para crear, actualizar y eliminar páginas
     // Por ejemplo: create: isAdminOrEditor
   },
