@@ -54,10 +54,3 @@ export const hooks = {
     // Define ganchos para manipular datos de entrada antes de crear o actualizar una página
   }
 };
-
-// Configuración específica de campos (si es necesario)
-export const fields = {
-  // Define configuraciones específicas para ciertos campos (si es necesario)
-};
-
-
