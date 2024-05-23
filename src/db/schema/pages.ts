@@ -4,7 +4,7 @@ import {
   integer
 } from "drizzle-orm/sqlite-core";
 import { auditSchema } from './audit';
-
+import { ApiConfig } from '../routes';
 export const tableName = 'pages';
 
 export const route = 'pages';
@@ -23,3 +23,10 @@ export const table = sqliteTable('pages', {
   ...definition,
   ...auditSchema
 });
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true
+  }
+};
