@@ -22,31 +22,3 @@ export const table = sqliteTable(tableName,   {
   ...definition,
   ...auditSchema
 });
-
-export const fields: ApiConfig['fields'] = {
-  tags: {
-    type: 'string[]'
-  }
-};
-
-// Relaciones (si es necesario)
-export const relation = relations(table, (/* Define tus relaciones aquí si es necesario */) => ({}));
-
-// Configuración de acceso (si es necesario)
-export const access = {
-  operation: {
-      read: true,
-        create: true,
-        update: true,
-        delete: true
-    // Define las reglas de acceso para crear, actualizar y eliminar páginas
-    // Por ejemplo: create: isAdminOrEditor
-  }
-};
-
-// Ganchos (hooks) para manipular datos (si es necesario)
-export const hooks = {
-  resolveInput: {
-    // Define ganchos para manipular datos de entrada antes de crear o actualizar una página
-  }
-};
