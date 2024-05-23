@@ -5,6 +5,9 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { auditSchema } from './audit';
 
+export const tableName = 'pages';
+
+export const route = 'pages';
 
 // Definición de la estructura de la tabla
 export const definition = {
@@ -16,7 +19,7 @@ export const definition = {
 };
 
 
-export const table = sqliteTable("pages", {
+export const table = sqliteTable('pages', {
   ...definition,
   ...auditSchema
 });
