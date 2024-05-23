@@ -39,12 +39,6 @@ export const access = {
         delete: true,  
     // Define las reglas de acceso para crear, actualizar y eliminar páginas
     // Por ejemplo: create: isAdminOrEditor
-  },
-  filter: {
-    // Define los filtros de acceso (si es necesario)
-  },
-  fields: {
-    // Define configuraciones específicas para los campos (si es necesario)
   }
 };
 
