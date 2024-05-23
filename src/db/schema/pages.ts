@@ -13,8 +13,6 @@ export const definition = {
   slug: text('slug'), // Campo de texto para el slug de la página
   html_code: text('html_code'), // Campo de texto para el código HTML de la página
   css_code: text('css_code'), // Campo de texto para el código CSS de la página
-  createdOn: integer('createdOn'),
-  updatedOn: integer('updatedOn')
 };
 
 // Creación de la tabla
