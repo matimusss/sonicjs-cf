@@ -22,3 +22,13 @@ export const table = sqliteTable(tableName,   {
   ...definition,
   ...auditSchema
 });
+
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true,
+    update: true,
+    delete: true
+  }
+};
