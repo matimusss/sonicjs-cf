@@ -16,10 +16,9 @@ export const definition = {
 };
 
 // Creación de la tabla
-export const table = sqliteTable(tableName,   {
-  ...definition,
-  ...auditSchema
-});
+export const table = sqliteTable(tableName,  
+  definition
+);
 
 
 export const access: ApiConfig['access'] = {
