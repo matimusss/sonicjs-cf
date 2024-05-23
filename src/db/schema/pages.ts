@@ -12,7 +12,7 @@ export const definition = {
   name: text('name'), // Campo de texto para el nombre de la página
   slug: text('slug'), // Campo de texto para el slug de la página
   html_code: text('html_code'), // Campo de texto para el código HTML de la página
-  css_code: text('css_code'),
+  css_code: text('css_code')
 };
 
 
