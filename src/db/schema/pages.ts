@@ -6,7 +6,6 @@ import {
 import { auditSchema } from './audit';
 import { ApiConfig } from '../routes';
 export const tableName = 'pages';
-
 export const route = 'pages';
 
 // Definición de la estructura de la tabla
