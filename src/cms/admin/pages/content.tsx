@@ -437,8 +437,11 @@ export const ContentNewForm = (props: {
         const fieldName = field.getAttribute('name');
         // Realizar acciones específicas para el campo con nombre 'X'
         if (fieldName === '[data]slug') {
-          field.style.backgroundColor = 'yellow';
-          // O cualquier otra manipulación que desees realizar
+          // Mostrar una alerta con el valor del campo [data]slug
+          const slugValue = field.value;
+          alert(`El valor del campo [data]slug es: ${slugValue}`);
+          // Imprimir un mensaje en la consola
+          console.log('El valor del campo [data]slug es:', slugValue);
         }
       });
     };
