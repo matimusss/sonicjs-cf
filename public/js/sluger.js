@@ -12,7 +12,7 @@ window.onload = function() {
 
     slug.forEach(function(field) {
       field.style.backgroundColor = 'yellow'; 
-      const titulo = JSON.stringify(nameOrTitle);
+      const titulo = nameOrTitle.style.backgroundColor;
       alert("se cargo" + titulo  + ".");
    
 });
