@@ -440,8 +440,8 @@ function newContent() {
         }
       });
       form.on('customEvent', function (event) {
+        chooseFileEventHandler(uppy, event);
         if (event.component.attributes.key === 'upload') {
-          chooseFileEventHandler(uppy, event);
         } else if (event.component.attributes.key === 'pick') {
           pickFileEventHandler((v) => {
             const field = event.component.attributes['data-field'];

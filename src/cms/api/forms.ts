@@ -1,6 +1,6 @@
 import { apiConfig } from '../../db/routes';
 import { AppContext } from '../../server';
-import { getSchemaFromTable } from '../data/d1-data';
+  import { getSchemaFromTable } from '../data/d1-data';
 import { singularize } from '../util/utils';
 
 export function getForm(ctx: AppContext, table) {
