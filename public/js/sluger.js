@@ -12,7 +12,7 @@ window.onload = function() {
 
     slug.forEach(function(field) {
       field.style.backgroundColor = 'yellow'; 
-      const titulo = nameOrTitle.name;
+      const titulo = nameOrTitle;
       alert("se cargo" + titulo  + ".");
    
 });
