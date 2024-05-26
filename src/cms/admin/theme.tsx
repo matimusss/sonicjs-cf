@@ -5,22 +5,7 @@ import * as React from 'react';
 import GjsEditor from '@grapesjs/react';
 import './style.css';
 import grapesjs, { Editor } from 'grapesjs';
-export const Script = () => {
-  return (
-    <>
-      <script>
-        {`
-          window.onload = function() {
-            setTimeout(function() {
-              alert("La página se ha cargado completamente");
-            }, 1000); // Espera 1 segundo antes de mostrar la alerta
-          };
-        `}
-      </script>
-      {/* El resto de tus scripts */}
-    </>
-  );
-};
+
 
 
 
@@ -102,10 +87,20 @@ export const Head = () => {
 
 
 
-
 export const Script = () => {
   return (
     <>
+
+
+<script>
+        {`
+          window.onload = function() {
+            setTimeout(function() {
+              alert("La página se ha cargado completamente");
+            }, 1000); // Espera 1 segundo antes de mostrar la alerta
+          };
+        `}
+      </script>
 
       <script
         src='https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js'
