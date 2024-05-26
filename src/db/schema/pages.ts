@@ -26,6 +26,8 @@ export const table = sqliteTable('pages', {
 export const access: ApiConfig['access'] = {
   operation: {
     read: true,
-    create: true
+    create: true,
+    update: true,
+    delete: true
   }
 };
