@@ -16,6 +16,8 @@ import RightSidebar from './../components/RightSidebar';
 import './../style.css';
 
 
+import React, { useEffect } from 'react';
+import $ from 'jquery'; // Importa jQuery si lo estás utilizando
 
 
 
@@ -401,11 +403,78 @@ export const ContentEditForm = (props: {
     >
       <div id='formio' data-id={props.contentId} data-route={props.route}></div>
       <FileModal />
+   
+   
+   
     </Layout>
   );
 };
 
+
+
+
+
+
+
+
+
+
+
+
 export const ContentNewForm = (props: {
+  table: string;
+  route: string;
+  username?: string;
+  env: Bindings;
+}) => {
+  useEffect(() => {
+    // Lógica para manipular campos después de que se renderice el formulario
+    const handleFormFields = () => {
+      // Obtener todos los campos del formulario
+      const formFields = $('#formio').find('.formio-component');
+      // Iterar sobre los campos y realizar acciones según el nombre
+      formFields.each(function() {
+        const fieldName = $(this).attr('name');
+        if (fieldName === 'data[slug]') {
+          
+          
+           // Realizar acciones específicas para el campo con nombre 'X'
+          $(this).css('background-color', 'yellow');
+          // O cualquier otra manipulación que desees realizar
+
+
+
+        }
+      });
+    };
+
+    // Llamar a la función para manipular campos después de que se renderice el formulario
+    handleFormFields();
+  }, [props.route]);
+
+  return (
+    <Layout
+      env={props.env}
+      screenTitle={'New: ' + props.table}
+      username={props.username}
+    >
+      <div id='formio' data-route={props.route}></div>
+      <FileModal />
+    </Layout>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+export const ContentNewFormANTERIOR = (props: {
   table: string;
   route: string;
   username?: string;
@@ -446,6 +515,8 @@ export const TopContentList = (props: {
                 <th scope='col'>Actions</th>
               </tr>
             </thead>
+
+
             <tbody>
               {props.content.map((item: any) => {
                 return (
@@ -534,6 +605,7 @@ export const TopContentTable = (props: {
             </a>
           </div>
           <div id='grid' data-route={props.table}></div>
+          
           <div id='executionTime' class='p-4 text-center text-muted hide'>
             Data Retrieval - <b>Server</b>: <span class='serverTime'></span>ms,{' '}
             <b>Client</b>: <span class='clientTime'></span>ms. <b>Source</b>:{' '}

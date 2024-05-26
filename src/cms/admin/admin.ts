@@ -155,7 +155,14 @@ admin.get('/tables/:route', async (ctx) => {
     return ctx.redirect('/admin/tables/auth/users', 301);
   }
   return ctx.html(await loadTableData(ctx, route));
+
 });
+
+
+
+
+
+
 
 admin.get('/cache/in-memory', async (ctx) => {
   return ctx.html(await loadInMemoryCacheTable(ctx));
