@@ -3,9 +3,10 @@ window.onload = function() {
 
     alert("se cargo");
     // Espera 1 segundo antes de ejecutar el código
-    const formioFields = document.querySelectorAll(' input[name="[data]slug"]');
+
+    const formioFields = document.querySelectorAll('[id*="slug"]');
     formioFields.forEach(function(field) {
       alert("se detecto un slug");
     });
-  }, 1000); // Espera 1 segundo antes de ejecutar el código
+  }, 1600); // Espera 1 segundo antes de ejecutar el código
 };
