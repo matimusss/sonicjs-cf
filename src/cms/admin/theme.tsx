@@ -5,8 +5,7 @@ import * as React from 'react';
 import GjsEditor from '@grapesjs/react';
 import './style.css';
 import grapesjs, { Editor } from 'grapesjs';
-
-
+var Slugify = require('slugifyjs').fromLocale('en');
 
 
 export const Head = () => {

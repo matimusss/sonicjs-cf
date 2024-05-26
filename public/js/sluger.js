@@ -1,6 +1,6 @@
 window.onload = function() {
   setTimeout(function() {
-  var Slugify = require('slugifyjs').fromLocale('en');
+
 
     alert("se cargo");
     // Espera 1 segundo antes de ejecutar el código
