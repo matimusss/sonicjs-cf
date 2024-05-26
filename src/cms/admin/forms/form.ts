@@ -6,29 +6,13 @@ export function loadForm(id) {
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'>
     <link rel='stylesheet' href='https://cdn.form.io/formiojs/formio.full.min.css'>
     <script src='https://cdn.form.io/formiojs/formio.full.min.js'></script>
-
     <script type='text/javascript'>
-    window.onload = function() {
-      Formio.builder(document.getElementById('builder'), {}, {});
-      setTimeout(() => {
-        // Buscar todos los campos INPUT dentro de la div "formio"
-        const formFields = document.querySelectorAll('#builder input');
-        // Iterar sobre los campos y buscar si alguno tiene como "name" "[data]slug"
-        formFields.forEach((field) => {
-          if (field.getAttribute('name') === '[data]slug') {
-            // Cambiar el texto inicial a "SLUG" y mostrar una alerta
-            field.value = 'SLUG';
-            alert('Se cambió el texto inicial del campo [data]slug a "SLUG"');
-          }
-        });
-      }, 1000); // Esperar 1 segundo (ajustar según sea necesario)
-    };
-  </script>
+      window.onload = function() {
+        Formio.builder(document.getElementById('builder'), {}, {});
+      };
+    </script>
 
-
-
-
-
+    
   </head>
     <body>
       <div id='builder'></div>
