@@ -17,6 +17,7 @@ import './../style.css';
 
 
 import React, { useEffect } from 'react';
+import $ from 'jquery'; // Importa jQuery si lo estás utilizando
 
 
 
@@ -419,73 +420,6 @@ export const ContentEditForm = (props: {
 
 
 export const ContentNewForm = (props: {
-  table: string;
-  route: string;
-  username?: string;
-  env: Bindings;
-}) => {
-
-
-  useEffect(() => {
-    // Lógica para manipular campos después de que se renderice el formulario
-    const handleFormFields = () => {
-      // Obtener todos los campos del formulario
-      const form = document.getElementById('formio');
-      const formFields = form.querySelectorAll('input');
-      // Iterar sobre los campos y realizar acciones según el nombre
-      formFields.forEach((field) => {
-        const fieldName = field.getAttribute('name');
-        // Realizar acciones específicas para el campo con nombre 'X'
-        if (fieldName === '[data]slug') {
-          // Mostrar una alerta con el valor del campo [data]slug
-          const slugValue = field.value;
-          alert(`El valor del campo [data]slug es: ${slugValue}`);
-          // Imprimir un mensaje en la consola
-          console.log('El valor del campo [data]slug es:', slugValue);
-        }
-      });
-    };
-
-    // Llamar a la función para manipular campos después de que se renderice el formulario
-    handleFormFields();
-  }, [props.route]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  return (
-    <Layout
-      env={props.env}
-      screenTitle={'New: ' + props.table}
-      username={props.username}
-    >
-      <div id='formio' data-route={props.route}></div>
-      <FileModal />
-    </Layout>
-  );
-};
-
-
-
-
-
-
-
-
-
-
-
-export const ContentNewFormANTERIOR = (props: {
   table: string;
   route: string;
   username?: string;
