@@ -91,16 +91,7 @@ export const Script = () => {
   return (
     <>
 
-
-<script>
-        {`
-          window.onload = function() {
-            setTimeout(function() {
-              alert("La página se ha cargado completamente");
-            }, 1000); // Espera 1 segundo antes de mostrar la alerta
-          };
-        `}
-      </script>
+<script src='/public/js/sluger.js'></script>
 
       <script
         src='https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js'
