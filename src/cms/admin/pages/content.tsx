@@ -17,7 +17,6 @@ import './../style.css';
 
 
 import React, { useEffect } from 'react';
-import $ from 'jquery'; // Importa jQuery si lo estás utilizando
 
 
 
@@ -419,31 +418,27 @@ export const ContentEditForm = (props: {
 
 
 
-
-
 export const ContentNewForm = (props: {
   table: string;
   route: string;
   username?: string;
   env: Bindings;
 }) => {
+
+
   useEffect(() => {
     // Lógica para manipular campos después de que se renderice el formulario
     const handleFormFields = () => {
       // Obtener todos los campos del formulario
-      const formFields = $('#formio').find('.formio-component');
+      const form = document.getElementById('formio');
+      const formFields = form.querySelectorAll('input');
       // Iterar sobre los campos y realizar acciones según el nombre
-      formFields.each(function() {
-        const fieldName = $(this).attr('name');
-        if (fieldName === 'data[slug]') {
-          
-          
-           // Realizar acciones específicas para el campo con nombre 'X'
-          $(this).css('background-color', 'yellow');
+      formFields.forEach((field) => {
+        const fieldName = field.getAttribute('name');
+        // Realizar acciones específicas para el campo con nombre 'X'
+        if (fieldName === '[data]slug') {
+          field.style.backgroundColor = 'yellow';
           // O cualquier otra manipulación que desees realizar
-
-
-
         }
       });
     };
@@ -451,6 +446,19 @@ export const ContentNewForm = (props: {
     // Llamar a la función para manipular campos después de que se renderice el formulario
     handleFormFields();
   }, [props.route]);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <Layout
