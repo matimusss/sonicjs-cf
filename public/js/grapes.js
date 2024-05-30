@@ -1,6 +1,6 @@
 const homeRes =  fetch(`https://sonicjs-cf2.pages.dev/v1/assets?filters[name][$eq]=home`);
 setTimeout(function() {
-  const paginaCargada = homeRes.json().data[0].html_code;
+  const paginaCargada = json(homeRes.data[0].html_code);
   const escapeName = (name) =>
     `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, "-");
   
