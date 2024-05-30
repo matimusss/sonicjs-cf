@@ -337,8 +337,10 @@ const auth = initializeLucia(d1, ctx.env);
 const code= content?.code;
 const authRequest = ctx.get('authRequest');
 const githubAuth = github(auth, {
-    clientId: process.env.GITHUB_CLIENT_ID ?? "",
-    clientSecret: process.env.GITHUB_CLIENT_SECRET ?? ""
+   // clientId: process.env.GITHUB_CLIENT_ID ?? "asdasd123123",
+   // clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "asdasd"
+    clientId: "asdasd123123",
+    clientSecret:  "asdasd"
   });
 
 type Auth = typeof auth;
