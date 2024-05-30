@@ -298,7 +298,7 @@ export async function loadNewContent(ctx, route, tbl?: string) {
 
 
 export async function edit_html(ctx, route, id, tbl?: string) {
-  const ruta = JSON.stringify(route);
+  const ruta = JSON.stringify(route).replace("admin/edit_html/", "");
   const ide = JSON.stringify(id);
  const codigoJS = `
  // Tu código JavaScript aquí
