@@ -335,7 +335,6 @@ const { ctx, content } = args;
 const d1 = ctx.env.D1DATA;
 const auth = initializeLucia(d1, ctx.env);
 const code= content?.code;
-const authRequest = ctx.get('authRequest');
 const githubAuth = github(auth, {
    // clientId: process.env.GITHUB_CLIENT_ID ?? "asdasd123123",
    // clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "asdasd"
@@ -369,6 +368,8 @@ const user = await auth.createUser({
 }});
    		return user;
 		};
+
+    
 		const user = await getUser();//siempre recibe un user,
     //ya sea q lo haya creado o ya hubiese existido,
     //sea cual sea, creamos la sesion:
@@ -376,11 +377,7 @@ const user = await auth.createUser({
 
 
 
-  ctx.header('Authorization', `Bearer ${session.sessionId}`);
-
-  return ctx.json({message : "ASD"});
-
-
+ 
 
     
    	const session = await auth.createSession({
@@ -389,9 +386,9 @@ const user = await auth.createUser({
 		}); 
 //creo que sobre cookies, DEPRECATED, se crean en el browser,
 //aca solamente creamos la session en el backend.
-		const authRequest = auth.handleRequest(ctx);
 
-    
+    const authRequest = ctx.get('authRequest');
+
   if (authRequest) {
     authRequest.setSession(session);
   }
