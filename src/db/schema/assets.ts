@@ -10,7 +10,7 @@ export const route = 'assets';
 
 // Definición de la estructura de la tabla
 export const definition = {
-  ID: integer('ID').primaryKey(),  // Se define como clave primaria e INTEGER
+  id: integer('id').primaryKey(),  // Se define como clave primaria e INTEGER
   name: text('name'), // Campo de texto para el nombre de la página
   html_code: text('html_code'), // Campo de texto para el código HTML de la página
   css_code: text('css_code')
