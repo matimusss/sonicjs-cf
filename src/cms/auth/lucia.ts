@@ -374,6 +374,11 @@ const user = await auth.createUser({
     //sea cual sea, creamos la sesion:
 
 
+
+
+
+
+    
    	const session = await auth.createSession({
 			userId: user.userId, //*CHEK*//
 			attributes: {}
@@ -381,9 +386,15 @@ const user = await auth.createUser({
 //creo que sobre cookies, DEPRECATED, se crean en el browser,
 //aca solamente creamos la session en el backend.
 		const authRequest = auth.handleRequest(ctx);
-	authRequest.setSession(session);
+
+    
+  if (authRequest) {
+    authRequest.setSession(session);
+  }
 	//	return ctx.redirect("/");
 //FINALEMNTE, DEVOLVEMOS EL BEARER TOKEN DE LA SESION ,YA SEA CREADA O LOG
+
+
     ctx.header('Authorization', `Bearer ${session.sessionId}`);
     return ctx.json({ bearer: session.sessionId });
 //MANEJO DE ERRORES
