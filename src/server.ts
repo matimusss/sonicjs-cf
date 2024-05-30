@@ -53,10 +53,20 @@ app.use(
     origin: (origin) => {
       return origin.indexOf('localhost') > 0 || origin.endsWith('.sonicjs.com')
         ? origin
-        : 'https://sonicjs.com';
+        : 'https://blpt-cf.pages.dev/';
     }
   })
 );
+
+
+
+
+
+
+
+
+
+
 
 //request Logging
 app.use('*', async (ctx, next) => {
