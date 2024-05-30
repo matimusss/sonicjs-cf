@@ -2,10 +2,13 @@ setTimeout(async function() {
  
 
 
-  console.log(route);
+  console.log(routes);
 
   console.log(id);
-  const response = await fetch('https://sonicjs-cf2.pages.dev/v1/${route}/${id}');
+
+const dir = "https://sonicjs-cf2.pages.dev/admin/edit_html/"+route+"/"+id;
+
+  const response = await fetch(dir);
     const homeRes = await response.json();
     const paginaCargada = homeRes.data[0].html_code;
 
