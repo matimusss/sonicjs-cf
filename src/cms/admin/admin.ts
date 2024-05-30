@@ -24,7 +24,8 @@ import {
   loadTableData,
   prueba,
   pruebaReact,
-  editor
+  editor,
+  edit_html
 } from './pages/content';
 
 import { loadApis } from './pages/api';
@@ -93,6 +94,22 @@ admin.get('/content/new/:route', async (ctx) => {
   }
   return ctx.html(await loadNewContent(ctx, route));
 });
+
+
+admin.get('/content/edit_html/:route/:id', async (ctx) => {
+  const route = ctx.req.param('route');
+  const id = ctx.req.param('id');
+  if (route === 'users') {
+    return ctx.redirect('/admin/content/new/auth/users', 301);
+  }
+
+  return ctx.html(await edit_html(ctx, route, id));
+});
+
+
+
+
+
 
 admin.get('/content/new/auth/users', async (ctx) => {
   return ctx.html(await loadNewContent(ctx, 'users'));

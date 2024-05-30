@@ -291,6 +291,23 @@ export async function loadNewContent(ctx, route, tbl?: string) {
   );
 }
 
+
+
+
+
+
+export async function edit_html(ctx, route, id, tbl?: string) {
+
+  
+  return (
+
+  );
+}
+
+
+
+
+
 function editScript() {
   return console.log('hello');
 }
@@ -596,6 +613,33 @@ export const TopContentTable = (props: {
 
 
 
+
+export async function prueba(ctx) {
+
+  return (
+    
+    <Layout>  
+      
+      <script>   window.miVariable = 'Hola desde la variable global';</script>
+      <script src="https://unpkg.com/grapesjs-component-twitch"></script>
+      <script src="https://unpkg.com/grapesjs-tailwind"></script>
+      <script src="https://unpkg.com/grapesjs-ga"></script>
+      <script src="https://unpkg.com/grapesjs-plugin-forms"></script>
+    
+    <script src='/public/js/grapes.js'></script>
+
+      <script src='/public/js/resultados.js'></script>
+
+      <div id="gjs" class="gjs-editor-cont">
+    </div>  
+    <div>
+    </div>
+      </Layout>
+  );
+};
+
+
+
 export async function prueba(ctx) {
   return (
     
@@ -604,8 +648,33 @@ export async function prueba(ctx) {
       <script src="https://unpkg.com/grapesjs-tailwind"></script>
       <script src="https://unpkg.com/grapesjs-ga"></script>
       <script src="https://unpkg.com/grapesjs-plugin-forms"></script>
+    
     <script src='/public/js/grapes.js'></script>
+
       <script src='/public/js/resultados.js'></script>
+
+      <div id="gjs" class="gjs-editor-cont">
+    </div>  
+    <div>
+    </div>
+      </Layout>
+  );
+};
+
+
+export async function prueba(ctx) {
+  return (
+    
+    <Layout>  
+      <script src="https://unpkg.com/grapesjs-component-twitch"></script>
+      <script src="https://unpkg.com/grapesjs-tailwind"></script>
+      <script src="https://unpkg.com/grapesjs-ga"></script>
+      <script src="https://unpkg.com/grapesjs-plugin-forms"></script>
+    
+    <script src='/public/js/grapes.js'></script>
+
+      <script src='/public/js/resultados.js'></script>
+
       <div id="gjs" class="gjs-editor-cont">
     </div>  
     <div>

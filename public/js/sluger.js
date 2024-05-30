@@ -1,5 +1,5 @@
 //window.onload = function() {
-//  setTimeout(function() {
+//  setTimeout(function() { 
 
 
 //    alert("se cargo");
