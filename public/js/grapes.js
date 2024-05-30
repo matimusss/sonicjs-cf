@@ -10,7 +10,7 @@ const dir = "https://sonicjs-cf2.pages.dev/v1/"+routes+"/"+id;
 console.log(dir);
   const response = await fetch(dir);
     const homeRes = await response.json();
-    const paginaCargada = homeRes.data[0].html_code;
+    const paginaCargada = await homeRes.data[0].html_code;
 
   
   const escapeName = (name) =>
