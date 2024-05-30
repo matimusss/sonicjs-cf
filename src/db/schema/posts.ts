@@ -14,7 +14,7 @@ export const route = 'posts';
 export const definition = {
   id: text('id').primaryKey(),
   title: text('title'),
-  slug: text('title'),
+  slug: text('slug'),
   body: text('body'),
   userId: text('userId'),
   image: text('image'),
