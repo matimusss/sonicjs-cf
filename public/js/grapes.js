@@ -7,7 +7,7 @@ setTimeout(async function() {
   console.log(id);
 
 const dir = "https://sonicjs-cf2.pages.dev/v1/"+routes+"/"+id;
-
+console.log(dir);
   const response = await fetch(dir);
     const homeRes = await response.json();
     const paginaCargada = homeRes.data[0].html_code;
@@ -133,6 +133,21 @@ const dir = "https://sonicjs-cf2.pages.dev/v1/"+routes+"/"+id;
       
 
 
+
+      cmdm.add('open-info7', function() {
+      console.log("coidigo");
+      });
+      
+      pn.addButton('options', {  
+        id: 'open-info7',
+        className: 'fa fa-floppy-o', 
+        command: function() { editor.runCommand('open-info7') },
+        attributes: {
+          'title': 'GUARDAR',
+          'data-tooltip-pos': 'bottom',
+        },
+      });
+      
 
 
 
