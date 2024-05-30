@@ -23,7 +23,7 @@ console.log(dir);
     container: "#gjs",
     showOffsets: true,
     //fromElement: true,
-    components: paginaCargada,
+    components: homeRes.data.html_code,
     noticeOnUnload: false,
     storageManager: false,
     selectorManager: { escapeName },
