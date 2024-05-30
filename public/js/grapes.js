@@ -12,8 +12,8 @@ console.log(dir);
   const response = await fetch("https://sonicjs-cf2.pages.dev/v1/"+routes+"/"+id);
     const homeRes = await response.json();
     console.log(homeRes);
-    const paginaCargada = await homeRes.data[0].html_code;
-console.log(paginaCargada);
+
+console.log(homeRes.data[0].html_code);
   
   const escapeName = (name) =>
     `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, "-");
