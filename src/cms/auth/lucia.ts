@@ -347,13 +347,20 @@ const githubAuth = github(auth, {
 try {
 		const { getExistingUser, githubUser, createUser } =
 			await githubAuth.validateCallback(code);
-//ESTA CONSTANTE SE ENCARGA DESPUES DE LOGUEAR O CREAR EL USER,
+//ESTA CONSTANTE SE ENCARGA DESPUES DE LOGU EAR O CREAR EL USER,
 //DEVUELVE EL USER
+
+
 const getUser = async () => {
-			const existingUser = await getExistingUser();
+  const existingUser = await auth.useKey  ('github', githubUser.login , null);
+
+			//const existingUser = await getExistingUser();
       //Si existe:
       if (existingUser) return existingUser;
     //Si no existe...
+
+
+    
 const user = await auth.createUser({
   key: {
     providerId: 'github',
@@ -361,9 +368,9 @@ const user = await auth.createUser({
     password: null,
   },
   attributes:{
-    firstname:     "ASd",
-    lastname:      "asdasd",
-    email:      "asdasd@asd.com",
+    firstname:     "AasdasdSd",
+    lastname:      "asasdasddasd",
+    email:      "asdaasdsd@asd.com",
     role: "admin"
 }});
    		return user;
@@ -426,7 +433,7 @@ export async function login<T extends string>(args: LuciaAPIArgs<T>) {
   try {
     // find user by key
     // and validate password
-    const key = await auth.useKey('email', email.toLowerCase(), password);
+    const key = await auth.useKey('email', email.toLowerCase(), password)             
     const session = await auth.createSession({
       userId: key.userId,
       attributes: {}
