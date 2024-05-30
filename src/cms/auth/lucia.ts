@@ -386,8 +386,8 @@ const user = await auth.createUser({
 		}); 
 //creo que sobre cookies, DEPRECATED, se crean en el browser,
 //aca solamente creamos la session en el backend.
-		const authRequest = auth.handleRequest(ctx);
-
+		//const authRequest = auth.handleRequest(ctx);
+    const authRequest = ctx.get('authRequest');
 
   if (authRequest) {
     authRequest.setSession(session);
