@@ -343,7 +343,6 @@ const githubAuth = github(auth, {
     clientSecret:  "asdasd"
   });
 
-type Auth = typeof auth;
 
 const d1Data = prepareD1Data(content.data);
 try {
@@ -362,8 +361,12 @@ const user = await auth.createUser({
     providerUserId: githubUser.login,
     password: null,
   },
-  attributes: d1Data
-});
+  attributes:{
+    firstname:     "ASd",
+    lastname:      "asdasd",
+    email:      "asdasd@asd.com",
+    role: "admin"
+}});
    		return user;
 		};
 		const user = await getUser();//siempre recibe un user,
