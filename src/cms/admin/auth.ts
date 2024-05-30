@@ -24,11 +24,24 @@ import {
   getOperationCreateResult,
   hasUser
 } from '../auth/auth-helpers';
-
+import { cors } from 'hono/cors';
 
 
 const authAPI = new Hono<{ Bindings: Bindings; Variables: Variables }>();
+
+
+authAPI.use(
+  '/v1/auth/login_oauth',
+  cors({
+    origin: 'https://blpt-cf.pages.dev/', // Reemplaza esto con tu dominio permitido
+    allowHeaders: ['Content-Type'], // Puedes ajustar los encabezados permitidos según tus necesidades
+    allowMethods: ['POST'], // Solo permitimos el método POST para esta ruta
+  })
+);
+
+
 authAPI.use('*', async (ctx, next) => {
+  
   const session = ctx.get('session');
   const path = ctx.req.path;
   if (!session && path !== '/v1/auth/login' && path !== '/v1/auth/verify' && path !== '/v1/auth/login_oauth') {
