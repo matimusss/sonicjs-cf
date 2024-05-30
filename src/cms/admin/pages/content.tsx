@@ -322,16 +322,6 @@ export async function edit_html(ctx, route, id, tbl?: string) {
       </div>
         </Layout>
     );
-  };
-  
-  
-  
-  
-  
-  
-  return (
-<div></div>
-  );
 }
 
 
