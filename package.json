@@ -41,6 +41,7 @@
     "@emotion/styled": "^11.11.5",
     "@grapesjs/react": "^1.0.0",
     "@lucia-auth/adapter-sqlite": "^2.0.0",
+    "@lucia-auth/oauth": "^3.5.3",
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
     "@mui/material": "^5.15.17",

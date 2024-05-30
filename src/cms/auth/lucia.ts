@@ -13,6 +13,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { sonicAdapter } from './sonicAdapter';
 import { Variables } from '../../server';
 
+import { OAuthRequestError } from "@lucia-auth/oauth";
+
+import { github } from "@lucia-auth/oauth/providers";
+
+
+
 export type Session = {
   user: any;
 };
@@ -313,6 +319,85 @@ export async function updateUser<T extends string>(
   return new Response('Invalid request', { status: 400 });
 }
 
+
+
+
+
+export async function login_oauth<T extends string>(args: LuciaAPIArgs<T>) {
+//doc en:
+// https://v2.lucia-auth.com/guidebook/github-oauth/hono/
+//https://v2.lucia-auth.com/oauth/basics/handle-users/
+//https://v2.lucia-auth.com/guidebook/github-oauth/nextjs-app/
+//https://v2.lucia-auth.com/guidebook/github-oauth/
+//https://v2.lucia-auth.com/oauth/
+//agregado
+const { ctx, content } = args;
+const d1 = ctx.env.D1DATA;
+const auth = initializeLucia(d1, ctx.env);
+const code= content?.code;
+const authRequest = ctx.get('authRequest');
+const githubAuth = github(auth, {
+    clientId: process.env.GITHUB_CLIENT_ID ?? "",
+    clientSecret: process.env.GITHUB_CLIENT_SECRET ?? ""
+  });
+
+type Auth = typeof auth;
+const id = uuidv4();
+content.data.id = id;
+const d1Data = prepareD1Data(content.data);
+try {
+		const { getExistingUser, githubUser, createUser } =
+			await githubAuth.validateCallback(code);
+//ESTA CONSTANTE SE ENCARGA DESPUES DE LOGUEAR O CREAR EL USER,
+//DEVUELVE EL USER
+const getUser = async () => {
+			const existingUser = await getExistingUser();
+      //Si existe:
+      if (existingUser) return existingUser;
+    //Si no existe...
+const user = await auth.createUser({
+  key: {
+    providerId: 'github',
+    providerUserId: githubUser.login,
+    password: null,
+  },
+  attributes: d1Data
+});
+   		return user;
+		};
+		const user = await getUser();//siempre recibe un user,
+    //ya sea q lo haya creado o ya hubiese existido,
+    //sea cual sea, creamos la sesion:
+   	const session = await auth.createSession({
+			userId: user.userId, //*CHEK*//
+			attributes: {}
+		}); 
+//creo que sobre cookies, DEPRECATED, se crean en el browser,
+//aca solamente creamos la session en el backend.
+//		const authRequest = auth.handleRequest(ctx);
+	//	authRequest.setSession(session);
+	//	return ctx.redirect("/");
+//FINALEMNTE, DEVOLVEMOS EL BEARER TOKEN DE LA SESION ,YA SEA CREADA O LOG
+    ctx.header('Authorization', `Bearer ${session.sessionId}`);
+    return ctx.json({ bearer: session.sessionId });
+//MANEJO DE ERRORES
+	} catch (e) {
+		if (e instanceof OAuthRequestError) {
+			// invalid code
+			return ctx.text("Bad request", 400);
+		}
+		return ctx.text("An unknown error occurred", 500);
+	}
+};
+
+
+
+
+
+
+
+
+
 export async function login<T extends string>(args: LuciaAPIArgs<T>) {
   const { ctx, content } = args;
   const d1 = ctx.env.D1DATA;
@@ -349,6 +434,16 @@ export async function login<T extends string>(args: LuciaAPIArgs<T>) {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
 export async function logout<T extends string>(ctx: LuciaAPIArgs<T>['ctx']) {
   const d1 = ctx.env.D1DATA;
   const auth = initializeLucia(d1, ctx.env);
@@ -357,6 +452,29 @@ export async function logout<T extends string>(ctx: LuciaAPIArgs<T>['ctx']) {
     const sessionId = ctx.get('session')?.sessionId;
     if (sessionId) {
       await auth.invalidateSession(sessionId);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     if (authRequest) {
       authRequest.setSession(null);

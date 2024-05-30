@@ -5,6 +5,7 @@ import {
   deleteUser,
   initializeLucia,
   login,
+  login_oauth,
   logout,
   updateUser
 } from '../auth/lucia';
@@ -24,9 +25,11 @@ import {
   hasUser
 } from '../auth/auth-helpers';
 
+
+
 const authAPI = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 authAPI.use('*', async (ctx, next) => {
-  const session = ctx.get('session');
+  const  = ctx.get('session');
   const path = ctx.req.path;
   if (!session && path !== '/v1/auth/login' && path !== '/v1/auth/verify') {
     if (path === '/v1/auth/users/setup') {
@@ -400,6 +403,16 @@ authAPI.post('/login', async (ctx) => {
   const content = await ctx.req.json();
   return await login({ ctx, content });
 });
+
+
+
+authAPI.post('/login_oauth', async (ctx) => {
+  const content = await ctx.req.json();
+  return await login_oauth({ ctx, content });
+});
+
+
+
 
 authAPI.get('/logout', async (ctx) => {
   return await logout(ctx);
