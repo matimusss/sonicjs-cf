@@ -344,8 +344,7 @@ const githubAuth = github(auth, {
   });
 
 type Auth = typeof auth;
-const id = uuidv4();
-content.data.id = id;
+
 const d1Data = prepareD1Data(content.data);
 try {
 		const { getExistingUser, githubUser, createUser } =
