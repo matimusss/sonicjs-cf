@@ -339,8 +339,8 @@ const authRequest = ctx.get('authRequest');
 const githubAuth = github(auth, {
    // clientId: process.env.GITHUB_CLIENT_ID ?? "asdasd123123",
    // clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "asdasd"
-    clientId: "asdasd123123",
-    clientSecret:  "asdasd"
+    clientId: "Ov23li3kJgisbMmtA44m",
+    clientSecret:  "1949c43b57f435bf4bed6914353c9dcc1d50f680"
   });
 
 
