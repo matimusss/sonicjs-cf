@@ -376,6 +376,10 @@ const user = await auth.createUser({
 
 
 
+  ctx.header('Authorization', `Bearer ${session.sessionId}`);
+
+  return ctx.json({message : "ASD"});
+
 
 
     
