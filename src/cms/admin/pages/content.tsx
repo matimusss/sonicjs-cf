@@ -298,9 +298,9 @@ export async function loadNewContent(ctx, route, tbl?: string) {
 
 export async function edit_html(ctx, route, id, tbl?: string) {
 
-  
-  return (
 
+  return (
+<div>asd</div>
   );
 }
 
