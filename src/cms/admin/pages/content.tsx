@@ -303,8 +303,8 @@ export async function edit_html(ctx, route, id, tbl?: string) {
  const codigoJS = `
  // Tu código JavaScript aquí
  console.log('Hola desde el código JavaScript');
- const route = "${ruta}";
- const id = "${ide}";
+ const route = ${ruta};
+ const id = ${ide};
 
 `;
     return (
