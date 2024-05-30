@@ -6,7 +6,7 @@ setTimeout(async function() {
 
   console.log(id);
 
-const dir = "https://sonicjs-cf2.pages.dev/admin/edit_html/"+route+"/"+id;
+const dir = "https://sonicjs-cf2.pages.dev/"+route+"/"+id;
 
   const response = await fetch(dir);
     const homeRes = await response.json();
