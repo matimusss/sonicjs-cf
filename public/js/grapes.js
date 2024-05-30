@@ -1,6 +1,12 @@
 setTimeout(async function() {
-  console.log(miVariable);
-    const response = await fetch(`https://sonicjs-cf2.pages.dev/v1/assets?filters[name][$eq]=home`);
+ 
+
+
+  console.log(ruta);
+
+  console.log(ide);
+  const response = await 
+  fetch('https://sonicjs-cf2.pages.dev/v1/${ruta}/${ide}');
     const homeRes = await response.json();
     const paginaCargada = homeRes.data[0].html_code;
 

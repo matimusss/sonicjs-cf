@@ -297,7 +297,38 @@ export async function loadNewContent(ctx, route, tbl?: string) {
 
 
 export async function edit_html(ctx, route, id, tbl?: string) {
-
+  const ruta = {route}  ;
+ const ide = {id};
+  
+ const codigoJS = `
+ // Tu código JavaScript aquí
+ console.log('Hola desde el código JavaScript');
+ const route = "${ruta}";
+ const id = "${ide}";
+ console.log('Ruta:', route);
+ console.log('ID:', id);
+`;
+    return (
+      <Layout>  
+   <script dangerouslySetInnerHTML={{ __html: codigoJS }} />
+        <script src="https://unpkg.com/grapesjs-component-twitch"></script>
+        <script src="https://unpkg.com/grapesjs-tailwind"></script>
+        <script src="https://unpkg.com/grapesjs-ga"></script>
+        <script src="https://unpkg.com/grapesjs-plugin-forms"></script>
+      <script src='/public/js/grapes.js'></script>
+        <script src='/public/js/resultados.js'></script>
+        <div id="gjs" class="gjs-editor-cont">
+      </div>  
+      <div>
+      </div>
+        </Layout>
+    );
+  };
+  
+  
+  
+  
+  
   
   return (
 <div></div>
@@ -615,13 +646,14 @@ export const TopContentTable = (props: {
 
 
 export async function prueba(ctx) {
+
+
+  
   const codigoJS = `
     // Tu código JavaScript aquí
     console.log('Hola desde el código JavaScript');
     const miVariable = "ASDASD";
   `;
-
-  
   return (
     
     <Layout>  
