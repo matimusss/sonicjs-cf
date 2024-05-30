@@ -18,6 +18,7 @@ import './../style.css';
 
 import React, { useEffect } from 'react';
 import $ from 'jquery'; // Importa jQuery si lo estás utilizando
+import { json } from 'drizzle-orm/mysql-core';
 
 
 
@@ -297,8 +298,8 @@ export async function loadNewContent(ctx, route, tbl?: string) {
 
 
 export async function edit_html(ctx, route, id, tbl?: string) {
-  const ruta = {route}  ;
- const ide = {id};
+  const ruta = `{route}`  ;
+ const ide = `{id}`;
   
  const codigoJS = `
  // Tu código JavaScript aquí
