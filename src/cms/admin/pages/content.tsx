@@ -298,9 +298,9 @@ export async function loadNewContent(ctx, route, tbl?: string) {
 
 export async function edit_html(ctx, route, id, tbl?: string) {
 
-
+  
   return (
-<div>asd</div>
+<div></div>
   );
 }
 
@@ -638,50 +638,6 @@ export async function prueba(ctx) {
   );
 };
 
-
-
-export async function prueba(ctx) {
-  return (
-    
-    <Layout>  
-      <script src="https://unpkg.com/grapesjs-component-twitch"></script>
-      <script src="https://unpkg.com/grapesjs-tailwind"></script>
-      <script src="https://unpkg.com/grapesjs-ga"></script>
-      <script src="https://unpkg.com/grapesjs-plugin-forms"></script>
-    
-    <script src='/public/js/grapes.js'></script>
-
-      <script src='/public/js/resultados.js'></script>
-
-      <div id="gjs" class="gjs-editor-cont">
-    </div>  
-    <div>
-    </div>
-      </Layout>
-  );
-};
-
-
-export async function prueba(ctx) {
-  return (
-    
-    <Layout>  
-      <script src="https://unpkg.com/grapesjs-component-twitch"></script>
-      <script src="https://unpkg.com/grapesjs-tailwind"></script>
-      <script src="https://unpkg.com/grapesjs-ga"></script>
-      <script src="https://unpkg.com/grapesjs-plugin-forms"></script>
-    
-    <script src='/public/js/grapes.js'></script>
-
-      <script src='/public/js/resultados.js'></script>
-
-      <div id="gjs" class="gjs-editor-cont">
-    </div>  
-    <div>
-    </div>
-      </Layout>
-  );
-};
 
 
 
