@@ -2,11 +2,10 @@ setTimeout(async function() {
  
 
 
-  console.log(ruta);
+  console.log(route);
 
-  console.log(ide);
-  const response = await 
-  fetch('https://sonicjs-cf2.pages.dev/v1/${ruta}/${ide}');
+  console.log(id);
+  const response = await fetch('https://sonicjs-cf2.pages.dev/v1/${route}/${id}');
     const homeRes = await response.json();
     const paginaCargada = homeRes.data[0].html_code;
 
