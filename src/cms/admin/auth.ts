@@ -29,7 +29,7 @@ import {
 
 const authAPI = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 authAPI.use('*', async (ctx, next) => {
-  const  = ctx.get('session');
+  const session = ctx.get('session');
   const path = ctx.req.path;
   if (!session && path !== '/v1/auth/login' && path !== '/v1/auth/verify') {
     if (path === '/v1/auth/users/setup') {
