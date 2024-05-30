@@ -615,12 +615,17 @@ export const TopContentTable = (props: {
 
 
 export async function prueba(ctx) {
+  const codigoJS = `
+    // Tu código JavaScript aquí
+    console.log('Hola desde el código JavaScript');
+    const miVariable = "ASDASD";
+  `;
 
+  
   return (
     
     <Layout>  
-      
-      <script>   window.miVariable = 'Hola desde la variable global';</script>
+ <script dangerouslySetInnerHTML={{ __html: codigoJS }} />
       <script src="https://unpkg.com/grapesjs-component-twitch"></script>
       <script src="https://unpkg.com/grapesjs-tailwind"></script>
       <script src="https://unpkg.com/grapesjs-ga"></script>
