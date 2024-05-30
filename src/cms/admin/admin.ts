@@ -96,7 +96,7 @@ admin.get('/content/new/:route', async (ctx) => {
 });
 
 
-admin.get('/content/edit_html/:route/:id', async (ctx) => {
+admin.get('/edit_html/:route/:id', async (ctx) => {
   const route = ctx.req.param('route');
   const id = ctx.req.param('id');
   if (route === 'users') {
