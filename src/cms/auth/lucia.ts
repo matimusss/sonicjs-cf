@@ -344,7 +344,7 @@ const githubAuth = github(auth, {
   });
 
 
-const d1Data = prepareD1Data(content.data);
+//const d1Data = prepareD1Data(content.data);
 try {
 		const { getExistingUser, githubUser, createUser } =
 			await githubAuth.validateCallback(code);
