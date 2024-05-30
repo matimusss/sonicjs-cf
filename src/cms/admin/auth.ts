@@ -31,7 +31,7 @@ const authAPI = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 authAPI.use('*', async (ctx, next) => {
   const session = ctx.get('session');
   const path = ctx.req.path;
-  if (!session && path !== '/v1/auth/login' && path !== '/v1/auth/verify') {
+  if (!session && path !== '/v1/auth/login' && path !== '/v1/auth/verify' && path !== '/v1/auth/login_oauth') {
     if (path === '/v1/auth/users/setup') {
       const userExists = await hasUser(ctx);
       if (userExists) {
