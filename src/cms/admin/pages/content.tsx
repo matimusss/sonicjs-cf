@@ -298,6 +298,7 @@ export async function loadNewContent(ctx, route, tbl?: string) {
 
 
 export async function edit_html(ctx, route, id, tbl?: string) {
+  //sacamos parte de la ruta q no sirve DEPRECATED
   const ruta = JSON.stringify(route).replace("admin/edit_html/", "");
   const ide = JSON.stringify(id);
  const codigoJS = `
