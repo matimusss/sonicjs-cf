@@ -1,27 +1,20 @@
-let homeRes; // Variable para almacenar los datos
-fetch(`https://sonicjs-cf2.pages.dev/v1/assets?filters[name][$eq]=home`)
-  .then(response => response.json()) // Parse la respuesta JSON
-  .then(data => {
-    // Almacena los datos en la variable homeRes
-    homeRes = data;
-    const paginaCargada = homeRes.data[0].html_code;
-    // Aquí puedes trabajar con los datos obtenidos
-    console.log(homeRes); // Por ejemplo, imprime los datos en la consola
-  })
-  .catch(error => console.error('Error fetching data:', error));
 
-setTimeout(function() {
+
+setTimeout(async function() {
  
 
+
+    const response = await fetch(`https://sonicjs-cf2.pages.dev/v1/assets?filters[name][$eq]=home`);
+    const homeRes = await response.json();
+    const paginaCargada = homeRes.data[0].html_code;
+
+
+
+
+  
   const escapeName = (name) =>
     `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, "-");
   
-
-
-
-
-
-
   window.editor = grapesjs.init({
     height: "80vh",
     container: "#gjs",
@@ -146,5 +139,5 @@ setTimeout(function() {
 
 
   
-}, 3000);
+}, 1000);
 //}
