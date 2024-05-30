@@ -372,14 +372,16 @@ const user = await auth.createUser({
 		const user = await getUser();//siempre recibe un user,
     //ya sea q lo haya creado o ya hubiese existido,
     //sea cual sea, creamos la sesion:
+
+
    	const session = await auth.createSession({
 			userId: user.userId, //*CHEK*//
 			attributes: {}
 		}); 
 //creo que sobre cookies, DEPRECATED, se crean en el browser,
 //aca solamente creamos la session en el backend.
-//		const authRequest = auth.handleRequest(ctx);
-	//	authRequest.setSession(session);
+		const authRequest = auth.handleRequest(ctx);
+	authRequest.setSession(session);
 	//	return ctx.redirect("/");
 //FINALEMNTE, DEVOLVEMOS EL BEARER TOKEN DE LA SESION ,YA SEA CREADA O LOG
     ctx.header('Authorization', `Bearer ${session.sessionId}`);
@@ -388,7 +390,7 @@ const user = await auth.createUser({
 	} catch (e) {
 		if (e instanceof OAuthRequestError) {
 			// invalid code
-			return ctx.text("Bad request", 400);
+			return ctx.text("Bad request", 400); 
 		}
 		return ctx.text("An unknown error occurred", 500);
 	}
@@ -456,29 +458,6 @@ export async function logout<T extends string>(ctx: LuciaAPIArgs<T>['ctx']) {
     const sessionId = ctx.get('session')?.sessionId;
     if (sessionId) {
       await auth.invalidateSession(sessionId);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
     if (authRequest) {
       authRequest.setSession(null);
