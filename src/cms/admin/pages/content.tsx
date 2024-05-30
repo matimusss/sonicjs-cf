@@ -298,9 +298,8 @@ export async function loadNewContent(ctx, route, tbl?: string) {
 
 
 export async function edit_html(ctx, route, id, tbl?: string) {
-  const ruta = `{route}`  ;
- const ide = `{id}`;
-  
+  const ruta = JSON.stringify(route);
+  const ide = JSON.stringify(id);
  const codigoJS = `
  // Tu código JavaScript aquí
  console.log('Hola desde el código JavaScript');
