@@ -21,6 +21,12 @@ import $ from 'jquery'; // Importa jQuery si lo estás utilizando
 import { json } from 'drizzle-orm/mysql-core';
 
 
+//agregado para laburar con la db, pero no tendria q estar aca sino en d1-data
+import { drizzle } from 'drizzle-orm/d1';
+import { and, eq } from 'drizzle-orm';
+import { tableSchemas } from './../../../db/routes';
+var qs = require('qs');
+///
 
 
 
@@ -299,11 +305,18 @@ export async function loadNewContent(ctx, route, tbl?: string) {
 
 
 export async function save_html(ctx, route, id, content, tbl?: string) {
-  const nombre = content.nombre;
-  const edad = content.edad;
-  const respuesta = `Nombre: ${nombre}, Edad: ${edad}`;
+  //editar table ROUTE, donde ID = id, 
+//cambiar campo html_code a nuevo htmlcode, 
+//return OK o NO OK
+  const nombre = content.codigo_html
+
+  const db = await ctx.env.D1DATA;
+  await db.update(tableSchemas.[route])
+  .set({ html_code: nombre })
+  .where(eq(tableSchemas.[route].id, id));
+
   // Devuelve la respuesta de texto
-  return respuesta;
+  return "OK?";
 }
 
 

@@ -21,10 +21,9 @@ console.log(dir);
       const url= "https://sonicjs-cf2.pages.dev/admin/save_html/"+routes+"/"+id;
 
       const data = {
-        nombre: 'Ejemplo',
-        edad: 30
+        codigo_html: 'Ejemplo',
       };
-      
+
       try {
         const options = {
           method: 'POST',
