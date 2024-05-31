@@ -14,37 +14,59 @@ console.log(dir);
     console.log(homeRes);
     console.log(homeRes.data.html_code);
 
-  
 
 
-    async function postData() {
-      const url= "https://sonicjs-cf2.pages.dev/admin/save_html/"+routes+"/"+id;
 
+
+
+
+
+
+
+    
+
+
+    async function postData(code) {
       const data = {
-        codigo_html: 'Ejemplo',
+        data: {
+          html_code: code
+        }
       };
 
-      try {
-        const options = {
+      const bodyData = JSON.stringify(data);
+      const storedBearerToken = localStorage.getItem("bearer");
+
+      // Verificar si el token está presente
+      if (storedBearerToken) {
+        //sacarle comillas al bearer...
+        const tokenWithoutQuotes = storedBearerToken.replace(/"/g, '').replace(/'/g, '');
+   const token = `Bearer ${tokenWithoutQuotes}`;
+        console.log( token);
+        // Configurar las opciones de la solicitud Fetch
+        const fetchOptions = {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': token // Agregar el token al encabezado de autorización
           },
-          body: JSON.stringify(data)
+          body: bodyData
         };
     
-        const response = await fetch(dir, options);
-    
-        if (!response.ok) {
-          throw new Error('La solicitud no fue exitosa');
-        }
-    
-        return await response.json();
-      } catch (error) {
-        console.error('Error en la solicitud:', error);
-        throw error;
-      }
-    }
+        // Realizar la solicitud Fetch
+        fetch(dir, fetchOptions)
+          .then(response => {
+            // Manejar la respuesta de la solicitud
+          })
+          .catch(error => {
+            // Manejar errores de la solicitud
+          });
+      } else {
+        console.log("No bearer token found in localStorage");
+      } };
+
+   
+
+
     
 
 
@@ -203,7 +225,8 @@ console.log(dir);
 
 
       cmdm.add('open-info8', function() {
-        postData()
+        var code_new = editor.getHtml();
+        postData(code_new)
         .then(response => {
           console.log('Respuesta:', response);
         })
