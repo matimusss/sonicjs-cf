@@ -316,7 +316,7 @@ export async function save_html(ctx, route, id, content, tbl?: string) {
   //.where(eq(tableSchemas[route].id, id));
 
   // Devuelve la respuesta de texto
-  return "OK?";
+  return nombre;
 }
 
 
