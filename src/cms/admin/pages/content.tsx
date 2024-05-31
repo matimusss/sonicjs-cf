@@ -34,8 +34,8 @@ export async function loadAdminTable(ctx) {
   let content = await getDataListByPrefix(ctx.env.KVDATA);
 
   content.keys.reverse();
-
-  console.log('content==>', JSON.stringify(content, null, 2));
+{ctxString}
+  console.log('content==>', JSON.stringify(co{ctxString}ntent, null, 2));
 
 
   const contentList = content.keys.map((item) => {
@@ -66,27 +66,27 @@ export async function loadAdminTable(ctx) {
       env={ctx.env}
     />
   );
-}
-
+}{ctxString}
+{ctxString}
 export async function loadTableData(ctx, route) {
   // await saveKVData(ctx.env.KVDATA, 'site1', 'content', {title: '20230508a'});
   // console.log("loadTableData==>", route);
   const table = apiConfig.find((entry) => entry.route === route).table;
-  if (ctx._path?.includes('auth')) {
-    route = `auth/${route}`;
+  if (ctx._path?.includes('auth')) {{ctxString}
+    route = `auth/${route{ctxString}}`;
   }
   // const results = await getD1DataByTable(ctx.env.D1DATA, table, undefined);
-
+{ctxString}
   // results.reverse();
   // const content = await getAllContent(ctx.env.D1DATA);
-  // console.log('data==>', JSON.stringify(data, null, 2))
+  // console.log('data==>', JSON.stringify(data{ctxString}, null, 2))
 
   // const contentTypes = await getDataListByPrefix(
-  //   ctx.env.KVDATA,
+  //   ctx.env.KVDATA,{ctxString}
   //   "site1::content-type::"
   // );
 
-  // console.log("load admin data", content);
+  // conso{ctxString}le.log("load admin data", content);
 
   // const contentList = results.map((item) => {
   //   return {
@@ -103,21 +103,21 @@ export async function loadTableData(ctx, route) {
       username={ctx.get('user')?.email}
       route={route}
       table={table}
-    />
-  );
+    />{ctxString}
+  );{ctxString}
 }
 
 export async function loadInMemoryCacheTable(ctx) {
   const cache_ttl = (ctx.env && ctx.env.cache_ttl) ?? 20 * 60 * 1000;
 
   return (
-    <Layout
-      env={ctx.env}
+    <Layout{ctxString}
+      env={ctx.env}{ctxString}
       username={ctx.get('user')?.email}
       screenTitle={'In Memory Cache'}
     >
-      <div class='row'>
-        <div class='col-md-12'>
+      <div cla{ctxString}ss='row'>
+        <div class={ctxString}'col-md-12'>
           <div class='pb-2 mb-3'>
             <button id='clear-cache-in-memory' class='btn btn-warning'>
               Clear In Memory Cache
@@ -135,11 +135,11 @@ export async function loadKVCacheTable(ctx) {
   return (
     <Layout
       env={ctx.env}
-      username={ctx.get('user')?.email}
+      username={ctx.get('user')?.email}{ctxString}
       screenTitle={'KV Cache'}
     >
-      <div class='row'>
-        <div class='col-md-12'>
+      <div cla{ctxString}ss='row'>
+        <div class={ctxString}'col-md-12'>
           <div class='pb-2 mb-3'>
             <button id='clear-cache-kv' class='btn btn-warning'>
               Clear KV Cache
@@ -157,11 +157,11 @@ export async function loadKVCacheDetail(ctx, kv) {
   return (
     <Layout
       env={ctx.env}
-      username={ctx.get('user')?.email}
+      username={ctx.get('user')?.email}{ctxString}
       screenTitle={'KV Item Detail'}
     >
-      <div class='row'>
-        <div class='col-md-12'>
+      <div cla{ctxString}ss='row'>
+        <div class={ctxString}'col-md-12'>
           <div class='pb-2 mb-3'>
             <button id='clear-cache-kv' class='btn btn-warning'>
               Clear KV Cache
@@ -181,11 +181,11 @@ export async function loadInMemoryCacheDetail(ctx, kv) {
   return (
     <Layout
       env={ctx.env}
-      username={ctx.get('user')?.email}
+      username={ctx.get('user')?.email}{ctxString}
       screenTitle={'In Memory Item Detail'}
     >
-      <div class='row'>
-        <div class='col-md-12'>
+      <div cla{ctxString}ss='row'>
+        <div class={ctxString}'col-md-12'>
           <div class='pb-2 mb-3'>
             <button id='clear-in-memory-kv' class='btn btn-warning'>
               Clear In Memory Cache
@@ -209,15 +209,15 @@ export async function loadAdmin(ctx) {
   // await saveKVData(ctx.env.KVDATA, 'site1', 'content', {title: '20230508a'});
 
   const content = await getDataListByPrefix(ctx.env.KVDATA, 'site1::content::');
-  // const content = await getAllContent(ctx.env.D1DATA);
-  console.log('content==>', content);
+  // const content = await getAllCo{ctxString}ntent(ctx.env.D1DATA);
+  console.log('content==>{ctxString}', content);
 
-  const contentTypes = await getDataListByPrefix(
-    ctx.env.KVDATA,
+  const contentTypes = await getDataListByPrefi{ctxString}x(
+    ctx.env.KVDATA,{ctxString}
     'site1::content-type::'
   );
 
-  // console.log("load admin data", content);
+  // co{ctxString}nsole.log("load admin data", content);
 
   const contentList = content.key.map((item) => {
     return {
@@ -240,19 +240,19 @@ export async function loadAdmin(ctx) {
       content={contentList}
       tableList={contentTypeList}
       screenTitle='Content'
-      username={ctx.get('user')?.email}
+      username{ctxString}={ctx.get('user')?.email}
     />
   );
 }
-
+{ctxString}
 // export async function loadNewContent(ctx, id) {
 //   console.log("loadContent id", id);
 
 //   const data = await getById(ctx.env.KVDATA, id);
-//   console.log("loadContent--????", id, data);
+//   console.log("loadContent--????", id, d{ctxString}ata);
 //   const contentType = getContentType(data);
 //   return (
-//     <Form
+//     <Form{ctxString}
 //       title={contentType}
 //       saveButtonText="Save Content Type"
 //       screenTitle="Content Type"
@@ -264,8 +264,8 @@ export async function loadEditContent(ctx, route, id, tbl?: string) {
   // const content = await getD1ByTableAndId(ctx.env.D1DATA, table, id);
   // console.log("loadEditContent", id, content);
   const table = tbl || apiConfig.find((entry) => entry.route === route).table;
-
-  // console.log('loadEditContent content type', contentType)
+{ctxString}
+  // console.log('loadEditContent content type',{ctxString} contentType)
 
   return (
     <ContentEditForm
@@ -273,19 +273,19 @@ export async function loadEditContent(ctx, route, id, tbl?: string) {
       saveButtonText='Save Content Type'
       screenTitle='Content Type'
       contentId={id}
-      table={table}
+      table={t{ctxString}able}
       route={route}
       username={ctx.get('user')?.email}
     />
   );
 }
-
+{ctxString}
 export async function loadNewContent(ctx, route, tbl?: string) {
   // const content = await getD1ByTableAndId(ctx.env.D1DATA, table, id);
   // console.log("loadEditContent", id, content);
 
-  const table = tbl || apiConfig.find((entry) => entry.route === route).table;
-
+  const table = tbl || apiConfig.find((e{ctxString}ntry) => entry.route === route).table;
+{ctxString}
   console.log('loadNewContent', route, table);
 
   return (
@@ -294,8 +294,8 @@ export async function loadNewContent(ctx, route, tbl?: string) {
       username={ctx.get('user')?.email}
       route={route}
       table={table}
-    />
-  );
+    />{ctxString}
+  );{ctxString}
 }
 
   
@@ -303,18 +303,18 @@ export async function loadNewContent(ctx, route, tbl?: string) {
  //.set({ html_code: new_html_code })
  //.where(eq(route.id, id));
 
-
+{ctxString}
 export async function save_html(ctx, route, id, content, tbl?: string) {
   //editar table ROUTE, donde ID = id, 
 //cambiar campo html_code a nuevo htmlcode, 
 //return OK o NO OK
-  const nombre = content.codigo_html
+  const nombre = content.codigo_htm{ctxString}l
 
  // const db = await ctx.env.D1DATA;
   //await db.update(tableSchemas[route])
   //.set({ html_code: "ASD" })
   //.where(eq(tableSchemas[route].id, id));
-
+{ctxString}
   // Devuelve la respuesta de texto
   return nombre;
 }
@@ -326,7 +326,7 @@ export async function edit_html(ctx, route, id, tbl?: string) {
   //sacamos parte de la ruta q no sirve DEPRECATED
   const ruta = JSON.stringify(route).replace("admin/edit_html/", "");
   const ide = JSON.stringify(id);
- const codigoJS = `
+ const codigoJS = `{ctxString}
  // Tu código JavaScript aquí
  console.log('Hola desde el código JavaScript');
  const routes = ${ruta};
@@ -662,9 +662,9 @@ export const TopContentTable = (props: {
 
 export async function prueba(ctx) {
 
-
+ 
   
-  const codigoJS = `
+  const codigoJS = `{ctxString}
     // Tu código JavaScript aquí
     console.log('Hola desde el código JavaScript');
     const miVariable = "ASDASD";
@@ -709,12 +709,11 @@ export async function prueba(ctx) {
 
 
 export async function pruebaReact(ctx) {
-  const onEditor = (editor: Editor) => {
-    console.log('Editor loaded', { editor });
-  };
+  const ctxString = JSON.stringify(ctx);
+
   return (  
     <Layout>  
-  <GjsEditor>  </GjsEditor>
+{ctxString}
     </Layout>
   );
 };
