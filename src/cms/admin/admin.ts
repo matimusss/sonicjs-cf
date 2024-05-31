@@ -112,9 +112,9 @@ admin.post('/save_html/:route/:id', async (ctx) => {
   const route = ctx.req.param('route');
   const id = ctx.req.param('id');
   const content = await ctx.req.json();
-  if (route === 'users') {
-    return ctx.redirect('/admin/content/new/auth/users', 301);
-  }
+//  if (route === 'users') {
+//    return ctx.redirect('/admin/content/new/auth/users', 301);
+ // }
   return ctx.json( content);
 
   //return ctx.html(await save_html(ctx, route, id, content));
