@@ -24,6 +24,7 @@ console.log(dir);
         nombre: 'Ejemplo',
         edad: 30
       };
+      
       try {
         const options = {
           method: 'POST',
