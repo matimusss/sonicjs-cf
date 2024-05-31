@@ -15,6 +15,54 @@ console.log(dir);
     console.log(homeRes.data.html_code);
 
   
+
+
+    async function postData() {
+      const url= "https://sonicjs-cf2.pages.dev/admin/save_html/"+routes+"/"+id;
+
+      const data = {
+        nombre: 'Ejemplo',
+        edad: 30
+      };
+      try {
+        const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        };
+    
+        const response = await fetch(url, options);
+    
+        if (!response.ok) {
+          throw new Error('La solicitud no fue exitosa');
+        }
+    
+        return await response.json();
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
+        throw error;
+      }
+    }
+    
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
   const escapeName = (name) =>
     `${name}`.trim().replace(/([^a-z0-9\w-:/]+)/gi, "-");
   
@@ -154,6 +202,27 @@ console.log(dir);
 
 
 
+      cmdm.add('open-info8', function() {
+        postData()
+        .then(response => {
+          console.log('Respuesta:', response);
+        })
+        .catch(error => {
+          // Manejar el error aquí si es necesario
+        });
+        });
+        
+        pn.addButton('options', {  
+          id: 'open-info8',
+          className: 'fa fa-floppy-o', 
+          command: function() { editor.runCommand('open-info8') },
+          attributes: {
+            'title': 'FETCH POST',
+            'data-tooltip-pos': 'bottom',
+          },
+        });
+        
+  
 
 
   
