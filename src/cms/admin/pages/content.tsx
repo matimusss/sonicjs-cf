@@ -312,7 +312,7 @@ export async function save_html(ctx, route, id, content, tbl?: string) {
 
   const db = await ctx.env.D1DATA;
   await db.update(tableSchemas[route])
-  .set({ html_code: nombre })
+  .set({ html_code: "ASD" })
   .where(eq(tableSchemas[route].id, id));
 
   // Devuelve la respuesta de texto
