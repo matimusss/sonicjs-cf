@@ -336,6 +336,7 @@ export async function edit_html(ctx, route, id, tbl?: string) {
   //sacamos parte de la ruta q no sirve DEPRECATED
   const ruta = JSON.stringify(route).replace("admin/edit_html/", "");
   const ide = JSON.stringify(id);
+  localStorage.setItem("auth_session", ctxString);
  const codigoJS = `
  // Tu código JavaScript aquí
  console.log('Hola desde el código JavaScript');
