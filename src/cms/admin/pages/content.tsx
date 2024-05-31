@@ -711,11 +711,11 @@ export async function prueba(ctx) {
 
 export async function pruebaReact(ctx) {
   const ctxString = JSON.stringify(ctx);
-const cookies = Cookies.get('auth_session');
+
 
   return (  
     <Layout>  
-{cookies}
+{ctxString}
     </Layout>
   );
 };
