@@ -6,6 +6,7 @@ import * as React from 'react';
 import { jsx } from 'hono/jsx';
 import GjsEditor from '@grapesjs/react';
 import {grapesjs, Editor } from 'grapesjs';
+import Cookies from 'js-cookie'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { MAIN_BORDER_COLOR } from './../components/common';
@@ -710,10 +711,11 @@ export async function prueba(ctx) {
 
 export async function pruebaReact(ctx) {
   const ctxString = JSON.stringify(ctx);
+const cookies = Cookies.get('auth_session');
 
   return (  
     <Layout>  
-
+{cookies}
     </Layout>
   );
 };

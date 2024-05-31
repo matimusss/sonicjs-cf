@@ -19,20 +19,6 @@ console.log(dir);
 
 
 
-
-
-    const cookies = document.cookie.split(';');
-
-    for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        const cookieParts = cookie.split('=');
-        const cookieName = cookieParts[0];
-        const cookieValue = cookieParts[1];
-        
-        // Aquí puedes hacer lo que necesites con el nombre y el valor de la cookie
-        console.log(`Nombre de la cookie: ${cookieName}, Valor: ${cookieValue}`);
-    }
-
     
 
 
