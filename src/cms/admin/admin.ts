@@ -115,7 +115,9 @@ admin.post('/save_html/:route/:id', async (ctx) => {
   if (route === 'users') {
     return ctx.redirect('/admin/content/new/auth/users', 301);
   }
-  return ctx.html(await save_html(ctx, route, id, content));
+  return ctx.json( content);
+
+  //return ctx.html(await save_html(ctx, route, id, content));
 });
 
 
