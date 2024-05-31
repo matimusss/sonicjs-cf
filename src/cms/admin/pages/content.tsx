@@ -310,10 +310,10 @@ export async function save_html(ctx, route, id, content, tbl?: string) {
 //return OK o NO OK
   const nombre = content.codigo_html
 
-  const db = await ctx.env.D1DATA;
-  await db.update(tableSchemas[route])
-  .set({ html_code: "ASD" })
-  .where(eq(tableSchemas[route].id, id));
+ // const db = await ctx.env.D1DATA;
+  //await db.update(tableSchemas[route])
+  //.set({ html_code: "ASD" })
+  //.where(eq(tableSchemas[route].id, id));
 
   // Devuelve la respuesta de texto
   return "OK?";
