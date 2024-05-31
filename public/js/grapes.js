@@ -26,14 +26,14 @@ console.log(dir);
 
       try {
         const options = {
-          method: 'POST',
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(data)
         };
     
-        const response = await fetch(url, options);
+        const response = await fetch(dir, options);
     
         if (!response.ok) {
           throw new Error('La solicitud no fue exitosa');
