@@ -311,9 +311,9 @@ export async function save_html(ctx, route, id, content, tbl?: string) {
   const nombre = content.codigo_html
 
   const db = await ctx.env.D1DATA;
-  await db.update(tableSchemas.[route])
+  await db.update(tableSchemas[route])
   .set({ html_code: nombre })
-  .where(eq(tableSchemas.[route].id, id));
+  .where(eq(tableSchemas[route].id, id));
 
   // Devuelve la respuesta de texto
   return "OK?";
