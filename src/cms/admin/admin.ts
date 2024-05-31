@@ -25,7 +25,8 @@ import {
   prueba,
   pruebaReact,
   editor,
-  edit_html
+  edit_html,
+  save_html
 } from './pages/content';
 
 import { loadApis } from './pages/api';
@@ -105,6 +106,19 @@ admin.get('/edit_html/:route/:id', async (ctx) => {
 
   return ctx.html(await edit_html(ctx, route, id));
 });
+
+
+admin.post('/save_html/:route/:id', async (ctx) => {
+  const route = ctx.req.param('route');
+  const id = ctx.req.param('id');
+  const content = await ctx.req.json();
+  if (route === 'users') {
+    return ctx.redirect('/admin/content/new/auth/users', 301);
+  }
+  return ctx.html(await save_html(ctx, route, id, content));
+});
+
+
 
 
 

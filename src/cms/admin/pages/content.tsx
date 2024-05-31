@@ -293,6 +293,14 @@ export async function loadNewContent(ctx, route, tbl?: string) {
 }
 
 
+export async function save_html(ctx, route, id, content, tbl?: string) {
+
+// await ctx.env.D1DATA.update(route)
+ //.set({ html_code: new_html_code })
+ //.where(eq(route.id, id));
+
+ return content;
+}
 
 
 
