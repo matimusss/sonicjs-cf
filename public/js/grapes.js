@@ -34,7 +34,7 @@ console.log(dir);
       };
 
       const bodyData = JSON.stringify(data);
-      const storedBearerToken = localStorage.getItem("bearer");
+      const storedBearerToken = localStorage.getItem("auth_session");
 
       // Verificar si el token está presente
       if (storedBearerToken) {

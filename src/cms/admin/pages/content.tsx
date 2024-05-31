@@ -713,7 +713,7 @@ export async function pruebaReact(ctx) {
 
   return (  
     <Layout>  
-{ctxString}
+
     </Layout>
   );
 };
