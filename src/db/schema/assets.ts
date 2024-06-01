@@ -7,6 +7,7 @@ import { auditSchema } from './audit';
 import { ApiConfig } from '../routes';
 export const tableName = 'assets';
 export const route = 'assets';
+import { isAdminOrUser } from '../config-helpers';
 
 // Definición de la estructura de la tabla
 export const definition = {
@@ -26,7 +27,7 @@ export const access: ApiConfig['access'] = {
   operation: {
     read: true,
     create: true,
-    update: true,
-    delete: true
+    update: isAdminOrUser,
+    delete: isAdminOrUser
   }
 };

@@ -7,7 +7,7 @@ import { auditSchema } from './audit';
 import { ApiConfig } from '../routes';
 export const tableName = 'pages';
 export const route = 'pages';
-
+import { isAdminOrUser } from '../config-helpers';
 // Definición de la estructura de la tabla
 export const definition = {
   id: integer('id').primaryKey(), // Se define como clave primaria e INTEGER
@@ -27,7 +27,7 @@ export const access: ApiConfig['access'] = {
   operation: {
     read: true,
     create: true,
-    update: true,
-    delete: true
+    update: isAdminOrUser,
+    delete: isAdminOrUser
   }
 };
