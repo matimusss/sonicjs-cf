@@ -152,7 +152,7 @@ tables.forEach((entry) => {
       entry.table,
       params,
       ctx.req.url,
-      'd1',
+      source, //hardcodeado para tomar datos de d1
       undefined
     );
 
@@ -180,6 +180,174 @@ tables.forEach((entry) => {
 
     return ctx.json({ ...data, executionTime });
   });
+//added no cache
+
+  //ie /v1/users
+  api.get(`/nc/${entry.route}`, async (ctx) => {
+    const start = Date.now();
+    const query = ctx.req.query();
+    const params = qs.parse(query);
+
+    if (entry.hooks?.beforeOperation) {
+      await entry.hooks.beforeOperation(ctx, 'read', params.id);
+    }
+    const accessControlResult = await getApiAccessControlResult(
+      entry?.access?.operation?.read || true,
+      entry?.access?.filter?.read || true,
+      true,
+      ctx,
+      params.id,
+      entry.table
+    );
+
+    if (typeof accessControlResult === 'object') {
+      params.accessControlResult= {...accessControlResult };
+    }
+
+    if (!accessControlResult) {
+      return ctx.text('Unauthorized', 401);
+    }
+
+    try {
+      params.limit = params.limit ?? '1000';
+      ctx.env.D1DATA = ctx.env.D1DATA;
+      let data = await getRecords(
+        ctx,
+        entry.table,
+        params,
+        ctx.req.url,
+        'd1', //hardcodeado para tomar datos de d1
+        undefined
+      );
+
+      if (entry.access?.item?.read) {
+        const accessControlResult = await getItemReadResult(
+          entry.access.item.read,
+          ctx,
+          data
+        );
+        if (!accessControlResult) {
+          return ctx.text('Unauthorized', 401);
+        }
+      }
+      data.data = await filterReadFieldAccess(
+        entry.access?.fields,
+        ctx,
+        data.data
+      );
+
+      if (entry.hooks?.afterOperation) {
+        await entry.hooks.afterOperation(ctx, 'read', params.id, null, data);
+      }
+      const end = Date.now();
+      const executionTime = end - start;
+
+      return ctx.json({ ...data, executionTime });
+    } catch (error) {
+      console.log(error);
+      return ctx.text(error);
+    }
+  });
+
+  //get single record
+  api.get(`/nc/${entry.route}/:id`, async (ctx) => {
+    const start = Date.now();
+
+    let { includeContentType, source, ...params } = ctx.req.query();
+
+    const id = ctx.req.param('id');
+
+    if (entry.hooks?.beforeOperation) {
+      await entry.hooks.beforeOperation(ctx, 'read', id);
+    }
+
+    params.id = id;
+    // will check the item result when we get the data
+    const accessControlResult = await getApiAccessControlResult(
+      entry?.access?.operation?.read || true,
+      entry?.access?.filter?.read || true,
+      true,
+      ctx,
+      id,
+      entry.table
+    );
+
+    if (typeof accessControlResult === 'object') {
+      params = { ...params, ...accessControlResult };
+    }
+
+    if (!accessControlResult) {
+      return ctx.text('Unauthorized', 401);
+    }
+
+    ctx.env.D1DATA = ctx.env.D1DATA;
+
+    source = source || 'fastest';
+    if (includeContentType !== undefined) {
+      source = 'd1';
+    }
+
+    let data = await getRecords(
+      ctx,
+      entry.table,
+      params,
+      ctx.req.url,
+      'd1', //hardcodeado para tomar datos de d1
+      undefined
+    );
+
+    if (entry.access?.item?.read) {
+      const accessControlResult = await getItemReadResult(
+        entry.access.item.read,
+        ctx,
+        data
+      );
+      if (!accessControlResult) {
+        return ctx.text('Unauthorized', 401);
+      }
+    }
+    data = await filterReadFieldAccess(entry.access?.fields, ctx, data);
+    if (includeContentType !== undefined) {
+      data.contentType = getForm(ctx, entry.table);
+    }
+
+    if (entry.hooks?.afterOperation) {
+      await entry.hooks.afterOperation(ctx, 'read', id, null, data);
+    }
+
+    const end = Date.now();
+    const executionTime = end - start;
+
+    return ctx.json({ ...data, executionTime });
+  });
+  //-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   //create single record
   //TODO: support batch inserts
