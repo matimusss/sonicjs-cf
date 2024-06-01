@@ -216,7 +216,7 @@ for (const key of Object.keys(tableSchemas)) {
     });
   }
 }
-
+//asd
 export const config: SonicJSConfig = {
   apiConfig: apiConfig,
   adminAccessControl: isAdminOrEditor
