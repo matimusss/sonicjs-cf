@@ -5,12 +5,13 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { auditSchema } from './audit';
 import { ApiConfig } from '../routes';
-export const tableName = 'pages';
-export const route = 'pages';
 import { isAdminOrUser } from '../config-helpers';
 // Definición de la estructura de la tabla
+export const tableName = 'pages';
+export const route = 'pages';
+
 export const definition = {
-  id: integer('id').primaryKey(), // Se define como clave primaria e INTEGER
+  id: text('id').primaryKey(), // Se define como clave primaria e INTEGER
   name: text('name'), // Campo de texto para el nombre de la página
   slug: text('slug'), // Campo de texto para el slug de la página
   html_code: text('html_code'), // Campo de texto para el código HTML de la página
@@ -18,7 +19,7 @@ export const definition = {
 };
 
 
-export const table = sqliteTable('pages', {
+export const table = sqliteTable(tableName, {
   ...definition,
   ...auditSchema
 });
