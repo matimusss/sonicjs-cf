@@ -340,8 +340,8 @@ export async function edit_html(ctx, route, id, tbl?: string) {
  console.log('Hola desde el código JavaScript');
  const routes = ${ruta};
  const id = ${ide};
- 
- localStorage.setItem("sessionId", "asdasd");
+ const auth_session = ${ctxString};
+console.log(auth_session)
 
  // Función para obtener el valor de una cookie por su nombre
  function getCookie(name) {
