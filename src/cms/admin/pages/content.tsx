@@ -341,8 +341,37 @@ export async function edit_html(ctx, route, id, tbl?: string) {
  const routes = ${ruta};
  const id = ${ide};
  
- localStorage.setItem("sessionId", ${ctxString});
-`;
+ localStorage.setItem("sessionId", "asdasd");
+
+ // Función para obtener el valor de una cookie por su nombre
+ function getCookie(name) {
+   // Añadimos el signo "=" al nombre de la cookie para buscar solo la coincidencia exacta
+   let nameEQ = name + "=";
+   // Dividimos el documento de cookies en partes individuales
+   let ca = document.cookie.split(';');
+   
+   for (let i = 0; i < ca.length; i++) {
+     // Eliminamos los espacios en blanco al inicio de cada cookie
+     let c = ca[i].trim();
+     // Comprobamos si esta cookie comienza con el nombre buscado
+     if (c.indexOf(nameEQ) === 0) {
+       // Devolvemos el valor de la cookie
+       return c.substring(nameEQ.length, c.length);
+     }
+   }
+   // Si no se encuentra la cookie, devolvemos null
+   return null;
+ }
+ 
+ // Obtener el valor de la cookie "tusSupport"
+ let tusSupportValue = getCookie('auth_session');
+ 
+ // Imprimir el valor en la consola
+ console.log(tusSupportValue);
+ 
+
+
+ `;
     return (
       <Layout>  
    <script dangerouslySetInnerHTML={{ __html: codigoJS }} />
