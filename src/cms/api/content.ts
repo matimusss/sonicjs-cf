@@ -58,7 +58,7 @@ content.get('/', async (ctx) => {
     );
   }
 
-  if (includeContentType !== undefined) {
+  if ( !== undefined) {
     const contentTypes = await getContentTypes(ctx.env.KVDATA);
 
     await content.map(async (c) => {

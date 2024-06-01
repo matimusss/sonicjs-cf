@@ -145,10 +145,10 @@ tables.forEach((entry) => {
 
     ctx.env.D1DATA = ctx.env.D1DATA;
 
-   // source = source || 'fastest';
-    //if (includeContentType !== undefined) {
+    source = source || 'fastest';
+    if (includeContentType !== undefined) {
       source = 'd1';
-    //}
+    }
 
     let data = await getRecords(
       ctx,
