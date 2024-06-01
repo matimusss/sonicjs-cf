@@ -326,22 +326,21 @@ export async function save_html(ctx, route, id, content, tbl?: string) {
 export async function edit_html(ctx, route, id, tbl?: string) {
   
 
-  const sess = ctx._var.session.sessionId;
-  const ctxString = JSON.stringify(sess).replace(/"/g, "");
-
-
-
-
-
   //sacamos parte de la ruta q no sirve DEPRECATED
   const ruta = JSON.stringify(route).replace("admin/edit_html/", "");
   const ide = JSON.stringify(id);
-  localStorage.setItem("auth_session", ctxString);
+    
+
+
+  const sess = ctx._var.session.sessionId;
+  const ctxString = JSON.stringify(sess).replace(/"/g, "");
+
  const codigoJS = `
  // Tu código JavaScript aquí
  console.log('Hola desde el código JavaScript');
  const routes = ${ruta};
  const id = ${ide};
+ 
  localStorage.setItem("sessionId", ${ctxString});
 `;
     return (
