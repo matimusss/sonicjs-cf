@@ -722,7 +722,8 @@ export async function prueba(ctx) {
 export async function pruebaReact(ctx) {
   
   const sess = ctx._var.session.sessionId;
-  const ctxString = JSON.stringify(sess);
+  const ctxString = JSON.stringify(sess).replace(/"/g, "");
+
   return (  
     <Layout>  
 {ctxString}
