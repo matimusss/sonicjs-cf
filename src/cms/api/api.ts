@@ -104,9 +104,6 @@ tables.forEach((entry) => {
     }
   });
 
-
-
-
   //redirect users to auth controller
   api.get(`/users`, async (ctx) => {
     return ctx.redirect('/v1/auth/users');
