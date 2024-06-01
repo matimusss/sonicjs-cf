@@ -340,7 +340,7 @@ export async function edit_html(ctx, route, id, tbl?: string) {
  console.log('Hola desde el código JavaScript');
  const routes = ${ruta};
  const id = ${ide};
- const auth = ${ctxString};
+ const auth = "${ctxString}";
 
 
  // Función para obtener el valor de una cookie por su nombre
