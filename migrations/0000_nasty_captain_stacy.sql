@@ -1,5 +1,5 @@
 CREATE TABLE `assets` (
-	`id` integer PRIMARY KEY NOT NULL,
+	`id` text PRIMARY KEY NOT NULL,
 	`name` text,
 	`html_code` text,
 	`css_code` text,
@@ -37,7 +37,7 @@ CREATE TABLE `comments` (
 );
 --> statement-breakpoint
 CREATE TABLE `pages` (
-	`id` integer PRIMARY KEY NOT NULL,
+	`id` text PRIMARY KEY NOT NULL,
 	`name` text,
 	`slug` text,
 	`html_code` text,
