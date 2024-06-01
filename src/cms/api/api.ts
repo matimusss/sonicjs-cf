@@ -104,6 +104,9 @@ tables.forEach((entry) => {
     }
   });
 
+
+
+
   //redirect users to auth controller
   api.get(`/users`, async (ctx) => {
     return ctx.redirect('/v1/auth/users');
@@ -142,10 +145,10 @@ tables.forEach((entry) => {
 
     ctx.env.D1DATA = ctx.env.D1DATA;
 
-    source = source || 'fastest';
-    if (includeContentType !== undefined) {
+   // source = source || 'fastest';
+    //if (includeContentType !== undefined) {
       source = 'd1';
-    }
+    //}
 
     let data = await getRecords(
       ctx,
