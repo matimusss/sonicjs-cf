@@ -152,7 +152,7 @@ tables.forEach((entry) => {
       entry.table,
       params,
       ctx.req.url,
-      source,
+      'd1',
       undefined
     );
 
