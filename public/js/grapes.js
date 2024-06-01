@@ -8,8 +8,13 @@ setTimeout(async function() {
 
 const dir = "https://sonicjs-cf2.pages.dev/v1/"+routes+"/"+id;
 console.log(dir);
+
 console.log(auth);
-  const response = await fetch("https://sonicjs-cf2.pages.dev/v1/"+routes+"/"+id);
+const bearer = auth.replace(/"/g, "");
+localStorage.setItem("auth_session", JSON.stringify(bearer));
+
+
+const response = await fetch("https://sonicjs-cf2.pages.dev/v1/"+routes+"/"+id);
     const homeRes = await response.json();
     console.log(homeRes);
     console.log(homeRes.data.html_code);

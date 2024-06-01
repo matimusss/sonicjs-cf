@@ -332,15 +332,15 @@ export async function edit_html(ctx, route, id, tbl?: string) {
     
 
 
-  const sess = ctx._var.session.sessionId;
-  const ctxString = JSON.stringify(sess).replace(/"/g, "");
+  const ctxString = ctx._var.session.sessionId;
+
 
  const codigoJS = `
  // Tu código JavaScript aquí
  console.log('Hola desde el código JavaScript');
  const routes = ${ruta};
  const id = ${ide};
- const auth = "${ctxString}";
+ const auth = ${ctxString};
 
 
  // Función para obtener el valor de una cookie por su nombre
