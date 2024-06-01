@@ -64,6 +64,13 @@
       "when": 1717097686622,
       "tag": "0008_organic_wither",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1717239216516,
+      "tag": "0009_mixed_rockslide",
+      "breakpoints": true
     }
   ]
 }
