@@ -7,7 +7,7 @@ export const tableName = 'tags';
 export const route =  'tags';
 export const definition = {
   id: text('id').primaryKey(),
-  tag_name: text('tag_name').notNull().unique()
+  tag_name: text('tag_name').notNull()
 };
 
 export const table = sqliteTable(tableName, {
