@@ -13,3 +13,12 @@ export const definition = {
 export const table = sqliteTable(tableName, {
   ...definition
 });
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true,
+    update: true,
+    delete: true
+  }
+};
