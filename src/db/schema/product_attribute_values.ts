@@ -5,7 +5,7 @@ import { text, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
 import * as productAttributes from './product_attributes';
 import * as attributeValues from './attribute_values';
-
+import { auditSchema } from './audit';
 export const tableName = 'product_attribute_values';
 export const route = 'product_attribute_values';
 export const definition = {
@@ -15,8 +15,10 @@ export const definition = {
 };
 
 export const table = sqliteTable(tableName, {
-  ...definition
+  ...definition,
+  ...auditSchema
 });
+
 
 export const relation = relations(table, ({ one }) => ({
   productAttribute: one(productAttributes.table, {

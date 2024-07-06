@@ -5,6 +5,7 @@ import * as productShippingInfo from './product_shipping_info';
 import * as gallery from './gallery';
 import * as productTags from './product_tags';
 import * as productSuppliers from './product_suppliers';
+import { auditSchema } from './audit';
 
 export const tableName = 'products';
 
@@ -24,15 +25,16 @@ export const definition = {
   published: numeric('published').default(0),
   disable_out_of_stock: numeric('disable_out_of_stock').default(1),
   note: text('note'),
-  created_at: text('created_at').notNull(),
-  updated_at: text('updated_at').notNull(),
   created_by: text('created_by'),
   updated_by: text('updated_by'),
 };
 
 export const table = sqliteTable(tableName, {
   ...definition
+  ,
+  ...auditSchema
 });
+
 
 export const relation = relations(table, ({ many, one }) => ({
   categories: many(productCategories.table, {

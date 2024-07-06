@@ -5,7 +5,7 @@ import { text, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
 import * as variants from './variants';
 import * as productAttributeValues from './product_attribute_values';
-
+import { auditSchema } from './audit';
 export const tableName = 'variant_values';
 export const route =  'variant_values';
 export const definition = {
@@ -15,8 +15,10 @@ export const definition = {
 };
 
 export const table = sqliteTable(tableName, {
-  ...definition
+  ...definition,
+  ...auditSchema
 });
+
 
 export const relation = relations(table, ({ one }) => ({
   variant: one(variants.table, {

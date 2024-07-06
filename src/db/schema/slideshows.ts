@@ -2,7 +2,7 @@
 ////TABLA :  :  slideshows
 
 import { text,  numeric, sqliteTable } from 'drizzle-orm/sqlite-core';
-
+import { auditSchema } from './audit';
 export const tableName = 'slideshows';
 export const route =  'slideshows';
 export const definition = {
@@ -22,5 +22,6 @@ export const definition = {
 };
 
 export const table = sqliteTable(tableName, {
-  ...definition
+  ...definition,
+  ...auditSchema
 });

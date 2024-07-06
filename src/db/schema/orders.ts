@@ -6,7 +6,7 @@ import { relations } from 'drizzle-orm';
 import * as users from './users';
 import * as orderStatuses from './order_statuses';
 import * as coupons from './coupons';
-
+import { auditSchema } from './audit';
 export const tableName = 'orders';
 export const route =  'orders';
 export const definition = {
@@ -17,12 +17,13 @@ export const definition = {
   order_approved_at: text('order_approved_at'),
   order_delivered_carrier_date: text('order_delivered_carrier_date'),
   order_delivered_customer_date: text('order_delivered_customer_date'),
-  created_at: text('created_at').notNull(),
   updated_by: text('updated_by')
 };
 
 export const table = sqliteTable(tableName, {
   ...definition
+  ,
+  ...auditSchema
 });
 
 export const relation = relations(table, ({ one }) => ({

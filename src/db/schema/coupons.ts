@@ -1,5 +1,5 @@
 import { text, numeric, sqliteTable } from 'drizzle-orm/sqlite-core';
-
+import { auditSchema } from './audit';
 export const tableName = 'coupons';
 
 export const route = 'coupons';
@@ -13,12 +13,12 @@ export const definition = {
   order_amount_limit: numeric('order_amount_limit'),
   coupon_start_date: text('coupon_start_date'), // Adjust type as per actual date type in SQLite
   coupon_end_date: text('coupon_end_date'), // Adjust type as per actual date type in SQLite
-  created_at: text('created_at').notNull(),
-  updated_at: text('updated_at').notNull(),
   created_by: text('created_by'),
   updated_by: text('updated_by')
 };
 
 export const table = sqliteTable(tableName, {
   ...definition
+  ,
+  ...auditSchema
 });

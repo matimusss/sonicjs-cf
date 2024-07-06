@@ -3,7 +3,7 @@
 
 
 ////TABLA :  :  product_tags
-
+import { auditSchema } from './audit';
 import { text, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
 import * as products from './products';
@@ -18,7 +18,8 @@ export const definition = {
 };
 
 export const table = sqliteTable(tableName, {
-  ...definition
+  ...definition,
+  ...auditSchema
 });
 
 export const relation = relations(table, ({ one }) => ({

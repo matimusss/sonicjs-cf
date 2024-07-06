@@ -1,5 +1,5 @@
 import { text, sqliteTable } from 'drizzle-orm/sqlite-core';
-
+import { auditSchema } from './audit';
 export const tableName = 'attributes';
 export const route= 'attributes';
 export const definition = {
@@ -9,4 +9,6 @@ export const definition = {
 
 export const table = sqliteTable(tableName, {
   ...definition
+  ,
+  ...auditSchema
 });

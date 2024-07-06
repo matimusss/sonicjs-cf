@@ -1,5 +1,5 @@
 import { text, integer, sqliteTable } from 'drizzle-orm/sqlite-core';
-
+import { auditSchema } from './audit';
 export const tableName = 'countries';
 export const route =   'countries';
 export const definition = {
@@ -13,5 +13,6 @@ export const definition = {
 };
 
 export const table = sqliteTable(tableName, {
-  ...definition
+  ...definition,
+  ...auditSchema
 });

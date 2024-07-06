@@ -4,7 +4,7 @@
 import { text,  sqliteTable } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
 import * as products from './products';
-
+import { auditSchema } from './audit';
 export const tableName = 'gallery';
 export const route = 'gallery';
 export const definition = {
@@ -13,13 +13,13 @@ export const definition = {
   image: text('image').notNull(),
   placeholder: text('placeholder'),
   is_thumbnail:  text('is_thumbnail'),
-  created_at:   text('created_at'),
-  updated_at:   text('updated_at'),
 };
 
 export const table = sqliteTable(tableName, {
-  ...definition
+  ...definition,
+  ...auditSchema
 });
+
 
 export const relation = relations(table, ({ one }) => ({
   product: one(products.table, {
