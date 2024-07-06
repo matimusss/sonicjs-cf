@@ -3,6 +3,20 @@
 
 import { text, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { auditSchema } from './audit';
+
+
+
+import { ApiConfig } from '../routes';
+
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true,
+    update: true,
+    delete: true
+  }
+};
 export const tableName = 'order_statuses';
 export const route =  'order_statuses';
 export const definition = {

@@ -3,6 +3,20 @@ import { relations } from 'drizzle-orm';
 import * as products from './products';
 import * as suppliers from './suppliers';
 import { auditSchema } from './audit';
+
+
+
+import { ApiConfig } from '../routes';
+
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true,
+    update: true,
+    delete: true
+  }
+};
 export const tableName = 'product_suppliers';
 
 export const route = 'product_suppliers';

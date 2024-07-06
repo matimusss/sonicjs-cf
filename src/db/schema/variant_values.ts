@@ -6,6 +6,20 @@ import { relations } from 'drizzle-orm';
 import * as variants from './variants';
 import * as productAttributeValues from './product_attribute_values';
 import { auditSchema } from './audit';
+
+
+
+import { ApiConfig } from '../routes';
+
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true,
+    update: true,
+    delete: true
+  }
+};
 export const tableName = 'variant_values';
 export const route =  'variant_values';
 export const definition = {

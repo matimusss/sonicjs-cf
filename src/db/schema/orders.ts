@@ -7,6 +7,20 @@ import * as users from './users';
 import * as orderStatuses from './order_statuses';
 import * as coupons from './coupons';
 import { auditSchema } from './audit';
+
+
+
+import { ApiConfig } from '../routes';
+
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true,
+    update: true,
+    delete: true
+  }
+};
 export const tableName = 'orders';
 export const route =  'orders';
 export const definition = {

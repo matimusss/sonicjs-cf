@@ -3,6 +3,20 @@ import { auditSchema } from './audit';
 export const tableName = 'notifications';
 export const route = 'notifications';
 
+
+
+import { ApiConfig } from '../routes';
+
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true,
+    update: true,
+    delete: true
+  }
+};
+
 export const definition = {
   id: text('id').primaryKey(),
   account_id: text('account_id'),

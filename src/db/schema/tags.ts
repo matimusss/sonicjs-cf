@@ -1,8 +1,38 @@
 
 ////TABLA :  :  tags
-import { ApiConfig } from '../routes';
+
 import { text, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { auditSchema } from './audit';
+
+
+
+import { ApiConfig } from '../routes';
+
+
+
+import { ApiConfig } from '../routes';
+
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true,
+    update: true,
+    delete: true
+  }
+};
+
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true,
+    update: true,
+    delete: true
+  }
+};
+
+
 
 export const tableName = 'tags';
 export const route =  'tags';
@@ -18,11 +48,3 @@ export const table = sqliteTable(tableName, {
   ...auditSchema
 });
 
-export const access: ApiConfig['access'] = {
-  operation: {
-    read: true,
-    create: true,
-    update: true,
-    delete: true
-  }
-};

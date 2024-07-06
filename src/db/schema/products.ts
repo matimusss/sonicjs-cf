@@ -7,6 +7,20 @@ import * as productTags from './product_tags';
 import * as productSuppliers from './product_suppliers';
 import { auditSchema } from './audit';
 
+
+import { ApiConfig } from '../routes';
+
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true,
+    update: true,
+    delete: true
+  }
+};
+
+
 export const tableName = 'products';
 
 export const route = 'products';

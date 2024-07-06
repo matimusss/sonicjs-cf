@@ -5,6 +5,19 @@ import { text, numeric, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
 import * as products from './products';
 import { auditSchema } from './audit';
+
+
+import { ApiConfig } from '../routes';
+
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true,
+    update: true,
+    delete: true
+  }
+};
 export const tableName = 'product_shipping_info';
 export const route = 'product_shipping_info';
 export const definition = {

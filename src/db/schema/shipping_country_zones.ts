@@ -6,6 +6,20 @@ import { relations } from 'drizzle-orm';
 import * as shippingZones from './shipping_zones';
 import * as countries from './countries';
 import { auditSchema } from './audit';
+
+
+
+import { ApiConfig } from '../routes';
+
+
+export const access: ApiConfig['access'] = {
+  operation: {
+    read: true,
+    create: true,
+    update: true,
+    delete: true
+  }
+};
 export const tableName = 'shipping_country_zones';
 export const route =  'shipping_country_zones';
 export const definition = {
