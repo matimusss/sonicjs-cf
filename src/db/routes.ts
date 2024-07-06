@@ -10,6 +10,35 @@ import * as assets from './schema/assets';
 import { AppContext } from '../server';
 import { isAdminOrEditor } from './config-helpers';
 
+import * as attribute_values from './schema/attribute_values';
+import * as attributes from './schema/attributes';
+import * as countries from './schema/countries';
+import * as coupons from './schema/coupons';
+import * as gallery from './schema/gallery';
+import * as notifications from './schema/notifications';
+import * as order_items from './schema/order_items';
+import * as order_statuses from './schema/order_statuses';
+import * as orders from './schema/orders';
+import * as product_attribute_values from './schema/product_attribute_values';
+import * as product_attributes from './schema/product_attributes';
+import * as product_categories from './schema/product_categories';
+import * as product_coupons from './schema/product_coupons';
+import * as product_shipping_info from './schema/product_shipping_info';
+import * as product_suppliers from './schema/product_suppliers';
+import * as product_tags from './schema/product_tags';
+import * as products from './schema/products';
+import * as sells from './schema/sells';
+import * as shipping_country_zones from './schema/shipping_country_zones';
+import * as shipping_rates from './schema/shipping_rates';
+import * as shipping_zones from './schema/shipping_zones';
+import * as slideshows from './schema/slideshows';
+import * as suppliers from './schema/suppliers';
+import * as tags from './schema/tags';
+import * as variant_options from './schema/variant_options';
+import * as variant_values from './schema/variant_values';
+import * as variants from './schema/variants';
+
+
 export type SonicJSConfig = {
   apiConfig: ApiConfig[];
   adminAccessControl: (ctx: AppContext) => boolean;
@@ -201,7 +230,34 @@ export const tableSchemas = {
   userKeys,
   userSessions,
   pages,
-  assets
+  assets,
+  attribute_values,
+attributes,
+countries,
+coupons,
+gallery,
+notifications,
+order_items,
+order_statuses,
+orders,
+product_attribute_values,
+product_attributes,
+product_categories,
+product_coupons,
+product_shipping_info,
+product_suppliers,
+product_tags,
+products,
+sells,
+shipping_country_zones,
+shipping_rates,
+shipping_zones,
+slideshows,
+suppliers,
+tags,
+variant_options,
+variant_values,
+variants
 };
 
 for (const key of Object.keys(tableSchemas)) {
