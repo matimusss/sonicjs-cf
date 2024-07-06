@@ -7,7 +7,7 @@ import * as products from './products';
 import * as variantOptions from './variant_options';
 
 export const tableName = 'variants';
-
+export const route =  'variants';
 export const definition = {
   id: text('id').primaryKey(),
   variant_option: text('variant_option').notNull(),

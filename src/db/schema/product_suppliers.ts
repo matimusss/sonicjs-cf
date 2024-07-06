@@ -5,6 +5,7 @@ import * as suppliers from './suppliers';
 
 export const tableName = 'product_suppliers';
 
+export const route = 'product_suppliers';
 export const definition = {
   product_id: text('product_id').references(() => products.table.id).notNull(),
   supplier_id: text('supplier_id').references(() => suppliers.table.id).notNull(),

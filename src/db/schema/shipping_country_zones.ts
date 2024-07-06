@@ -7,7 +7,7 @@ import * as shippingZones from './shipping_zones';
 import * as countries from './countries';
 
 export const tableName = 'shipping_country_zones';
-
+export const route =  'shipping_country_zones';
 export const definition = {
   id: text('id').primaryKey(),
   shipping_zone_id: numeric('shipping_zone_id').references(() => shippingZones.table.id).notNull(),

@@ -4,7 +4,7 @@
 import { text,  numeric, sqliteTable } from 'drizzle-orm/sqlite-core';
 
 export const tableName = 'slideshows';
-
+export const route =  'slideshows';
 export const definition = {
   id: text('id').primaryKey(),
   title: text('title'),

@@ -7,7 +7,7 @@ import * as productAttributes from './product_attributes';
 import * as attributeValues from './attribute_values';
 
 export const tableName = 'product_attribute_values';
-
+export const route = 'product_attribute_values';
 export const definition = {
   id: text('id').primaryKey(),
   product_attribute_id: text('product_attribute_id').references(() => productAttributes.table.id).notNull(),

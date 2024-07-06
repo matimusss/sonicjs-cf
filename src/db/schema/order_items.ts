@@ -7,7 +7,7 @@ import * as products from './products';
 import * as orders from './orders';
 
 export const tableName = 'order_items';
-
+export const route =  'order_items';
 export const definition = {
   id: text('id').primaryKey(),
   product_id: text('product_id').references(() => products.table.id),

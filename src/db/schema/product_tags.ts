@@ -10,7 +10,7 @@ import * as products from './products';
 import * as tags from './tags';
 
 export const tableName = 'product_tags';
-
+export const route =  'product_tags';
 export const definition = {
   id: text('id').primaryKey(),
   product_id: text('product_id').references(() => products.table.id).notNull(),

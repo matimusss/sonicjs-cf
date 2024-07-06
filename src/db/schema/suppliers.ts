@@ -3,7 +3,7 @@ import { relations } from 'drizzle-orm';
 import * as countries from './countries';
 
 export const tableName = 'suppliers';
-
+export const route = 'suppliers';
 export const definition = {
   id: text('id').primaryKey(),
   supplier_name: text('supplier_name').notNull(),

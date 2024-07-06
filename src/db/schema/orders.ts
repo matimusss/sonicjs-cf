@@ -8,7 +8,7 @@ import * as orderStatuses from './order_statuses';
 import * as coupons from './coupons';
 
 export const tableName = 'orders';
-
+export const route =  'orders';
 export const definition = {
   id: text('id').primaryKey(),
   coupon_id: text('coupon_id').references(() => coupons.table.id),

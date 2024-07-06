@@ -7,7 +7,7 @@ import * as variants from './variants';
 import * as productAttributeValues from './product_attribute_values';
 
 export const tableName = 'variant_values';
-
+export const route =  'variant_values';
 export const definition = {
   id: text('id').primaryKey(),
   variant_id: text('variant_id').references(() => variants.table.id).notNull(),

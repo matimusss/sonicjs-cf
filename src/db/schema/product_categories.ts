@@ -6,7 +6,7 @@ import * as products from './products';
 import * as categories from './categories';
 
 export const tableName = 'product_categories';
-
+export const route = 'product_categories';
 export const definition = {
   id: text('id').primaryKey(),
   product_id: text('product_id').references(() => products.table.id).notNull(),

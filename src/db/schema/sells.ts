@@ -6,7 +6,7 @@ import { relations } from 'drizzle-orm';
 import * as products from './products';
 
 export const tableName = 'sells';
-
+export const route =  'sells';
 export const definition = {
   id: numeric('id').primaryKey(),
   product_id: text('product_id').references(() => products.table.id).unique(),

@@ -1,6 +1,7 @@
 import { text,  sqliteTable } from 'drizzle-orm/sqlite-core';
 
 export const tableName = 'notifications';
+export const route = 'notifications';
 
 export const definition = {
   id: text('id').primaryKey(),

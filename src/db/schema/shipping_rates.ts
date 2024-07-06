@@ -6,6 +6,7 @@ import { relations } from 'drizzle-orm';
 import * as shippingZones from './shipping_zones';
 
 export const tableName = 'shipping_rates';
+export const route =  'shipping_rates';
 
 export const definition = {
   id: text('id').primaryKey(),

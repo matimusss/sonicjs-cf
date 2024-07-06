@@ -6,7 +6,7 @@ import * as products from './products';
 import * as coupons from './coupons';
 
 export const tableName = 'product_coupons';
-
+export const route =   'product_coupons';
 export const definition = {
   id: text('id').primaryKey(),
   product_id: text('product_id').references(() => products.table.id).notNull(),

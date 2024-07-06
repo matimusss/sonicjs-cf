@@ -7,7 +7,7 @@ import * as products from './products';
 import * as gallery from './gallery';
 
 export const tableName = 'variant_options';
-
+export const route =  'variant_options';
 export const definition = {
   id: text('id').primaryKey(),
   title: text('title').notNull(),

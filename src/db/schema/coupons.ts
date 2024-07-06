@@ -2,6 +2,7 @@ import { text, numeric, sqliteTable } from 'drizzle-orm/sqlite-core';
 
 export const tableName = 'coupons';
 
+export const route = 'coupons';
 export const definition = {
   id: text('id').primaryKey(),
   code: text('code').notNull().unique(),

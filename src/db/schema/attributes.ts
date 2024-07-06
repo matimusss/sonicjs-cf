@@ -1,7 +1,7 @@
 import { text, sqliteTable } from 'drizzle-orm/sqlite-core';
 
 export const tableName = 'attributes';
-
+export const route= 'attributes';
 export const definition = {
   id: text('id').primaryKey(),
   attribute_name: text('attribute_name').notNull()

@@ -8,6 +8,7 @@ import * as productSuppliers from './product_suppliers';
 
 export const tableName = 'products';
 
+export const route = 'products';
 export const definition = {
   id: text('id').primaryKey(),
   slug: text('slug').notNull().unique(),

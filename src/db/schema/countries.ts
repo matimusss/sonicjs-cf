@@ -1,7 +1,7 @@
 import { text, integer, sqliteTable } from 'drizzle-orm/sqlite-core';
 
 export const tableName = 'countries';
-
+export const route =   'countries';
 export const definition = {
   id: integer('id').primaryKey(),
   iso: text('iso').notNull(),

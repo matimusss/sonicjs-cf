@@ -3,7 +3,7 @@ import { relations } from 'drizzle-orm';
 import * as attributes from './attributes';
 
 export const tableName = 'attribute_values';
-
+export const route = 'attribute_values';
 export const definition = {
   id: text('id').primaryKey(),
   attribute_id: text('attribute_id').references(() => attributes.table.id).notNull(),

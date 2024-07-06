@@ -4,7 +4,7 @@
 import { text,  sqliteTable } from 'drizzle-orm/sqlite-core';
 
 export const tableName = 'shipping_zones';
-
+export const route =  'shipping_zones';
 export const definition = {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
