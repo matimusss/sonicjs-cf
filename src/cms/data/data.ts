@@ -17,7 +17,7 @@ import {
 } from './kv-data';
 import {
   deleteD1ByTableAndId,
-  ,
+  getD1ByTableAndId,
   getD1DataByTable,
   insertD1Data,
   updateD1Data
@@ -68,7 +68,7 @@ import { log } from '../util/logger';
 //     return kvData;
 //   }
 
-//   const d1Data = await (d1, table, params.id);
+//   const d1Data = await getD1ByTableAndId(d1, table, params.id);
 
 //   addToInMemoryCache(cacheKey, { data: d1Data.data, source: "cache" });
 //   addToKvCache(kv, cacheKey, { data: d1Data.data, source: "kv" });
@@ -77,18 +77,6 @@ import { log } from '../util/logger';
 
 //   return d1Data;
 // }
-
-
-
-
-
-
-
-
-
-
-
-
 
 export async function getRecords(
   ctx,
