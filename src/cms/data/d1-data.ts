@@ -8,6 +8,53 @@ export async function getAllContent(db) {
   return results;
 }
 
+
+
+export async function getD1DataByView(db, table, params) {
+  const sql = generateSelectSqlView(table, params);
+  const { results } = await db.prepare(sql).all();
+  return params?.id ? results[0] : results;
+}
+
+export function generateSelectSqlView(table, params) {
+  // console.log("params ==>", JSON.stringify(params, null, 2));
+
+  var whereClause = '';
+  var sortBySyntax = '';
+  var limitSyntax: string = '';
+  var offsetSyntax = '';
+
+  if (params && params.id) {
+    whereClause = `WHERE id = '${params.id}'`;
+  } else if (params) {
+    let { limit, offset, filters } = params;
+
+    sortBySyntax = sortClauseBuilder(params);
+
+    limit = limit ?? 0;
+    limitSyntax = limit > 0 ? `limit ${limit}` : '';
+    // console.log("limitSyntax ==>", limitSyntax);
+
+    offset = offset ?? 0;
+    offsetSyntax = offset > 0 ? `offset ${offset}` : '';
+
+    whereClause = whereClauseBuilder(filters);
+  }
+
+  let sql = `SELECT *, COUNT() OVER() AS total FROM ${table} ${whereClause} ${sortBySyntax} ${limitSyntax} ${offsetSyntax}`;
+  sql = sql.replace(/\s+/g, ' ').trim() + ';';
+
+  console.log('sql ==>', sql);
+  return sql;
+}
+
+
+
+
+
+
+
+
 export async function getD1DataByTable(db, table, params) {
   const sql = generateSelectSql(table, params);
   const { results } = await db.prepare(sql).all();
@@ -46,7 +93,7 @@ export function generateSelectSql(table, params) {
   return sql;
 }
 
-export async function getD1ByTableAndId(db, table, id, params) {
+export async function (db, table, id, params) {
   const { results } = await db
     .prepare(`SELECT * FROM ${table} where id = '${id}';`)
     .all();

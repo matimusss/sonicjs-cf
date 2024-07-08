@@ -1,6 +1,17 @@
+CREATE TABLE `assets` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text,
+	`html_code` text,
+	`css_code` text,
+	`createdOn` integer,
+	`updatedOn` integer
+);
+--> statement-breakpoint
 CREATE TABLE `attributes` (
 	`id` text PRIMARY KEY NOT NULL,
-	`attribute_name` text NOT NULL
+	`attribute_name` text NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer
 );
 --> statement-breakpoint
 CREATE TABLE `attribute_values` (
@@ -8,7 +19,38 @@ CREATE TABLE `attribute_values` (
 	`attribute_id` text NOT NULL,
 	`attribute_value` text NOT NULL,
 	`color` text,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`attribute_id`) REFERENCES `attributes`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE TABLE `categories` (
+	`id` text PRIMARY KEY NOT NULL,
+	`title` text,
+	`body` text,
+	`createdOn` integer,
+	`updatedOn` integer
+);
+--> statement-breakpoint
+CREATE TABLE `categoriesToPosts` (
+	`id` text NOT NULL,
+	`postId` text NOT NULL,
+	`categoryId` text NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
+	PRIMARY KEY(`categoryId`, `postId`),
+	FOREIGN KEY (`postId`) REFERENCES `posts`(`id`) ON UPDATE no action ON DELETE no action,
+	FOREIGN KEY (`categoryId`) REFERENCES `categories`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE TABLE `comments` (
+	`id` text PRIMARY KEY NOT NULL,
+	`body` text,
+	`userId` text,
+	`postId` integer,
+	`tags` text,
+	`createdOn` integer,
+	`updatedOn` integer
 );
 --> statement-breakpoint
 CREATE TABLE `countries` (
@@ -18,7 +60,9 @@ CREATE TABLE `countries` (
 	`upper_name` text NOT NULL,
 	`iso3` text,
 	`num_code` integer,
-	`phone_code` integer NOT NULL
+	`phone_code` integer NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer
 );
 --> statement-breakpoint
 CREATE TABLE `coupons` (
@@ -31,10 +75,10 @@ CREATE TABLE `coupons` (
 	`order_amount_limit` numeric,
 	`coupon_start_date` text,
 	`coupon_end_date` text,
-	`created_at` text NOT NULL,
-	`updated_at` text NOT NULL,
 	`created_by` text,
-	`updated_by` text
+	`updated_by` text,
+	`createdOn` integer,
+	`updatedOn` integer
 );
 --> statement-breakpoint
 CREATE TABLE `gallery` (
@@ -43,8 +87,8 @@ CREATE TABLE `gallery` (
 	`image` text NOT NULL,
 	`placeholder` text,
 	`is_thumbnail` text,
-	`created_at` text,
-	`updated_at` text,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
@@ -56,7 +100,9 @@ CREATE TABLE `notifications` (
 	`seen` text,
 	`created_at` text NOT NULL,
 	`receive_time` text,
-	`notification_expiry_date` text
+	`notification_expiry_date` text,
+	`createdOn` integer,
+	`updatedOn` integer
 );
 --> statement-breakpoint
 CREATE TABLE `orders` (
@@ -67,8 +113,9 @@ CREATE TABLE `orders` (
 	`order_approved_at` text,
 	`order_delivered_carrier_date` text,
 	`order_delivered_customer_date` text,
-	`created_at` text NOT NULL,
 	`updated_by` text,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`coupon_id`) REFERENCES `coupons`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`customer_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`order_status_id`) REFERENCES `order_statuses`(`id`) ON UPDATE no action ON DELETE no action
@@ -80,6 +127,8 @@ CREATE TABLE `order_items` (
 	`order_id` text,
 	`price` numeric NOT NULL,
 	`quantity` numeric NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`) ON UPDATE no action ON DELETE no action
 );
@@ -89,10 +138,32 @@ CREATE TABLE `order_statuses` (
 	`status_name` text NOT NULL,
 	`color` text NOT NULL,
 	`privacy` text DEFAULT 'private' NOT NULL,
-	`created_at` text NOT NULL,
-	`updated_at` text NOT NULL,
 	`created_by` text,
-	`updated_by` text
+	`createdOn` integer,
+	`updatedOn` integer
+);
+--> statement-breakpoint
+CREATE TABLE `pages` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text,
+	`slug` text,
+	`html_code` text,
+	`css_code` text,
+	`createdOn` integer,
+	`updatedOn` integer
+);
+--> statement-breakpoint
+CREATE TABLE `posts` (
+	`id` text PRIMARY KEY NOT NULL,
+	`title` text,
+	`slug` text,
+	`body` text,
+	`userId` text,
+	`image` text,
+	`images` text,
+	`tags` text,
+	`createdOn` integer,
+	`updatedOn` integer
 );
 --> statement-breakpoint
 CREATE TABLE `products` (
@@ -110,16 +181,18 @@ CREATE TABLE `products` (
 	`published` numeric DEFAULT 0,
 	`disable_out_of_stock` numeric DEFAULT 1,
 	`note` text,
-	`created_at` text NOT NULL,
-	`updated_at` text NOT NULL,
 	`created_by` text,
-	`updated_by` text
+	`updated_by` text,
+	`createdOn` integer,
+	`updatedOn` integer
 );
 --> statement-breakpoint
 CREATE TABLE `product_attributes` (
 	`id` text PRIMARY KEY NOT NULL,
 	`product_id` text NOT NULL,
 	`attribute_id` text NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`attribute_id`) REFERENCES `attributes`(`id`) ON UPDATE no action ON DELETE no action
 );
@@ -128,6 +201,8 @@ CREATE TABLE `product_attribute_values` (
 	`id` text PRIMARY KEY NOT NULL,
 	`product_attribute_id` text NOT NULL,
 	`attribute_value_id` text NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`product_attribute_id`) REFERENCES `product_attributes`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`attribute_value_id`) REFERENCES `attribute_values`(`id`) ON UPDATE no action ON DELETE no action
 );
@@ -136,6 +211,8 @@ CREATE TABLE `product_categories` (
 	`id` text PRIMARY KEY NOT NULL,
 	`product_id` text NOT NULL,
 	`category_id` text NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON UPDATE no action ON DELETE no action
 );
@@ -144,6 +221,8 @@ CREATE TABLE `product_coupons` (
 	`id` text PRIMARY KEY NOT NULL,
 	`product_id` text NOT NULL,
 	`coupon_id` text NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`coupon_id`) REFERENCES `coupons`(`id`) ON UPDATE no action ON DELETE no action
 );
@@ -159,12 +238,16 @@ CREATE TABLE `product_shipping_info` (
 	`dimension_height` numeric DEFAULT 0 NOT NULL,
 	`dimension_depth` numeric DEFAULT 0 NOT NULL,
 	`dimension_unit` text,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE TABLE `product_suppliers` (
 	`product_id` text NOT NULL,
 	`supplier_id` text NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`supplier_id`) REFERENCES `suppliers`(`id`) ON UPDATE no action ON DELETE no action
 );
@@ -173,6 +256,8 @@ CREATE TABLE `product_tags` (
 	`id` text PRIMARY KEY NOT NULL,
 	`product_id` text NOT NULL,
 	`tag_id` text NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`tag_id`) REFERENCES `tags`(`id`) ON UPDATE no action ON DELETE no action
 );
@@ -189,6 +274,8 @@ CREATE TABLE `shipping_country_zones` (
 	`id` text PRIMARY KEY NOT NULL,
 	`shipping_zone_id` numeric NOT NULL,
 	`country_id` numeric NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`shipping_zone_id`) REFERENCES `shipping_zones`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`country_id`) REFERENCES `countries`(`id`) ON UPDATE no action ON DELETE no action
 );
@@ -201,6 +288,8 @@ CREATE TABLE `shipping_rates` (
 	`max_value` numeric,
 	`no_max` text,
 	`price` numeric DEFAULT 0 NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`shipping_zone_id`) REFERENCES `shipping_zones`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
@@ -211,10 +300,8 @@ CREATE TABLE `shipping_zones` (
 	`active` text,
 	`free_shipping` text,
 	`rate_type` text,
-	`created_at` text NOT NULL,
-	`updated_at` text NOT NULL,
-	`created_by` text,
-	`updated_by` text
+	`createdOn` integer,
+	`updatedOn` integer
 );
 --> statement-breakpoint
 CREATE TABLE `slideshows` (
@@ -230,7 +317,9 @@ CREATE TABLE `slideshows` (
 	`clicks` numeric DEFAULT 0 NOT NULL,
 	`styles` text,
 	`created_at` text NOT NULL,
-	`updated_at` text NOT NULL
+	`updated_at` text NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer
 );
 --> statement-breakpoint
 CREATE TABLE `suppliers` (
@@ -243,16 +332,48 @@ CREATE TABLE `suppliers` (
 	`country_id` integer NOT NULL,
 	`city` text,
 	`note` text,
-	`created_at` text NOT NULL,
-	`updated_at` text NOT NULL,
 	`created_by` text,
 	`updated_by` text,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`country_id`) REFERENCES `countries`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE TABLE `tags` (
 	`id` text PRIMARY KEY NOT NULL,
-	`tag_name` text NOT NULL
+	`tag_name` text NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer
+);
+--> statement-breakpoint
+CREATE TABLE `user_keys` (
+	`id` text PRIMARY KEY NOT NULL,
+	`user_id` text NOT NULL,
+	`hashed_password` text,
+	`createdOn` integer,
+	`updatedOn` integer,
+	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE TABLE `users` (
+	`id` text PRIMARY KEY NOT NULL,
+	`firstName` text,
+	`lastName` text,
+	`email` text,
+	`password` text,
+	`role` text,
+	`createdOn` integer,
+	`updatedOn` integer
+);
+--> statement-breakpoint
+CREATE TABLE `user_sessions` (
+	`id` text PRIMARY KEY NOT NULL,
+	`user_id` text NOT NULL,
+	`active_expires` integer NOT NULL,
+	`idle_expires` integer NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
+	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE TABLE `variants` (
@@ -260,6 +381,8 @@ CREATE TABLE `variants` (
 	`variant_option` text NOT NULL,
 	`product_id` text NOT NULL,
 	`variant_option_id` text NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`variant_option_id`) REFERENCES `variant_options`(`id`) ON UPDATE no action ON DELETE no action
 );
@@ -275,6 +398,8 @@ CREATE TABLE `variant_options` (
 	`quantity` numeric NOT NULL,
 	`sku` text,
 	`active` text,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`image_id`) REFERENCES `gallery`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON UPDATE no action ON DELETE no action
 );
@@ -283,11 +408,15 @@ CREATE TABLE `variant_values` (
 	`id` text PRIMARY KEY NOT NULL,
 	`variant_id` text NOT NULL,
 	`product_attribute_value_id` text NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
 	FOREIGN KEY (`variant_id`) REFERENCES `variants`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`product_attribute_value_id`) REFERENCES `product_attribute_values`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
+CREATE INDEX `commentsUserIdIndex` ON `comments` (`userId`);--> statement-breakpoint
+CREATE INDEX `commentsPostIdIndex` ON `comments` (`postId`);--> statement-breakpoint
 CREATE UNIQUE INDEX `coupons_code_unique` ON `coupons` (`code`);--> statement-breakpoint
+CREATE INDEX `postUserIdIndex` ON `posts` (`userId`);--> statement-breakpoint
 CREATE UNIQUE INDEX `products_slug_unique` ON `products` (`slug`);--> statement-breakpoint
-CREATE UNIQUE INDEX `sells_product_id_unique` ON `sells` (`product_id`);--> statement-breakpoint
-CREATE UNIQUE INDEX `tags_tag_name_unique` ON `tags` (`tag_name`);
+CREATE UNIQUE INDEX `sells_product_id_unique` ON `sells` (`product_id`);
