@@ -37,6 +37,33 @@ const tables = apiConfig.filter((tbl) => tbl.table !== 'users');
 tables.forEach((entry) => {
   // console.log("setting route for " + entry.route);
 
+
+
+
+  api.get('/product-full-details', async (ctx) => {
+    const query = 'SELECT * FROM product_full_Details'; // Query personalizada
+  
+    try {
+      // Ejecuta la consulta utilizando `getRecords`
+      const data = await getRecords(ctx, 'product_full_Details', {}, query);
+  
+      // Devuelve los resultados
+      return ctx.json(data);
+    } catch (error) {
+      console.error('Error retrieving product full details:', error);
+      return ctx.text('Error retrieving product full details', 500);
+    }
+  });
+
+
+
+
+
+
+
+
+
+
   //ie /v1/users
   api.get(`/${entry.route}`, async (ctx) => {
     const start = Date.now();

@@ -10,7 +10,7 @@ import * as assets from './schema/assets';
 import { AppContext } from '../server';
 import { isAdminOrEditor } from './config-helpers';
 
-import * as view from './schema/view';
+
 import * as attribute_values from './schema/attribute_values';
 import * as attributes from './schema/attributes';
 import * as countries from './schema/countries';
@@ -259,7 +259,6 @@ tags,
 variant_options,
 variant_values,
 variants,
-view
 };
 
 for (const key of Object.keys(tableSchemas)) {
