@@ -41,11 +41,11 @@ tables.forEach((entry) => {
 
 
   api.get('/product-full-details', async (ctx) => {
-    const query = 'SELECT * FROM product_full_Details'; // Query personalizada
+    const query = 'SELECT * FROM product_full_details'; // Query personalizada
   
     try {
       // Ejecuta la consulta utilizando `getRecords`
-      const data = await getRecords(ctx, 'product_full_Details', {}, query);
+      const data = await getRecords(ctx, 'product_full_details', {}, query);
   
       // Devuelve los resultados
       return ctx.json(data);
