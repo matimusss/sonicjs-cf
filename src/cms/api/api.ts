@@ -63,27 +63,23 @@ tables.forEach((entry) => {
 ////////////////////////          
 
 
-api.get('/product-full-details/:slug', async (ctx) => {
-  const slug = ctx.req.param('slug');
 
+  api.get('/product-full-details/:slug', async (ctx) => {
+    const { slug } = ctx.req.param('slug'); // Obtén el parámetro 'slug' de la URL
+    //const slug = ctx.req.param('slug');
+    const query = `SELECT * FROM product_full_details WHERE slug = $1`; // Query personalizada con parámetro
   
-  const query = `SELECT * FROM product_full_details WHERE slug = '${slug}'`; // Query personalizada
-
+    try {
+      // Ejecuta la consulta utilizando `getRecords`
+      const data = await getRecords(ctx, 'product_full_details', { slug }, query);
   
-  try {
-    // Ejecuta la consulta utilizando `getRecords`
-    const data = await getRecords(ctx, 'product_full_details', {}, query);
-
-    // Devuelve los resultados
-    return ctx.json(data);
-  } catch (error) {
-    console.error('Error retrieving product full details:', error);
-    return ctx.text('Error retrieving product full details', 500);
-  }
-
-});
-
-
+      // Devuelve los resultados
+      return ctx.json(data);
+    } catch (error) {
+      console.error('Error retrieving product full details:', error);
+      return ctx.text('Error retrieving product full details', 500);
+    }
+  });
 
 
 
