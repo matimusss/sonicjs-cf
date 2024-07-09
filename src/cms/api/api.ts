@@ -67,8 +67,9 @@ tables.forEach((entry) => {
     const query = 'SELECT * FROM product_full_details WHERE slug = \'' + slug + '\'';    console.log(query);  
     try {
       // Ejecuta la consulta utilizando `getRecords`
-      const data = await getRecords(ctx, 'product_full_details', {}, query);
-  
+      const data = await getRecords(ctx, 'product_full_details', params, ctx.req.url,"d1", query);
+
+
       // Devuelve los resultados
       return ctx.json(data);
     } catch (error) {
