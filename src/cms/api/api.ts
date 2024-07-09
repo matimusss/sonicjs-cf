@@ -63,9 +63,9 @@ tables.forEach((entry) => {
     let { includeContentType, source, ...params } = ctx.req.query();
 
     const slug = ctx.req.param('id');
-    console.log(slug);  
+    
     const query = `SELECT * FROM product_full_details WHERE slug = "${slug}"`;// Query personalizada
-  
+    console.log(query);  
     try {
       // Ejecuta la consulta utilizando `getRecords`
       const data = await getRecords(ctx, 'product_full_details', {}, query);
