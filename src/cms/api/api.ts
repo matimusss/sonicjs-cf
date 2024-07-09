@@ -59,26 +59,32 @@ tables.forEach((entry) => {
   });
 
 
+  api.get('/product-full-details/:id', async (ctx) => {
+    let { includeContentType, source, ...params } = ctx.req.query();
+
+    const slug = ctx.req.param('id');
+  
+    const query = `SELECT * FROM product_full_details WHERE slug = '${slug}'`;// Query personalizada
+  
+    try {
+      // Ejecuta la consulta utilizando `getRecords`
+      const data = await getRecords(ctx, 'product_full_details', {}, query);
+  
+      // Devuelve los resultados
+      return ctx.json(data);
+    } catch (error) {
+      console.error('Error retrieving product full details:', error);
+      return ctx.text('Error retrieving product full details', 500);
+    }
+  });
+
+
+
+
+
 
 ////////////////////////          
 
-
-
-api.get(`/product-full-details/${entry.route}`, async (ctx) => {
-  const { route } = entry; // Obtén el valor de 'route' desde 'entry'
-  const query = `SELECT * FROM product_full_details WHERE slug = '${route}'`; // Query personalizada
-  
-  try {
-    // Ejecuta la consulta utilizando `getRecords`
-    const data = await getRecords(ctx, 'product_full_details', { route }, query);
-  
-    // Devuelve los resultados
-    return ctx.json(data);
-  } catch (error) {
-    console.error('Error retrieving product full details:', error);
-    return ctx.text('Error retrieving product full details', 500);
-  }
-});
 
   //ie /v1/users
   api.get(`/${entry.route}`, async (ctx) => {
