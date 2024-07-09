@@ -38,9 +38,11 @@ tables.forEach((entry) => {
   // console.log("setting route for " + entry.route);
 
 
-
+//EJEMPLO DE RUTA CON QUERY PERSONALIZADA, request a una view.
 
   api.get('/product-full-details', async (ctx) => {
+  
+  
     const query = 'SELECT * FROM product_full_details'; // Query personalizada
   
     try {
@@ -57,8 +59,27 @@ tables.forEach((entry) => {
 
 
 
+////////////////////////          
 
 
+api.get('/product-full-details/:slug', async (ctx) => {
+  const { slug } = ctx.params; // Obtiene el parámetro de la URL
+
+  const query = {
+    slug: { $eq: slug } // Define la condición de búsqueda
+  };
+
+  try {
+    // Ejecuta la consulta utilizando `getRecords`
+    const data = await getRecords(ctx, 'product_full_details', query);
+
+    // Devuelve los resultados
+    return ctx.json(data);
+  } catch (error) {
+    console.error('Error retrieving product full details:', error);
+    return ctx.text('Error retrieving product full details', 500);
+  }
+});
 
 
 
