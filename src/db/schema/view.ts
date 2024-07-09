@@ -10,7 +10,7 @@ import * as gallery from './gallery';
 import { ApiConfig } from '../routes';
 import { integer, text, sqliteView, sqliteTable } from "drizzle-orm/sqlite-core";
 export const route = 'view';
-
+export const tablename  = 'product_full_details';
 // Definición de la vista 'product_relations_view'
 export const productRelationsView = sqliteView('product_full_details').as((qb) => {
   return qb
