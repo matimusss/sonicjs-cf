@@ -12,7 +12,7 @@ import {
 } from '../data/kv-data';
 import { Bindings } from '../types/bindings';
 import { apiConfig, config } from '../../db/routes';
-import { getD1DataByTable, getD1ByTableAndId } from '../data/d1-data';
+import { getD1DataByTable, getD1ByTableAndId, getD1ByTableAndId_view } from '../data/d1-data';
 import { getForm } from './forms';
 import qs from 'qs';
 import {
@@ -40,27 +40,43 @@ tables.forEach((entry) => {
 
 //EJEMPLO DE RUTA CON QUERY PERSONALIZADA, request a una view.
 
-  api.get('/product-full-details', async (ctx) => {
+  //api.get('/product-full-details', async (ctx) => {
   
-    let { includeContentType, source, ...params } = ctx.req.query();
+    //let { includeContentType, source, ...params } = ctx.req.query();
 
-    const query = 'SELECT * FROM product_full_details'; // Query personalizada
+    //const query = 'SELECT * FROM product_full_details'; // Query personalizada
+  
+ //   try {
+      // Ejecuta la consulta utilizando `getRecords`
+      //const data = await getRecords(ctx, 'product_full_details', params, ctx.req.url,"d1", query);  
+      // Devuelve los resultados
+    //  return ctx.json(data);
+   // } catch (error) {
+      //console.error('Error retrieving product full details:', error);
+      //return ctx.text('Error retrieving product full details', 500);
+    //}
+  //});
+
+
+
+
+  api.get('/product-full-details/:id', async (ctx) => {
+    const { id } = ctx.req.param(); // Obtén el parámetro ID de la URL
   
     try {
-      // Ejecuta la consulta utilizando `getRecords`
-      const data = await getRecords(ctx, 'product_full_details', params, ctx.req.url,"d1", query);  
-      // Devuelve los resultados
-      return ctx.json(data);
+      // Llama a la función getD1ByTableAndId para obtener los datos del producto
+      const data = await getD1ByTableAndId_view(ctx, 'product_full_details', id, 'd1');
+  
+      if (data) {
+        return ctx.json(data);
+      } else {
+        return ctx.text('Product not found', 404);
+      }
     } catch (error) {
       console.error('Error retrieving product full details:', error);
       return ctx.text('Error retrieving product full details', 500);
     }
   });
-
-
-
-
-
 
 
 ////////////////////////          
