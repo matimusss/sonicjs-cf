@@ -47,22 +47,18 @@ export function generateSelectSql(table, params) {
 }
 
 export async function getD1ByTableAndId_view(db, table, id) {
+  // Define la consulta SQL con un parámetro de reemplazo
+  let sql = `SELECT * FROM ${table} WHERE slug = ?`;
 
-
-
-  let sql = `SELECT * FROM product_full_details where slug = 'producto_junior';`;
- 
-
-  sql = sql.replace(/\s+/g, ' ').trim() + ';';
-  const { results } = await db.prepare(sql).all();
-
-
-  console.log('sql ==>', sql);
-
-  return sql;
-
+  try {
+    // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
+    const { results } = await db.prepare(sql).bind(id).all();
+    return results; // Devuelve los resultados de la consulta
+  } catch (error) {
+    console.error('Error executing SQL:', error);
+    throw error; // Lanza el error para que pueda ser manejado en el llamador
+  }
 }
-
 export function prepareD1Data(data, tbl = '') {
   const table = data.table || tbl;
   const schema = getRepoFromTable(table);
