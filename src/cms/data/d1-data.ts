@@ -48,11 +48,14 @@ export function generateSelectSql(table, params) {
 
 export async function getD1ByTableAndId_view(db, table, id, params) {
 
-  const { results } = await db
+
 
   let sql = `SELECT * FROM product_full_details where slug = '${id}';`;
  
+
   sql = sql.replace(/\s+/g, ' ').trim() + ';';
+  const { results } = await db.prepare(sql).all();
+
 
   console.log('sql ==>', sql);
 
