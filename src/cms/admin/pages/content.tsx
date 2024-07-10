@@ -733,18 +733,6 @@ export async function prueba(ctx) {
 
 
 
-export async function pruebaReact(ctx) {
-  
-
-
-  return (  
-    <Layout>  
-{ctxString}
-    </Layout>
-  );
-};
-
-
 export const ProductForm = (ctx) => {
   return (
         <div class='container-fluid'>
