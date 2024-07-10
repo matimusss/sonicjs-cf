@@ -1,7 +1,10 @@
 const url = window.location.href;
 const authMode = url.includes('/auth/');
 const gridWrapper = document.getElementById('grid-products');
+
+
 if (gridWrapper) {
+    console.log("MOUNTEDDDDDD");
   const dataGrid = new gridjs.Grid({
     data: [
         { name: 'John', email: 'john@example.com', phoneNumber: '(353) 01 222 3333' },

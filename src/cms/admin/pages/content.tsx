@@ -737,6 +737,7 @@ export const ProductForm = (ctx) => {
   return (
     <Layout env={ctx.env}>
                 <div id='grid-products'></div>
+                <script src='/public/js/grid-products.js'></script>
    <NewProduct />
     </Layout>
   );
