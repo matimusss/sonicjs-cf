@@ -9,7 +9,7 @@ if (gridWrapper2) {
         { name: 'John', email: 'john@example.com', phoneNumber: '(353) 01 222 3333' },
         { name: 'Mark', email: 'mark@gmail.com', phoneNumber: '(01) 22 888 4444' },
       ]
-    }).render(gridWrapper);
+    }).render(gridWrapper2); 
 }
 
 
