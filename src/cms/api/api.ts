@@ -65,7 +65,7 @@ tables.forEach((entry) => {
   
     try {
       // Llama a la función getD1ByTableAndId para obtener los datos del producto
-      const data = await getD1ByTableAndId_view(ctx, 'product_full_details', id, 'd1');
+      const data = await getD1ByTableAndId_view(   ctx.env.D1DATA, 'product_full_details', id);
   
       if (data) {
         return ctx.json(data);

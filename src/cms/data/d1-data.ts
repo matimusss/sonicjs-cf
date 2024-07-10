@@ -46,7 +46,7 @@ export function generateSelectSql(table, params) {
   return sql;
 }
 
-export async function getD1ByTableAndId_view(db, table, id, params) {
+export async function getD1ByTableAndId_view(db, table, id) {
 
 
 
