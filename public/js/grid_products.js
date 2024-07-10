@@ -1,3 +1,4 @@
+
 const gridWrapperProducts = document.getElementById('grid-products');
 if (gridWrapperProducts) {
   const dataGrid = new gridjs.Grid({
