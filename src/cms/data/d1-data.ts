@@ -47,11 +47,17 @@ export function generateSelectSql(table, params) {
 }
 
 export async function getD1ByTableAndId_view(db, table, id, params) {
-  const { results } = await db
-    .prepare(`SELECT * FROM product_full_details where slug = '${id}';`)
-    .all();
 
-  return results[0];
+  const { results } = await db
+
+  let sql = `SELECT * FROM product_full_details where slug = '${id}';`;
+ 
+  sql = sql.replace(/\s+/g, ' ').trim() + ';';
+
+  console.log('sql ==>', sql);
+
+  return sql;
+
 }
 
 export function prepareD1Data(data, tbl = '') {
