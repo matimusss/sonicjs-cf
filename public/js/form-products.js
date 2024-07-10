@@ -1,3 +1,10 @@
+setTimeout(async function() {
+ 
+
+
+  
+
+
 (function () {
     const url = window.location.href;
     const formioElement = document.getElementById('formio-products');
@@ -316,3 +323,6 @@
     }
   }
 })();
+    
+}, 1000);
+//}

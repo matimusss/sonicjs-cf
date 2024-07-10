@@ -344,6 +344,12 @@ export const Layout: FC<{
                     </a>
                   </li>
 
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/admin/editar_productos'>
+                      Editor de productos
+                    </a>
+                  </li>
+
             
            
 
