@@ -732,9 +732,6 @@ export async function prueba(ctx) {
 
 
 
-          <div id='grid' data-route={props.table}></div>
-
-
 export const ProductForm = (ctx) => {
   return (
     <Layout env={ctx.env}>
