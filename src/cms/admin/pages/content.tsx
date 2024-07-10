@@ -738,7 +738,9 @@ export const ProductForm = (ctx) => {
   return (
     <Layout  env={ctx.env} >  
     <script src='/public/js/form-product.js'></script>
-              <form id='formio-products' ></form>
+              <div id='formio-products' ></div>
+              <script src="https://cdn.form.io/formiojs/formiojs.form.min.js" crossorigin="anonymous"></script>
+
         </Layout>
     
   );

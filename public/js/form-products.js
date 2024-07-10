@@ -11,8 +11,6 @@ setTimeout(async function() {
     
     
 
-
-    if (formioElement) {
       Formio.createForm(formioElement, {
         components: [
             {
@@ -43,7 +41,7 @@ setTimeout(async function() {
           // utilizando axios o cualquier otra biblioteca de HTTP
         });
       });
-    }
+  
   })();
   
 
