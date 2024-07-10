@@ -116,6 +116,14 @@ admin.get('/edit_html/:route/:id', async (ctx) => {
 });
 
 
+
+
+
+admin.get('/editar_productos',async (ctx) => {
+  return ctx.html(await ProductForm(ctx) );});
+
+
+
 admin.post('/save_html/:route/:id', async (ctx) => {
   const route = ctx.req.param('route');
   const id = ctx.req.param('id');
@@ -151,10 +159,6 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 
 
 
-
-
-admin.get('/editar_productos',async (ctx) => {
-  return ctx.html(await ProductForm(ctx) );});
 
 
 

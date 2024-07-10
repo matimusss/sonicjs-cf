@@ -728,8 +728,8 @@ export async function prueba(ctx) {
 
 
 
-export async function ProductForm(ctx, route, id, tbl?: string) {
-  
+export async function ProductForm(ctx) {
+
   return (
     <Layout env={ctx.env}>
                 <div id='grid-products'></div>
