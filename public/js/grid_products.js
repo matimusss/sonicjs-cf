@@ -1,9 +1,9 @@
 const url2 = window.location.href;
 const authMode = url2.includes('/auth/');
-const gridWrapper = document.getElementById('grid-products');
+const gridWrapper2 = document.getElementById('grid-products');
 
 
-if (gridWrapper) {
+if (gridWrapper2) {
     console.log("MOUNTEDDDDDD");
   const dataGrid = new gridjs.Grid({
     data: [
