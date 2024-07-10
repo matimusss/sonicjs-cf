@@ -732,7 +732,7 @@ export async function ProductForm(ctx) {
 
   return (
     <Layout env={ctx.env}>
-                <div id='grid-products'></div>
+                <div id='grid'></div>
                 <script src='/public/js/grid-products.js'></script>
    <NewProduct />
     </Layout>
