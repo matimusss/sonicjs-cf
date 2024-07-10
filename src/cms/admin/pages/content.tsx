@@ -734,11 +734,6 @@ export async function ProductForm(ctx) {
     <Layout env={ctx.env}>
           
 
-
-
-  <link href='/public/css/gridjs.css' rel='stylesheet' />
-  <script src='https://unpkg.com/gridjs/dist/gridjs.umd.js'></script>
-<script src='/public/js/grid-products.js'></script>
       <div id='grid-products'></div>
    <NewProduct />
     </Layout>
