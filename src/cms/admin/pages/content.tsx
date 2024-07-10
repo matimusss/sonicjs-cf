@@ -2,12 +2,10 @@ import { ApiConfig, apiConfig } from '../../../db/routes';
 import { getDataListByPrefix } from '../../data/kv-data';
 import { Bindings } from '../../types/bindings';
 import { Layout, Head } from '../theme';
-import * as React from 'react';
 import { jsx } from 'hono/jsx';
 import GjsEditor from '@grapesjs/react';
 import {grapesjs, Editor } from 'grapesjs';
 import Cookies from 'js-cookie'
-import React from "react";
 import useSWR from "swr";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { MAIN_BORDER_COLOR } from './../components/common';
@@ -735,89 +733,41 @@ export async function prueba(ctx) {
 
 
 
-
-const fetchDataFunction = async (
-  searchTerm,
-  filterColor,
-  sortBy,
-  minPrice,
-  maxPrice,
-  page,
-  itemsPerPage
-) => {
-  const data = [
-    // ... your data array
+export const FilterableProductList = () => {
+  const productList = [
+    { id: 1, title: 'Product 1', description: 'Description 1', color: 'blue', price: 100 },
+    { id: 2, title: 'Product 2', description: 'Description 2', color: 'red', price: 200 },
+    { id: 3, title: 'Product 3', description: 'Description 3', color: 'black', price: 150 },
+    // Agrega más productos según sea necesario
   ];
 
-  let filteredData = data.filter((item) =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const [filteredProducts, setFi7lteredProducts] = useState(productList);
+  const [search, setSearch] = useState('');
+  const [filterColor, setFilterColor] = useState('');
+  const [sortBy, setSortBy] = useState('');
 
-  if (filterColor) {
-    filteredData = filteredData.filter((item) => item.color === filterColor);
-  }
+  const handleFilterAndSort = () => {
+    let filteredData = productList.filter((item) =>
+      item.title.toLowerCase().includes(search.toLowerCase())
+    );
 
-  filteredData = filteredData.filter(
-    (item) =>
-      (!minPrice || item.price >= minPrice) &&
-      (!maxPrice || item.price <= maxPrice)
-  );
+    if (filterColor) {
+      filteredData = filteredData.filter((item) => item.color === filterColor);
+    }
 
-  if (sortBy === "asc") {
-    filteredData.sort((a, b) => a.price - b.price);
-  } else if (sortBy === "desc") {
-    filteredData.sort((a, b) => b.price - a.price);
-  }
+    if (sortBy === 'asc') {
+      filteredData.sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'desc') {
+      filteredData.sort((a, b) => b.price - a.price);
+    }
 
-  const start = (page - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-
-  await new Promise((resolve) => setTimeout(resolve, 600));
-
-  return {
-    items: filteredData.slice(start, end),
-    total: filteredData.length,
+    setFilteredProducts(filteredData);
   };
-};
-
-export const SearchFilterComponent = () => {
-  const [keepPreviousData, setKeepPreviousData] = React.useState(false);
-  const [search, setSearch] = React.useState("");
-  const [filterColor, setFilterColor] = React.useState("");
-  const [sortBy, setSortBy] = React.useState(""); // asc, desc
-  const [minPrice, setMinPrice] = React.useState("");
-  const [maxPrice, setMaxPrice] = React.useState("");
-  const [page, setPage] = React.useState(1);
-  const itemsPerPage = 10;
-
-  const { data, error, isValidating } = useSWR(
-    [search, filterColor, sortBy, minPrice, maxPrice, page, itemsPerPage],
-    () =>
-      fetchDataFunction(
-        search,
-        filterColor,
-        sortBy,
-        minPrice,
-        maxPrice,
-        page,
-        itemsPerPage
-      ),
-    { keepPreviousData }
-  );
-
-  const isLoading = !data && !error;
-const totalPages = data ? Math.ceil(data.total / itemsPerPage) : 1;
-
-  // Effect to reset the page to 1 when filters or search terms change
-  React.useEffect(() => {
-    setPage(1);
-  }, [search, filterColor, sortBy, minPrice, maxPrice]);
 
   return (
     <div>
-      <h1>SWR Search, Filter & Sort Example</h1>
+      <h1>Product List</h1>
       <div className="search-container">
-        <a> CREAR PRODUCTO</a>
         <input
           type="text"
           value={search}
@@ -840,70 +790,30 @@ const totalPages = data ? Math.ceil(data.total / itemsPerPage) : 1;
           <option value="asc">Price Ascending</option>
           <option value="desc">Price Descending</option>
         </select>
-        <input
-          type="number"
-          value={minPrice}
-          onChange={(e) =>
-            setMinPrice(e.target.value ? parseInt(e.target.value) : "")
-          }
-          placeholder="Min Price"
-        />
-        <input
-          type="number"
-          value={maxPrice}
-          onChange={(e) =>
-            setMaxPrice(e.target.value ? parseInt(e.target.value) : "")
-          }
-          placeholder="Max Price"
-        />
-        <label>
-          <input
-            type="checkbox"
-            checked={keepPreviousData}
-            onChange={(e) => setKeepPreviousData(e.target.checked)}
-          />{" "}
-          Keep Previous Data
-        </label>
-      </div>
-
-      <div className={isLoading ? "loading" : ""}>
-        {data &&
-          data.items.map((item) => (
-            <div className="item" key={item.id}>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              <p>Color: {item.color}</p>
-              <p>Price: ${item.price}</p>
-            </div>
-          ))}
+        <button onClick={handleFilterAndSort}>Apply Filters</button>
       </div>
 
       <div>
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          disabled={page === 1}
-        >
-          Previous
-        </button>
-        <span>
-          Page {page} of {totalPages}
-        </span>
-        <button
-          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-          disabled={page === totalPages}
-        >
-          Next
-        </button>
+        {filteredProducts.map((item) => (
+          <div className="item" key={item.id}>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+            <p>Color: {item.color}</p>
+            <p>Price: ${item.price}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
+
+
+
 export const ProductForm = (ctx) => {
   return (
     <Layout env={ctx.env}>
-      <SearchFilterComponent />
-
+< FilterableProductList ></FilterableProductList>
    <NewProduct />
     </Layout>
   );
