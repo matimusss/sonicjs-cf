@@ -806,8 +806,7 @@ export const SearchFilterComponent = () => {
   );
 
   const isLoading = !data && !error;
-
-4  const totalPages = data ? Math.ceil(data.total / itemsPerPage) : 1;
+const totalPages = data ? Math.ceil(data.total / itemsPerPage) : 1;
 
   // Effect to reset the page to 1 when filters or search terms change
   React.useEffect(() => {
