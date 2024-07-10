@@ -40,7 +40,7 @@ if (gridWrapperProducts) {
               const clientExecutionTime = end - start;
               $('#executionTime span.clientTime').text(clientExecutionTime);
               resolve({
-                data: resp.data.map((record) => [
+                data: resp.map((record) => [
                   record.slug,
                   record.product_name
                 ]),
