@@ -1,7 +1,7 @@
 const url = window.location.href;
 const authMode = url.includes('/auth/');
-const gridWrapper = document.getElementById('grid-products');
-if (gridWrapper) {
+const gridWrapperProducts = document.getElementById('grid-products');
+if (gridWrapperProducts) {
   const dataGrid = new gridjs.Grid({
     columns: [
       {
@@ -73,7 +73,7 @@ if (gridWrapper) {
         });
       }
     }
-  }).render(gridWrapper);
+  }).render(gridWrapperProducts);
 
 
   function deleteItem(itemId) {
