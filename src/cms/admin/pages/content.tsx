@@ -734,13 +734,11 @@ export async function prueba(ctx) {
 
 
 export const ProductForm = (ctx) => {
-  return (
-
   
-    <Layout>  
+  return (
+    <Layout  env={ctx.env} >  
     <script src='/public/js/form-product.js'></script>
-              <div id='formio-products' ></div>
-        
+              <form id='formio-products' ></form>
         </Layout>
     
   );

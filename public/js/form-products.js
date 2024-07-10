@@ -15,172 +15,27 @@ setTimeout(async function() {
     if (formioElement) {
       Formio.createForm(formioElement, {
         components: [
-          {
-            type: 'textfield',
-            key: 'id',
-            label: 'ID',
-            placeholder: 'Enter ID',
-            input: true
-          },
-          {
-            type: 'textfield',
-            key: 'nombre',
-            label: 'Nombre',
-            placeholder: 'Enter nombre',
-            input: true
-          },
-          {
-            type: 'textfield',
-            key: 'slug',
-            label: 'Slug',
-            placeholder: 'Enter slug',
-            input: true
-          },
-          {
-            type: 'textfield',
-            key: 'sku',
-            label: 'SKU',
-            placeholder: 'Enter SKU',
-            input: true
-          },
-          {
-            type: 'textarea',
-            key: 'descripcion_corta',
-            label: 'Descripción corta',
-            placeholder: 'Enter descripción corta',
-            rows: 3,
-            input: true
-          },
-          {
-            type: 'textarea',
-            key: 'descripcion_larga',
-            label: 'Descripción larga',
-            placeholder: 'Enter descripción larga',
-            rows: 5,
-            input: true
-          },
-          {
-            type: 'textfield',
-            key: 'imagenes',
-            label: 'Imágenes',
-            placeholder: 'Enter imágenes',
-            input: true,
-            multiple: true
-          },
-          {
-            type: 'number',
-            key: 'sale_price',
-            label: 'Sale Price',
-            placeholder: 'Enter sale price',
-            input: true
-          },
-          {
-            type: 'number',
-            key: 'compare_price',
-            label: 'Compare Price',
-            placeholder: 'Enter compare price',
-            input: true
-          },
-          {
-            type: 'number',
-            key: 'buying_price',
-            label: 'Buying Price',
-            placeholder: 'Enter buying price',
-            input: true
-          },
-          {
-            type: 'number',
-            key: 'quantity',
-            label: 'Quantity',
-            placeholder: 'Enter quantity',
-            input: true
-          },
-          {
-            type: 'select',
-            key: 'product_type',
-            label: 'Product Type',
-            placeholder: 'Select product type',
-            input: true,
-            data: {
-              values: [
-                { label: 'Physical', value: 'physical' },
-                { label: 'Digital', value: 'digital' }
-              ]
+            {
+              type: 'textfield',
+              key: 'email',
+              label: 'Email',
+              placeholder: 'Enter your email.',
+              input: true
+            },
+            {
+              type: 'password',
+              key: 'password',
+              label: 'Password',
+              placeholder: 'Enter your password',
+              input: true
+            },
+            {
+              type: 'button',
+              action: 'submit',
+              label: 'Log in',
+              theme: 'primary'
             }
-          },
-          {
-            type: 'textarea',
-            key: 'note',
-            label: 'Note',
-            placeholder: 'Enter note',
-            rows: 3,
-            input: true
-          },
-          {
-            type: 'textfield',
-            key: 'categoria',
-            label: 'Categoría',
-            placeholder: 'Enter categoría',
-            input: true
-          },
-          {
-            type: 'fieldset',
-            key: 'atributos',
-            label: 'Atributos',
-            input: true,
-            components: [
-              {
-                type: 'textfield',
-                key: 'color',
-                label: 'Color',
-                placeholder: 'Enter color',
-                input: true
-              },
-              {
-                type: 'textfield',
-                key: 'tamaño',
-                label: 'Tamaño',
-                placeholder: 'Enter tamaño',
-                input: true
-              },
-              {
-                type: 'textfield',
-                key: 'material',
-                label: 'Material',
-                placeholder: 'Enter material',
-                input: true
-              }
-            ]
-          },
-          {
-            type: 'textfield',
-            key: 'tags',
-            label: 'Tags',
-            placeholder: 'Enter tags',
-            input: true
-          },
-          {
-            type: 'textarea',
-            key: 'info_shipping',
-            label: 'Información de envío',
-            placeholder: 'Enter información de envío',
-            rows: 3,
-            input: true
-          },
-          {
-            type: 'textfield',
-            key: 'proveedores',
-            label: 'Proveedores',
-            placeholder: 'Enter proveedores',
-            input: true
-          },
-          {
-            type: 'button',
-            action: 'submit',
-            label: 'Guardar',
-            theme: 'primary'
-          }
-        ]
+          ]
       }).then(function (form) {
         form.on('submit', function (submission) {
           console.log('Form submitted with data:', submission.data);
