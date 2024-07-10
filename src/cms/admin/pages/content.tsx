@@ -485,15 +485,12 @@ export const FileModal = () => {
     </div>
   );
 };
-export const ContentEditForm = (props: {
-  screenTitle: string;
-  saveButtonText: string;
-  contentId: string;
-  table: string;
-  route: string;
-  username?: string;
-  env: Bindings;
-}) => {
+
+
+
+
+export async function ContentEditForm(ctx, route, id, tbl?: string) 
+{
   return (
     <Layout
       env={props.env}
@@ -502,8 +499,6 @@ export const ContentEditForm = (props: {
     >
       <div id='formio' data-id={props.contentId} data-route={props.route}></div>
       <FileModal />
-   
-   
    
     </Layout>
   );
@@ -733,7 +728,8 @@ export async function prueba(ctx) {
 
 
 
-export const ProductForm = (ctx) => {
+export async function ProductForm(ctx, route, id, tbl?: string) {
+  
   return (
     <Layout env={ctx.env}>
                 <div id='grid-products'></div>
