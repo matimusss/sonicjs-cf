@@ -735,11 +735,14 @@ export async function prueba(ctx) {
 
 export const ProductForm = (ctx) => {
   return (
+    <div>
+    <Head />
     <Layout>  
   
               <div id='formio-products' ></div>
         
         </Layout>
+        </div>
   );
 };
 
