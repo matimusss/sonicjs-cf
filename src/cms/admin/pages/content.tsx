@@ -735,8 +735,7 @@ export async function ProductForm(ctx) {
           
 
 
-          <script src='/public/js/grid-in-memory-cache.js'></script>
-<script src='/public/js/grid-kv-cache.js'></script>
+
   <link href='/public/css/gridjs.css' rel='stylesheet' />
   <script src='https://unpkg.com/gridjs/dist/gridjs.umd.js'></script>
 <script src='/public/js/grid-products.js'></script>
