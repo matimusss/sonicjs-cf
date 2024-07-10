@@ -1,7 +1,7 @@
 import { ApiConfig, apiConfig } from '../../../db/routes';
 import { getDataListByPrefix } from '../../data/kv-data';
 import { Bindings } from '../../types/bindings';
-import { Layout } from '../theme';
+import { Layout, Head } from '../theme';
 import * as React from 'react';
 import { jsx } from 'hono/jsx';
 import GjsEditor from '@grapesjs/react';
