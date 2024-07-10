@@ -1,5 +1,5 @@
-const url = window.location.href;
-const authMode = url.includes('/auth/');
+const url2 = window.location.href;
+const authMode = url2.includes('/auth/');
 const gridWrapper = document.getElementById('grid-products');
 
 
