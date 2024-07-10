@@ -37,6 +37,10 @@ import { format } from 'date-fns';
 import { getAllFromInMemoryCache, getFromInMemoryCache } from '../data/cache';
 import { getKVCache, getRecordFromKvCache } from '../data/kv-data';
 import { loadLogin, loadSetup } from './pages/login';
+import { loadProductForm, ProductForm } from './pages/product';
+
+
+
 import { Variables } from '../../server';
 import { tableSchemas } from '../../db/routes';
 import { drizzle } from 'drizzle-orm/d1';
@@ -74,6 +78,10 @@ admin.get('/ping', (ctx) => {
 admin.get('/', async (ctx) => ctx.html(await loadApis(ctx)));
 
 admin.get('/login', async (ctx) => ctx.html(await loadLogin(ctx)));
+
+
+admin.get('/admin_productos', async (ctx) => ctx.html(await loadProductForm(ctx)));
+
 
 admin.get('/content/new/auth/users/setup', async (ctx) =>
   ctx.html(await loadSetup(ctx))

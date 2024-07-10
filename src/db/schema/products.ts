@@ -72,3 +72,15 @@ export const relation = relations(table, ({ many, one }) => ({
     references: [productSuppliers.table.product_id]
   })
 }));
+
+
+//se refiere a campos de la tabla  , podes especificar el tipo de form aca.
+
+export const fields: ApiConfig['fields'] = {
+
+  tags: {
+    type: 'foreign'
+  }
+
+};
+

@@ -119,6 +119,7 @@ export const Script = () => {
       <script src='/public/js/admin.js'></script>
       <script src='/public/js/form-content-type.js'></script>
       <script src='/public/js/form-content.js'></script>
+      <script src='/public/js/form-product.js'></script>
       <script src='/public/js/form-login.js'></script>
       <script src='/public/js/grid.js'></script>
       <script src='/public/js/grid-in-memory-cache.js'></script>
