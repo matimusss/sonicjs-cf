@@ -737,8 +737,10 @@ export async function ProductForm(ctx) {
       screenTitle={'productos'}
     >
           
-
+          <div class='row'>
+          <div class='col-md-12'>
       <div id='grid-products'></div>
+      </div></div>
    <NewProduct />
     </Layout>
   );
