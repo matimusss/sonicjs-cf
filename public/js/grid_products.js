@@ -3,14 +3,13 @@ const gridWrapperProducts = document.getElementById('grid-products');
 if (gridWrapperProducts) {
   const dataGrid = new gridjs.Grid({ columns: [
     {
-      name: 'Key',
-      formatter: (viewLink) => gridjs.html(`${viewLink}`)
+      name: 'Slug',
+      formatter: (slug) => gridjs.html(`${slug}`)
     },
     {
-      name: 'Created',
-      formatter: (dt) =>
-        gridjs.html(`<time class="timeSince" datetime="${dt}">${dt}</time>`)
-    }
+        name: 'product_name',
+        formatter: (product_name) => gridjs.html(`${product_name}`)
+      }
   ],
   pagination: {
     limit: 10,
@@ -20,7 +19,7 @@ if (gridWrapperProducts) {
     }
   },
   server: {
-    url: `/admin/api/in-memory-cache`,
+    url: `/v1/product-full-details/remera_negra`,
     data: (opts) => {
       return new Promise((resolve, reject) => {
         // let's implement our own HTTP client
@@ -42,8 +41,8 @@ if (gridWrapperProducts) {
               $('#executionTime span.clientTime').text(clientExecutionTime);
               resolve({
                 data: resp.data.map((record) => [
-                  record.viewLink,
-                  record.createdOn
+                  record.slug,
+                  record.product_name
                 ]),
                 total: resp.total
               });
