@@ -734,21 +734,113 @@ export async function prueba(ctx) {
 
 
 export const ProductForm = (ctx) => {
-  
   return (
-    <Layout  env={ctx.env} >  
-    <script src='/public/js/form-product.js'></script>
-              <div id='formio-products' ></div>
-              <script src="https://cdn.form.io/formiojs/formiojs.form.min.js" crossorigin="anonymous"></script>
-
-        </Layout>
-    
+    <Layout env={ctx.env}>
+      <div className="container-fluid">
+        <div className="row">
+          <main className="col-10 offset-1 px-md-4 py-md-4">
+            <h2>Crear Producto</h2>
+            <form id="form-product">
+              <div className="form-group">
+                <label htmlFor="id">ID</label>
+                <input type="text" className="form-control" id="id" name="id" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="nombre">Nombre</label>
+                <input type="text" className="form-control" id="nombre" name="nombre" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="slug">Slug</label>
+                <input type="text" className="form-control" id="slug" name="slug" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="sku">SKU</label>
+                <input type="text" className="form-control" id="sku" name="sku" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="descripcion_corta">Descripción corta</label>
+                <input type="text" className="form-control" id="descripcion_corta" name="descripcion_corta" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="descripcion_larga">Descripción larga</label>
+                <textarea className="form-control" id="descripcion_larga" name="descripcion_larga"></textarea>
+              </div>
+              <div className="form-group">
+                <label htmlFor="imagenes">Imágenes</label>
+                <input type="file" className="form-control-file" id="imagenes" name="imagenes" multiple />
+              </div>
+              <div className="form-group">
+                <label htmlFor="sale_price">Precio de venta</label>
+                <input type="number" className="form-control" id="sale_price" name="sale_price" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="compare_price">Precio de comparación</label>
+                <input type="number" className="form-control" id="compare_price" name="compare_price" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="buying_price">Precio de compra</label>
+                <input type="number" className="form-control" id="buying_price" name="buying_price" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="quantity">Cantidad</label>
+                <input type="number" className="form-control" id="quantity" name="quantity" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="product_type">Tipo de producto</label>
+                <input type="text" className="form-control" id="product_type" name="product_type" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="note">Nota</label>
+                <textarea className="form-control" id="note" name="note"></textarea>
+              </div>
+              <div className="form-group">
+                <label htmlFor="categoria">Categoría</label>
+                <input type="text" className="form-control" id="categoria" name="categoria" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="atributo1">Atributo 1: Color</label>
+                <input type="text" className="form-control" id="atributo1" name="atributo1" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="valor1">Valor</label>
+                <input type="text" className="form-control" id="valor1" name="valor1" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="atributo2">Atributo 2: Tamaño</label>
+                <input type="text" className="form-control" id="atributo2" name="atributo2" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="valor2">Valor</label>
+                <input type="text" className="form-control" id="valor2" name="valor2" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="atributo3">Atributo 3: Material</label>
+                <input type="text" className="form-control" id="atributo3" name="atributo3" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="valor3">Valor</label>
+                <input type="text" className="form-control" id="valor3" name="valor3" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="tags">Tags</label>
+                <input type="text" className="form-control" id="tags" name="tags" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="shipping_info">Información de envío</label>
+                <textarea className="form-control" id="shipping_info" name="shipping_info"></textarea>
+              </div>
+              <div className="form-group">
+                <label htmlFor="suppliers">Proveedores</label>
+                <input type="text" className="form-control" id="suppliers" name="suppliers" />
+              </div>
+              <button type="submit" className="btn btn-primary">Cupones</button>
+            </form>
+          </main>
+        </div>
+      </div>
+    </Layout>
   );
 };
-
-
-
-
 
 
 
