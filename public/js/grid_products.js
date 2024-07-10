@@ -19,7 +19,7 @@ if (gridWrapperProducts) {
     }
   },
   server: {
-    url: `/v1/product-full-details/remera_negra`,
+    url: `https://sonicjs-cf2.pages.dev/v1/product-full-details/remera_negra`,
     data: (opts) => {
       return new Promise((resolve, reject) => {
         // let's implement our own HTTP client
