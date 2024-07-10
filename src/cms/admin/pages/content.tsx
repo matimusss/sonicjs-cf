@@ -733,13 +733,13 @@ export async function ProductForm(ctx) {
   return (
     <Layout env={ctx.env}>
           
-  <script src='/public/js/grid_products.js'></script>
-  <script src='https://unpkg.com/gridjs/dist/gridjs.umd.js'></script>
-<script src='/public/js/grid.js'></script>
-<script src='/public/js/grid-products.js'></script>
-<script src='/public/js/grid-in-memory-cache.js'></script>
+
+
+          <script src='/public/js/grid-in-memory-cache.js'></script>
 <script src='/public/js/grid-kv-cache.js'></script>
   <link href='/public/css/gridjs.css' rel='stylesheet' />
+  <script src='https://unpkg.com/gridjs/dist/gridjs.umd.js'></script>
+<script src='/public/js/grid-products.js'></script>
       <div id='grid-products'></div>
    <NewProduct />
     </Layout>
