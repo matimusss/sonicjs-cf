@@ -1,6 +1,6 @@
 const url = window.location.href;
 const authMode = url.includes('/auth/');
-const gridWrapper = document.getElementById('grid');
+const gridWrapper = document.getElementById('grid-products');
 if (gridWrapper) {
   const dataGrid = new gridjs.Grid({
     columns: [
