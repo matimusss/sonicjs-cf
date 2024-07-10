@@ -25,6 +25,7 @@ import {
   prueba,
   pruebaReact,
   editor,
+  ProductForm,
   edit_html,
   save_html
 } from './pages/content';
@@ -37,7 +38,6 @@ import { format } from 'date-fns';
 import { getAllFromInMemoryCache, getFromInMemoryCache } from '../data/cache';
 import { getKVCache, getRecordFromKvCache } from '../data/kv-data';
 import { loadLogin, loadSetup } from './pages/login';
-import { loadProductForm, ProductForm } from './pages/product';
 
 
 
@@ -80,7 +80,7 @@ admin.get('/', async (ctx) => ctx.html(await loadApis(ctx)));
 admin.get('/login', async (ctx) => ctx.html(await loadLogin(ctx)));
 
 
-admin.get('/admin_productos', async (ctx) => ctx.html(await loadProductForm(ctx)));
+
 
 
 admin.get('/content/new/auth/users/setup', async (ctx) =>
@@ -152,6 +152,9 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 
 
 
+
+admin.get('/editar_productos', (ctx) => {
+  return ctx.html(ProductForm(ctx) );});
 
 
 

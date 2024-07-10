@@ -733,6 +733,35 @@ export async function prueba(ctx) {
 
 
 
+export async function pruebaReact(ctx) {
+  
+
+
+  return (  
+    <Layout>  
+{ctxString}
+    </Layout>
+  );
+};
+
+
+export const ProductForm = (ctx) => {
+  return (
+        <div class='container-fluid'>
+          <div class='row'>
+            <main class='col-10 offset-1 px-md-4 py-md-4'>
+              <h2>Crear Producto</h2>
+              <form id='formio-products'></form>
+              {props.children}
+              <button type='submit' form='formio-product' class='btn btn-primary mt-3'>Submit</button>
+            </main>
+          </div>
+        </div>
+  );
+};
+
+
+
 
 
 
