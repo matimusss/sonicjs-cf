@@ -48,7 +48,7 @@ export function generateSelectSql(table, params) {
 
 export async function getD1ByTableAndId_view(db, table, id, params) {
   const { results } = await db
-    .prepare(`SELECT * FROM ${table} where slug = '${id}';`)
+    .prepare(`SELECT * FROM product_full_details where slug = '${id}';`)
     .all();
 
   return results[0];
