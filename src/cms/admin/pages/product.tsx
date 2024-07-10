@@ -18,7 +18,7 @@ export const ProductForm = (props: { children?: string; screenTitle?: string }) 
           <div class='row'>
             <main class='col-10 offset-1 px-md-4 py-md-4'>
               <h2>Crear Producto</h2>
-              <form id='formio-product'></form>
+              <form id='formio-products'></form>
               {props.children}
               <button type='submit' form='formio-product' class='btn btn-primary mt-3'>Submit</button>
             </main>
