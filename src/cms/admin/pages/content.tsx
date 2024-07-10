@@ -7,7 +7,8 @@ import { jsx } from 'hono/jsx';
 import GjsEditor from '@grapesjs/react';
 import {grapesjs, Editor } from 'grapesjs';
 import Cookies from 'js-cookie'
-
+import React from "react";
+import useSWR from "swr";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { MAIN_BORDER_COLOR } from './../components/common';
 import CustomModal from './../components/CustomModal';
@@ -733,118 +734,474 @@ export async function prueba(ctx) {
 
 
 
+
+
+
+
+
+
+export default function List() {
+
+  const fetchDataFunction = async (
+    searchTerm,
+    filterColor,
+    sortBy,
+    minPrice,
+    maxPrice,
+    page,
+    itemsPerPage
+  ) => {
+    const data = [
+      {
+        id: 1,
+        title: "Laptop Dell",
+        description: "Powerful laptop for work.",
+        color: "blue",
+        price: 1200,
+      },
+      {
+        id: 2,
+        title: "Laptop HP",
+        description: "Affordable laptop for students.",
+        color: "red",
+        price: 800,
+      },
+      {
+        id: 3,
+        title: "Laptop Lenovo",
+        description: "Versatile laptop for everyday use.",
+        color: "blue",
+        price: 1000,
+      },
+      {
+        id: 4,
+        title: "Tablet Samsung",
+        description: "Compact tablet for entertainment.",
+        color: "red",
+        price: 600,
+      },
+      {
+        id: 5,
+        title: "Desktop PC",
+        description: "High-performance desktop for gaming.",
+        color: "blue",
+        price: 1500,
+      },
+      {
+        id: 6,
+        title: "Monitor LG",
+        description: "High-resolution monitor.",
+        color: "black",
+        price: 300,
+      },
+      {
+        id: 7,
+        title: "Keyboard",
+        description: "Mechanical keyboard.",
+        color: "black",
+        price: 100,
+      },
+      {
+        id: 8,
+        title: "Mouse",
+        description: "Wireless mouse.",
+        color: "black",
+        price: 50,
+      },
+      {
+        id: 9,
+        title: "Printer",
+        description: "All-in-one printer.",
+        color: "white",
+        price: 200,
+      },
+      {
+        id: 10,
+        title: "Webcam",
+        description: "HD webcam.",
+        color: "black",
+        price: 80,
+      },
+      {
+        id: 11,
+        title: "Headphones",
+        description: "Noise-canceling headphones.",
+        color: "black",
+        price: 150,
+      },
+      {
+        id: 12,
+        title: "Speakers",
+        description: "Bluetooth speakers.",
+        color: "blue",
+        price: 120,
+      },
+      {
+        id: 13,
+        title: "Smartphone",
+        description: "Latest model smartphone.",
+        color: "black",
+        price: 1000,
+      },
+      {
+        id: 14,
+        title: "Tablet Apple",
+        description: "New Apple tablet.",
+        color: "white",
+        price: 900,
+      },
+      {
+        id: 15,
+        title: "Smartwatch",
+        description: "Fitness smartwatch.",
+        color: "black",
+        price: 250,
+      },
+      {
+        id: 16,
+        title: "Camera",
+        description: "DSLR camera.",
+        color: "black",
+        price: 1200,
+      },
+      {
+        id: 17,
+        title: "Game Console",
+        description: "Next-gen game console.",
+        color: "white",
+        price: 500,
+      },
+      {
+        id: 18,
+        title: "Router",
+        description: "Wi-Fi router.",
+        color: "white",
+        price: 100,
+      },
+      {
+        id: 19,
+        title: "External Hard Drive",
+        description: "1TB external hard drive.",
+        color: "black",
+        price: 80,
+      },
+      {
+        id: 20,
+        title: "Microphone",
+        description: "Studio microphone.",
+        color: "black",
+        price: 150,
+      },
+      {
+        id: 21,
+        title: "Drone",
+        description: "Camera drone.",
+        color: "white",
+        price: 600,
+      },
+      {
+        id: 22,
+        title: "VR Headset",
+        description: "Virtual reality headset.",
+        color: "black",
+        price: 400,
+      },
+      {
+        id: 23,
+        title: "Fitness Tracker",
+        description: "Health and fitness tracker.",
+        color: "black",
+        price: 120,
+      },
+      {
+        id: 24,
+        title: "Smart Light",
+        description: "Smart home light.",
+        color: "white",
+        price: 60,
+      },
+      {
+        id: 25,
+        title: "Robot Vacuum",
+        description: "Automatic robot vacuum.",
+        color: "white",
+        price: 300,
+      },
+    ];
+  
+    let filteredData = data.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  
+    if (filterColor) {
+      filteredData = filteredData.filter((item) => item.color === filterColor);
+    }
+  
+    filteredData = filteredData.filter(
+      (item) =>
+        (!minPrice || item.price >= minPrice) &&
+        (!maxPrice || item.price <= maxPrice)
+    );
+  
+    if (sortBy === "asc") {
+      filteredData.sort((a, b) => a.price - b.price);
+    } else if (sortBy === "desc") {
+      filteredData.sort((a, b) => b.price - a.price);
+    }
+  
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+  
+    await new Promise((resolve) => setTimeout(resolve, 600));
+  
+    return {
+      items: filteredData.slice(start, end),
+      total: filteredData.length,
+    };
+  };
+
+  const [keepPreviousData, setKeepPreviousData] = React.useState(false);
+  const [search, setSearch] = React.useState("");
+  const [filterColor, setFilterColor] = React.useState("");
+  const [sortBy, setSortBy] = React.useState(""); // asc, desc
+  const [minPrice, setMinPrice] = React.useState("");
+  const [maxPrice, setMaxPrice] = React.useState("");
+  const [page, setPage] = React.useState(1);
+  const itemsPerPage = 10;
+
+  const { data, error, isValidating } = useSWR(
+    [search, filterColor, sortBy, minPrice, maxPrice, page, itemsPerPage],
+    () =>
+      fetchDataFunction(
+        search,
+        filterColor,
+        sortBy,
+        minPrice,
+        maxPrice,
+        page,
+        itemsPerPage
+      ),
+    { keepPreviousData }
+  );
+
+  const isLoading = !data && !error;
+
+  const totalPages = data ? Math.ceil(data.total / itemsPerPage) : 1;
+
+  // Effect to reset the page to 1 when filters or search terms change
+  React.useEffect(() => {
+    setPage(1);
+  }, [search, filterColor, sortBy, minPrice, maxPrice]);
+
+  return (
+    <div>
+
+
+      <h1>SWR Search, Filter & Sort Example</h1>
+      <div className="search-container">
+    <a> CREAR PRODUCTO</a>
+    
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search Products..."
+          autoFocus
+        />
+
+    
+
+        <select
+          value={filterColor}
+          onChange={(e) => setFilterColor(e.target.value)}
+        >
+          <option value="">All Colors</option>
+          <option value="blue">Blue</option>
+          <option value="red">Red</option>
+          <option value="black">Black</option>
+        </select>
+        <br />
+        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <option value="">Sort by</option>
+          <option value="asc">Price Ascending</option>
+          <option value="desc">Price Descending</option>
+        </select>
+        <input
+          type="number"
+          value={minPrice}
+          onChange={(e) =>
+            setMinPrice(e.target.value ? parseInt(e.target.value) : "")
+          }
+          placeholder="Min Price"
+        />
+        <input
+          type="number"
+          value={maxPrice}
+          onChange={(e) =>
+            setMaxPrice(e.target.value ? parseInt(e.target.value) : "")
+          }
+          placeholder="Max Price"
+        />
+        <label>
+          <input
+            type="checkbox"
+            checked={keepPreviousData}
+            onChange={(e) => setKeepPreviousData(e.target.checked)}
+          />{" "}
+          Keep Previous Data
+        </label>
+      </div>
+
+      <div className={isLoading ? "loading" : ""}>
+        {data &&
+          data.items.map((item) => (
+            <div className="item" key={item.id}>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <p>Color: {item.color}</p>
+              <p>Price: ${item.price}</p>
+            </div>
+          ))}
+      </div>
+
+      <div>
+        <button
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <span>
+          Page {page} of {totalPages}
+        </span>
+        <button
+          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={page === totalPages}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export const ProductForm = (ctx) => {
   return (
     <Layout env={ctx.env}>
-      <div className="container-fluid">
-        <div className="row">
-          <main className="col-10 offset-1 px-md-4 py-md-4">
-            <h2>Crear Producto</h2>
-            <form id="form-product">
-              <div className="form-group">
-                <label htmlFor="id">ID</label>
-                <input type="text" className="form-control" id="id" name="id" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="nombre">Nombre</label>
-                <input type="text" className="form-control" id="nombre" name="nombre" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="slug">Slug</label>
-                <input type="text" className="form-control" id="slug" name="slug" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="sku">SKU</label>
-                <input type="text" className="form-control" id="sku" name="sku" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="descripcion_corta">Descripción corta</label>
-                <input type="text" className="form-control" id="descripcion_corta" name="descripcion_corta" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="descripcion_larga">Descripción larga</label>
-                <textarea className="form-control" id="descripcion_larga" name="descripcion_larga"></textarea>
-              </div>
-              <div className="form-group">
-                <label htmlFor="imagenes">Imágenes</label>
-                <input type="file" className="form-control-file" id="imagenes" name="imagenes" multiple />
-              </div>
-              <div className="form-group">
-                <label htmlFor="sale_price">Precio de venta</label>
-                <input type="number" className="form-control" id="sale_price" name="sale_price" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="compare_price">Precio de comparación</label>
-                <input type="number" className="form-control" id="compare_price" name="compare_price" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="buying_price">Precio de compra</label>
-                <input type="number" className="form-control" id="buying_price" name="buying_price" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="quantity">Cantidad</label>
-                <input type="number" className="form-control" id="quantity" name="quantity" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="product_type">Tipo de producto</label>
-                <input type="text" className="form-control" id="product_type" name="product_type" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="note">Nota</label>
-                <textarea className="form-control" id="note" name="note"></textarea>
-              </div>
-              <div className="form-group">
-                <label htmlFor="categoria">Categoría</label>
-                <input type="text" className="form-control" id="categoria" name="categoria" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="atributo1">Atributo 1: Color</label>
-                <input type="text" className="form-control" id="atributo1" name="atributo1" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="valor1">Valor</label>
-                <input type="text" className="form-control" id="valor1" name="valor1" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="atributo2">Atributo 2: Tamaño</label>
-                <input type="text" className="form-control" id="atributo2" name="atributo2" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="valor2">Valor</label>
-                <input type="text" className="form-control" id="valor2" name="valor2" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="atributo3">Atributo 3: Material</label>
-                <input type="text" className="form-control" id="atributo3" name="atributo3" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="valor3">Valor</label>
-                <input type="text" className="form-control" id="valor3" name="valor3" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="tags">Tags</label>
-                <input type="text" className="form-control" id="tags" name="tags" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="shipping_info">Información de envío</label>
-                <textarea className="form-control" id="shipping_info" name="shipping_info"></textarea>
-              </div>
-              <div className="form-group">
-                <label htmlFor="suppliers">Proveedores</label>
-                <input type="text" className="form-control" id="suppliers" name="suppliers" />
-              </div>
-              <button type="submit" className="btn btn-primary">Cupones</button>
-            </form>
-          </main>
-        </div>
-      </div>
+<List></List>
+   <NewProduct />
     </Layout>
   );
 };
 
 
+export const NewProduct = (ctx) => {
+  return (
 
-
+<div className="container-fluid">
+<div className="row">
+  <main className="col-10 offset-1 px-md-4 py-md-4">
+    <h2>Crear Producto</h2>
+    <form id="form-product">
+      <div className="form-group">
+        <label htmlFor="id">ID</label>
+        <input type="text" className="form-control" id="id" name="id" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="nombre">Nombre</label>
+        <input type="text" className="form-control" id="nombre" name="nombre" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="slug">Slug</label>
+        <input type="text" className="form-control" id="slug" name="slug" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="sku">SKU</label>
+        <input type="text" className="form-control" id="sku" name="sku" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="descripcion_corta">Descripción corta</label>
+        <input type="text" className="form-control" id="descripcion_corta" name="descripcion_corta" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="descripcion_larga">Descripción larga</label>
+        <textarea className="form-control" id="descripcion_larga" name="descripcion_larga"></textarea>
+      </div>
+      <div className="form-group">
+        <label htmlFor="imagenes">Imágenes</label>
+        <input type="file" className="form-control-file" id="imagenes" name="imagenes" multiple />
+      </div>
+      <div className="form-group">
+        <label htmlFor="sale_price">Precio de venta</label>
+        <input type="number" className="form-control" id="sale_price" name="sale_price" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="compare_price">Precio de comparación</label>
+        <input type="number" className="form-control" id="compare_price" name="compare_price" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="buying_price">Precio de compra</label>
+        <input type="number" className="form-control" id="buying_price" name="buying_price" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="quantity">Cantidad</label>
+        <input type="number" className="form-control" id="quantity" name="quantity" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="product_type">Tipo de producto</label>
+        <input type="text" className="form-control" id="product_type" name="product_type" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="note">Nota</label>
+        <textarea className="form-control" id="note" name="note"></textarea>
+      </div>
+      <div className="form-group">
+        <label htmlFor="categoria">Categoría</label>
+        <input type="text" className="form-control" id="categoria" name="categoria" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="atributo1">Atributo 1: Color</label>
+        <input type="text" className="form-control" id="atributo1" name="atributo1" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="valor1">Valor</label>
+        <input type="text" className="form-control" id="valor1" name="valor1" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="atributo2">Atributo 2: Tamaño</label>
+        <input type="text" className="form-control" id="atributo2" name="atributo2" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="valor2">Valor</label>
+        <input type="text" className="form-control" id="valor2" name="valor2" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="atributo3">Atributo 3: Material</label>
+        <input type="text" className="form-control" id="atributo3" name="atributo3" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="valor3">Valor</label>
+        <input type="text" className="form-control" id="valor3" name="valor3" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="tags">Tags</label>
+        <input type="text" className="form-control" id="tags" name="tags" />
+      </div>
+      <div className="form-group">
+        <label htmlFor="shipping_info">Información de envío</label>
+        <textarea className="form-control" id="shipping_info" name="shipping_info"></textarea>
+      </div>
+      <div className="form-group">
+        <label htmlFor="suppliers">Proveedores</label>
+        <input type="text" className="form-control" id="suppliers" name="suppliers" />
+      </div>
+      <button type="submit" className="btn btn-primary">Cupones</button>
+    </form>
+  </main>
+</div>
+</div>
+  );
+};
 
 
 
