@@ -731,7 +731,11 @@ export async function prueba(ctx) {
 export async function ProductForm(ctx) {
 
   return (
-    <Layout env={ctx.env}>
+    <Layout
+      env={ctx.env}
+      username={ctx.get('user')?.email}
+      screenTitle={'productos'}
+    >
           
 
       <div id='grid-products'></div>
