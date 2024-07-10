@@ -1,5 +1,5 @@
 const url2 = window.location.href;
-const gridWrappre = document.getElementById('grid-products');
+const gridWrapprer = document.getElementById('grid-products');
 
 
 if (gridWrapper) {
