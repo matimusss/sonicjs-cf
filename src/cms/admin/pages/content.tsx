@@ -732,88 +732,13 @@ export async function prueba(ctx) {
 
 
 
-
-export const FilterableProductList = () => {
-  const productList = [
-    { id: 1, title: 'Product 1', description: 'Description 1', color: 'blue', price: 100 },
-    { id: 2, title: 'Product 2', description: 'Description 2', color: 'red', price: 200 },
-    { id: 3, title: 'Product 3', description: 'Description 3', color: 'black', price: 150 },
-    // Agrega más productos según sea necesario
-  ];
-
-  const [filteredProducts, setFi7lteredProducts] = useState(productList);
-  const [search, setSearch] = useState('');
-  const [filterColor, setFilterColor] = useState('');
-  const [sortBy, setSortBy] = useState('');
-
-  const handleFilterAndSort = () => {
-    let filteredData = productList.filter((item) =>
-      item.title.toLowerCase().includes(search.toLowerCase())
-    );
-
-    if (filterColor) {
-      filteredData = filteredData.filter((item) => item.color === filterColor);
-    }
-
-    if (sortBy === 'asc') {
-      filteredData.sort((a, b) => a.price - b.price);
-    } else if (sortBy === 'desc') {
-      filteredData.sort((a, b) => b.price - a.price);
-    }
-
-    setFilteredProducts(filteredData);
-  };
-
-  return (
-    <div>
-      <h1>Product List</h1>
-      <div className="search-container">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search Products..."
-          autoFocus
-        />
-        <select
-          value={filterColor}
-          onChange={(e) => setFilterColor(e.target.value)}
-        >
-          <option value="">All Colors</option>
-          <option value="blue">Blue</option>
-          <option value="red">Red</option>
-          <option value="black">Black</option>
-        </select>
-        <br />
-        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-          <option value="">Sort by</option>
-          <option value="asc">Price Ascending</option>
-          <option value="desc">Price Descending</option>
-        </select>
-        <button onClick={handleFilterAndSort}>Apply Filters</button>
-      </div>
-
-      <div>
-        {filteredProducts.map((item) => (
-          <div className="item" key={item.id}>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-            <p>Color: {item.color}</p>
-            <p>Price: ${item.price}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-
+          <div id='grid' data-route={props.table}></div>
 
 
 export const ProductForm = (ctx) => {
   return (
     <Layout env={ctx.env}>
-< FilterableProductList ></FilterableProductList>
+                <div id='grid-products'></div>
    <NewProduct />
     </Layout>
   );
