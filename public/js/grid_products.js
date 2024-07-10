@@ -1,5 +1,3 @@
-const url = window.location.href;
-const authMode = url.includes('/auth/');
 const gridWrapperProducts = document.getElementById('grid-products');
 if (gridWrapperProducts) {
   const dataGrid = new gridjs.Grid({
@@ -96,7 +94,7 @@ if (gridWrapperProducts) {
     xhttp.send();
   }
 
-  gridWrapper.addEventListener('click', function (e) {
+  gridWrapperProducts.addEventListener('click', function (e) {
     if (e.target.closest('.delete-btn')) {
       const itemId = e.target
         .closest('.delete-btn')
@@ -115,5 +113,5 @@ if (gridWrapperProducts) {
 // });
 
 function getTable() {
-  return $('#grid').data('route');
+  return $('#grid-products').data('route');
 }
