@@ -50,7 +50,7 @@ export async function getD1ByTableAndId_view(db, table, id, params) {
 
 
 
-  let sql = `SELECT * FROM product_full_details where slug = '${id}';`;
+  let sql = `SELECT * FROM product_full_details where slug = 'producto_junior';`;
  
 
   sql = sql.replace(/\s+/g, ' ').trim() + ';';
