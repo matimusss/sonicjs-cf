@@ -153,7 +153,7 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 
 
 
-admin.get('/editar_productos', (ctx) => {
+admin.get('/editar_productos',async (ctx) => {
   return ctx.html(ProductForm(ctx) );});
 
 
