@@ -36,6 +36,8 @@ let mode;
   }
 })();
 
+
+
 let currUppyField = '';
 
 async function initUppy(id) {
@@ -142,6 +144,16 @@ async function pickFileEventHandler(cb) {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
 function setupComponents(data) {
   const fileFields = data.filter(
     (c) => c.metaType === 'file' || c.metaType === 'file[]'
@@ -214,6 +226,11 @@ function setupComponents(data) {
     }, [])
   };
 }
+
+
+
+
+
 
 function handleSubmitData(data) {
   Object.keys(data).forEach((key) => {

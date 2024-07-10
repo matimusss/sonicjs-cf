@@ -120,5 +120,8 @@ export const fields: ApiConfig['fields'] = {
   },
   body: {
     type: 'ckeditor'
+  },
+  slug: {
+    type: 'foreign'
   }
 };

@@ -67,6 +67,21 @@ export function getForm(ctx: AppContext, table) {
         isUploadEnabled: false
       };
     }
+    else if (formField.metaType == 'foreign') {
+      const c = formField;
+      formField = {
+        label: c.label || c.key,
+        key: c.key,
+        type: 'textarea',
+        input: true,
+      };
+    }
+
+
+
+
+
+    //aca agregariamos NUEVO CAMPO FORMIO
     formFields.push(formField);
   }
 

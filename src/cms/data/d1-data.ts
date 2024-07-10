@@ -3,6 +3,37 @@ import { and, eq } from 'drizzle-orm';
 import { tableSchemas } from '../../db/routes';
 var qs = require('qs');
 
+
+
+
+
+
+
+
+
+
+//EJEMPLO PAR ACONSULTAR vista.
+export async function getD1ByTableAndId_view(db, table, id) {
+  // Define la consulta SQL con un parámetro de reemplazo
+  let sql = `SELECT * FROM ${table} WHERE slug = ?`;
+  try {
+    // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
+    const { results } = await db.prepare(sql).bind(id).all();
+    return results; // Devuelve los resultados de la consulta
+  } catch (error) {
+    console.error('Error executing SQL:', error);
+    throw error; // Lanza el error para que pueda ser manejado en el llamador
+  }
+}
+
+
+
+
+
+
+
+
+
 export async function getAllContent(db) {
   const { results } = await db.prepare('SELECT * FROM users').all();
   return results;
@@ -46,19 +77,7 @@ export function generateSelectSql(table, params) {
   return sql;
 }
 
-export async function getD1ByTableAndId_view(db, table, id) {
-  // Define la consulta SQL con un parámetro de reemplazo
-  let sql = `SELECT * FROM ${table} WHERE slug = ?`;
 
-  try {
-    // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
-    const { results } = await db.prepare(sql).bind(id).all();
-    return results; // Devuelve los resultados de la consulta
-  } catch (error) {
-    console.error('Error executing SQL:', error);
-    throw error; // Lanza el error para que pueda ser manejado en el llamador
-  }
-}
 export function prepareD1Data(data, tbl = '') {
   const table = data.table || tbl;
   const schema = getRepoFromTable(table);

@@ -36,29 +36,25 @@ const api = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 const tables = apiConfig.filter((tbl) => tbl.table !== 'users');
 tables.forEach((entry) => {
   // console.log("setting route for " + entry.route);
-
-
-//EJEMPLO DE RUTA CON QUERY PERSONALIZADA, request a una view.
-
+  //EJEMPLO DE RUTA CON QUERY PERSONALIZADA, request a una view.
   //api.get('/product-full-details', async (ctx) => {
-  
-    //let { includeContentType, source, ...params } = ctx.req.query();
-
-    //const query = 'SELECT * FROM product_full_details'; // Query personalizada
-  
- //   try {
-      // Ejecuta la consulta utilizando `getRecords`
-      //const data = await getRecords(ctx, 'product_full_details', params, ctx.req.url,"d1", query);  
-      // Devuelve los resultados
-    //  return ctx.json(data);
-   // } catch (error) {
-      //console.error('Error retrieving product full details:', error);
-      //return ctx.text('Error retrieving product full details', 500);
-    //}
+  //let { includeContentType, source, ...params } = ctx.req.query();
+  //const query = 'SELECT * FROM product_full_details'; // Query personalizada
+  //   try {
+  // Ejecuta la consulta utilizando `getRecords`
+  //const data = await getRecords(ctx, 'product_full_details', params, ctx.req.url,"d1", query);  
+  // Devuelve los resultados
+  //  return ctx.json(data);
+  // } catch (error) {
+  //console.error('Error retrieving product full details:', error);
+  //return ctx.text('Error retrieving product full details', 500);
+  //}
   //});
 
 
 
+
+//EJEMPLO DE RUTA CON RUTA DINAMICA Y REFIRIENDOSE A UNA VISTA.
 
   api.get('/product-full-details/:id', async (ctx) => {
     const { id } = ctx.req.param(); // Obtén el parámetro ID de la URL
@@ -67,6 +63,7 @@ tables.forEach((entry) => {
       // Llama a la función getD1ByTableAndId para obtener los datos del producto
       const data = await getD1ByTableAndId_view(   ctx.env.D1DATA, 'product_full_details', id);
   
+      
       if (data) {
         return ctx.json(data);
       } else {
@@ -77,6 +74,8 @@ tables.forEach((entry) => {
       return ctx.text('Error retrieving product full details', 500);
     }
   });
+
+
 
 
 ////////////////////////          

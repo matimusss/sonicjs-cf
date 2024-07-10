@@ -211,12 +211,19 @@ export interface ApiConfig {
       | {
           type: 'password';
         }
+        | {
+          type: 'foreign';
+        }
       | {
           type: 'ckeditor';
         }
       | {
           type: 'quill';
         };
+        
+
+        
+    //aca agregariamos NUEVO CAMPO FORMIO
   };
 }
 
