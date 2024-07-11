@@ -4,8 +4,9 @@ import { auditSchema } from './../audit';
 
 
 
-import { ApiConfig } from './../routes';
-import { isAdminOrEditor } from './../config-helpers';
+
+import { ApiConfig } from './../../routes';
+import { isAdminOrEditor } from '../../config-helpers';
 
 export const tableName = 'categories';
 
