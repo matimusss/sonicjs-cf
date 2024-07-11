@@ -15,7 +15,6 @@ import Topbar from './../components/Topbar';
 import RightSidebar from './../components/RightSidebar';
 import './../style.css';
 
-
 import React, { useEffect } from 'react';
 import $ from 'jquery'; // Importa jQuery si lo estás utilizando
 import { json } from 'drizzle-orm/mysql-core';
@@ -27,8 +26,6 @@ import { and, eq } from 'drizzle-orm';
 import { tableSchemas } from './../../../db/routes';
 var qs = require('qs');
 ///
-
-
 
 export async function loadAdminTable(ctx) {
   let content = await getDataListByPrefix(ctx.env.KVDATA);
@@ -298,101 +295,7 @@ export async function loadNewContent(ctx, route, tbl?: string) {
   );
 }
 
-  
-// await ctx.env.D1DATA.update(route)
- //.set({ html_code: new_html_code })
- //.where(eq(route.id, id));
 
-
-export async function save_html(ctx, route, id, content, tbl?: string) {
-  //editar table ROUTE, donde ID = id, 
-//cambiar campo html_code a nuevo htmlcode, 
-//return OK o NO OK
-  const nombre = content.codigo_html
-
- // const db = await ctx.env.D1DATA;
-  //await db.update(tableSchemas[route])
-  //.set({ html_code: "ASD" })
-  //.where(eq(tableSchemas[route].id, id));
-
-  // Devuelve la respuesta de texto
-  return nombre;
-}
-
-
-
-
-export async function edit_html(ctx, route, id, tbl?: string) {
-  
-
-  //sacamos parte de la ruta q no sirve DEPRECATED
-  const ruta = JSON.stringify(route).replace("admin/edit_html/", "");
-  const ide = JSON.stringify(id);
-    
-  const ctxString = ctx._var.session.sessionId.replace(/"/g, "");
-
-
- const codigoJS = `
- // Tu código JavaScript aquí
- console.log('Hola desde el código JavaScript');
- const routes = ${ruta};
- const id = ${ide};
- const auth = "${ctxString}";
-
-
- // Función para obtener el valor de una cookie por su nombre
- function getCookie(name) {
-   // Añadimos el signo "=" al nombre de la cookie para buscar solo la coincidencia exacta
-   let nameEQ = name + "=";
-   // Dividimos el documento de cookies en partes individuales
-   let ca = document.cookie.split(';');
-   
-   for (let i = 0; i < ca.length; i++) {
-     // Eliminamos los espacios en blanco al inicio de cada cookie
-     let c = ca[i].trim();
-     // Comprobamos si esta cookie comienza con el nombre buscado
-     if (c.indexOf(nameEQ) === 0) {
-       // Devolvemos el valor de la cookie
-       return c.substring(nameEQ.length, c.length);
-     }
-   }
-   // Si no se encuentra la cookie, devolvemos null
-   return null;
- }
- 
- // Obtener el valor de la cookie "tusSupport"
- let tusSupportValue = getCookie('auth_session');
- 
- // Imprimir el valor en la consola
- console.log(tusSupportValue);
- 
-
-
- `;
-    return (
-      <Layout>  
-   <script dangerouslySetInnerHTML={{ __html: codigoJS }} />
-        <script src="https://unpkg.com/grapesjs-component-twitch"></script>
-        <script src="https://unpkg.com/grapesjs-tailwind"></script>
-        <script src="https://unpkg.com/grapesjs-ga"></script>
-        <script src="https://unpkg.com/grapesjs-plugin-forms"></script>
-      <script src='/public/js/grapes.js'></script>
-        <script src='/public/js/resultados.js'></script>
-        <div id="gjs" class="gjs-editor-cont">
-      </div>  
-      <div>
-      </div>
-        </Layout>
-    );
-}
-
-
-
-
-
-function editScript() {
-  return console.log('hello');
-}
 
 export const FileModal = () => {
   return (
@@ -631,13 +534,6 @@ export const TopContentTable = (props: {
       <div class='row'>
         <div class='col-md-12'>
           <div class='pb-2 mb-3'>
-
-
-
-
-
-
-            
             {/* <!-- Button trigger modal --> */}
             <a
               href={'/admin/content/new/' + props.route}
@@ -691,12 +587,114 @@ export const TopContentTable = (props: {
 
 
 
+//implementaciones propias /////////////////////
+/////////////////////////////////
+
+//
+
+
+
+
+// await ctx.env.D1DATA.update(route)
+ //.set({ html_code: new_html_code })
+ //.where(eq(route.id, id));
+
+
+ export async function save_html(ctx, route, id, content, tbl?: string) {
+  //editar table ROUTE, donde ID = id, 
+//cambiar campo html_code a nuevo htmlcode, 
+//return OK o NO OK
+  const nombre = content.codigo_html
+
+ // const db = await ctx.env.D1DATA;
+  //await db.update(tableSchemas[route])
+  //.set({ html_code: "ASD" })
+ //.where(eq(tableSchemas[route].id, id));
+
+  // Devuelve la respuesta de texto
+  return nombre;
+}
+
+
+
+
+export async function edit_html(ctx, route, id, tbl?: string) {
+  
+
+  //sacamos parte de la ruta q no sirve DEPRECATED
+  const ruta = JSON.stringify(route).replace("admin/edit_html/", "");
+  const ide = JSON.stringify(id);
+    
+  const ctxString = ctx._var.session.sessionId.replace(/"/g, "");
+
+
+ const codigoJS = `
+ // Tu código JavaScript aquí
+ console.log('Hola desde el código JavaScript');
+ const routes = ${ruta};
+ const id = ${ide};
+ const auth = "${ctxString}";
+
+
+ // Función para obtener el valor de una cookie por su nombre
+ function getCookie(name) {
+   // Añadimos el signo "=" al nombre de la cookie para buscar solo la coincidencia exacta
+   let nameEQ = name + "=";
+   // Dividimos el documento de cookies en partes individuales
+   let ca = document.cookie.split(';');
+   
+   for (let i = 0; i < ca.length; i++) {
+     // Eliminamos los espacios en blanco al inicio de cada cookie
+     let c = ca[i].trim();
+     // Comprobamos si esta cookie comienza con el nombre buscado
+     if (c.indexOf(nameEQ) === 0) {
+       // Devolvemos el valor de la cookie
+       return c.substring(nameEQ.length, c.length);
+     }
+   }
+   // Si no se encuentra la cookie, devolvemos null
+   return null;
+ }
+ 
+ // Obtener el valor de la cookie "tusSupport"
+ let tusSupportValue = getCookie('auth_session');
+ 
+ // Imprimir el valor en la consola
+ console.log(tusSupportValue);
+ 
+
+
+ `;
+    return (
+      <Layout>  
+   <script dangerouslySetInnerHTML={{ __html: codigoJS }} />
+        <script src="https://unpkg.com/grapesjs-component-twitch"></script>
+        <script src="https://unpkg.com/grapesjs-tailwind"></script>
+        <script src="https://unpkg.com/grapesjs-ga"></script>
+        <script src="https://unpkg.com/grapesjs-plugin-forms"></script>
+      <script src='/public/js/grapes.js'></script>
+        <script src='/public/js/resultados.js'></script>
+        <div id="gjs" class="gjs-editor-cont">
+      </div>  
+      <div>
+      </div>
+        </Layout>
+    );
+}
+
+
+
+
+
+function editScript() {
+  return console.log('hello');
+}
+
 
 
 
 export async function prueba(ctx) {
 
- 
   
   const codigoJS = `
     // Tu código JavaScript aquí
@@ -725,18 +723,41 @@ export async function prueba(ctx) {
 };
 
 
+// CRUDS
+
+
+//AttributesCRUD
+//TagsCRUD
+//OrdersCRUD
+//CategoriesCRUD
+//ProductCRUD
+//CouponsCRUD
 
 
 
-export async function ProductForm(ctx) {
-
+export async function OrdersCRUD(ctx) {
   return (
     <Layout
       env={ctx.env}
       username={ctx.get('user')?.email}
-      screenTitle={'productos'}
-    >
-          
+      screenTitle={'ordenes'}>
+          <div class='row'>
+          <div class='col-md-12'>
+      <div id='grid-orders'></div>
+      </div></div>
+   <NewProduct />
+    </Layout>
+  );
+};
+
+
+
+export async function ProductCRUD(ctx) {
+  return (
+    <Layout
+      env={ctx.env}
+      username={ctx.get('user')?.email}
+      screenTitle={'productos'}>
           <div class='row'>
           <div class='col-md-12'>
       <div id='grid-products'></div>
@@ -747,9 +768,114 @@ export async function ProductForm(ctx) {
 };
 
 
+export async function CouponsCRUD(ctx) {
+  return (
+    <Layout
+      env={ctx.env}
+      username={ctx.get('user')?.email}
+      screenTitle={'cupones'}>
+          <div class='row'>
+          <div class='col-md-12'>
+      <div id='grid-coupons'></div>
+      </div></div>
+   <NewProduct />
+    </Layout>
+  );
+};
+
+export async function AttributesCRUD(ctx) {
+  return (
+    <Layout
+      env={ctx.env}
+      username={ctx.get('user')?.email}
+      screenTitle={'atributos'}>
+          <div class='row'>
+          <div class='col-md-12'>
+      <div id='grid-attributes'></div>
+      </div></div>
+   <NewProduct />
+    </Layout>
+  );
+};
+export async function CategoriesCRUD(ctx) {
+  return (
+    <Layout
+      env={ctx.env}
+      username={ctx.get('user')?.email}
+      screenTitle={'categorias'}>
+          <div class='row'>
+          <div class='col-md-12'>
+      <div id='grid-categories'></div>
+      </div></div>
+   <NewProduct />
+    </Layout>
+  );
+};
+
+export async function TagsCRUD(ctx) {
+  return (
+    <Layout
+      env={ctx.env}
+      username={ctx.get('user')?.email}
+      screenTitle={'tags'}>
+          <div class='row'>
+          <div class='col-md-12'>
+      <div id='grid-tags'></div>
+      </div></div>
+   <NewProduct />
+    </Layout>
+  );
+};
+
+
+
+
+export async function pruebaReact(ctx) {
+  
+  const sess = ctx._var.session.sessionId;
+  const ctxString = JSON.stringify(sess).replace(/"/g, "");
+
+  return (  
+    <Layout>  
+{ctxString}
+    </Layout>
+  );
+};
+
+
+
+
+export  function editor() {
+  const onEditor = (editor: Editor) => {
+    console.log('Editor loaded', { editor });
+  };
+
+  return (
+    <GjsEditor
+      // Pass the core GrapesJS library to the wrapper (required).
+      // You can also pass the CDN url (eg. "https://unpkg.com/grapesjs")
+      grapesjs={grapesjs}
+      // Load the GrapesJS CSS file asynchronously from URL.
+      // This is an optional prop, you can always import the CSS directly in your JS if you wish.
+      grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
+      // GrapesJS init options
+      options={{
+        height: '100vh',
+        storageManager: false,
+      }}
+      onEditor={onEditor}
+    />
+  );
+}
+
+
+
+
+
+
+
 export const NewProduct = (ctx) => {
   return (
-
 <div className="container-fluid">
 <div className="row">
   <main className="col-10 offset-1 px-md-4 py-md-4">
@@ -854,50 +980,3 @@ export const NewProduct = (ctx) => {
 </div>
   );
 };
-
-
-
-
-
-
-
-
-
-
-export async function pruebaReact(ctx) {
-  
-  const sess = ctx._var.session.sessionId;
-  const ctxString = JSON.stringify(sess).replace(/"/g, "");
-
-  return (  
-    <Layout>  
-{ctxString}
-    </Layout>
-  );
-};
-
-
-
-
-export  function editor() {
-  const onEditor = (editor: Editor) => {
-    console.log('Editor loaded', { editor });
-  };
-
-  return (
-    <GjsEditor
-      // Pass the core GrapesJS library to the wrapper (required).
-      // You can also pass the CDN url (eg. "https://unpkg.com/grapesjs")
-      grapesjs={grapesjs}
-      // Load the GrapesJS CSS file asynchronously from URL.
-      // This is an optional prop, you can always import the CSS directly in your JS if you wish.
-      grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
-      // GrapesJS init options
-      options={{
-        height: '100vh',
-        storageManager: false,
-      }}
-      onEditor={onEditor}
-    />
-  );
-}

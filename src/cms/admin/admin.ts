@@ -28,6 +28,13 @@ import {
   ProductForm,
   edit_html,
   save_html
+AttributesCRUD,
+TagsCRUD,
+OrdersCRUD,
+CategoriesCRUD,
+ProductCRUD,
+CouponsCRUD,
+
 } from './pages/content';
 
 import { loadApis } from './pages/api';
@@ -80,9 +87,6 @@ admin.get('/', async (ctx) => ctx.html(await loadApis(ctx)));
 admin.get('/login', async (ctx) => ctx.html(await loadLogin(ctx)));
 
 
-
-
-
 admin.get('/content/new/auth/users/setup', async (ctx) =>
   ctx.html(await loadSetup(ctx))
 );
@@ -105,6 +109,38 @@ admin.get('/content/new/:route', async (ctx) => {
 });
 
 
+
+
+
+
+
+
+//CRUDS
+
+  admin.get('/CategoriesCRUD',async (ctx) => {
+    return ctx.html(await CategoriesCRUD(ctx) );});
+
+    admin.get('/AttributesCRUD',async (ctx) => {
+      return ctx.html(await AttributesCRUD(ctx) );});
+
+      admin.get('/OrdersCRUD',async (ctx) => {
+        return ctx.html(await OrdersCRUD(ctx) );});
+
+        admin.get('/TagsCRUD',async (ctx) => {
+          return ctx.html(await TagsCRUD(ctx) );});
+
+          admin.get('/ProductCRUD',async (ctx) => {
+            return ctx.html(await ProductCRUD(ctx) );});
+
+            admin.get('/CouponsCRUD',async (ctx) => {
+              return ctx.html(await CouponsCRUD(ctx) );});
+
+//
+
+
+//EDITOR GRAPESJS
+//GET Y POST
+
 admin.get('/edit_html/:route/:id', async (ctx) => {
   const route = ctx.req.param('route');
   const id = ctx.req.param('id');
@@ -114,14 +150,6 @@ admin.get('/edit_html/:route/:id', async (ctx) => {
 
   return ctx.html(await edit_html(ctx, route, id));
 });
-
-
-
-
-
-admin.get('/editar_productos',async (ctx) => {
-  return ctx.html(await ProductForm(ctx) );});
-
 
 
 admin.post('/save_html/:route/:id', async (ctx) => {
@@ -135,6 +163,26 @@ admin.post('/save_html/:route/:id', async (ctx) => {
 
   return ctx.text(await save_html(ctx, route, id, content));
 });
+
+//
+
+//ETC / PRUEBAS
+
+admin.get('/prueba', async (ctx) => {
+  // return ctx.html(await prueba());
+  return ctx.html(  
+   await prueba(ctx)
+ 
+ 
+ );
+ 
+ });
+ 
+
+ admin.get('/pruebaReact', (ctx) => {
+  return ctx.html(pruebaReact(ctx) );});
+
+
 
 
 
@@ -163,24 +211,12 @@ admin.get('/content/edit/auth/users/:id', async (ctx) => {
 
 
 
-admin.get('/prueba', async (ctx) => {
- // return ctx.html(await prueba());
- return ctx.html(  
-  await prueba(ctx)
-
-
-);
-
-});
 
 
 
 
 
 
-
-admin.get('/pruebaReact', (ctx) => {
-  return ctx.html(pruebaReact(ctx) );});
 
 
 
@@ -205,10 +241,6 @@ admin.get('/tables/:route', async (ctx) => {
   return ctx.html(await loadTableData(ctx, route));
 
 });
-
-
-
-
 
 
 
@@ -263,10 +295,6 @@ admin.get('/api/in-memory-cache', async (ctx) => {
     executionTime
   });
 });
-
-
-
-
 
 
 

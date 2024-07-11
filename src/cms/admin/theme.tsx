@@ -332,25 +332,55 @@ export const Layout: FC<{
            
            
 
+
+                  <h6 class='sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'>
+                    <span>CRUD´S</span>
+                  </h6>
+                  <li class='nav-item'>
+                    <a class='nav-link'  href='/admin/OrdersCRUD'>
+                    Panel de ordenes
+                    </a>
+                  </li>
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/admin/AttributesCRUD'>
+                    Panel de atributos
+                    </a>
+                  </li>
+
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/admin/CategoriesCRUD'>
+                    Panel de categorias
+                    </a>
+                  </li>
+
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/admin/ProductCRUD'>
+                    Panel de products
+                    </a>
+                  </li>
+
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/admin/TagsCRUD'>
+                    Panel de etiquetas
+                    </a>
+                  </li>
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/admin/CouponsCRUD'>
+                      Panel de cupones
+                    </a>
+                  </li>
+                  
+           
+
                   <h6 class='sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'>
                     <span>Agregados</span>
                   </h6>
                   <li class='nav-item'>
                     <a class='nav-link'  href='/admin/prueba'>
-                      Editor de paginas
+                      Editor de paginas/recursos HTML
                     </a>
                   </li>
-                  <li class='nav-item'>
-                    <a class='nav-link' href='/admin/pruebaReact'>
-                      Editor de paginas REACT
-                    </a>
-                  </li>
-
-                  <li class='nav-item'>
-                    <a class='nav-link' href='/admin/editar_productos'>
-                      Editor de productos
-                    </a>
-                  </li>
+  
 
             
            
