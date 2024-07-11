@@ -4,15 +4,7 @@ if (gridWrapperCoupons) {
   const dataGrid = new gridjs.Grid({
     columns: [
 
-      record.,
-      record.,
-      record.,
-      record.,
-      record.,
-      record.,
-      record.,
-      record.,
-      record.
+
       {
         name: 'ID',
         formatter: (id) => gridjs.html(`${id}`)

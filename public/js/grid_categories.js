@@ -13,7 +13,7 @@ if (gridWrapperCategories) {
       },
       {
         name: 'ID',
-        formatter: (body) => gridjs.html(`${id}`)
+        formatter: (id) => gridjs.html(`${id}`)
       },
       {
         name: 'Actions',
@@ -51,9 +51,10 @@ if (gridWrapperCategories) {
                 $('#executionTime span.clientTime').text(clientExecutionTime);
                 resolve({
                   data: resp.data.map((record) => [
+                    record.id,
                     record.title,
                     record.body,
-                    record.id,
+            
                   ]),
                   total: resp.total
                 });
