@@ -25,9 +25,8 @@ import {
   prueba,
   pruebaReact,
   editor,
-  ProductForm,
   edit_html,
-  save_html
+  save_html,
 AttributesCRUD,
 TagsCRUD,
 OrdersCRUD,
