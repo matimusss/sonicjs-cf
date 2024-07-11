@@ -1,3 +1,12 @@
+CREATE TABLE `assets` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text,
+	`html_code` text,
+	`css_code` text,
+	`createdOn` integer,
+	`updatedOn` integer
+);
+--> statement-breakpoint
 CREATE TABLE `attributes` (
 	`id` text PRIMARY KEY NOT NULL,
 	`attribute_name` text NOT NULL,
@@ -36,6 +45,16 @@ CREATE TABLE `categoriesToPosts` (
 	PRIMARY KEY(`categoryId`, `postId`),
 	FOREIGN KEY (`postId`) REFERENCES `posts`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`categoryId`) REFERENCES `categories`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE TABLE `comments` (
+	`id` text PRIMARY KEY NOT NULL,
+	`body` text,
+	`userId` text,
+	`postId` integer,
+	`tags` text,
+	`createdOn` integer,
+	`updatedOn` integer
 );
 --> statement-breakpoint
 CREATE TABLE `countries` (
@@ -124,6 +143,29 @@ CREATE TABLE `order_statuses` (
 	`color` text NOT NULL,
 	`privacy` text DEFAULT 'private' NOT NULL,
 	`created_by` text,
+	`createdOn` integer,
+	`updatedOn` integer
+);
+--> statement-breakpoint
+CREATE TABLE `pages` (
+	`id` text PRIMARY KEY NOT NULL,
+	`name` text,
+	`slug` text,
+	`html_code` text,
+	`css_code` text,
+	`createdOn` integer,
+	`updatedOn` integer
+);
+--> statement-breakpoint
+CREATE TABLE `posts` (
+	`id` text PRIMARY KEY NOT NULL,
+	`title` text,
+	`slug` text,
+	`body` text,
+	`userId` text,
+	`image` text,
+	`images` text,
+	`tags` text,
 	`createdOn` integer,
 	`updatedOn` integer
 );
@@ -316,6 +358,36 @@ CREATE TABLE `tags` (
 	`updatedOn` integer
 );
 --> statement-breakpoint
+CREATE TABLE `user_keys` (
+	`id` text PRIMARY KEY NOT NULL,
+	`user_id` text NOT NULL,
+	`hashed_password` text,
+	`createdOn` integer,
+	`updatedOn` integer,
+	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE TABLE `users` (
+	`id` text PRIMARY KEY NOT NULL,
+	`firstName` text,
+	`lastName` text,
+	`email` text,
+	`password` text,
+	`role` text,
+	`createdOn` integer,
+	`updatedOn` integer
+);
+--> statement-breakpoint
+CREATE TABLE `user_sessions` (
+	`id` text PRIMARY KEY NOT NULL,
+	`user_id` text NOT NULL,
+	`active_expires` integer NOT NULL,
+	`idle_expires` integer NOT NULL,
+	`createdOn` integer,
+	`updatedOn` integer,
+	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
 CREATE TABLE `variants` (
 	`id` text PRIMARY KEY NOT NULL,
 	`variant_option` text,
@@ -354,6 +426,9 @@ CREATE TABLE `variant_values` (
 	FOREIGN KEY (`product_attribute_value_id`) REFERENCES `product_attribute_values`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
+CREATE INDEX `commentsUserIdIndex` ON `comments` (`userId`);--> statement-breakpoint
+CREATE INDEX `commentsPostIdIndex` ON `comments` (`postId`);--> statement-breakpoint
 CREATE UNIQUE INDEX `coupons_code_unique` ON `coupons` (`code`);--> statement-breakpoint
+CREATE INDEX `postUserIdIndex` ON `posts` (`userId`);--> statement-breakpoint
 CREATE UNIQUE INDEX `products_slug_unique` ON `products` (`slug`);--> statement-breakpoint
 CREATE UNIQUE INDEX `sells_product_id_unique` ON `sells` (`product_id`);
