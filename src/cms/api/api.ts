@@ -12,7 +12,7 @@ import {
 } from '../data/kv-data';
 import { Bindings } from '../types/bindings';
 import { apiConfig, config } from '../../db/routes';
-import { getD1DataByTable, getD1ByTableAndId, getD1ByTableAndId_view } from '../data/d1-data';
+import { getD1DataByTable, getD1ByTableAndId, getD1ByTableAndId_view,getD1byname_view } from '../data/d1-data';
 import { getForm } from './forms';
 import qs from 'qs';
 import {
@@ -29,7 +29,8 @@ import {
   filterUpdateFieldAccess,
   getApiAccessControlResult,
   getItemReadResult,
-  getOperationCreateResult
+  getOperationCreateResult,
+  
 } from '../auth/auth-helpers';
 
 const api = new Hono<{ Bindings: Bindings; Variables: Variables }>();
@@ -74,16 +75,13 @@ tables.forEach((entry) => {
 
 
 
-  api.get('/product-min-details/:id', async (ctx) => {
-    const { id } = ctx.req.param(); // Obtén el parámetro ID de la URL
-    //SI IDE ES : ____SHOWALL , por ej, devolver todas,
-    
+
+
+
+  api.get('/product-min-details', async (ctx) => {
     try {
       // Llama a la función getD1ByTableAndId para obtener los datos del producto
-      const data = await getD1ByTableAndId_view(   ctx.env.D1DATA, 'product_min_details', id);
-      
-      
-      
+      const data = await getD1byname_view(   ctx.env.D1DATA, 'product_min_details', id);
       if (data) {
         return ctx.json(data);
       } else {
@@ -96,22 +94,6 @@ tables.forEach((entry) => {
   });
 
 
-
-  api.get('/product-min-details/:id', async (ctx) => {
-    const { id } = ctx.req.param(); // Obtén el parámetro ID de la URL
-    try {
-      // Llama a la función getD1ByTableAndId para obtener los datos del producto
-      const data = await getD1ByTableAndId_view(   ctx.env.D1DATA, 'product_full_details', id);
-      if (data) {
-        return ctx.json(data);
-      } else {
-        return ctx.text('Product not found', 404);
-      }
-    } catch (error) {
-      console.error('Error retrieving product full details:', error);
-      return ctx.text('Error retrieving product full details', 500);
-    }
-  });
 
 
 

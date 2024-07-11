@@ -4,12 +4,64 @@ if (gridWrapperProducts) {
   const dataGrid = new gridjs.Grid({
     columns: [
       {
-        name: 'Slug',
-        formatter: (slug) => gridjs.html(`${slug}`)
+        name: 'id',
+        formatter: (id) => gridjs.html(`${id}`)
       },
       {
         name: 'product_name',
         formatter: (product_name) => gridjs.html(`${product_name}`)
+      },
+      {
+        name: 'slug',
+        formatter: (slug) => gridjs.html(`${slug}`)
+      },
+      {
+        name: 'sale_price',
+        formatter: (sale_price) => gridjs.html(`${sale_price}`)
+      },
+      {
+        name: 'compare_price',
+        formatter: (compare_price) => gridjs.html(`${compare_price}`)
+      },
+      {
+        name: 'buying_price',
+        formatter: (buying_price) => gridjs.html(`${buying_price}`)
+      },
+      {
+        name: 'quantity',
+        formatter: (quantity) => gridjs.html(`${quantity}`)
+      },
+      {
+        name: 'product_type',
+        formatter: (product_type) => gridjs.html(`${product_type}`)
+      },
+      {
+        name: 'category_title',
+        formatter: (category_title) => gridjs.html(`${category_title}`)
+      },
+      {
+        name: 'tag_ids',
+        formatter: (tag_ids) => gridjs.html(`${tag_ids}`)
+      },
+      {
+        name: 'attribute_values',
+        formatter: (attribute_values) => gridjs.html(`${attribute_values}`)
+      },
+      {
+        name: 'colors',
+        formatter: (colors) => gridjs.html(`${colors}`)
+      },
+      {
+        name: 'coupon_codes',
+        formatter: (coupon_codes) => gridjs.html(`${coupon_codes}`)
+      },
+      {
+        name: 'images',
+        formatter: (images) => gridjs.html(`${images}`)
+      },
+      {
+        name: 'thumbnails',
+        formatter: (thumbnails) => gridjs.html(`${thumbnails}`)
       },
       {
         name: 'Actions',
@@ -21,7 +73,7 @@ if (gridWrapperProducts) {
       }
     ],
 
-    
+
     pagination: {
       limit: 10,
       server: {
@@ -30,7 +82,7 @@ if (gridWrapperProducts) {
       }
     },
     server: {
-      url: `https://sonicjs-cf2.pages.dev/v1/product-full-details/remera_negra`,
+      url: `https://sonicjs-cf2.pages.dev/v1/product-min-details`,
       data: (opts) => {
         return new Promise((resolve, reject) => {
           const xhttp = new XMLHttpRequest();
@@ -49,8 +101,21 @@ if (gridWrapperProducts) {
                 $('#executionTime span.clientTime').text(clientExecutionTime);
                 resolve({
                   data: resp.map((record) => [ //LA UNICA QUE NO LLEVA RESP.DATA.MAP PORKE ES UNA VIEW Y NO UNA TABLA , LAS RESO DE SONICEN JSON TAN TODAS ADENTRO DE UN .DATA
-                    record.slug,
-                    record.product_name
+                    record.id, 
+                    record.product_name,
+                     record.slug,
+                      record.sale_price,
+                       record.compare_price, 
+                       record.buying_price, 
+                       record.quantity, 
+                       record.product_type, 
+                       record.category_title,
+                        record.tag_ids,
+                         record.attribute_values,
+                          record.colors, 
+                          record.coupon_codes,
+                           record.images,
+                            record.thumbnails
                   ]),
                   total: resp.total
                 });
