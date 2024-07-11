@@ -1,9 +1,6 @@
 import { text, numeric, sqliteTable } from 'drizzle-orm/sqlite-core';
-import { auditSchema } from './audit';
-
-
-
-import { ApiConfig } from '../routes';
+import { auditSchema } from './../audit';
+import { ApiConfig } from './../../routes';
 
 
 export const access: ApiConfig['access'] = {
@@ -31,6 +28,20 @@ export const definition = {
   created_by: text('created_by'),
   updated_by: text('updated_by')
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const table = sqliteTable(tableName, {
   ...definition

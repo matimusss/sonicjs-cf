@@ -5,10 +5,12 @@ import * as productShippingInfo from './product_shipping_info';
 import * as gallery from './gallery';
 import * as productTags from './product_tags';
 import * as productSuppliers from './product_suppliers';
-import { auditSchema } from './audit';
+import { auditSchema } from './../audit';
 
 
-import { ApiConfig } from '../routes';
+
+import { ApiConfig } from './../../routes';
+
 
 
 export const access: ApiConfig['access'] = {

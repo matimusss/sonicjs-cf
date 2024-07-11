@@ -3,14 +3,14 @@
 
 import { text, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
-import * as users from './users';
+import * as users from './../users';
 import * as orderStatuses from './order_statuses';
 import * as coupons from './coupons';
-import { auditSchema } from './audit';
+import { auditSchema } from './../audit';
 
 
 
-import { ApiConfig } from '../routes';
+import { ApiConfig } from './../../routes';
 
 
 export const access: ApiConfig['access'] = {
@@ -33,6 +33,17 @@ export const definition = {
   order_delivered_customer_date: text('order_delivered_customer_date'),
   updated_by: text('updated_by')
 };
+
+
+
+
+
+
+
+
+
+
+
 
 export const table = sqliteTable(tableName, {
   ...definition

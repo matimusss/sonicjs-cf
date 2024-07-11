@@ -1,11 +1,13 @@
 import { text,  sqliteTable } from 'drizzle-orm/sqlite-core';
-import { auditSchema } from './audit';
+
 export const tableName = 'notifications';
 export const route = 'notifications';
 
+import { auditSchema } from './../audit';
 
 
-import { ApiConfig } from '../routes';
+
+import { ApiConfig } from './../../routes';
 
 
 export const access: ApiConfig['access'] = {
@@ -20,7 +22,7 @@ export const access: ApiConfig['access'] = {
 export const definition = {
   id: text('id').primaryKey(),
   account_id: text('account_id'),
-  title: text('title', 100),
+  title: text('title'),
   content: text('content'),
   seen: text('seen'),
   created_at: text('created_at').notNull(),

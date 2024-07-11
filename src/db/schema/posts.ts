@@ -2,7 +2,6 @@ import { sqliteTable, index, text } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
 import { auditSchema } from './audit';
 import * as users from './users';
-import * as categoriesToPosts from './categoriesToPosts';
 import * as comments from './comments';
 import { ApiConfig } from '../routes';
 import { isAdmin, isAdminOrEditor } from '../config-helpers';

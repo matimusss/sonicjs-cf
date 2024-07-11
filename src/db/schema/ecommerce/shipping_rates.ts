@@ -4,11 +4,12 @@
 import { text, numeric,  sqliteTable } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
 import * as shippingZones from './shipping_zones';
-import { auditSchema } from './audit';
+import { auditSchema } from './../audit';
 
 
 
-import { ApiConfig } from '../routes';
+import { ApiConfig } from './../../routes';
+
 
 
 export const access: ApiConfig['access'] = {
@@ -26,10 +27,10 @@ export const definition = {
   id: text('id').primaryKey(),
   shipping_zone_id: numeric('shipping_zone_id').references(() => shippingZones.table.id).notNull(),
   weight_unit: text('weight_unit'),
-  min_value: numeric('min_value').notNull().default(0),
+  min_value: numeric('min_value').notNull(),
   max_value: numeric('max_value'),
   no_max: text('no_max'),
-  price: numeric('price').notNull().default(0),
+  price: numeric('price').notNull(),
 
 };
 
