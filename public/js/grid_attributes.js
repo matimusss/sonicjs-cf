@@ -46,9 +46,9 @@ if (gridWrapperAttributes) {
                 const clientExecutionTime = end - start;
                 $('#executionTime span.clientTime').text(clientExecutionTime);
                 resolve({
-                  data: resp.map((record) => [
-                    record.data.id,
-                    record.data.attribute_name
+                  data: resp.data.map((record) => [
+                    record.id,
+                    record.attribute_name
                   ]),
                   total: resp.total
                 });

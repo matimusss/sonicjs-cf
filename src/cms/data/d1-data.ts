@@ -12,7 +12,13 @@ var qs = require('qs');
 
 
 
-//EJEMPLO PAR ACONSULTAR vista.
+//EJEMPLO PAR ACONSULTAR vista.}
+
+
+
+
+
+
 export async function getD1ByTableAndId_view(db, table, id) {
   // Define la consulta SQL con un parámetro de reemplazo
   let sql = `SELECT * FROM ${table} WHERE slug = ?`;

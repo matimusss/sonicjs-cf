@@ -3,15 +3,58 @@ const gridWrapperCoupons = document.getElementById('grid-coupons');
 if (gridWrapperCoupons) {
   const dataGrid = new gridjs.Grid({
     columns: [
+
+      record.,
+      record.,
+      record.,
+      record.,
+      record.,
+      record.,
+      record.,
+      record.,
+      record.
       {
-        name: 'Slug',
-        formatter: (slug) => gridjs.html(`${slug}`)
+        name: 'ID',
+        formatter: (id) => gridjs.html(`${id}`)
       },
       {
-        name: 'product_name',
-        formatter: (product_name) => gridjs.html(`${product_name}`)
+        name: 'Codigo',
+        formatter: (code) => gridjs.html(`${code}`)
       },
       {
+        name: 'Valor de descuento',
+        formatter: (discount_value) => gridjs.html(`${discount_value}`)
+      },
+
+      {
+        name: 'Tipo de descuento',
+        formatter: (discount_type) => gridjs.html(`${discount_type}`)
+      },
+      {
+        name: 'Cantidad de veces usado',
+        formatter: (times_used) => gridjs.html(`${times_used}`)
+      },
+      {
+        name: 'Maxima cantidad de veces para usar',
+        formatter: (max_usage) => gridjs.html(`${max_usage}`)
+      },
+      {
+        name: 'Limite de ordenes',
+        formatter: (order_amount_limit) => gridjs.html(`${order_amount_limit}`)
+      },
+      {
+        name: 'Fecha de inicio',
+        formatter: (coupon_start_date) => gridjs.html(`${coupon_start_date}`)
+      },
+      {
+        name: 'Fecha de final',
+        formatter: (coupon_end_date) => gridjs.html(`${coupon_end_date}`)
+      },
+
+
+
+      {
+
         name: 'Actions',
         formatter: (_, row) => {
           return gridjs.html(`
@@ -28,7 +71,7 @@ if (gridWrapperCoupons) {
       }
     },
     server: {
-      url: `https://sonicjs-cf2.pages.dev/v1/product-full-details/remera_negra`,
+      url: `https://sonicjs-cf2.pages.dev/v1/coupons`,
       data: (opts) => {
         return new Promise((resolve, reject) => {
           const xhttp = new XMLHttpRequest();
@@ -47,8 +90,15 @@ if (gridWrapperCoupons) {
                 $('#executionTime span.clientTime').text(clientExecutionTime);
                 resolve({
                   data: resp.data.map((record) => [
-                    record.slug,
-                    record.product_name
+                    record.id,
+                    record.code,
+                    record.discount_value,
+                    record.discount_type,
+                    record.times_used,
+                    record.max_usage,
+                    record.order_amount_limit,
+                    record.coupon_start_date,
+                    record.coupon_end_date
                   ]),
                   total: resp.total
                 });

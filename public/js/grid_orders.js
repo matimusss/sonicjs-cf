@@ -28,7 +28,7 @@ if (gridWrapperOrders) {
       }
     },
     server: {
-      url: `https://sonicjs-cf2.pages.dev/v1/product-full-details/remera_negra`,
+      url: `https://https://sonicjs-cf2.pages.dev/v1/orders`,
       data: (opts) => {
         return new Promise((resolve, reject) => {
           const xhttp = new XMLHttpRequest();
@@ -46,8 +46,8 @@ if (gridWrapperOrders) {
                 const clientExecutionTime = end - start;
                 $('#executionTime span.clientTime').text(clientExecutionTime);
                 resolve({
-                  data: resp.map((record) => [
-                    record.slug,
+                  data: resp.data.map((record) => [
+                     record.slug,
                     record.product_name
                   ]),
                   total: resp.total

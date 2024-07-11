@@ -20,6 +20,8 @@ if (gridWrapperProducts) {
         }
       }
     ],
+
+    
     pagination: {
       limit: 10,
       server: {
@@ -46,7 +48,7 @@ if (gridWrapperProducts) {
                 const clientExecutionTime = end - start;
                 $('#executionTime span.clientTime').text(clientExecutionTime);
                 resolve({
-                  data: resp.map((record) => [
+                  data: resp.map((record) => [ //LA UNICA QUE NO LLEVA RESP.DATA.MAP PORKE ES UNA VIEW Y NO UNA TABLA , LAS RESO DE SONICEN JSON TAN TODAS ADENTRO DE UN .DATA
                     record.slug,
                     record.product_name
                   ]),
