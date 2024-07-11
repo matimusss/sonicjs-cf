@@ -3,7 +3,7 @@
 
 import { text, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
-import * as users from './../users';
+import * as users from './users';
 import * as orderStatuses from './order_statuses';
 import * as coupons from './coupons';
 import { auditSchema } from './../audit';
