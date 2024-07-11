@@ -4,12 +4,12 @@ if (gridWrapperAttributes) {
   const dataGrid = new gridjs.Grid({
     columns: [
       {
-        name: 'Slug',
-        formatter: (slug) => gridjs.html(`${slug}`)
+        name: 'ID',
+        formatter: (id) => gridjs.html(`${id}`)
       },
       {
-        name: 'product_name',
-        formatter: (product_name) => gridjs.html(`${product_name}`)
+        name: 'Nombre',
+        formatter: (attribute_name) => gridjs.html(`${attribute_name}`)
       },
       {
         name: 'Actions',
@@ -28,7 +28,7 @@ if (gridWrapperAttributes) {
       }
     },
     server: {
-      url: `https://sonicjs-cf2.pages.dev/v1/product-full-details/remera_negra`,
+      url: `https://sonicjs-cf2.pages.dev/v1/attributes`,
       data: (opts) => {
         return new Promise((resolve, reject) => {
           const xhttp = new XMLHttpRequest();
@@ -47,8 +47,8 @@ if (gridWrapperAttributes) {
                 $('#executionTime span.clientTime').text(clientExecutionTime);
                 resolve({
                   data: resp.map((record) => [
-                    record.slug,
-                    record.product_name
+                    record.data.id,
+                    record.data.attribute_name
                   ]),
                   total: resp.total
                 });

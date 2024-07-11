@@ -122,6 +122,11 @@ export const Script = () => {
       <script src='/public/js/form-product.js'></script>
       <script src='/public/js/form-login.js'></script>
       <script src='/public/js/grid_products.js'></script>
+      <script src='/public/js/grid_categories.js'></script>
+      <script src='/public/js/grid_tags.js'></script>
+      <script src='/public/js/grid_orders.js'></script>
+      <script src='/public/js/grid_coupons.js'></script>
+      <script src='/public/js/grid_attributes.js'></script>
 
       <script src='/public/js/grid.js'></script>
       <script src='/public/js/grid-in-memory-cache.js'></script>
