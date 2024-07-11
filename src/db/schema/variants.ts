@@ -1,16 +1,15 @@
 
-////TABLA :  :  product_attributes
+////TABLA :  :  variants
 
 import { text, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
 import * as products from './products';
-import * as attributes from './attributes';
+import * as variantOptions from './variant_options';
 import { auditSchema } from './../audit';
 
 
 
-import { ApiConfig } from './../../routes';
-
+import { ApiConfig } from './../routes';
 
 
 export const access: ApiConfig['access'] = {
@@ -21,13 +20,17 @@ export const access: ApiConfig['access'] = {
     delete: true
   }
 };
-export const tableName = 'product_attributes';
-export const route = 'product_attributes';
+export const tableName = 'variants';
+export const route =  'variants';
 export const definition = {
-  id : text('id').primaryKey(),
+  id: text('id').primaryKey(),
+  variant_option: text('variant_option'),
   product_id: text('product_id').references(() => products.table.id).notNull(),
-  attribute_id: text('attribute_id').references(() => attributes.table.id).notNull()
+  variant_option_id: text('variant_option_id').references(() => variantOptions.table.id).notNull(), 
 };
+
+
+
 
 export const table = sqliteTable(tableName, {
   ...definition,
@@ -36,12 +39,14 @@ export const table = sqliteTable(tableName, {
 
 
 export const relation = relations(table, ({ one }) => ({
-  product: one(products.table, {
+  product_id: one(products.table, {
     fields: [table.product_id],
     references: [products.table.id]
   }),
-  attribute: one(attributes.table, {
-    fields: [table.attribute_id],
-    references: [attributes.table.id]
+
+  variant_option_id: one(variantOptions.table, {
+    fields: [table.variant_option_id],
+    references: [variantOptions.table.id]
   })
+
 }));

@@ -1,12 +1,14 @@
+
+
 import { text, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { relations } from 'drizzle-orm';
 import * as products from './products';
-import * as suppliers from './suppliers';
+import * as coupons from './coupons';
 import { auditSchema } from './../audit';
 
 
 
-import { ApiConfig } from './../../routes';
+import { ApiConfig } from './../routes';
 
 
 
@@ -18,12 +20,12 @@ export const access: ApiConfig['access'] = {
     delete: true
   }
 };
-export const tableName = 'product_suppliers';
-
-export const route = 'product_suppliers';
+export const tableName = 'product_coupons';
+export const route =   'product_coupons';
 export const definition = {
+  id: text('id').primaryKey(),
   product_id: text('product_id').references(() => products.table.id).notNull(),
-  supplier_id: text('supplier_id').references(() => suppliers.table.id).notNull(),
+  coupon_id: text('coupon_id').references(() => coupons.table.id).notNull()
 };
 
 export const table = sqliteTable(tableName, {
@@ -35,8 +37,8 @@ export const relation = relations(table, ({ one }) => ({
     fields: [table.product_id],
     references: [products.table.id]
   }),
-  supplier: one(suppliers.table, {
-    fields: [table.supplier_id],
-    references: [suppliers.table.id]
+  coupon: one(coupons.table, {
+    fields: [table.coupon_id],
+    references: [coupons.table.id]
   })
 }));

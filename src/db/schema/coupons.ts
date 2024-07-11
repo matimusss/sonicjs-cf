@@ -1,6 +1,6 @@
 import { text, numeric, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { auditSchema } from './../audit';
-import { ApiConfig } from './../../routes';
+import { ApiConfig } from './../routes';
 
 
 export const access: ApiConfig['access'] = {

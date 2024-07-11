@@ -9,7 +9,7 @@ import { auditSchema } from './../audit';
 
 
 
-import { ApiConfig } from './../../routes';
+import { ApiConfig } from './../routes';
 
 
 

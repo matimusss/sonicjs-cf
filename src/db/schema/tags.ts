@@ -1,9 +1,15 @@
+
+
+
+////TABLA :  :  tags
+
 import { text, sqliteTable } from 'drizzle-orm/sqlite-core';
 import { auditSchema } from './../audit';
 
 
 
-import { ApiConfig } from './../../routes';
+import { ApiConfig } from './../routes';
+
 
 
 export const access: ApiConfig['access'] = {
@@ -14,15 +20,23 @@ export const access: ApiConfig['access'] = {
     delete: true
   }
 };
-export const tableName = 'attributes';
-export const route= 'attributes';
+
+
+
+
+export const tableName = 'tags';
+export const route =  'tags';
+
+
 export const definition = {
   id: text('id').primaryKey(),
-  attribute_name: text('attribute_name').notNull()
+  tag_name: text('tag_name').notNull(),
+  icon: text('icon').notNull()
+  
 };
 
 export const table = sqliteTable(tableName, {
-  ...definition
-  ,
+  ...definition,
   ...auditSchema
 });
+
