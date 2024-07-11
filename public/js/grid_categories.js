@@ -50,10 +50,10 @@ if (gridWrapperCategories) {
                 const clientExecutionTime = end - start;
                 $('#executionTime span.clientTime').text(clientExecutionTime);
                 resolve({
-                  data: resp.map((record) => [
-                    record.data.title,
-                    record.data.body,
-                    record.data.id,
+                  data: resp.data.map((record) => [
+                    record.title,
+                    record.body,
+                    record.id,
                   ]),
                   total: resp.total
                 });

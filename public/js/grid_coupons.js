@@ -46,7 +46,7 @@ if (gridWrapperCoupons) {
                 const clientExecutionTime = end - start;
                 $('#executionTime span.clientTime').text(clientExecutionTime);
                 resolve({
-                  data: resp.map((record) => [
+                  data: resp.data.map((record) => [
                     record.slug,
                     record.product_name
                   ]),
