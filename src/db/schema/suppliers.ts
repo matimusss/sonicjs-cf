@@ -38,9 +38,3 @@ export const table = sqliteTable(tableName, {
   ...auditSchema
 });
 
-export const relation = relations(table, ({ one }) => ({
-  country: one(countries.table, {
-    fields: [table.country_id],
-    references: [countries.table.id]
-  })
-}));
