@@ -26,7 +26,7 @@ export const definition = {
   phone_number: text('phone_number'),
   address_line1: text('address_line1').notNull(),
   address_line2: text('address_line2'),
-  country_id: integer('country_id').references(() => countries.table.id).notNull(),
+  country_id: integer('country_id'),
   city: text('city'),
   note: text('note'),
   created_by: text('created_by'),
