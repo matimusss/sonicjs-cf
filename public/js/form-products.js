@@ -29,7 +29,7 @@ setTimeout(async function() {
               '  {% }) %}' +
               '  <div class="col-sm-2">' +
               '    <div class="btn-group pull-right">' +
-              '      <div class="btn btn-default btn-sm addTag"><i class="bi bi-plus"></i>ADD</div>' + // Botón para agregar el tag
+              '      <button type="button" class="btn btn-default btn-sm addTag"><i class="bi bi-plus"></i>ADD</button>' + // Botón para agregar el tag
               '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
               '    </div>' +
               '  </div>' +
@@ -58,13 +58,18 @@ setTimeout(async function() {
         const addButtons = document.querySelectorAll('.addTag');
         
         addButtons.forEach(button => {
-          button.addEventListener('click', function() {
+          button.addEventListener('click', function(event) {
+            event.preventDefault(); // Evita el comportamiento por defecto del botón
+            
             const row = this.closest('.editgrid-row');
             const tagName = row.querySelector('[name="data[tagName]"]').value;
             
             if (tagName.trim() !== '') {
               // Agregar tagName al campo hidden
-              hiddenTags.value += tagName + ',';
+              if (hiddenTags.value !== '') {
+                hiddenTags.value += ','; // Agregar coma si ya hay tags
+              }
+              hiddenTags.value += tagName;
               
               // Mostrar tagName en la lista "AQUI"
               const tagDiv = document.createElement('div');
@@ -74,11 +79,11 @@ setTimeout(async function() {
               deleteButton.textContent = 'X';
               deleteButton.addEventListener('click', function() {
                 // Eliminar tagName del campo hidden y del DOM
-                const tagToRemove = this.parentNode.textContent.trim();
+                const tagToRemove = tagDiv.textContent;
                 hiddenTags.value = hiddenTags.value.replace(tagToRemove + ',', '');
-                tagsList.removeChild(this.parentNode);
+                tagsList.removeChild(tagDiv);
                 
-                // Volver a mostrar la fila en la lista principal
+                // Mostrar la fila en la lista principal
                 row.style.display = '';
               });
               
