@@ -29,7 +29,7 @@ setTimeout(async function() {
               '  {% }) %}' +
               '  <div class="col-sm-2">' +
               '    <div class="btn-group pull-right">' +
-              '      <button class="btn btn-default btn-sm addTag"><i class="bi bi-plus"></i>ADD</button>' + // Botón para agregar el tag
+              '      <div class="btn btn-default btn-sm addTag"><i class="bi bi-plus"></i>ADD</div>' + // Botón para agregar el tag
               '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
               '    </div>' +
               '  </div>' +
