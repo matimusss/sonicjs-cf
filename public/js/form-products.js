@@ -59,8 +59,7 @@ setTimeout(async function() {
         
         addButtons.forEach(button => {
           button.addEventListener('click', function(event) {
-            event.preventDefault(); // Evita el comportamiento por defecto del botón
-            
+        console.log("asd");
             const row = this.closest('.editgrid-row');
             const tagName = row.querySelector('[name="data[tagName]"]').value;
             
