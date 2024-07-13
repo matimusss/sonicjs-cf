@@ -16,6 +16,7 @@ export const access: ApiConfig['access'] = {
     delete: true
   }
 };
+
 export const tableName = 'suppliers';
 export const route = 'suppliers';
 export const definition = {

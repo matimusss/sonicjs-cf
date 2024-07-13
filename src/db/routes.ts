@@ -9,7 +9,7 @@ import { AppContext } from '../server';
 import { isAdminOrEditor } from './config-helpers';
 
 
-import * as attribute_values from './schema/attribute_values';
+import * as attribute_values from './schema/attribute_values';  
 import * as attributes from './schema/attributes';
 import * as countries from './schema/countries';
 import * as coupons from './schema/coupons';

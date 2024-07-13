@@ -119,7 +119,7 @@ export const Script = () => {
       <script src='/public/js/admin.js'></script>
       <script src='/public/js/form-content-type.js'></script>
       <script src='/public/js/form-content.js'></script>
-      <script src='/public/js/form-product.js'></script>
+      <script src='/public/js/form-products.js'></script>
       <script src='/public/js/form-login.js'></script>
       <script src='/public/js/grid_products.js'></script>
       <script src='/public/js/grid_categories.js'></script>

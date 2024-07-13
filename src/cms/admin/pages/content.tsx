@@ -751,6 +751,19 @@ export async function OrdersCRUD(ctx) {
 };
 
 
+export async function ProductFORM(ctx) {
+  return (
+    <Layout
+      env={ctx.env}
+      username={ctx.get('user')?.email}
+      screenTitle={'productos'}>
+       
+       <form id='formio-products'></form>
+
+    </Layout>
+  );
+};
+
 
 export async function ProductCRUD(ctx) {
   return (
@@ -758,11 +771,9 @@ export async function ProductCRUD(ctx) {
       env={ctx.env}
       username={ctx.get('user')?.email}
       screenTitle={'productos'}>
-          <div class='row'>
-          <div class='col-md-12'>
-      <div id='grid-products'></div>
-      </div></div>
-   <NewProduct />
+       
+
+
     </Layout>
   );
 };

@@ -32,6 +32,7 @@ TagsCRUD,
 OrdersCRUD,
 CategoriesCRUD,
 ProductCRUD,
+ProductFORM,
 CouponsCRUD,
 
 } from './pages/content';
@@ -133,6 +134,10 @@ admin.get('/content/new/:route', async (ctx) => {
 
             admin.get('/CouponsCRUD',async (ctx) => {
               return ctx.html(await CouponsCRUD(ctx) );});
+
+
+              admin.get('/ProductFORM',async (ctx) => {
+                return ctx.html(await ProductFORM(ctx) );});
 
 //
 
