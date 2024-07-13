@@ -11,7 +11,7 @@ setTimeout(async function() {
             {
               type: 'textfield',
               key: 'email',
-              label: 'Email',
+              label: 'PROBANDO',
               placeholder: 'Enter your email.',
               input: true
             },
