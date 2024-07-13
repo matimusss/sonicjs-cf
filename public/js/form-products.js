@@ -59,7 +59,6 @@ setTimeout(async function() {
         
         addButtons.forEach(button => {
           button.addEventListener('click', function() {
-            event.preventDefault();
             const row = this.closest('.editgrid-row');
             const tagName = row.querySelector('[name="data[tagName]"]').value;
             
