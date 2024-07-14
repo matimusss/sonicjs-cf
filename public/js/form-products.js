@@ -45,10 +45,10 @@
                 input: true,
                 data: {
                   values: [
-                    {value: 'remeras', label: 'Remeras'},
-                    {value: 'batas', label: 'Batas'},
-                    {value: 'ojotas', label: 'Ojotas'},
-                    {value: 'buzos', label: 'Buzos'}
+                    {value: 'Remeras', label: 'Remeras'},
+                    {value: 'Batas', label: 'Batas'},
+                    {value: 'Ojotas', label: 'Ojotas'},
+                    {value: 'Buzos', label: 'Buzos'}
                   ]
                 },
                 dataSrc: "values",
@@ -63,10 +63,10 @@
         data: {
           tags: [
             {
-              gender: 'male'
+              tagName: 'Corbatas'
             },
             {
-              gender: 'female'
+              tagName: 'Guantes'
             }
           ]
         }
