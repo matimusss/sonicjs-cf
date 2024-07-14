@@ -55,7 +55,7 @@
             values: []
           },
           template: '<span>{{ item.label }}</span>',
-          refreshOn: 'attributes.attributeType',
+          refreshOn: 'attributeType',
           clearOnRefresh: true,
           validate: {
             required: true
@@ -89,7 +89,7 @@
                 type: 'simple',
                 simple: {
                   show: true,
-                  when: 'attributes.attributeType',
+                  when: 'attributeType',
                   eq: 'color'
                 }
               },
