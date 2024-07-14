@@ -9,118 +9,83 @@
 
 
 
-
-
-
-
-
-(function () {
-  Formio.createForm(document.getElementById('formio-attributes'), {
-    components: [{
-      type: 'editgrid',
-      label: 'Attributes',
-      key: 'attributes',
-      defaultOpen: true,
-      removeRow: 'Cancel',
-      components: [
-        {
-          type: 'select',
-          label: 'Attribute Type',
-          key: 'attributeType',
-          placeholder: 'Select Attribute Type',
-          dataSrc: 'values',
-          validate: {
-            required: true
-          },
-          data: {
-            values: [
+    (function () {
+      Formio.createForm(document.getElementById('formio-attributes'), {
+        components: [
+          {
+            type: 'editgrid',
+            label: 'Attributes',
+            key: 'attributes',
+            defaultOpen: true,
+            removeRow: 'Cancel',
+            components: [
               {
-                label: 'Peso',
-                value: 'peso'
+                type: 'select',
+                label: 'Attribute Type',
+                key: 'attributeType',
+                placeholder: 'Select Attribute Type',
+                dataSrc: 'values',
+                validate: {
+                  required: true
+                },
+                data: {
+                  values: [
+                    { label: 'Peso', value: 'peso' },
+                    { label: 'Color', value: 'color' }
+                  ]
+                },
+                template: '<span>{{ item.label }}</span>',
+                input: true
               },
               {
-                value: 'color',
-                label: 'Color'
+                type: 'select',
+                label: 'Attribute Value',
+                key: 'attributeValue',
+                placeholder: 'Select Attribute Value',
+                dataSrc: 'values',
+                data: {
+                  values: [
+                    // Default values, these will be overridden based on the attributeType selection
+                    { label: 'Default', value: 'default' }
+                  ]
+                },
+                template: '<span>{{ item.label }}</span>',
+                refreshOn: 'attributes.attributeType',
+                clearOnRefresh: true,
+                validate: {
+                  required: true
+                },
+                customConditional: `
+                  show = (data.attributeType === 'peso' || data.attributeType === 'color');
+                  if (show) {
+                    const attributeType = data.attributeType;
+                    let values = [];
+                    if (attributeType === 'peso') {
+                      values = [
+                        { label: '1 KG', value: '1kg' },
+                        { label: '2 KG', value: '2kg' },
+                        { label: '3 KG', value: '3kg' },
+                        { label: '4 KG', value: '4kg' }
+                      ];
+                    } else if (attributeType === 'color') {
+                      values = [
+                        { label: 'Rojo', value: 'rojo' },
+                        { label: 'Azul', value: 'azul' },
+                        { label: 'Verde', value: 'verde' },
+                        { label: 'Amarillo', value: 'amarillo' }
+                      ];
+                    }
+                    instance.component.data.values = values;
+                    instance.redraw();
+                  }
+                `,
+                input: true
               }
             ]
           }
-        },
-        {
-          type: 'select',
-          label: 'Attribute Value',
-          key: 'attributeValue',
-          placeholder: 'Select Attribute Value',
-          dataSrc: 'values',
-          data: {
-            values: []
-          },
-          template: '<span>{{ item.label }}</span>',
-          refreshOn: 'attributeType',
-          clearOnRefresh: true,
-          validate: {
-            required: true
-          },
-          logic: [
-            {
-              name: 'Show Weight Options',
-              trigger: {
-                type: 'simple',
-                simple: {
-                  show: true,
-                  when: 'attributeType',
-                  eq: 'peso'
-                }
-              },
-              actions: [
-                {
-                  name: 'Set Weight Options',
-                  type: 'value',
-                  value: `data.values = [
-                    {label: '1 KG', value: '1kg'},
-                    {label: '5 KG', value: '5kg'},
-                    {label: '10 KG', value: '10kg'}
-                  ];`
-                }
-              ]
-            },
-            {
-              name: 'Show Color Options',
-              trigger: {
-                type: 'simple',
-                simple: {
-                  show: true,
-                  when: 'attributeType',
-                  eq: 'color'
-                }
-              },
-              actions: [
-                {
-                  name: 'Set Color Options',
-                  type: 'value',
-                  value: `data.values = [
-                    {label: 'Rojo', value: 'rojo'},
-                    {label: 'Azul', value: 'azul'},
-                    {label: 'Verde', value: 'verde'}
-                  ];`
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }]
-  });
-})();
-
-
-
-
-
-
-
-
-
-
+        ]
+      });
+    })();
 
 
 
