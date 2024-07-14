@@ -47,7 +47,6 @@ setTimeout(async function() {
         }
       ]
     }).then(function(form) {
-      // Manejo de eventos para agregar tags
       form.on('render', function() {
         const tagsList = document.getElementById('tagsList');
         const hiddenTags = document.createElement('input');
@@ -55,27 +54,35 @@ setTimeout(async function() {
         hiddenTags.name = 'tagsForm'; // Nombre del campo hidden
         tagsList.parentNode.insertBefore(hiddenTags, tagsList.nextSibling); // Inserta el campo hidden después de tagsList
         
-        const addButtons = document.querySelectorAll('.addTag');
-        
-        addButtons.forEach(button => {
-          button.addEventListener('click', function(event) {
-            const row = this.closest('.editgrid-row');
-            const tagName = row.querySelector('[name="data[tagName]"]').value;
-            
-            if (tagName.trim() !== '') {
-              // Agregar tagName al campo hidden
-              if (hiddenTags.value !== '') {
-                hiddenTags.value += ','; // Agregar coma si ya hay tags
+        // Esta función adjunta los eventos a los botones
+        function attachTagEvents() {
+          const addButtons = document.querySelectorAll('.addTag');
+          addButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+              const row = this.closest('.editgrid-row');
+              const tagName = row.querySelector('[name="data[tagName]"]').value;
+              
+              if (tagName.trim() !== '') {
+                // Agregar tagName al campo hidden
+                if (hiddenTags.value !== '') {
+                  hiddenTags.value += ','; // Agregar coma si ya hay tags
+                }
+                hiddenTags.value += tagName;
+                
+                console.log(`Tag added: ${tagName}`);
+                
+                // Ocultar la fila en la lista principal
+                row.style.display = 'none';
               }
-              hiddenTags.value += tagName;
-              
-              console.log(`Tag added: ${tagName}`);
-              
-              // Ocultar la fila en la lista principal
-              row.style.display = 'none';
-            }
+            });
           });
-        });
+        }
+
+        // Adjuntar eventos inicialmente
+        attachTagEvents();
+
+        // Adjuntar eventos después de cada renderizado del grid
+        form.on('change', attachTagEvents);
       });
       
       // Proporcionar una presentación predeterminada
