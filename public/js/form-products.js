@@ -34,13 +34,14 @@ setTimeout(async function() {
               label: "Aplicar, Agregar o Eliminar Tags (etiquetas de producto)",
               key: "tagName",
               placeholder: "Select one",
+
               data: {
-                json: [
-                  {"value": "a", "label": "A"},
-                  {"value": "b", "label": "B"},
-                  {"value": "c", "label": "C"},
-                  {"value": "d", "label": "D"}
-                ]
+                json: `[
+                  {"value":"a","label":"Remeras"},
+                  {"value":"b","label":"Camperas"},
+                  {"value":"c","label":"Buzos"},
+                  {"value":"d","label":"Calzones"}
+                ]`
               },
               dataSrc: "json",
               template: "<span>{{ item.label }}</span>",
