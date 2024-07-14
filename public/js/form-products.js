@@ -47,6 +47,7 @@ setTimeout(async function() {
         }
       ]
     }).then(function(form) {
+      // Manejo de eventos para agregar tags
       form.on('render', function() {
         const tagsList = document.getElementById('tagsList');
         const hiddenTags = document.createElement('input');
@@ -54,8 +55,8 @@ setTimeout(async function() {
         hiddenTags.name = 'tagsForm'; // Nombre del campo hidden
         tagsList.parentNode.insertBefore(hiddenTags, tagsList.nextSibling); // Inserta el campo hidden después de tagsList
         
-        // Esta función adjunta los eventos a los botones
-        function attachTagEvents() {
+        // Adjuntar eventos después de un pequeño delay para asegurar que los elementos están disponibles
+        setTimeout(() => {
           const addButtons = document.querySelectorAll('.addTag');
           addButtons.forEach(button => {
             button.addEventListener('click', function(event) {
@@ -76,13 +77,7 @@ setTimeout(async function() {
               }
             });
           });
-        }
-
-        // Adjuntar eventos inicialmente
-        attachTagEvents();
-
-        // Adjuntar eventos después de cada renderizado del grid
-        form.on('change', attachTagEvents);
+        }, 40);
       });
       
       // Proporcionar una presentación predeterminada
