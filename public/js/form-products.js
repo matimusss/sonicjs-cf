@@ -67,7 +67,7 @@
                 type: 'simple',
                 simple: {
                   show: true,
-                  when: 'attributes.attributeType',
+                  when: 'attributeType',
                   eq: 'peso'
                 }
               },
