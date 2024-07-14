@@ -85,7 +85,7 @@
               }
             ]
           },
-          template: '<span>{{ item.Model_Name }}</span>',
+          template: '<span>{{ item.label }}</span>',
           refreshOn: 'cars.make',
           clearOnRefresh: true,
           validate: {
