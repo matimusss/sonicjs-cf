@@ -34,32 +34,29 @@ setTimeout(async function() {
               '</div>',
             footer: ''
           },
-        
-
-
-
+     
           components: [
             {
               type: "select",
               label: "Favorite Things",
-              key: "favoriteThings",
+              key: "tagName",
               placeholder: "These are a few of your favorite things...",
               data: {
                 values: [
                   {
-                    value: "raindropsOnRoses",
+                    tagName: "raindropsOnRoses",
                     label: "Raindrops on roses"
                   },
                   {
-                    value: "whiskersOnKittens",
+                    tagName: "whiskersOnKittens",
                     label: "Whiskers on Kittens"
                   },
                   {
-                    value: "brightCopperKettles",
+                    tagName: "brightCopperKettles",
                     label: "Bright Copper Kettles"
                   },
                   {
-                    value: "warmWoolenMittens",
+                    tagName: "warmWoolenMittens",
                     label: "Warm Woolen Mittens"
                   }
                 ]
