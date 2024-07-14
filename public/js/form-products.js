@@ -18,8 +18,7 @@ setTimeout(async function() {
               '      <strong>{{ component.label }}</strong>' +
               '    </div>' +
               '  {% }) %}' +
-              '</div>'+
-              '<div id="tagsList"> AQUI: NINGUNO </div>', // Div para mostrar los tags
+              '</div>',
             row: '' +
               '<div class="row">' +
               '  {% util.eachComponent(components, function(component) { %}' +
@@ -29,56 +28,65 @@ setTimeout(async function() {
               '  {% }) %}' +
               '  <div class="col-sm-2">' +
               '    <div class="btn-group pull-right">' +
-              '      <div class="btn btn-default btn-sm addTag"><i class="bi bi-plus"></i>ADD</div>' + // Botón para agregar el tag
               '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
               '    </div>' +
               '  </div>' +
               '</div>',
             footer: ''
           },
+        
+
+
+
           components: [
             {
-              label: 'Tag Name',
-              key: 'tagName',
-              type: 'textfield',
+              type: "select",
+              label: "Favorite Things",
+              key: "favoriteThings",
+              placeholder: "These are a few of your favorite things...",
+              data: {
+                values: [
+                  {
+                    value: "raindropsOnRoses",
+                    label: "Raindrops on roses"
+                  },
+                  {
+                    value: "whiskersOnKittens",
+                    label: "Whiskers on Kittens"
+                  },
+                  {
+                    value: "brightCopperKettles",
+                    label: "Bright Copper Kettles"
+                  },
+                  {
+                    value: "warmWoolenMittens",
+                    label: "Warm Woolen Mittens"
+                  }
+                ]
+              },
+              dataSrc: "values",
+              template: "<span>{{ item.label }}</span>",
+              multiple: true,
               input: true
-            },
+            }
           ]
+
+
+
+
+
+
+
+
+
+
+
         }
       ]
     }).then(function(form) {
       // Manejo de eventos para agregar tags
       form.on('render', function() {
-        const tagsList = document.getElementById('tagsList');
-        const hiddenTags = document.createElement('input');
-        hiddenTags.type = 'hidden';
-        hiddenTags.name = 'tagsForm'; // Nombre del campo hidden
-        tagsList.parentNode.insertBefore(hiddenTags, tagsList.nextSibling); // Inserta el campo hidden después de tagsList
-        
-        // Adjuntar eventos después de un pequeño delay para asegurar que los elementos están disponibles
-        setTimeout(() => {
-          const addButtons = document.querySelectorAll('.addTag');
-          addButtons.forEach(button => {
-            button.addEventListener('click', function(event) {
-              event.preventDefault();
-              const row = this.closest('.editgrid-row');
-              const tagName = row.querySelector('[name="data[tagName]"]').value;
-              
-              if (tagName.trim() !== '') {
-                // Agregar tagName al campo hidden
-                if (hiddenTags.value !== '') {
-                  hiddenTags.value += ','; // Agregar coma si ya hay tags
-                }
-                hiddenTags.value += tagName;
-                
-                console.log(`Tag added: ${tagName}`);
-                
-                // Ocultar la fila en la lista principal
-                row.style.display = 'none';
-              }
-            });
-          });
-        }, 1000);
+     
       });
       
       // Proporcionar una presentación predeterminada
