@@ -64,6 +64,7 @@
           label: 'Model',
           key: 'model',
           placeholder: 'Select your model',
+          dataSrc: 'values',
           data: {
             values: [
               {
@@ -84,7 +85,6 @@
               }
             ]
           },
-          dataSrc: 'values',
           template: '<span>{{ item.Model_Name }}</span>',
           refreshOn: 'cars.make',
           clearOnRefresh: true,
