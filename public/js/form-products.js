@@ -34,42 +34,25 @@ setTimeout(async function() {
               '</div>',
             footer: ''
           },
-     
           components: [
             {
               type: "select",
-              label: "Favorite Things",
+              label: "Select JSON",
               key: "tagName",
-              placeholder: "These are a few of your favorite things...",
+              placeholder: "Select one",
               data: {
-                values: [
-                  {
-                    tagName: "raindropsOnRoses",
-                    label: "Raindrops on roses"
-                  },
-                  {
-                    tagName: "whiskersOnKittens",
-                    label: "Whiskers on Kittens"
-                  },
-                  {
-                    tagName: "brightCopperKettles",
-                    label: "Bright Copper Kettles"
-                  },
-                  {
-                    tagName: "warmWoolenMittens",
-                    label: "Warm Woolen Mittens"
-                  }
-                ]
+                json: `[
+                  {"value":"a","label":"A"},
+                  {"value":"b","label":"B"},
+                  {"value":"c","label":"C"},
+                  {"value":"d","label":"D"}
+                ]`
               },
-              dataSrc: "values",
+              dataSrc: "json",
               template: "<span>{{ item.label }}</span>",
-              multiple: true,
               input: true
             }
           ]
-
-
-
 
 
 
