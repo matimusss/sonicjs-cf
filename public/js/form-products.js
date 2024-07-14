@@ -22,7 +22,7 @@ setTimeout(async function() {
               '<div id="tagsList"> AQUI: NINGUNO </div>', // Div para mostrar los tags
             row: '' +
               '<div class="row">' +
-              '  {%util.eachComponent(components, function(component) { %}' +
+              '  {% util.eachComponent(components, function(component) { %}' +
               '    <div class="col-sm-2">' +
               '      {{ row[component.key] }}' +
               '    </div>' +
@@ -59,7 +59,6 @@ setTimeout(async function() {
         
         addButtons.forEach(button => {
           button.addEventListener('click', function(event) {
-        console.log("asd");
             const row = this.closest('.editgrid-row');
             const tagName = row.querySelector('[name="data[tagName]"]').value;
             
@@ -70,24 +69,7 @@ setTimeout(async function() {
               }
               hiddenTags.value += tagName;
               
-              // Mostrar tagName en la lista "AQUI"
-              const tagDiv = document.createElement('div');
-              tagDiv.textContent = tagName;
-              
-              const deleteButton = document.createElement('button');
-              deleteButton.textContent = 'X';
-              deleteButton.addEventListener('click', function() {
-                // Eliminar tagName del campo hidden y del DOM
-                const tagToRemove = tagDiv.textContent;
-                hiddenTags.value = hiddenTags.value.replace(tagToRemove + ',', '');
-                tagsList.removeChild(tagDiv);
-                
-                // Mostrar la fila en la lista principal
-                row.style.display = '';
-              });
-              
-              tagDiv.appendChild(deleteButton);
-              tagsList.appendChild(tagDiv);
+              console.log(`Tag added: ${tagName}`);
               
               // Ocultar la fila en la lista principal
               row.style.display = 'none';
