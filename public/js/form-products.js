@@ -35,12 +35,12 @@ setTimeout(async function() {
               key: "tagName",
               placeholder: "Select one",
               data: {
-                json: `[
-                  {"value":"a","label":"A"},
-                  {"value":"b","label":"B"},
-                  {"value":"c","label":"C"},
-                  {"value":"d","label":"D"}
-                ]`
+                json: [
+                  {"value": "a", "label": "A"},
+                  {"value": "b", "label": "B"},
+                  {"value": "c", "label": "C"},
+                  {"value": "d", "label": "D"}
+                ]
               },
               dataSrc: "json",
               template: "<span>{{ item.label }}</span>",
