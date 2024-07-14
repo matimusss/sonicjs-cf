@@ -29,7 +29,7 @@ setTimeout(async function() {
               '  {% }) %}' +
               '  <div class="col-sm-2">' +
               '    <div class="btn-group pull-right">' +
-              '      <button type="button" class="btn btn-default btn-sm addTag"><i class="bi bi-plus"></i>ADD</button>' + // Botón para agregar el tag
+              '      <div class="btn btn-default btn-sm addTag"><i class="bi bi-plus"></i>ADD</div>' + // Botón para agregar el tag
               '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
               '    </div>' +
               '  </div>' +
@@ -60,6 +60,7 @@ setTimeout(async function() {
           const addButtons = document.querySelectorAll('.addTag');
           addButtons.forEach(button => {
             button.addEventListener('click', function(event) {
+              event.preventDefault();
               const row = this.closest('.editgrid-row');
               const tagName = row.querySelector('[name="data[tagName]"]').value;
               
@@ -77,7 +78,7 @@ setTimeout(async function() {
               }
             });
           });
-        }, 40);
+        }, 1000);
       });
       
       // Proporcionar una presentación predeterminada
