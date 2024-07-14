@@ -84,11 +84,10 @@
               }
             ]
           },
-          valueProperty: 'Model_Name',
+          dataSrc: 'values',
           template: '<span>{{ item.Model_Name }}</span>',
           refreshOn: 'cars.make',
           clearOnRefresh: true,
-          selectValues: 'Results',
           validate: {
             required: true
           }
@@ -96,7 +95,7 @@
       ]
     }]
   });
-})();
+  })();
 
 
 
