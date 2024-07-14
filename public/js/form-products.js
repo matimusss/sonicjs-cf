@@ -67,12 +67,12 @@ setTimeout(async function() {
         data: {
           children: [
             {
-              value: 'a',
-              label: '1'
+              tagName: 'a', // Asegúrate de que estos valores coincidan con los datos del select
+              tagId: '1'
             },
             {
-              value: 'b',
-              label: '2'
+              tagName: 'b', // Asegúrate de que estos valores coincidan con los datos del select
+              tagId: '2'
             }
           ]
         }
