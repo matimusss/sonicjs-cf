@@ -17,7 +17,7 @@ setTimeout(async function() {
               '<div class="row">' +
               '  {% util.eachComponent(components, function(component) { %}' +
               '    <div class="col-sm-2">' +
-              '      {{ row[component.label] }}' +
+              '      {{ row[component.key] }}' +
               '    </div>' +
               '  {% }) %}' +
               '  <div class="col-sm-2">' +
@@ -67,12 +67,12 @@ setTimeout(async function() {
         data: {
           children: [
             {
-              tagName: 'a',
-              tagId: '1'
+              value: 'a',
+              label: '1'
             },
             {
-              tagName: 'b',
-              tagId: '2'
+              value: 'b',
+              label: '2'
             }
           ]
         }
