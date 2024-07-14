@@ -44,22 +44,14 @@
                 type: 'select',
                 input: true,
                 data: {
-                  values: [
-                    {
-                      value: 'male',
-                      label: 'Male'
-                    },
-                    {
-                      value: 'female',
-                      label: 'Female'
-                    },
-                    {
-                      value: 'other',
-                      label: 'Other'
-                    }
-                  ]
+                  json: `[
+                    {"value":"a","label":"A"},
+                    {"value":"b","label":"B"},
+                    {"value":"c","label":"C"},
+                    {"value":"d","label":"D"}
+                  ]`
                 },
-                dataSrc: 'values',
+                dataSrc: "json",
                 template: '<span>{{ item.label }}</span>'
               }
             ]
