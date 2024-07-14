@@ -1,100 +1,105 @@
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   (function () {
 
     Formio.createForm(document.getElementById('formio-attributes'), {
+
+    components: [{
+      type: 'editgrid',
+      label: 'Cars',
+      key: 'cars',
+      defaultOpen: true,
+      removeRow: 'Cancel',
       components: [
-          {
-            label: 'Children',
-            key: 'attributes',
-            type: 'editgrid',
-            input: true,
-            templates: {
-              header: '' +
-                '<div class="row">' +
-                '  {% util.eachComponent(components, function(component) { %} ' +
-                '    <div class="col-sm-2">' +
-                '      <strong>{{ component.label }}</strong>' +
-                '    </div>' +
-                '  {% }) %}' +
-                '</div>',
-              row: '' +
-                '<div class="row">' +
-                '  {%util.eachComponent(components, function(component) { %}' +
-                '    <div class="col-sm-2">' +
-                '      {{ row[component.key] }}' +
-                '    </div>' +
-                '  {% }) %}' +
-                '  <div class="col-sm-2">' +
-                '    <div class="btn-group pull-right">' +
-                '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
-                '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
-                '    </div>' +
-                '  </div>' +
-                '</div>',
-              footer: ''
-            },
-            components: [
-          
+        {
+          type: 'select',
+          label: 'Make',
+          key: 'make',
+          placeholder: 'Select your make',
+          dataSrc: 'values',
+          validate: {
+            required: true
+          },
+          data: {
+            values: [
               {
-                label: 'Nombre de atributo',
-                key: 'attributeName',
-                type: 'select',
-                input: true,
-                data: {
-                  values: [
-                    {value: 'Peso', label: 'Peso'},
-                    {value: 'Color', label: 'Color'},
-                    {value: 'Material', label: 'Material'},
-                    {value: 'Motivo', label: 'Motivo'}
-                  ]
-                },
-                
-                dataSrc: "values",
-                template: '<span>{{ item.label }}</span>'
-              }
-,
+                label: 'Chevy',
+                value: 'chevrolet'
+              },
               {
-                label: 'Valor de atributo',
-                key: 'attributeValue',
-                type: 'select',
-                input: true,
-                data: {
-                  values: [
-                    {value: '15kg', label: '15kg'},
-                    {value: '12kg', label: '12kg'},
-                    {value: '11kg', label: '11kg'},
-                    {value: '10kg', label: '10kg'}
-                  ]
-                },
-                
-                dataSrc: "values",
-                template: '<span>{{ item.label }}</span>'
+                value: 'honda',
+                label: 'Honda'
+              },
+              {
+                label: 'Ford',
+                value: 'ford'
+              },
+              {
+                label: 'Toyota',
+                value: 'toyota'
               }
-
-
-
-
             ]
           }
-        ]
-    }).then(function(form) {
-      // Provide a default submission.
-      form.submission = {
-        data: {
-          tags: [
-            {
-              attributeName: 'Color',
-                 attributeValue: 'Rojo'
-            },
-            {
-              attributeName: 'Material',
-                 attributeValue: 'Polyester'
-            }
-          ]
+        },
+        {
+          type: 'select',
+          label: 'Model',
+          key: 'model',
+          placeholder: 'Select your model',
+          data: {
+            values: [
+              {
+                label: 'Casdasdashevy',
+                value: 'dasdasdasdasdhevrolet'
+              },
+              {
+                value: 'hasdasdonda',
+                label: 'asdasdasdasdHonda'
+              },
+              {
+                label: 'Fasdasdasord',
+                value: 'fdasdasdasdord'
+              },
+              {
+                label: 'Toyota',
+                value: 'toyota'
+              }
+            ]
+          },
+          valueProperty: 'Model_Name',
+          template: '<span>{{ item.Model_Name }}</span>',
+          refreshOn: 'cars.make',
+          clearOnRefresh: true,
+          selectValues: 'Results',
+          validate: {
+            required: true
+          }
         }
-      };
-    });
-  })();
+      ]
+    }]
+  });
+})();
+
+
+
 
 
 
