@@ -8,7 +8,7 @@
       components: [
           {
             label: 'Children',
-            key: 'children',
+            key: 'tags',
             type: 'editgrid',
             input: true,
             templates: {
@@ -39,19 +39,19 @@
             components: [
           
               {
-                label: 'Gender',
-                key: 'gender',
+                label: 'Nombre de Tag',
+                key: 'tagName',
                 type: 'select',
                 input: true,
                 data: {
-                  json: `[
-                    {"value":"a","label":"A"},
-                    {"value":"b","label":"B"},
-                    {"value":"c","label":"C"},
-                    {"value":"d","label":"D"}
-                  ]`
+                  values: [
+                    {value: 'remeras', label: 'Remeras'},
+                    {value: 'batas', label: 'Batas'},
+                    {value: 'ojotas', label: 'Ojotas'},
+                    {value: 'buzos', label: 'Buzos'}
+                  ]
                 },
-                dataSrc: "json",
+                dataSrc: "values",
                 template: '<span>{{ item.label }}</span>'
               }
             ]
@@ -61,16 +61,12 @@
       // Provide a default submission.
       form.submission = {
         data: {
-          children: [
+          tags: [
             {
-       
               gender: 'male'
-    
             },
             {
-        
               gender: 'female'
-        
             }
           ]
         }
