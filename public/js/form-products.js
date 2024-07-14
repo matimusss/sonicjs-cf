@@ -1,8 +1,7 @@
 setTimeout(async function() {
   (function () {
     const url = window.location.href;
-    const formioElement = document.getElementById('formio-products');
-    
+    const formioElement = document.getElementById('formio-products');    
     Formio.createForm(formioElement, {
       components: [
         {
@@ -13,11 +12,6 @@ setTimeout(async function() {
           templates: {
             header: '' +
               '<div class="row">' +
-              '  {% util.eachComponent(components, function(component) { %} ' +
-              '    <div class="col-sm-2">' +
-              '      <strong>{{ component.label }}</strong>' +
-              '    </div>' +
-              '  {% }) %}' +
               '</div>',
             row: '' +
               '<div class="row">' +
@@ -37,7 +31,7 @@ setTimeout(async function() {
           components: [
             {
               type: "select",
-              label: "Select JSON",
+              label: "Aplicar, Agregar o Eliminar Tags (etiquetas de producto)",
               key: "tagName",
               placeholder: "Select one",
               data: {
@@ -51,22 +45,21 @@ setTimeout(async function() {
               dataSrc: "json",
               template: "<span>{{ item.label }}</span>",
               input: true
+            },
+            {
+              type: "textfield",
+              key: "tagId",
+              input: true,
+              hidden: true,
+              persistent: true
             }
           ]
-
-
-
-
-
-
-
-
         }
       ]
     }).then(function(form) {
       // Manejo de eventos para agregar tags
       form.on('render', function() {
-     
+        // Aquí puedes agregar lógica adicional si es necesario
       });
       
       // Proporcionar una presentación predeterminada
@@ -74,10 +67,12 @@ setTimeout(async function() {
         data: {
           children: [
             {
-              tagName: 'Remeras',
+              tagName: 'a',
+              tagId: '1'
             },
             {
-              tagName: 'Vestidos',
+              tagName: 'b',
+              tagId: '2'
             }
           ]
         }
