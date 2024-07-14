@@ -1,8 +1,5 @@
 
   (function () {
-    const url2 = window.location.href;
-    const formioElement2 = document.getElementById('formio-attributes');    
-
 
     Formio.createForm(document.getElementById('formio-attributes'), {
       components: [
@@ -111,9 +108,7 @@
 
 
   (function () {
-    const url = window.location.href;
-    const formioElement = document.getElementById('formio-tags');    
-
+ 
 
     Formio.createForm(document.getElementById('formio-tags'), {
       components: [
@@ -168,22 +163,26 @@
             ]
           }
         ]
-    }).then(function(form) {
+    })
+    .then(function(form) {
       // Provide a default submission.
       form.submission = {
         data: {
-          attributes: [
+          tags: [
             {
-              attributeName: 'Corbatas'
+              tagName: 'Corbatas'
             },
             {
-              attributeName: 'Guantes'
+              tagName: 'Guantes'
             }
           ]
         }
       };
     });
-  })();
+
+  })
+  
+  ();
 
 
 
