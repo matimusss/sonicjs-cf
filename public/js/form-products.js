@@ -340,32 +340,138 @@ Formio.createForm(document.getElementById('formio-variants'), {
           placeholder: 'Nombre de la variante',
           input: true,
         },
-        {  label: 'Caracteristicas',
-          key: 'variantAttributes',
+        {
+          label: 'Atributos de la variante',
+          key: 'variantAttribute',
           type: 'select',
           input: true,
           data: {
             values: [
               {
-                value: 'color rojo',
-                label: 'Color rojo'
+                value: 'color',
+                label: 'Color'
               },
               {
-                value: 'peso 15 kg',
-                label: 'peso 15 kg'
+                value: 'peso',
+                label: 'peso'
               },
               {
-                value: 'material madera',
-                label: 'Material madera'
+                value: 'material',
+                label: 'Material'
               }
             ]
           },
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
-        }
-      
-   
+        },
+        {
+          label: 'Valores',
+          key: 'variantAttributeValue',
+          type: 'select',
+          input: true,
+          conditional: {
+            show: true,
+            conjunction: "all",
+            conditions: [
+              {
+                component: 'variantAttribute',
+                operator: 'isEqual',
+                value: 'peso'
+              }
+            ]
+          },
+          data: {
+            values: [
+              {
+                value: '15kg',
+                label: '15kg'
+              },
+              {
+                value: '10kg',
+                label: '10kg'
+              },
+              {
+                value: '11kg',
+                label: '11kg'
+              }
+            ]
+          },
+          dataSrc: 'values',
+          template: '<span>{{ item.label }}</span>'
+        },
+        {
+          label: 'Valores',
+          key: 'value',
+          type: 'select',
+          input: true,
+          conditional: {
+            show: true,
+            conjunction: "all",
+            conditions: [
+              {
+                component: 'variantAttribute',
 
+                operator: 'isEqual',
+                value: 'color'
+              }
+            ]
+          },
+          data: {
+            values: [
+              {
+                value: 'Rojo',
+                label: 'Rojo'
+              },
+              {
+                value: 'Negro',
+                label: 'Negro'
+              },
+              {
+                value: 'Azul',
+                label: 'Azul'
+              }
+            ]
+          },
+          dataSrc: 'values',
+          template: '<span>{{ item.label }}</span>'
+        },
+        {
+          label: 'Valores',
+          key: 'value',
+          type: 'select',
+          input: true,
+          conditional: {
+            show: true,
+            conjunction: "all",
+            conditions: [
+              {
+                component: 'variantAttribute',
+                operator: 'isEqual',
+                value: 'material'
+              }
+            ]
+          },
+          data: {
+            values: [
+              {
+                value: 'Polyester',
+                label: 'Polyester'
+              },
+              {
+                value: 'Madera',
+                label: 'Madera'
+              },
+              {
+                value: 'Algodon',
+                label: 'Algodon'
+              }
+            ]
+          },
+          dataSrc: 'values',
+          template: '<span>{{ item.label }}</span>'
+        },
+      
+      
 
       ]
     }
@@ -374,14 +480,14 @@ Formio.createForm(document.getElementById('formio-variants'), {
 // Provide a default submission.
 form.submission = {
   data: {
-    attributes_form: [
+    variants_form: [
       {
-        variantAttributes: 'Color rojo, tamaño grande',
         variantName: 'Rojo y grande',
+        variantAttributes: 'Color rojo, tamaño grande',
       },
       {
-        variantAttributes: 'Color azul, tamaño pequeño',
         variantName: 'Azul pequeño',
+        variantAttributes: 'Color azul, tamaño pequeño',
       },
     ]
   }
