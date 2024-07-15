@@ -520,7 +520,6 @@ Formio.createForm(document.getElementById('formio-variants'), {
         variant.a = combinedValues; // Asegúrate de actualizar también en el array de variantes
       });
 
-      return true; // Devuelve true para continuar con el envío del formulario
     });
 
 // Provide a default submission.
