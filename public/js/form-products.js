@@ -377,6 +377,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
         {
           label: 'Valores',
           key: 'variantAttributeValueWeigh',
+          tableView:  'false',
           type: 'select',
           input: true,
           conditional: {
@@ -412,6 +413,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
         {
           label: 'Valores color',
           key: 'variantAttributeValueColor',
+          tableView:  'false',
           type: 'select',
           input: true,
           conditional: {
@@ -447,6 +449,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
         {
           label: 'Valores Material',
           key: 'variantAttributeValueMaterial',
+          tableView:  'false',
           type: 'select',
           input: true,
           conditional: {
@@ -518,7 +521,7 @@ form.submission = {
 
 
 
-async function createForm() {
+(async function() {
   // Fetch the product data
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/products/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
   const productData = await response.json();
@@ -659,6 +662,16 @@ async function createForm() {
       }
     ]
   }).then(function(form) {
+  // Configurar el evento change para escuchar cambios en 'product_name'
+  form.getComponent('product_name').on('change', function(value) {
+    // Aquí puedes ejecutar cualquier acción cuando cambie 'product_name'
+    console.log('El valor de product_name ha cambiado:', value);
+    
+    // Actualizar el valor de otro componente, por ejemplo 'slug'
+    form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
+  });
+
+
     // Set initial submission data
     form.submission = {
       data: {
@@ -683,6 +696,7 @@ async function createForm() {
       }
     };
   });
-}
 
-createForm();
+})();
+
+
