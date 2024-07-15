@@ -69,7 +69,7 @@ Formio.createForm(document.getElementById('formio-attributes'), {
               {
                 component: 'attribute',
                 operator: 'isEqual',
-                value: "peso"
+                value: 'peso'
               }
             ]
           },
@@ -92,6 +92,77 @@ Formio.createForm(document.getElementById('formio-attributes'), {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
+        {
+          label: 'Valores2',
+          key: 'value2',
+          type: 'select',
+          input: true,
+          conditional: {
+            show: true,
+            conjunction: "all",
+            conditions: [
+              {
+                component: 'attribute',
+                operator: 'isEqual',
+                value: 'color'
+              }
+            ]
+          },
+          data: {
+            values: [
+              {
+                value: 'Rojo',
+                label: 'Rojo'
+              },
+              {
+                value: 'Negro',
+                label: 'Negro'
+              },
+              {
+                value: 'Azul',
+                label: 'Azul'
+              }
+            ]
+          },
+          dataSrc: 'values',
+          template: '<span>{{ item.label }}</span>'
+        },
+        {
+          label: 'Valores3',
+          key: 'value3',
+          type: 'select',
+          input: true,
+          conditional: {
+            show: true,
+            conjunction: "all",
+            conditions: [
+              {
+                component: 'attribute',
+                operator: 'isEqual',
+                value: 'material'
+              }
+            ]
+          },
+          data: {
+            values: [
+              {
+                value: 'Polyester',
+                label: 'Polyester'
+              },
+              {
+                value: 'Madera',
+                label: 'Madera'
+              },
+              {
+                value: 'Algodon',
+                label: 'Algodon'
+              }
+            ]
+          },
+          dataSrc: 'values',
+          template: '<span>{{ item.label }}</span>'
+        },
+
 
       ]
     }
