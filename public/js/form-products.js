@@ -366,8 +366,8 @@ Formio.createForm(document.getElementById('formio-variants'), {
           template: '<span>{{ item.label }}</span>'
         },
         {
-          label: 'Valores Peso',
-          key: 'variantAttributeValueWeight',
+          label: 'Valores',
+          key: 'variantAttributeValueWeigh',
           type: 'select',
           input: true,
           conditional: {
@@ -496,3 +496,184 @@ form.submission = {
 };
 });
 })();
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function createForm() {
+  // Fetch the product data
+  const response = await fetch('https://sonicjs-cf2.pages.dev/v1/products/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
+  const productData = await response.json();
+
+  const data = productData.data;
+
+  // Create the form
+  Formio.createForm(document.getElementById('formio-product'), {
+    components: [
+      {
+        type: 'textfield',
+        key: 'id',
+        label: 'ID',
+        input: true,
+        defaultValue: data.id,
+        disabled: true
+      },
+      {
+        type: 'textfield',
+        key: 'slug',
+        label: 'Slug',
+        input: true,
+        defaultValue: data.slug
+      },
+      {
+        type: 'textfield',
+        key: 'product_name',
+        label: 'Product Name',
+        input: true,
+        defaultValue: data.product_name
+      },
+      {
+        type: 'textfield',
+        key: 'sku',
+        label: 'SKU',
+        input: true,
+        defaultValue: data.sku
+      },
+      {
+        type: 'number',
+        key: 'sale_price',
+        label: 'Sale Price',
+        input: true,
+        defaultValue: data.sale_price
+      },
+      {
+        type: 'number',
+        key: 'compare_price',
+        label: 'Compare Price',
+        input: true,
+        defaultValue: data.compare_price
+      },
+      {
+        type: 'number',
+        key: 'buying_price',
+        label: 'Buying Price',
+        input: true,
+        defaultValue: data.buying_price
+      },
+      {
+        type: 'number',
+        key: 'quantity',
+        label: 'Quantity',
+        input: true,
+        defaultValue: data.quantity
+      },
+      {
+        type: 'textfield',
+        key: 'short_description',
+        label: 'Short Description',
+        input: true,
+        defaultValue: data.short_description
+      },
+      {
+        type: 'textarea',
+        key: 'product_description',
+        label: 'Product Description',
+        input: true,
+        defaultValue: data.product_description
+      },
+      {
+        type: 'textfield',
+        key: 'product_type',
+        label: 'Product Type',
+        input: true,
+        defaultValue: data.product_type
+      },
+      {
+        type: 'textfield',
+        key: 'published',
+        label: 'Published',
+        input: true,
+        defaultValue: data.published
+      },
+      {
+        type: 'textfield',
+        key: 'disable_out_of_stock',
+        label: 'Disable Out Of Stock',
+        input: true,
+        defaultValue: data.disable_out_of_stock
+      },
+      {
+        type: 'textfield',
+        key: 'note',
+        label: 'Note',
+        input: true,
+        defaultValue: data.note
+      },
+      {
+        type: 'textfield',
+        key: 'created_by',
+        label: 'Created By',
+        input: true,
+        defaultValue: data.created_by
+      },
+      {
+        type: 'textfield',
+        key: 'updated_by',
+        label: 'Updated By',
+        input: true,
+        defaultValue: data.updated_by
+      },
+      {
+        type: 'textfield',
+        key: 'createdOn',
+        label: 'Created On',
+        input: true,
+        defaultValue: new Date(data.createdOn).toLocaleString(),
+        disabled: true
+      },
+      {
+        type: 'textfield',
+        key: 'updatedOn',
+        label: 'Updated On',
+        input: true,
+        defaultValue: new Date(data.updatedOn).toLocaleString(),
+        disabled: true
+      }
+    ]
+  }).then(function(form) {
+    // Set initial submission data
+    form.submission = {
+      data: {
+        id: data.id,
+        slug: data.slug,
+        product_name: data.product_name,
+        sku: data.sku,
+        sale_price: data.sale_price,
+        compare_price: data.compare_price,
+        buying_price: data.buying_price,
+        quantity: data.quantity,
+        short_description: data.short_description,
+        product_description: data.product_description,
+        product_type: data.product_type,
+        published: data.published,
+        disable_out_of_stock: data.disable_out_of_stock,
+        note: data.note,
+        created_by: data.created_by,
+        updated_by: data.updated_by,
+        createdOn: new Date(data.createdOn).toLocaleString(),
+        updatedOn: new Date(data.updatedOn).toLocaleString()
+      }
+    };
+  });
+}
+
+createForm();

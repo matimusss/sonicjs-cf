@@ -761,7 +761,7 @@ export async function ProductFORM(ctx) {
        <div id='formio-tags'></div>
        <div id='formio-attributes'></div>
        <div id='formio-variants'></div>
-       
+       <div id='formio-product'></div>
     </Layout>
   );
 };
