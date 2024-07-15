@@ -352,7 +352,6 @@ Formio.createForm(document.getElementById('formio-variants'), {
         },
         {
           label: 'Valores juntados',
-          defaultValue: '15kg, rojo, polyester',
           key: 'a',
           type: 'hidden',
           input: true,
