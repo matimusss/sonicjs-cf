@@ -350,7 +350,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
           tableView: true,
         },
         {
-          label: 'Valores OCULTOS',
+          label: 'Valores OCULTOSeee',
           defaultValue: 'asdasd',
           key: 'a',
           type: 'hidden',
@@ -363,7 +363,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
           key: 'variantAttribute',
           type: 'select',
           input: true,
-          tableView: true,
+          tableView: false,
           data: {
             values: [
               { 
