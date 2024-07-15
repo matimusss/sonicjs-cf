@@ -521,6 +521,48 @@ Formio.createForm(document.getElementById('formio-variants'), {
       });
 
     });
+    form.on('submitDone', function (submission) { 
+      // Obtener los valores de los campos select
+      const materialValue = submission.data.variantAttributeValueMaterial || '';
+      const colorValue = submission.data.variantAttributeValueColor || '';
+      const weightValue = submission.data.variantAttributeValueWeight || '';
+
+      // Combinar los valores en un solo string
+      const combinedValues = `${materialValue}, ${colorValue}, ${weightValue}`;
+
+      // Asignar el valor combinado al campo hidden 'a'
+      form.getComponent('a').setValue(combinedValues);
+
+      // Mostrar en consola para verificar
+      console.log('Valores combinados:', combinedValues);
+
+      // Continuar con el envío del formulario
+      submission.data.variants_form.forEach(variant => {
+        variant.a = combinedValues; // Asegúrate de actualizar también en el array de variantes
+      });
+
+    });
+    form.on('formSubmit', function (submission) { 
+      // Obtener los valores de los campos select
+      const materialValue = submission.data.variantAttributeValueMaterial || '';
+      const colorValue = submission.data.variantAttributeValueColor || '';
+      const weightValue = submission.data.variantAttributeValueWeight || '';
+
+      // Combinar los valores en un solo string
+      const combinedValues = `${materialValue}, ${colorValue}, ${weightValue}`;
+
+      // Asignar el valor combinado al campo hidden 'a'
+      form.getComponent('a').setValue(combinedValues);
+
+      // Mostrar en consola para verificar
+      console.log('Valores combinados:', combinedValues);
+
+      // Continuar con el envío del formulario
+      submission.data.variants_form.forEach(variant => {
+        variant.a = combinedValues; // Asegúrate de actualizar también en el array de variantes
+      });
+
+    });
 
 // Provide a default submission.
 
