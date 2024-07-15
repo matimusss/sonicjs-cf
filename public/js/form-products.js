@@ -401,7 +401,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
         },
         {
           label: 'Valores',
-          key: 'value',
+          key: 'variantAttributeValue',
           type: 'select',
           input: true,
           conditional: {
@@ -436,6 +436,9 @@ Formio.createForm(document.getElementById('formio-variants'), {
           template: '<span>{{ item.label }}</span>'
         },
         {
+          label: 'Valores',
+          key: 'variantAttributeValue',
+          type: 'select',
           label: 'Valores',
           key: 'value',
           type: 'select',
@@ -483,11 +486,13 @@ form.submission = {
     variants_form: [
       {
         variantName: 'Rojo y grande',
-        variantAttributes: 'Color rojo, tamaño grande',
+        variantAttribute: 'Color ',
+        variantAttributeValue: 'rojo',
       },
       {
         variantName: 'Azul pequeño',
-        variantAttributes: 'Color azul, tamaño pequeño',
+        variantAttribute: 'Material',
+        variantAttributeValue: 'madera',
       },
     ]
   }
