@@ -444,7 +444,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
             ]
           },
           dataSrc: 'values',
-          template: '<span>{{ item.label }}</span>'
+
         },
         {
           label: 'Valores Material',
@@ -515,22 +515,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
     });
 
 // Provide a default submission.
-form.submission = {
-  data: {
-    variants_form: [
-      {
-        variantName: 'Rojo y grande',
-        variantAttribute: 'Color ',
-        variantAttributeValue: 'rojo',
-      },
-      {
-        variantName: 'Azul pequeño',
-        variantAttribute: 'Material',
-        variantAttributeValue: 'madera',
-      },
-    ]
-  }
-};
+
 });
 })();
 
