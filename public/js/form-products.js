@@ -366,8 +366,8 @@ Formio.createForm(document.getElementById('formio-variants'), {
           template: '<span>{{ item.label }}</span>'
         },
         {
-          label: 'Valores',
-          key: 'variantAttributeValue',
+          label: 'Valores Peso',
+          key: 'variantAttributeValueWeight',
           type: 'select',
           input: true,
           conditional: {
@@ -401,8 +401,8 @@ Formio.createForm(document.getElementById('formio-variants'), {
           template: '<span>{{ item.label }}</span>'
         },
         {
-          label: 'Valores',
-          key: 'variantAttributeValue',
+          label: 'Valores color',
+          key: 'variantAttributeValueColor',
           type: 'select',
           input: true,
           conditional: {
@@ -411,7 +411,6 @@ Formio.createForm(document.getElementById('formio-variants'), {
             conditions: [
               {
                 component: 'variantAttribute',
-
                 operator: 'isEqual',
                 value: 'color'
               }
@@ -437,8 +436,8 @@ Formio.createForm(document.getElementById('formio-variants'), {
           template: '<span>{{ item.label }}</span>'
         },
         {
-          label: 'Valores',
-          key: 'variantAttributeValue',
+          label: 'Valores Material',
+          key: 'variantAttributeValueMaterial',
           type: 'select',
           input: true,
           conditional: {
