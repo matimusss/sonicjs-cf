@@ -46,7 +46,7 @@ Formio.createForm(document.getElementById('formio-attributes'), {
               },
               {
                 value: 'peso',
-                label: 'Peso'
+                label: 'peso'
               },
               {
                 value: 'material',
@@ -67,9 +67,9 @@ Formio.createForm(document.getElementById('formio-attributes'), {
             conjunction: "all",
             conditions: [
               {
-                component: "attribute",
-                operator: "isEqual",
-                value: "Peso"
+                component: 'attribute',
+                operator: 'isEqual',
+                value: "peso"
               }
             ]
           },
