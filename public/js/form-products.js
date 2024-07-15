@@ -499,13 +499,12 @@ Formio.createForm(document.getElementById('formio-variants'), {
     }
   ]
 }).then(function(form) {
-
     // Manejar el evento submit del formulario
-    form.on('submit', function (submission) {
+    form.on('submit', function (submission) { 
       // Obtener los valores de los campos select
-      const materialValue = form.data.variantAttributeValueMaterial || '';
-      const colorValue = form.data.variantAttributeValueColor || '';
-      const weightValue = form.data.variantAttributeValueWeight || '';
+      const materialValue = submission.data.variantAttributeValueMaterial || '';
+      const colorValue = submission.data.variantAttributeValueColor || '';
+      const weightValue = submission.data.variantAttributeValueWeight || '';
 
       // Combinar los valores en un solo string
       const combinedValues = `${materialValue}, ${colorValue}, ${weightValue}`;
