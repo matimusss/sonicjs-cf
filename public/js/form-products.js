@@ -347,7 +347,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
           label: 'Nombre de la variante',
           placeholder: 'Nombre de la variante',
           input: true,
-          tableView: true,
+          tableView: false,
         },
         {
           label: 'Valores OCULTOSeee',
