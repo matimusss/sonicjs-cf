@@ -324,7 +324,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
           '</div>',
         row: '' +
           '<div class="row">' +
-          '  {%util.eachComponent(components, function(component) { %}' +
+          '  {% util.eachComponent(components, function(component) { %}' +
           '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}'+
           '    <div class="col-sm-2">' +
           '      {{ row[component.key] }}' +
@@ -337,8 +337,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
           '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
           '    </div>' +
           '  </div>' +
-          '</div>'+
-          '{% } %}',
+          '</div>',
         footer: ''
       },
       components: [
@@ -365,7 +364,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
           key: 'variantAttribute',
           type: 'select',
           input: true,
-          tableView: false,
+          tableView: true,
           data: {
             values: [
               { 
