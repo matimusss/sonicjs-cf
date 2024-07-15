@@ -62,6 +62,17 @@ Formio.createForm(document.getElementById('formio-attributes'), {
           key: 'value',
           type: 'select',
           input: true,
+          conditional: {
+            show: true,
+            conjunction: "all",
+            conditions: [
+              {
+                component: "attribute",
+                operator: "isEqual",
+                value: "Peso"
+              }
+            ]
+          },
           data: {
             values: [
               {
