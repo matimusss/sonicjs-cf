@@ -293,236 +293,253 @@ form.submission = {
 
 
 
-  (function () {
-    Formio.createForm(document.getElementById('formio-variants'), {
+
+
+
+
+
+  (function () {  
+Formio.createForm(document.getElementById('formio-variants'), {
+  components: [
+    {
+      label: 'Variantes',
+      key: 'variants_form',
+      type: 'editgrid',
+      input: true,
+      templates: {
+        header: '' +
+          '<div class="row">' +
+          '  {% util.eachComponent(components, function(component) { %} ' +
+          '    <div class="col-sm-2">' +
+          '      <strong>{{ component.label }}</strong>' +
+          '    </div>' +
+          '  {% }) %}' +
+          '</div>',
+        row: '' +
+          '<div class="row">' +
+          '  {%util.eachComponent(components, function(component) { %}' +
+          '    <div class="col-sm-2">' +
+          '      {{ row[component.key] }}' +
+          '    </div>' +
+          '  {% }) %}' +
+          '  <div class="col-sm-2">' +
+          '    <div class="btn-group pull-right">' +
+          '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
+          '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
+          '    </div>' +
+          '  </div>' +
+          '</div>',
+        footer: ''
+      },
       components: [
+        
         {
-          label: 'Variantes',
-          key: 'variants_form',
-          type: 'editgrid',
+          type: 'textfield',
+          key: 'variantName',
+          label: 'Nombre de la variante',
+          placeholder: 'Nombre de la variante',
           input: true,
-          templates: {
-            header: '' +
-              '<div class="row">' +
-              '  {% util.eachComponent(components, function(component) { %} ' +
-              '    <div class="col-sm-2">' +
-              '      <strong>{{ component.label }}</strong>' +
-              '    </div>' +
-              '  {% }) %}' +
-              '</div>',
-            row: '' +
-              '<div class="row">' +
-              '  {%util.eachComponent(components, function(component) { %}' +
-              '    <div class="col-sm-2">' +
-              '      {{ row[component.key] }}' +
-              '    </div>' +
-              '  {% }) %}' +
-              '  <div class="col-sm-2">' +
-              '    <div class="btn-group pull-right">' +
-              '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
-              '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
-              '    </div>' +
-              '  </div>' +
-              '</div>',
-            footer: ''
+        },
+        {
+          label: 'Valores OCULTOS',
+          defaultValue: 'asdasd',
+          key: 'a',
+          type: 'hidden',
+          input: true,
+          tableView: true,
+        },
+
+        {
+          label: 'Atributos de la variante',
+          key: 'variantAttribute',
+          type: 'select',
+          input: true,
+          data: {
+            values: [
+              { 
+                value: 'color',
+                label: 'color'
+              },
+              {
+                value: 'peso',
+                label: 'peso'
+              },
+              {
+                value: 'material',
+                label: 'material'
+              }
+            ]
           },
-          components: [
-            {
-              type: 'textfield',
-              key: 'variantName',
-              label: 'Nombre de la variante',
-              placeholder: 'Nombre de la variante',
-              input: true,
-            },
-            {
-              label: 'Valores OCULTOS',
-              defaultValue: '',
-              key: 'a',
-              type: 'hidden',
-              input: true,
-              tableView: true,
-            },
-            {
-              label: 'Atributos de la variante',
-              key: 'variantAttribute',
-              type: 'select',
-              input: true,
-              data: {
-                values: [
-                  { 
-                    value: 'color',
-                    label: 'color'
-                  },
-                  {
-                    value: 'peso',
-                    label: 'peso'
-                  },
-                  {
-                    value: 'material',
-                    label: 'material'
-                  }
-                ]
+          multiple: true,
+          dataSrc: 'values',
+          template: '<span>{{ item.label }}</span>'
+        },
+        {
+          label: 'Valores',
+          key: 'variantAttributeValueWeigh',
+          tableView:  false,
+          type: 'select',
+          input: true,
+          conditional: {
+            show: true,
+            conjunction: "all",
+            conditions: [
+              {
+                component: 'variantAttribute',
+                operator: 'isEqual',
+                value: 'peso'
+              }
+            ]
+          },
+          data: {
+            values: [
+              {
+                value: '15kg',
+                label: '15kg'
               },
-              multiple: true,
-              dataSrc: 'values',
-              template: '<span>{{ item.label }}</span>'
-            },
-            {
-              label: 'Valores',
-              key: 'variantAttributeValueWeight',
-              tableView:  'false',
-              type: 'select',
-              input: true,
-              conditional: {
-                show: true,
-                conjunction: "all",
-                conditions: [
-                  {
-                    component: 'variantAttribute',
-                    operator: 'isEqual',
-                    value: 'peso'
-                  }
-                ]
+              {
+                value: '10kg',
+                label: '10kg'
               },
-              data: {
-                values: [
-                  {
-                    value: '15kg',
-                    label: '15kg'
-                  },
-                  {
-                    value: '10kg',
-                    label: '10kg'
-                  },
-                  {
-                    value: '11kg',
-                    label: '11kg'
-                  }
-                ]
+              {
+                value: '11kg',
+                label: '11kg'
+              }
+            ]
+          },
+          dataSrc: 'values',
+          template: '<span>{{ item.label }}</span>'
+        },
+        {
+          label: 'Valores color',
+          key: 'variantAttributeValueColor',
+          tableView:  false,
+          type: 'select',
+          input: true,
+          conditional: {
+            show: true,
+            conjunction: "all",
+            conditions: [
+              {
+                component: 'variantAttribute',
+                operator: 'isEqual',
+                value: 'color'
+              }
+            ]
+          },
+          data: {
+            values: [
+              {
+                value: 'Rojo',
+                label: 'Rojo'
               },
-              dataSrc: 'values',
-              template: '<span>{{ item.label }}</span>'
-            },
-            {
-              label: 'Valores color',
-              key: 'variantAttributeValueColor',
-              tableView:  'false',
-              type: 'select',
-              input: true,
-              conditional: {
-                show: true,
-                conjunction: "all",
-                conditions: [
-                  {
-                    component: 'variantAttribute',
-                    operator: 'isEqual',
-                    value: 'color'
-                  }
-                ]
+              {
+                value: 'Negro',
+                label: 'Negro'
               },
-              data: {
-                values: [
-                  {
-                    value: 'Rojo',
-                    label: 'Rojo'
-                  },
-                  {
-                    value: 'Negro',
-                    label: 'Negro'
-                  },
-                  {
-                    value: 'Azul',
-                    label: 'Azul'
-                  }
-                ]
+              {
+                value: 'Azul',
+                label: 'Azul'
+              }
+            ]
+          },
+          dataSrc: 'values',
+          template: '<span>{{ item.label }}</span>'
+        },
+        {
+          label: 'Valores Material',
+          key: 'variantAttributeValueMaterial',
+          tableView:  false,
+          type: 'select',
+          input: true,
+          conditional: {
+            show: true,
+            conjunction: "all",
+            conditions: [
+              {
+                component: 'variantAttribute',
+                operator: 'isEqual',
+                value: 'material'
+              }
+            ]
+          },
+          data: {
+            values: [
+              {
+                value: 'Polyester',
+                label: 'Polyester'
               },
-              dataSrc: 'values',
-              template: '<span>{{ item.label }}</span>'
-            },
-            {
-              label: 'Valores Material',
-              key: 'variantAttributeValueMaterial',
-              tableView:  'false',
-              type: 'select',
-              input: true,
-              conditional: {
-                show: true,
-                conjunction: "all",
-                conditions: [
-                  {
-                    component: 'variantAttribute',
-                    operator: 'isEqual',
-                    value: 'material'
-                  }
-                ]
+              {
+                value: 'Madera',
+                label: 'Madera'
               },
-              data: {
-                values: [
-                  {
-                    value: 'Polyester',
-                    label: 'Polyester'
-                  },
-                  {
-                    value: 'Madera',
-                    label: 'Madera'
-                  },
-                  {
-                    value: 'Algodon',
-                    label: 'Algodon'
-                  }
-                ]
-              },
-              dataSrc: 'values',
-              template: '<span>{{ item.label }}</span>'
-            },
-          ]
-        }
+              {
+                value: 'Algodon',
+                label: 'Algodon'
+              }
+            ]
+          },
+          dataSrc: 'values',
+          template: '<span>{{ item.label }}</span>'
+        },
+      
+      
+
       ]
-    }).then(function (form) {
-      // Manejar el evento submit del formulario
-      form.on('submit', function (submission) {
-        // Obtener los valores de los campos select
-        const materialValue = form.data.variantAttributeValueMaterial || '';
-        const colorValue = form.data.variantAttributeValueColor || '';
-        const weightValue = form.data.variantAttributeValueWeight || '';
-  
-        // Combinar los valores en un solo string
-        const combinedValues = `${materialValue}, ${colorValue}, ${weightValue}`;
-  
-        // Asignar el valor combinado al campo hidden 'a'
-        form.getComponent('a').setValue(combinedValues);
-  
-        // Mostrar en consola para verificar
-        console.log('Valores combinados:', combinedValues);
-  
-        // Continuar con el envío del formulario
-        submission.data.variants_form.forEach(variant => {
-          variant.a = combinedValues; // Asegúrate de actualizar también en el array de variantes
-        });
-  
-        return true; // Devuelve true para continuar con el envío del formulario
+    }
+  ]
+}).then(function(form) {
+
+    // Manejar el evento submit del formulario
+    form.on('submit', function (submission) {
+      // Obtener los valores de los campos select
+      const materialValue = form.data.variantAttributeValueMaterial || '';
+      const colorValue = form.data.variantAttributeValueColor || '';
+      const weightValue = form.data.variantAttributeValueWeight || '';
+
+      // Combinar los valores en un solo string
+      const combinedValues = `${materialValue}, ${colorValue}, ${weightValue}`;
+
+      // Asignar el valor combinado al campo hidden 'a'
+      form.getComponent('a').setValue(combinedValues);
+
+      // Mostrar en consola para verificar
+      console.log('Valores combinados:', combinedValues);
+
+      // Continuar con el envío del formulario
+      submission.data.variants_form.forEach(variant => {
+        variant.a = combinedValues; // Asegúrate de actualizar también en el array de variantes
       });
-  
-      // Proporcionar una presentación de envío predeterminada
-      form.submission = {
-        data: {
-          variants_form: [
-            {
-              variantName: 'Rojo y grande',
-              variantAttribute: 'Color ',
-              variantAttributeValue: 'rojo',
-            },
-            {
-              variantName: 'Azul pequeño',
-              variantAttribute: 'Material',
-              variantAttributeValue: 'madera',
-            },
-          ]
-        }
-      };
+
+      return true; // Devuelve true para continuar con el envío del formulario
     });
-  })();
-  
+
+// Provide a default submission.
+form.submission = {
+  data: {
+    variants_form: [
+      {
+        variantName: 'Rojo y grande',
+        variantAttribute: 'Color ',
+        variantAttributeValue: 'rojo',
+      },
+      {
+        variantName: 'Azul pequeño',
+        variantAttribute: 'Material',
+        variantAttributeValue: 'madera',
+      },
+    ]
+  }
+};
+});
+})();
+
+
+
+
+
+
+
 
 
 
@@ -671,13 +688,13 @@ form.submission = {
     ]
   }).then(function(form) {
   // Configurar el evento change para escuchar cambios en 'product_name'
-  form.getComponent('product_name').on('change', function(value) {
-    // Aquí puedes ejecutar cualquier acción cuando cambie 'product_name'
-    console.log('El valor de product_name ha cambiado:', value);
-    
-    // Actualizar el valor de otro componente, por ejemplo 'slug'
-    form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
-  });
+    form.getComponent('product_name').on('change', function(value) {
+      // Aquí puedes ejecutar cualquier acción cuando cambie 'product_name'
+      console.log('El valor de product_name ha cambiado:', value);
+      
+      // Actualizar el valor de otro componente, por ejemplo 'slug'
+      form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
+    });
 
 
     // Set initial submission data
