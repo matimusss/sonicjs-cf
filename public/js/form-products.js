@@ -339,6 +339,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
           label: 'Nombre de la variante',
           placeholder: 'Nombre de la variante',
           input: true,
+          tableView: true,
         },
         {
           label: 'Valores OCULTOS',
@@ -354,6 +355,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
           key: 'variantAttribute',
           type: 'select',
           input: true,
+          tableView: true,
           data: {
             values: [
               { 
@@ -377,7 +379,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
         {
           label: 'Valores',
           key: 'variantAttributeValueWeigh',
-          tableView:  'false',
+          tableView:  false,
           type: 'select',
           input: true,
           conditional: {
@@ -444,7 +446,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
             ]
           },
           dataSrc: 'values',
-
+          template: '<span>{{ item.label }}</span>'
         },
         {
           label: 'Valores Material',
