@@ -307,6 +307,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
       type: 'editgrid',
       input: true,
       tableView: false,
+      displayAsTable: false,
       templates: {
         header: '' +
           '<div class="row">' +
