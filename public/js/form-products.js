@@ -377,7 +377,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
         {
           label: 'Valores',
           key: 'variantAttributeValueWeigh',
-          tableView:  false,
+          tableView:  'false',
           type: 'select',
           input: true,
           conditional: {
@@ -413,9 +413,9 @@ Formio.createForm(document.getElementById('formio-variants'), {
         {
           label: 'Valores color',
           key: 'variantAttributeValueColor',
-          tableView:  false,
           type: 'select',
           input: true,
+          tableView:  false,
           conditional: {
             show: true,
             conjunction: "all",
