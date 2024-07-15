@@ -304,9 +304,6 @@ Formio.createForm(document.getElementById('formio-variants'), {
   display: "form",
   components: [
     {
-
-
-
       rowDraft: false,
       label: 'Variantes',
       key: 'variants_form',
@@ -315,28 +312,32 @@ Formio.createForm(document.getElementById('formio-variants'), {
       tableView: false,
       displayAsTable: false,
       templates: {
-        header: '' +
-          '<div class="row">' +
-          '  {% util.eachComponent(components, function(component) { %} ' +
-          '    <div class="col-sm-2">' +
-          '      <strong>{{ component.label }}</strong>' +
-          '    </div>' +
-          '  {% }) %}' +
-          '</div>',
-        row: '' +
-          '<div class="row">' +
-          '  {%util.eachComponent(components, function(component) { %}' +
-          '    <div class="col-sm-2">' +
-          '      {{ row[component.key] }}' +
-          '    </div>' +
-          '  {% }) %}' +
-          '  <div class="col-sm-2">' +
-          '    <div class="btn-group pull-right">' +
-          '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
-          '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
-          '    </div>' +
-          '  </div>' +
-          '</div>',
+          header: '' +
+            '<div class="row">' +
+            '  {% util.eachComponent(components, function(component) { %}' +
+            '    {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}' +
+            '      <div class="col-sm-2">' +
+            '        <strong>{{ component.label }}</strong>' +
+            '      </div>' +
+            '    {% } %}' +
+            '  {% }) %}' +
+            '</div>',
+          row: '' +
+            '<div class="row">' +
+            '  {% util.eachComponent(components, function(component) { %}' +
+            '    {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}' +
+            '      <div class="col-sm-2">' +
+            '        {{ row[component.key] }}' +
+            '      </div>' +
+            '    {% } %}' +
+            '  {% }) %}' +
+            '  <div class="col-sm-2">' +
+            '    <div class="btn-group pull-right">' +
+            '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
+            '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
+            '    </div>' +
+            '  </div>' +
+            '</div>'
         footer: ''
       },
       components: [
