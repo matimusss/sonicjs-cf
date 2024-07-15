@@ -349,7 +349,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
             values: [
               { 
                 value: 'color',
-                label: 'Color'
+                label: 'color'
               },
               {
                 value: 'peso',
@@ -357,7 +357,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
               },
               {
                 value: 'material',
-                label: 'Material'
+                label: 'material'
               }
             ]
           },
@@ -438,9 +438,6 @@ Formio.createForm(document.getElementById('formio-variants'), {
         {
           label: 'Valores',
           key: 'variantAttributeValue',
-          type: 'select',
-          label: 'Valores',
-          key: 'value',
           type: 'select',
           input: true,
           conditional: {
