@@ -300,8 +300,14 @@ form.submission = {
 
   (function () {  
 Formio.createForm(document.getElementById('formio-variants'), {
+  type: "form",
+  display: "form",
   components: [
     {
+
+
+
+      rowDraft: false,
       label: 'Variantes',
       key: 'variants_form',
       type: 'editgrid',
