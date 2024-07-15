@@ -341,6 +341,15 @@ Formio.createForm(document.getElementById('formio-variants'), {
           input: true,
         },
         {
+          label: 'Valores OCULTOS',
+          defaultValue: 'asdasd',
+          key: 'a',
+          type: 'hidden',
+          input: true,
+          tableView: true,
+        },
+
+        {
           label: 'Atributos de la variante',
           key: 'variantAttribute',
           type: 'select',
