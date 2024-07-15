@@ -361,6 +361,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
               }
             ]
           },
+          multiple: true,
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
