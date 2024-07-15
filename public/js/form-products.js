@@ -366,7 +366,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
         },
         {
           label: 'Valores',
-          key: 'value',
+          key: 'variantAttributeValue',
           type: 'select',
           input: true,
           conditional: {
@@ -410,6 +410,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
             conditions: [
               {
                 component: 'variantAttribute',
+
                 operator: 'isEqual',
                 value: 'color'
               }
@@ -486,8 +487,7 @@ form.submission = {
       },
       {
         variantName: 'Azul pequeño',
-        variantAttribute: 'Color azul, tamaño pequeño',
-        value:
+        variantAttributes: 'Color azul, tamaño pequeño',
       },
     ]
   }
