@@ -379,7 +379,6 @@ Formio.createForm(document.getElementById('formio-variants'), {
         {
           label: 'Valores',
           key: 'variantAttributeValueWeigh',
-          tableView:  false,
           type: 'select',
           input: true,
           conditional: {
@@ -393,6 +392,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
               }
             ]
           },
+          tableView:  false,
           data: {
             values: [
               {
@@ -417,7 +417,6 @@ Formio.createForm(document.getElementById('formio-variants'), {
           key: 'variantAttributeValueColor',
           type: 'select',
           input: true,
-          tableView:  false,
           conditional: {
             show: true,
             conjunction: "all",
@@ -429,6 +428,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
               }
             ]
           },
+          tableView:  false,
           data: {
             values: [
               {
@@ -451,7 +451,6 @@ Formio.createForm(document.getElementById('formio-variants'), {
         {
           label: 'Valores Material',
           key: 'variantAttributeValueMaterial',
-          tableView:  false,
           type: 'select',
           input: true,
           conditional: {
@@ -465,6 +464,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
               }
             ]
           },
+          tableView:  false,
           data: {
             values: [
               {
