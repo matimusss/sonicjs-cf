@@ -417,6 +417,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
           key: 'variantAttributeValueColor',
           type: 'select',
           input: true,
+          tableView:  false,
           conditional: {
             show: true,
             conjunction: "all",
@@ -428,7 +429,6 @@ Formio.createForm(document.getElementById('formio-variants'), {
               }
             ]
           },
-          tableView:  false,
           data: {
             values: [
               {
@@ -464,7 +464,6 @@ Formio.createForm(document.getElementById('formio-variants'), {
               }
             ]
           },
-          tableView:  false,
           data: {
             values: [
               {
@@ -482,7 +481,8 @@ Formio.createForm(document.getElementById('formio-variants'), {
             ]
           },
           dataSrc: 'values',
-          template: '<span>{{ item.label }}</span>'
+          template: '<span>{{ item.label }}</span>',
+          tableView:  false,
         },
       
       
