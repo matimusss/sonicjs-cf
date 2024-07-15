@@ -314,7 +314,7 @@ Formio.createForm(document.getElementById('formio-variants'), {
       templates: {
         header: '' +
           '<div class="row">' +
-          '  {% util.eachComponent(components, function(component) { %} ' +
+          '  {% util.eachComponent(components, function(component) { %}' +
           '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}'+
           '    <div class="col-sm-2">' +
           '      <strong>{{ component.label }}</strong>' +
@@ -325,11 +325,11 @@ Formio.createForm(document.getElementById('formio-variants'), {
         row: '' +
           '<div class="row">' +
           '  {%util.eachComponent(components, function(component) { %}' +
-          '{% if (!component.hasOwnProperty("tableView") || component.tableView) { %} '+
+          '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}'+
           '    <div class="col-sm-2">' +
           '      {{ row[component.key] }}' +
           '    </div>' +
-          '  {% } %} ' +
+          '  {% } %}' +
           '  {% }) %}' +
           '  <div class="col-sm-2">' +
           '    <div class="btn-group pull-right">' +
@@ -337,7 +337,8 @@ Formio.createForm(document.getElementById('formio-variants'), {
           '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
           '    </div>' +
           '  </div>' +
-          '</div>',
+          '</div>'+
+          '{% } %}',
         footer: ''
       },
       components: [
