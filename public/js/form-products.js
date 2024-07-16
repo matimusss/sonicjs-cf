@@ -499,72 +499,51 @@ Formio.createForm(document.getElementById('formio-variants'), {
     }
   ]
 }).then(function(form) {
-    // Manejar el evento submit del formulario
-    form.on('submit', function (submission) { 
-      // Obtener los valores de los campos select
-      const materialValue = submission.data.variantAttributeValueMaterial || '';
-      const colorValue = submission.data.variantAttributeValueColor || '';
-      const weightValue = submission.data.variantAttributeValueWeight || '';
+var materialVar = "";
+var weightVar = "";
+var colorVar = "";
 
-      // Combinar los valores en un solo string
-      const combinedValues = `${materialValue}, ${colorValue}, ${weightValue}`;
 
-      // Asignar el valor combinado al campo hidden 'a'
-      form.getComponent('a').setValue(combinedValues);
+  form.getComponent('variantAttributeValueMaterial').on('change', function(value) {
+    // Aquí puedes ejecutar cualquier acción cuando cambie 'product_name'
+    console.log('El valor de material ha cambiado:', value);
+    // Actualizar el valor de otro componente, por ejemplo 'slug'
+   // form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
+  let materialVar = value;
+  });
 
-      // Mostrar en consola para verificar
-      console.log('Valores combinados:', combinedValues);
+  form.getComponent('variantAttributeValueWeight').on('change', function(value) {
+    // Aquí puedes ejecutar cualquier acción cuando cambie 'product_name'
+    console.log('El valor de peso ha cambiado:', value);
+    // Actualizar el valor de otro componente, por ejemplo 'slug'
+   // form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
+  let materialVar = value;
+  });
+  form.getComponent('variantAttributeValueColor').on('change', function(value) {
+    // Aquí puedes ejecutar cualquier acción cuando cambie 'product_name'
+    console.log('El valor de color ha cambiado:', value);
+    // Actualizar el valor de otro componente, por ejemplo 'slug'
+   // form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
+  let materialVar = value;
+  });
 
-      // Continuar con el envío del formulario
-      submission.data.variants_form.forEach(variant => {
-        variant.a = combinedValues; // Asegúrate de actualizar también en el array de variantes
-      });
 
-    });
-    form.on('submitDone', function (submission) { 
-      // Obtener los valores de los campos select
-      const materialValue = submission.data.variantAttributeValueMaterial || '';
-      const colorValue = submission.data.variantAttributeValueColor || '';
-      const weightValue = submission.data.variantAttributeValueWeight || '';
-
-      // Combinar los valores en un solo string
-      const combinedValues = `${materialValue}, ${colorValue}, ${weightValue}`;
-
-      // Asignar el valor combinado al campo hidden 'a'
-      form.getComponent('a').setValue(combinedValues);
-
-      // Mostrar en consola para verificar
-      console.log('Valores combinados:', combinedValues);
-
-      // Continuar con el envío del formulario
-      submission.data.variants_form.forEach(variant => {
-        variant.a = combinedValues; // Asegúrate de actualizar también en el array de variantes
-      });
-
-    });
-    form.on('formSubmit', function (submission) { 
-      // Obtener los valores de los campos select
-      const materialValue = submission.data.variantAttributeValueMaterial || '';
-      const colorValue = submission.data.variantAttributeValueColor || '';
-      const weightValue = submission.data.variantAttributeValueWeight || '';
-
-      // Combinar los valores en un solo string
-      const combinedValues = `${materialValue}, ${colorValue}, ${weightValue}`;
-
-      // Asignar el valor combinado al campo hidden 'a'
-      form.getComponent('a').setValue(combinedValues);
-
-      // Mostrar en consola para verificar
-      console.log('Valores combinados:', combinedValues);
-
-      // Continuar con el envío del formulario
-      submission.data.variants_form.forEach(variant => {
-        variant.a = combinedValues; // Asegúrate de actualizar también en el array de variantes
-      });
-
-    });
-
-// Provide a default submission.
+// Suponiendo que 'form' es tu instancia del formulario
+form.on('editGridSaveRow', (event) => {
+  const { component, row } = event;
+  
+  // Aquí puedes ejecutar cualquier acción cuando se guarda una fila en el EditGrid
+  console.log('Componente EditGrid:', component);
+  console.log('Fila guardada:', row);
+  
+  // Por ejemplo, puedes acceder a un campo específico en la fila guardada
+  //if (row.hasOwnProperty('campoEspecifico')) {
+  //    console.log('Valor del campo específico:', row.campoEspecifico);
+ // }
+  
+  // Puedes hacer otras acciones aquí, como actualizar otro componente
+  // form.getComponent('otroComponente').setValue('Nuevo valor basado en la fila guardada');
+});
 
 });
 })();
