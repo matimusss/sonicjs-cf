@@ -310,206 +310,6 @@ form.submission = {
 
 
 
-  const formularioJson = {
-    type: "form",
-    display: "form",
-    components: [
-      {
-        rowDraft: false,
-        label: 'Variantes',
-        key: 'variants_form',
-        type: 'editgrid',
-        input: true,
-        tableView: false,
-        displayAsTable: false,
-        templates: {
-          header: '' +
-            '<div class="row">' +
-            '  {% util.eachComponent(components, function(component) { %}' +
-            '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}'+
-            '    <div class="col-sm-2">' +
-            '      <strong>{{ component.label }}</strong>' +
-            '    </div>' +
-            '  {% } %}'+
-            '  {% }) %}' +
-            '</div>',
-          row: '' +
-            '<div class="row">' +
-            '  {% util.eachComponent(components, function(component) { %}' +
-            '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}'+
-            '    <div class="col-sm-2">' +
-            '      {{ row[component.key] }}' +
-            '    </div>' +
-            '  {% } %}' +
-            '  {% }) %}' +
-            '  <div class="col-sm-2">' +
-            '    <div class="btn-group pull-right">' +
-            '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
-            '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
-            '    </div>' +
-            '  </div>' +
-            '</div>',
-          footer: ''
-        },
-        components: [
-          
-          {
-            type: 'textfield',
-            key: 'variantName',
-            label: 'Nombre de la variante',
-            placeholder: 'Nombre de la variante',
-            input: true,
-            tableView: true,
-          },
-          {
-            label: 'Valores juntados',
-            key: 'a',
-            type: 'hidden',
-            input: true,
-            tableView: true,
-          },
-  
-          {
-            label: 'Atributos de la variante',
-            key: 'variantAttribute',
-            type: 'select',
-            input: true,
-            tableView: true,
-            data: {
-              values: [
-                { 
-                  value: 'color',
-                  label: 'color'
-                },
-                {
-                  value: 'peso',
-                  label: 'peso'
-                },
-                {
-                  value: 'material',
-                  label: 'material'
-                }
-              ]
-            },
-            multiple: true,
-            dataSrc: 'values',
-            template: '<span>{{ item.label }}</span>'
-          },
-          {
-            label: 'Valores',
-            key: 'variantAttributeValueWeigh',
-            type: 'select',
-            input: true,
-            conditional: {
-              show: true,
-              conjunction: "all",
-              conditions: [
-                {
-                  component: 'variantAttribute',
-                  operator: 'isEqual',
-                  value: 'peso'
-                }
-              ]
-            },
-            tableView:  false,
-            data: {
-              values: [
-                {
-                  value: '15kg',
-                  label: '15kg'
-                },
-                {
-                  value: '10kg',
-                  label: '10kg'
-                },
-                {
-                  value: '11kg',
-                  label: '11kg'
-                }
-              ]
-            },
-            dataSrc: 'values',
-            template: '<span>{{ item.label }}</span>'
-          },
-          {
-            label: 'Valores color',
-            key: 'variantAttributeValueColor',
-            type: 'select',
-            input: true,
-            tableView:  false,
-            conditional: {
-              show: true,
-              conjunction: "all",
-              conditions: [
-                {
-                  component: 'variantAttribute',
-                  operator: 'isEqual',
-                  value: 'color'
-                }
-              ]
-            },
-            data: {
-              values: [
-                {
-                  value: 'Rojo',
-                  label: 'Rojo'
-                },
-                {
-                  value: 'Negro',
-                  label: 'Negro'
-                },
-                {
-                  value: 'Azul',
-                  label: 'Azul'
-                }
-              ]
-            },
-            dataSrc: 'values',
-            template: '<span>{{ item.label }}</span>'
-          },
-          {
-            label: 'Valores Material',
-            key: 'variantAttributeValueMaterial',
-            type: 'select',
-            input: true,
-            conditional: {
-              show: true,
-              conjunction: "all",
-              conditions: [
-                {
-                  component: 'variantAttribute',
-                  operator: 'isEqual',
-                  value: 'material'
-                }
-              ]
-            },
-            data: {
-              values: [
-                {
-                  value: 'Polyester',
-                  label: 'Polyester'
-                },
-                {
-                  value: 'Madera',
-                  label: 'Madera'
-                },
-                {
-                  value: 'Algodon',
-                  label: 'Algodon'
-                }
-              ]
-            },
-            dataSrc: 'values',
-            template: '<span>{{ item.label }}</span>',
-            tableView:  false,
-          },
-        
-        
-  
-        ]
-      }
-    ]
-  }
 
   
   
@@ -521,6 +321,7 @@ form.submission = {
   
   
   
+  const formularioJson = generarFormularioJson();
   
   function generarFormularioJson() {
     const formularioJson = 
@@ -717,23 +518,17 @@ form.submission = {
           template: '<span>{{ item.label }}</span>',
           tableView:  false,
         },
-      
-      
-
       ]
     }
   ]
 } ;
 return formularioJson;
 }
-
-
-
   (function () {  
-Formio.createForm(document.getElementById('formio-variants'),formularioJson ).then(function(form) {
-
+Formio.createForm(document.getElementById('formio-variants'),formularioJson )
+.then(function(form) {
+//variante para identificar la instancia del formulario, nos referimos a ella en el submit global y etceteras.
   variantsForm = form;
-
 // Suponiendo que 'form' es tu instancia del formulario
 form.on('editGridSaveRow', (event) => {
   const { component, row } = event;  
@@ -743,7 +538,7 @@ form.on('editGridSaveRow', (event) => {
   // Por ejemplo, puedes acceder a un campo específico en la fila guardada
   //if (row.hasOwnProperty('campoEspecifico')) {
   //    console.log('Valor del campo específico:', row.campoEspecifico);
- // }
+  //}
   const gridComponent = form.getComponent('variants_form');
   if (gridComponent) {
     const rowIndex = gridComponent.editRows.findIndex(r => r.data === row);
@@ -752,13 +547,7 @@ form.on('editGridSaveRow', (event) => {
       gridComponent.redraw(); // Asegúrate de redibujar el componente para reflejar los cambios
     }
   }
-
-
-
-
-
 });
-
 });
 })();
 
