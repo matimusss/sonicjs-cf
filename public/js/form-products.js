@@ -1,3 +1,8 @@
+let tagsForm; // Declara la variable para almacenar la instancia del formulario
+let attributesForm; // Declara la variable para almacenar la instancia del formulario
+let variantsForm; // Declara la variable para almacenar la instancia del formulario
+
+let productsForm; // Declara la variable para almacenar la instancia del formulario
 
 (function () {  
 Formio.createForm(document.getElementById('formio-attributes'), {
@@ -168,6 +173,9 @@ Formio.createForm(document.getElementById('formio-attributes'), {
     }
   ]
 }).then(function(form) {
+
+  attributesForm = form;
+
 // Provide a default submission.
 form.submission = {
   data: {
@@ -269,6 +277,8 @@ form.submission = {
         ]
     })
     .then(function(form) {
+      tagsForm = form;
+
       // simulamos los envios "anteriores" osea, los tags que ya tiene agregados el producto, hacemos como que los enviamos.
       form.submission = {
         data: {
@@ -301,206 +311,7 @@ form.submission = {
 
 
 
-  const formularioJson = {
-    type: "form",
-    display: "form",
-    components: [
-      {
-        rowDraft: false,
-        label: 'Variantes',
-        key: 'variants_form',
-        type: 'editgrid',
-        input: true,
-        tableView: false,
-        displayAsTable: false,
-        templates: {
-          header: '' +
-            '<div class="row">' +
-            '  {% util.eachComponent(components, function(component) { %}' +
-            '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}'+
-            '    <div class="col-sm-2">' +
-            '      <strong>{{ component.label }}</strong>' +
-            '    </div>' +
-            '  {% } %}'+
-            '  {% }) %}' +
-            '</div>',
-          row: '' +
-            '<div class="row">' +
-            '  {% util.eachComponent(components, function(component) { %}' +
-            '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}'+
-            '    <div class="col-sm-2">' +
-            '      {{ row[component.key] }}' +
-            '    </div>' +
-            '  {% } %}' +
-            '  {% }) %}' +
-            '  <div class="col-sm-2">' +
-            '    <div class="btn-group pull-right">' +
-            '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
-            '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
-            '    </div>' +
-            '  </div>' +
-            '</div>',
-          footer: ''
-        },
-        components: [
-          
-          {
-            type: 'textfield',
-            key: 'variantName',
-            label: 'Nombre de la variante',
-            placeholder: 'Nombre de la variante',
-            input: true,
-            tableView: true,
-          },
-          {
-            label: 'Valores juntados',
-            key: 'a',
-            type: 'hidden',
-            input: true,
-            tableView: true,
-          },
-  
-          {
-            label: 'Atributos de la variante',
-            key: 'variantAttribute',
-            type: 'select',
-            input: true,
-            tableView: true,
-            data: {
-              values: [
-                { 
-                  value: 'color',
-                  label: 'color'
-                },
-                {
-                  value: 'peso',
-                  label: 'peso'
-                },
-                {
-                  value: 'material',
-                  label: 'material'
-                }
-              ]
-            },
-            multiple: true,
-            dataSrc: 'values',
-            template: '<span>{{ item.label }}</span>'
-          },
-          {
-            label: 'Valores',
-            key: 'variantAttributeValueWeigh',
-            type: 'select',
-            input: true,
-            conditional: {
-              show: true,
-              conjunction: "all",
-              conditions: [
-                {
-                  component: 'variantAttribute',
-                  operator: 'isEqual',
-                  value: 'peso'
-                }
-              ]
-            },
-            tableView:  false,
-            data: {
-              values: [
-                {
-                  value: '15kg',
-                  label: '15kg'
-                },
-                {
-                  value: '10kg',
-                  label: '10kg'
-                },
-                {
-                  value: '11kg',
-                  label: '11kg'
-                }
-              ]
-            },
-            dataSrc: 'values',
-            template: '<span>{{ item.label }}</span>'
-          },
-          {
-            label: 'Valores color',
-            key: 'variantAttributeValueColor',
-            type: 'select',
-            input: true,
-            tableView:  false,
-            conditional: {
-              show: true,
-              conjunction: "all",
-              conditions: [
-                {
-                  component: 'variantAttribute',
-                  operator: 'isEqual',
-                  value: 'color'
-                }
-              ]
-            },
-            data: {
-              values: [
-                {
-                  value: 'Rojo',
-                  label: 'Rojo'
-                },
-                {
-                  value: 'Negro',
-                  label: 'Negro'
-                },
-                {
-                  value: 'Azul',
-                  label: 'Azul'
-                }
-              ]
-            },
-            dataSrc: 'values',
-            template: '<span>{{ item.label }}</span>'
-          },
-          {
-            label: 'Valores Material',
-            key: 'variantAttributeValueMaterial',
-            type: 'select',
-            input: true,
-            conditional: {
-              show: true,
-              conjunction: "all",
-              conditions: [
-                {
-                  component: 'variantAttribute',
-                  operator: 'isEqual',
-                  value: 'material'
-                }
-              ]
-            },
-            data: {
-              values: [
-                {
-                  value: 'Polyester',
-                  label: 'Polyester'
-                },
-                {
-                  value: 'Madera',
-                  label: 'Madera'
-                },
-                {
-                  value: 'Algodon',
-                  label: 'Algodon'
-                }
-              ]
-            },
-            dataSrc: 'values',
-            template: '<span>{{ item.label }}</span>',
-            tableView:  false,
-          },
-        
-        
-  
-        ]
-      }
-    ]
-  }
+
   
   
   
@@ -722,6 +533,7 @@ return formularioJson;
   (function () {  
 Formio.createForm(document.getElementById('formio-variants'),formularioJson ).then(function(form) {
 
+  variantsForm = form;
 
 // Suponiendo que 'form' es tu instancia del formulario
 form.on('editGridSaveRow', (event) => {
@@ -904,6 +716,7 @@ form.on('editGridSaveRow', (event) => {
       }
     ]
   }).then(function(form) {
+    productsForm = form;
   // Configurar el evento change para escuchar cambios en 'product_name'
     form.getComponent('product_name').on('change', function(value) {
       // Aquí puedes ejecutar cualquier acción cuando cambie 'product_name'
@@ -955,9 +768,10 @@ setTimeout(() => {
   globalSubmitButton.addEventListener('click', () => {
       // Enviar todos los formularios
       Promise.all([
-          form1.submit(),
-          form2.submit(),
-          form3.submit()
+          productsForm.submit(),
+          variantsForm.submit(),
+          tagsForm.submit(),
+          attributesForm.submit()
       ]).then((results) => {
           console.log('Todos los formularios se enviaron correctamente', results);
       }).catch((error) => {
