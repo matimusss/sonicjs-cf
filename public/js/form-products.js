@@ -504,28 +504,6 @@ var weightVar = "";
 var colorVar = "";
 
 
-  form.getComponent('variantAttributeValueMaterial').on('change', function(value) {
-    // Aquí puedes ejecutar cualquier acción cuando cambie 'product_name'
-    console.log('El valor de material ha cambiado:', value);
-    // Actualizar el valor de otro componente, por ejemplo 'slug'
-   // form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
-  let materialVar = value;
-  });
-
-  form.getComponent('variantAttributeValueWeight').on('change', function(value) {
-    // Aquí puedes ejecutar cualquier acción cuando cambie 'product_name'
-    console.log('El valor de peso ha cambiado:', value);
-    // Actualizar el valor de otro componente, por ejemplo 'slug'
-   // form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
-  let materialVar = value;
-  });
-  form.getComponent('variantAttributeValueColor').on('change', function(value) {
-    // Aquí puedes ejecutar cualquier acción cuando cambie 'product_name'
-    console.log('El valor de color ha cambiado:', value);
-    // Actualizar el valor de otro componente, por ejemplo 'slug'
-   // form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
-  let materialVar = value;
-  });
 
 
 // Suponiendo que 'form' es tu instancia del formulario
