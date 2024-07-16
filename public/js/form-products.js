@@ -249,7 +249,9 @@ form.submission = {
                 type: 'select',
                 input: true,
                 data: {
-                  values: [
+                  values: [ // map sobre TODOS los tag_name y tag_id que NO esten aplicados al producto (tags- product_tags)
+                    //{value: 'tag.id', label: 'tag.name'},
+                    
                     {value: 'Remeras', label: 'Remeras'},
                     {value: 'Batas', label: 'Batas'},
                     {value: 'Ojotas', label: 'Ojotas'},
@@ -259,16 +261,20 @@ form.submission = {
                 dataSrc: "values",
                 template: '<span>{{ item.label }}</span>'
               }
+
+//agregar componente oculto o bloqueado para ID,
+
             ]
           }
         ]
     })
     .then(function(form) {
-      // Provide a default submission.
+      // simulamos los envios "anteriores" osea, los tags que ya tiene agregados el producto, hacemos como que los enviamos.
       form.submission = {
         data: {
           tags: [
             {
+              //{tagId: 'tag.id', tagName: 'tag.name'},
               tagName: 'Corbatas'
             },
             {
@@ -715,9 +721,7 @@ return formularioJson;
 
   (function () {  
 Formio.createForm(document.getElementById('formio-variants'),formularioJson ).then(function(form) {
-var materialVar = "";
-var weightVar = "";
-var colorVar = "";
+
 
 // Suponiendo que 'form' es tu instancia del formulario
 form.on('editGridSaveRow', (event) => {
@@ -725,15 +729,10 @@ form.on('editGridSaveRow', (event) => {
   // Aquí puedes ejecutar cualquier acción cuando se guarda una fila en el EditGrid
   console.log('Componente EditGrid:', component);
   console.log('Fila guardada:', row);
-  
   // Por ejemplo, puedes acceder a un campo específico en la fila guardada
   //if (row.hasOwnProperty('campoEspecifico')) {
   //    console.log('Valor del campo específico:', row.campoEspecifico);
  // }
-  
-  // Puedes hacer otras acciones aquí, como actualizar otro componente
-  // form.getComponent('otroComponente').setValue('Nuevo valor basado en la fila guardada');
-
   const gridComponent = form.getComponent('variants_form');
   if (gridComponent) {
     const rowIndex = gridComponent.editRows.findIndex(r => r.data === row);
@@ -943,3 +942,26 @@ form.on('editGridSaveRow', (event) => {
 })();
 
 
+
+
+
+
+
+
+
+setTimeout(() => {
+  const globalSubmitButton = document.getElementById('globalSubmit');
+
+  globalSubmitButton.addEventListener('click', () => {
+      // Enviar todos los formularios
+      Promise.all([
+          form1.submit(),
+          form2.submit(),
+          form3.submit()
+      ]).then((results) => {
+          console.log('Todos los formularios se enviaron correctamente', results);
+      }).catch((error) => {
+          console.error('Error al enviar uno o más formularios', error);
+      });
+  });
+}, 1000);
