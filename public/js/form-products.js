@@ -521,6 +521,20 @@ form.on('editGridSaveRow', (event) => {
   
   // Puedes hacer otras acciones aquí, como actualizar otro componente
   // form.getComponent('otroComponente').setValue('Nuevo valor basado en la fila guardada');
+
+  const gridComponent = form.getComponent('variants_form');
+  if (gridComponent) {
+    const rowIndex = gridComponent.editRows.findIndex(r => r.data === row);
+    if (rowIndex !== -1) {
+      gridComponent.editRows[rowIndex].data.a = "choto";
+      gridComponent.redraw(); // Asegúrate de redibujar el componente para reflejar los cambios
+    }
+  }
+
+
+
+
+
 });
 
 });
