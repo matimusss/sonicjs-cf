@@ -93,7 +93,7 @@ export async function getProduct(db, id) {
 
     // Ejecutar las consultas de manera secuencial
     const [productDetails, galleryImages, attributeValues, tags, suppliers] = await Promise.all([
-      db.prepare(productQuery).all(id),
+      db.prepare(productQuery).get(id),
       db.prepare(galleryQuery).all(id),
       db.prepare(attributeQuery).all(id),
       db.prepare(tagQuery).all(id),
