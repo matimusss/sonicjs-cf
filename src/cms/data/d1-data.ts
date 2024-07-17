@@ -31,7 +31,7 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 }
 
 export async function getProduct(db, id) {
-  try {
+ 
     // Consulta para obtener los detalles básicos del producto
     const productQuery = `
       SELECT
@@ -62,12 +62,17 @@ export async function getProduct(db, id) {
         // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
         const { results } = await db.prepare(productQuery).bind(id).all();
         return results; // Devuelve los resultados de la consulta
-      } catch (error) {
+      } 
+
+      catch (error) {
         console.error('Error executing SQL:', error);
         throw error; // Lanza el error para que pueda ser manejado en el llamador
       }
-    }    }
+
+      
+    }    
     
+
 
 
 
