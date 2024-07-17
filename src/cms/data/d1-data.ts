@@ -94,19 +94,11 @@ export async function getProduct(db, id) {
     // Ejecutar las consultas de manera secuencial
     const [productDetails, galleryImages, attributeValues, tags, suppliers] = await Promise.all([
       db.prepare(productQuery).get(id),
-      db.prepare(galleryQuery).all(id),
-      db.prepare(attributeQuery).all(id),
-      db.prepare(tagQuery).all(id),
-      db.prepare(supplierQuery).all(id)
     ]);
 
     // Construir el objeto de respuesta combinando los resultados
     const product = {
       ...productDetails[0], // Tomar el primer resultado de productDetails
-      gallery_images: galleryImages.map(img => img.image).join(', '),
-      attribute_values: attributeValues.map(av => av.attribute_value).join(', '),
-      tags: tags.map(tag => tag.tag_name).join(', '),
-      suppliers: suppliers.map(supplier => supplier.supplier_name).join(', ')
     };
 
     // Imprimir el producto en la consola para verificar
