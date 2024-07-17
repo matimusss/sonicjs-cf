@@ -17,20 +17,8 @@ var qs = require('qs');
 
 
 
-export async function getD1ByTableAndSlug_view(db, table, id) {
-  // Define la consulta SQL con un parámetro de reemplazo
-  let sql = `SELECT * FROM ${table} WHERE slug = ?`;
-  try {
-    // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
-    const { results } = await db.prepare(sql).bind(id).all();
-    return results; // Devuelve los resultados de la consulta
-  } catch (error) {
-    console.error('Error executing SQL:', error);
-    throw error; // Lanza el error para que pueda ser manejado en el llamador
-  } 
-}
 export async function getProduct(db, id) {
-  // Consulta para obtener los detalles básicos del producto, las imágenes de la galería, los valores de atributos, las etiquetas y los proveedores en una sola consulta con joins
+  // Consulta para obtener los detalles básicos del producto
   const productQuery = `
     SELECT
       p.id AS product_id,
@@ -44,20 +32,31 @@ export async function getProduct(db, id) {
       p.short_description,
       p.product_description,
       p.product_type,
-      GROUP_CONCAT(g.image) AS gallery_images,
-      GROUP_CONCAT(av.attribute_value) AS attribute_values,
-      GROUP_CONCAT(t.tag_name) AS tags,
-      GROUP_CONCAT(s.supplier_name) AS suppliers
+      c.category_name,
+      psi.weight,
+      psi.weight_unit,
+      psi.volume,
+      psi.volume_unit,
+      psi.dimension_width,
+      psi.dimension_height,
+      psi.dimension_depth,
+      psi.dimension_unit,
+      g.image AS gallery_image,
+      g.placeholder AS gallery_placeholder,
+      g.is_thumbnail,
+      a.attribute_name,
+      av.attribute_value,
+      av.color
     FROM products p
-    LEFT JOIN gallery g ON p.id = g.product_id
-    LEFT JOIN product_attribute_values pav ON p.id = pav.product_id
-    LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
     LEFT JOIN product_categories pc ON p.id = pc.product_id
-    LEFT JOIN tags t ON pc.category_id = t.id
-    LEFT JOIN product_suppliers ps ON p.id = ps.product_id
-    LEFT JOIN suppliers s ON ps.supplier_id = s.id
+    LEFT JOIN categories c ON pc.category_id = c.id
+    LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
+    LEFT JOIN gallery g ON p.id = g.product_id
+    LEFT JOIN product_attributes pa ON p.id = pa.product_id
+    LEFT JOIN attributes a ON pa.attribute_id = a.id
+    LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
+    LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
     WHERE p.id = ?
-    GROUP BY p.id
   `;
 
   try {
@@ -69,7 +68,6 @@ export async function getProduct(db, id) {
     throw error; // Lanza el error para que pueda ser manejado en el llamador
   }
 }
-
 
 
 
