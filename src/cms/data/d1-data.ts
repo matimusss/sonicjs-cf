@@ -30,8 +30,6 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
   }
 }
 
-
-
 export async function getProduct(db, id) {
   try {
     // Consulta para obtener los detalles básicos del producto
@@ -95,21 +93,24 @@ export async function getProduct(db, id) {
 
     // Ejecutar las consultas de manera secuencial
     const [productDetails, galleryImages, attributeValues, tags, suppliers] = await Promise.all([
-      db.prepare(productQuery).bind(id).all(),
-      db.prepare(galleryQuery).bind(id).all(),
-      db.prepare(attributeQuery).bind(id).all(),
-      db.prepare(tagQuery).bind(id).all(),
-      db.prepare(supplierQuery).bind(id).all()
+      db.prepare(productQuery).all(id),
+      db.prepare(galleryQuery).all(id),
+      db.prepare(attributeQuery).all(id),
+      db.prepare(tagQuery).all(id),
+      db.prepare(supplierQuery).all(id)
     ]);
 
     // Construir el objeto de respuesta combinando los resultados
     const product = {
-      ...productDetails,
+      ...productDetails[0], // Tomar el primer resultado de productDetails
       gallery_images: galleryImages.map(img => img.image).join(', '),
       attribute_values: attributeValues.map(av => av.attribute_value).join(', '),
       tags: tags.map(tag => tag.tag_name).join(', '),
       suppliers: suppliers.map(supplier => supplier.supplier_name).join(', ')
     };
+
+    // Imprimir el producto en la consola para verificar
+    console.log('Producto obtenido:', product);
 
     return product;
   } catch (error) {
@@ -117,6 +118,7 @@ export async function getProduct(db, id) {
     throw error; // Lanza el error para que pueda ser manejado en el llamador
   }
 }
+
 
 
 
