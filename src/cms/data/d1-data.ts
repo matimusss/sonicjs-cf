@@ -51,25 +51,26 @@ export async function getProduct(db, id) {
     `;
 
 
-    // Ejecutar las consultas de manera secuencial
-    const productDetails= await Promise.all(
-      db.prepare(productQuery).bind(id).all(),
-    );
 
-    // Construir el objeto de respuesta combinando los resultados
-    const product = {
-      ...productDetails, // Tomar el primer resultado de productDetails
-    };
 
-    // Imprimir el producto en la consola para verificar
-    console.log('Producto obtenido:', product);
 
-    return product;
-  } catch (error) {
-    console.error('Error executing SQL:', error);
-    throw error; // Lanza el error para que pueda ser manejado en el llamador
-  }
-}
+
+
+
+
+      try {
+        // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
+        const { results } = await db.prepare(productQuery).bind(id).all();
+        return results; // Devuelve los resultados de la consulta
+      } catch (error) {
+        console.error('Error executing SQL:', error);
+        throw error; // Lanza el error para que pueda ser manejado en el llamador
+      }
+    }    }
+    
+
+
+
 
 
 
