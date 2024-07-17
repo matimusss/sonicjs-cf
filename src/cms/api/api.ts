@@ -61,7 +61,7 @@ tables.forEach((entry) => {
     const { id } = ctx.req.param(); // Obtén el parámetro ID de la URL
     try {
       // Llama a la función getD1ByTableAndId para obtener los datos del producto
-      const data = await getD1ByTableAndId_view(   ctx.env.D1DATA, 'product_full_details', id);
+      const data = await getD1ByTableAndId_view(   ctx.env.D1DATA, 'full_product_view', id);
       if (data) {
         return ctx.json(data);
       } else {

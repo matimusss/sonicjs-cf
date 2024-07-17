@@ -215,8 +215,6 @@ form.submission = {
 
 
   (function () {
- 
-
     Formio.createForm(document.getElementById('formio-tags'), {
       components: [
           {
@@ -250,7 +248,6 @@ form.submission = {
               footer: ''
             },
             components: [
-          
               {
                 label: 'Nombre de Tag',
                 key: 'tagName',
@@ -259,7 +256,6 @@ form.submission = {
                 data: {
                   values: [ // map sobre TODOS los tag_name y tag_id que NO esten aplicados al producto (tags- product_tags)
                     //{value: 'tag.id', label: 'tag.name'},
-                    
                     {value: 'Remeras', label: 'Remeras'},
                     {value: 'Batas', label: 'Batas'},
                     {value: 'Ojotas', label: 'Ojotas'},
@@ -278,8 +274,7 @@ form.submission = {
     })
     .then(function(form) {
       tagsForm = form;
-
-      // simulamos los envios "anteriores" osea, los tags que ya tiene agregados el producto, hacemos como que los enviamos.
+      // simulamos los envios "anteriores" osea, los tags que ya tiene agregados el producto, hacemos como que los enviamos ,quedan disponibles para editar y borrar.
       form.submission = {
         data: {
           tags: [
@@ -294,10 +289,8 @@ form.submission = {
         }
       };
     });
-
   })
-  
-  ();
+();
 
 
 
