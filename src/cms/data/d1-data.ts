@@ -27,52 +27,48 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
   } catch (error) {
     console.error('Error executing SQL:', error);
     throw error; // Lanza el error para que pueda ser manejado en el llamador
+  } 
+}
+export async function getProduct(db, id) {
+  // Consulta para obtener los detalles básicos del producto, las imágenes de la galería, los valores de atributos, las etiquetas y los proveedores en una sola consulta con joins
+  const productQuery = `
+    SELECT
+      p.id AS product_id,
+      p.slug,
+      p.product_name,
+      p.sku,
+      p.sale_price,
+      p.compare_price,
+      p.buying_price,
+      p.quantity,
+      p.short_description,
+      p.product_description,
+      p.product_type,
+      GROUP_CONCAT(g.image) AS gallery_images,
+      GROUP_CONCAT(av.attribute_value) AS attribute_values,
+      GROUP_CONCAT(t.tag_name) AS tags,
+      GROUP_CONCAT(s.supplier_name) AS suppliers
+    FROM products p
+    LEFT JOIN gallery g ON p.id = g.product_id
+    LEFT JOIN product_attribute_values pav ON p.id = pav.product_id
+    LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
+    LEFT JOIN product_categories pc ON p.id = pc.product_id
+    LEFT JOIN tags t ON pc.category_id = t.id
+    LEFT JOIN product_suppliers ps ON p.id = ps.product_id
+    LEFT JOIN suppliers s ON ps.supplier_id = s.id
+    WHERE p.id = ?
+    GROUP BY p.id
+  `;
+
+  try {
+    // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
+    const { results } = await db.prepare(productQuery).bind(id).all();
+    return results; // Devuelve los resultados de la consulta
+  } catch (error) {
+    console.error('Error executing SQL:', error);
+    throw error; // Lanza el error para que pueda ser manejado en el llamador
   }
 }
-
-export async function getProduct(db, id) {
- 
-    // Consulta para obtener los detalles básicos del producto
-    const productQuery = `
-      SELECT
-        id AS product_id,
-        slug,
-        product_name,
-        sku,
-        sale_price,
-        compare_price,
-        buying_price,
-        quantity,
-        short_description,
-        product_description,
-        product_type
-      FROM products
-      WHERE id = ?
-    `;
-
-
-
-
-
-
-
-
-
-      try {
-        // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
-        const { results } = await db.prepare(productQuery).bind(id).all();
-        return results; // Devuelve los resultados de la consulta
-      } 
-
-      catch (error) {
-        console.error('Error executing SQL:', error);
-        throw error; // Lanza el error para que pueda ser manejado en el llamador
-      }
-
-      
-    }    
-    
-
 
 
 
