@@ -73,7 +73,7 @@ tables.forEach((entry) => {
     }
   });
 
-  api.get('/full_product_view/:id', async (ctx) => {
+  api.get('/full-product-view/:id', async (ctx) => {
     const { id } = ctx.req.param(); // Obtén el parámetro ID de la URL
     try {
       // Llama a la función getD1ByTableAndId para obtener los datos del producto
@@ -84,7 +84,7 @@ tables.forEach((entry) => {
         return ctx.text('Product not found', 404);
       }
     } catch (error) {
-      console.error('Error retrieving product full details:', error);
+      console.error('Erroar retrieving product full details:', error);
       return ctx.text('Error retrieving product full details', 500);
     }
   });
