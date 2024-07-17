@@ -30,9 +30,9 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 }
 
 
-export async function getD1ByTableAndId_view(db, table, id) {
+export async function getD1ProductsTableAndId_view(db, table, id) {
   // Define la consulta SQL con un parámetro de reemplazo
-  let sql = `SELECT * FROM ${table} WHERE id = ?`;
+  let sql = `SELECT * FROM ${table} WHERE product_id = ?`;
   try {
     // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
     const { results } = await db.prepare(sql).bind(id).all();

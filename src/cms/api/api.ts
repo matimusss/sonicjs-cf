@@ -12,7 +12,7 @@ import {
 } from '../data/kv-data';
 import { Bindings } from '../types/bindings';
 import { apiConfig, config } from '../../db/routes';
-import { getD1DataByTable, getD1ByTableAndId, getD1ByTableAndSlug_view, getD1ByTableAndId_view,getD1byname_view } from '../data/d1-data';
+import { getD1DataByTable, getD1ByTableAndId, getD1ByTableAndSlug_view,getD1ProductsTableAndId_view,getD1byname_view } from '../data/d1-data';
 import { getForm } from './forms';
 import qs from 'qs';
 import {
@@ -77,7 +77,7 @@ tables.forEach((entry) => {
     const { id } = ctx.req.param(); // Obtén el parámetro ID de la URL
     try {
       // Llama a la función getD1ByTableAndId para obtener los datos del producto
-      const data = await getD1ByTableAndId_view(   ctx.env.D1DATA, 'full_product_view', id);
+      const data = await getD1ProductsTableAndId_view(   ctx.env.D1DATA, 'full_product_view', id);
       if (data) {
         return ctx.json(data);
       } else {
