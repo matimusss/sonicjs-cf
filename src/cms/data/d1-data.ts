@@ -93,7 +93,7 @@ export async function getProduct(db, id) {
 
     // Ejecutar las consultas de manera secuencial
     const [productDetails, galleryImages, attributeValues, tags, suppliers] = await Promise.all([
-      db.prepare(productQuery).get(id),
+      db.prepare(productQuery).bind(id).all(),
     ]);
 
     // Construir el objeto de respuesta combinando los resultados
