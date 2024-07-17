@@ -17,6 +17,19 @@ var qs = require('qs');
 
 
 
+export async function getD1ByTableAndSlug_view(db, table, id) {
+  // Define la consulta SQL con un parámetro de reemplazo
+  let sql = `SELECT * FROM ${table} WHERE slug = ?`;
+  try {
+    // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
+    const { results } = await db.prepare(sql).bind(id).all();
+    return results; // Devuelve los resultados de la consulta
+  } catch (error) {
+    console.error('Error executing SQL:', error);
+    throw error; // Lanza el error para que pueda ser manejado en el llamador
+  } 
+}
+
 export async function getProduct(db, id) {
   // Consulta para obtener los detalles básicos del producto
   const productQuery = `
@@ -68,11 +81,6 @@ export async function getProduct(db, id) {
     throw error; // Lanza el error para que pueda ser manejado en el llamador
   }
 }
-
-
-
-
-
 
 
 
