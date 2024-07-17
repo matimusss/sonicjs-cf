@@ -50,55 +50,15 @@ export async function getProduct(db, id) {
       WHERE id = ?
     `;
 
-    // Consulta para obtener las imágenes de la galería del producto
-    const galleryQuery = `
-      SELECT image
-      FROM gallery
-      WHERE product_id = ?
-    `;
-
-    // Consulta para obtener los valores de atributos del producto
-    const attributeQuery = `
-      SELECT av.attribute_value
-      FROM product_attribute_values pav
-      LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
-      WHERE pav.product_attribute_id IN (
-        SELECT id
-        FROM product_attributes
-        WHERE product_id = ?
-      )
-    `;
-
-    // Consulta para obtener las etiquetas del producto
-    const tagQuery = `
-      SELECT tag_name
-      FROM tags
-      WHERE id IN (
-        SELECT category_id
-        FROM product_categories
-        WHERE product_id = ?
-      )
-    `;
-
-    // Consulta para obtener los proveedores del producto
-    const supplierQuery = `
-      SELECT supplier_name
-      FROM suppliers
-      WHERE id IN (
-        SELECT supplier_id
-        FROM product_suppliers
-        WHERE product_id = ?
-      )
-    `;
 
     // Ejecutar las consultas de manera secuencial
-    const [productDetails, galleryImages, attributeValues, tags, suppliers] = await Promise.all([
+    const productDetails= await Promise.all(
       db.prepare(productQuery).bind(id).all(),
-    ]);
+    );
 
     // Construir el objeto de respuesta combinando los resultados
     const product = {
-      ...productDetails[0], // Tomar el primer resultado de productDetails
+      ...productDetails, // Tomar el primer resultado de productDetails
     };
 
     // Imprimir el producto en la consola para verificar
