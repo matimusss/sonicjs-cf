@@ -16,6 +16,99 @@ var qs = require('qs');
 
 
 
+
+
+
+export async function getProduct(db, id) {
+  try {
+    // Consulta para obtener los detalles básicos del producto
+    const productQuery = `
+      SELECT
+        id AS product_id,
+        slug,
+        product_name,
+        sku,
+        sale_price,
+        compare_price,
+        buying_price,
+        quantity,
+        short_description,
+        product_description,
+        product_type
+      FROM products
+      WHERE id = ?
+    `;
+
+    // Consulta para obtener las imágenes de la galería del producto
+    const galleryQuery = `
+      SELECT image
+      FROM gallery
+      WHERE product_id = ?
+    `;
+
+    // Consulta para obtener los valores de atributos del producto
+    const attributeQuery = `
+      SELECT av.attribute_value
+      FROM product_attribute_values pav
+      LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
+      WHERE pav.product_attribute_id IN (
+        SELECT id
+        FROM product_attributes
+        WHERE product_id = ?
+      )
+    `;
+
+    // Consulta para obtener las etiquetas del producto
+    const tagQuery = `
+      SELECT tag_name
+      FROM tags
+      WHERE id IN (
+        SELECT category_id
+        FROM product_categories
+        WHERE product_id = ?
+      )
+    `;
+
+    // Consulta para obtener los proveedores del producto
+    const supplierQuery = `
+      SELECT supplier_name
+      FROM suppliers
+      WHERE id IN (
+        SELECT supplier_id
+        FROM product_suppliers
+        WHERE product_id = ?
+      )
+    `;
+
+    // Ejecutar las consultas de manera secuencial
+    const [productDetails, galleryImages, attributeValues, tags, suppliers] = await Promise.all([
+      db.prepare(productQuery).bind(id).get(),
+      db.prepare(galleryQuery).bind(id).all(),
+      db.prepare(attributeQuery).bind(id).all(),
+      db.prepare(tagQuery).bind(id).all(),
+      db.prepare(supplierQuery).bind(id).all()
+    ]);
+
+    // Construir el objeto de respuesta combinando los resultados
+    const product = {
+      ...productDetails,
+      gallery_images: galleryImages.map(img => img.image).join(', '),
+      attribute_values: attributeValues.map(av => av.attribute_value).join(', '),
+      tags: tags.map(tag => tag.tag_name).join(', '),
+      suppliers: suppliers.map(supplier => supplier.supplier_name).join(', ')
+    };
+
+    return product;
+  } catch (error) {
+    console.error('Error executing SQL:', error);
+    throw error; // Lanza el error para que pueda ser manejado en el llamador
+  }
+}
+
+
+
+
+
 export async function getD1ByTableAndSlug_view(db, table, id) {
   // Define la consulta SQL con un parámetro de reemplazo
   let sql = `SELECT * FROM ${table} WHERE slug = ?`;
