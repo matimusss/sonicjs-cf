@@ -72,7 +72,7 @@ export async function getProduct(db, id) {
     GROUP_CONCAT(DISTINCT g.is_thumbnail) AS is_thumbnails,
     
     GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names,
-    GROUP_CONCAT(DISTINCT pav.attribute_value) AS attribute_values,
+    GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values,
     GROUP_CONCAT(DISTINCT av.color) AS colors
   FROM products p
   LEFT JOIN product_categories pc ON p.id = pc.product_id
@@ -80,9 +80,9 @@ export async function getProduct(db, id) {
   LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
   LEFT JOIN gallery g ON p.id = g.product_id
   LEFT JOIN product_attributes pa ON p.id = pa.product_id
-  LEFT JOIN attributes a ON pa.attribute_id = a.id
   LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
   LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
+  LEFT JOIN attributes a ON pa.attribute_id = a.id
   WHERE p.id = ?
   GROUP BY p.id;
 `;
