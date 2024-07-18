@@ -69,9 +69,9 @@ export async function getProduct(db, id) {
     MAX(g.image) AS gallery_image,
     MAX(g.placeholder) AS gallery_placeholder,
     MAX(g.is_thumbnail) AS is_thumbnail,
-    MAX(a.attribute_name) AS attribute_name,
-    GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values,
-    GROUP_CONCAT(DISTINCT av.color) AS colors -- Concatenamos colores
+    GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names,
+    GROUP_CONCAT(DISTINCT pav.attribute_value) AS attribute_values,
+    GROUP_CONCAT(DISTINCT av.color) AS colors
   FROM products p
   LEFT JOIN product_categories pc ON p.id = pc.product_id
   LEFT JOIN categories c ON pc.category_id = c.id
@@ -86,6 +86,7 @@ export async function getProduct(db, id) {
            p.buying_price, p.quantity, p.short_description, p.product_description,
            p.product_type;
 `;
+
   try {
     // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
     const { results } = await db.prepare(productQuery).bind(id).all();
