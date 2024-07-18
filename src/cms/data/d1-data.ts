@@ -44,39 +44,46 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 
 export async function getProduct(db, id) {
   const productQuery = `
-SELECT
-  p.id AS product_id,
-  p.slug,
-  p.product_name,
-  p.sku,
-  p.sale_price,
-  p.compare_price,
-  p.buying_price,
-  p.quantity,
-  p.short_description,
-  p.product_description,
-  p.product_type,
-  GROUP_CONCAT(DISTINCT pc.category_id) AS category_ids,
-  MAX(psi.id) AS shipping_info_id,
-  MAX(g.id) AS gallery_id,
-  GROUP_CONCAT(DISTINCT pa.id) AS product_attribute_ids,
-  GROUP_CONCAT(DISTINCT pav.attribute_value_id) AS product_attribute_value_ids,
-  GROUP_CONCAT(DISTINCT av.id) AS attribute_value_ids,
-  GROUP_CONCAT(DISTINCT pt.tag_id) AS tag_ids,
-  GROUP_CONCAT(DISTINCT ps.supplier_id) AS supplier_ids,
-  GROUP_CONCAT(DISTINCT pco.coupon_id) AS coupon_ids
-FROM products p
-LEFT JOIN product_categories pc ON p.id = pc.product_id
-LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
-LEFT JOIN gallery g ON p.id = g.product_id
-LEFT JOIN product_attributes pa ON p.id = pa.product_id
-LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
-LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
-LEFT JOIN product_tags pt ON p.id = pt.product_id
-LEFT JOIN product_suppliers ps ON p.id = ps.product_id
-LEFT JOIN product_coupons pco ON p.id = pco.product_id
-GROUP BY p.id;
-
+  SELECT
+    p.id AS product_id,
+    p.slug,
+    p.product_name,
+    p.sku,
+    p.sale_price,
+    p.compare_price,
+    p.buying_price,
+    p.quantity,
+    p.short_description,
+    p.product_description,
+    p.product_type,
+    GROUP_CONCAT(DISTINCT c.category_name) AS category_names,
+    MAX(psi.weight) AS weight,
+    MAX(psi.weight_unit) AS weight_unit,
+    MAX(psi.volume) AS volume,
+    MAX(psi.volume_unit) AS volume_unit,
+    MAX(psi.dimension_width) AS dimension_width,
+    MAX(psi.dimension_height) AS dimension_height,
+    MAX(psi.dimension_depth) AS dimension_depth,
+    MAX(psi.dimension_unit) AS dimension_unit,
+    
+    GROUP_CONCAT(DISTINCT g.image) AS gallery_images,
+    GROUP_CONCAT(DISTINCT g.placeholder) AS gallery_placeholders,
+    GROUP_CONCAT(DISTINCT g.is_thumbnail) AS is_thumbnails,
+    
+    GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names,
+    GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values,
+    GROUP_CONCAT(DISTINCT av.color) AS colors
+  FROM products p
+  LEFT JOIN product_categories pc ON p.id = pc.product_id
+  LEFT JOIN categories c ON pc.category_id = c.id
+  LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
+  LEFT JOIN gallery g ON p.id = g.product_id
+  LEFT JOIN product_attributes pa ON p.id = pa.product_id
+  LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
+  LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
+  LEFT JOIN attributes a ON pa.attribute_id = a.id
+  WHERE p.id = ?
+  GROUP BY p.id;
 `;
 
 
