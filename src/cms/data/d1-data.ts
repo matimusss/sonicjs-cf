@@ -74,15 +74,15 @@ export async function getProduct(db, id) {
     GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values,
     GROUP_CONCAT(DISTINCT av.color) AS colors,
     
-    GROUP_CONCAT(DISTINCT ps.supplier_id) AS supplier_ids,
+    -- GROUP_CONCAT(DISTINCT ps.supplier_id) AS supplier_ids,
     GROUP_CONCAT(DISTINCT s.supplier_name) AS supplier_names,
     
-    GROUP_CONCAT(DISTINCT pco.coupon_id) AS coupon_ids,
+    -- GROUP_CONCAT(DISTINCT pco.coupon_id) AS coupon_ids,
     GROUP_CONCAT(DISTINCT co.code) AS coupon_codes,
     GROUP_CONCAT(DISTINCT co.discount_value) AS coupon_discount_values,
     GROUP_CONCAT(DISTINCT co.discount_type) AS coupon_discount_types,
     
-    GROUP_CONCAT(DISTINCT pt.tag_id) AS tag_ids,
+    -- GROUP_CONCAT(DISTINCT pt.tag_id) AS tag_ids,
     GROUP_CONCAT(DISTINCT t.tag_name) AS tag_names,
     GROUP_CONCAT(DISTINCT t.icon) AS tag_icons
   FROM products p
