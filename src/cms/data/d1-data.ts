@@ -41,7 +41,10 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
   } 
 }
 
-const productQuery = `
+
+export async function getProduct(db, id) {
+  // Consulta para obtener los detalles básicos del producto
+  const productQuery = `
   SELECT
     p.id AS product_id,
     p.slug,
