@@ -44,45 +44,39 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 
 export async function getProduct(db, id) {
   const productQuery = `
-  SELECT
-    p.id AS product_id,
-    p.slug,
-    p.product_name,
-    p.sku,
-    p.sale_price,
-    p.compare_price,
-    p.buying_price,
-    p.quantity,
-    p.short_description,
-    p.product_description,
-    p.product_type,
-    GROUP_CONCAT(DISTINCT c.id) AS category_ids,
-    GROUP_CONCAT(DISTINCT c.category_name) AS category_names,
-    MAX(psi.id) AS shipping_info_id,
-    MAX(g.id) AS gallery_id,
-    MAX(pa.id) AS product_attribute_id,
-    MAX(pav.id) AS product_attribute_value_id,
-    MAX(av.id) AS attribute_value_id,
-    GROUP_CONCAT(DISTINCT av.id) AS attribute_value_ids,
-    GROUP_CONCAT(DISTINCT a.id) AS attribute_ids,
-    GROUP_CONCAT(DISTINCT t.id) AS tag_ids,
-    GROUP_CONCAT(DISTINCT sup.id) AS supplier_ids,
-    GROUP_CONCAT(DISTINCT pc.coupon_id) AS coupon_ids
-  FROM products p
-  LEFT JOIN product_categories pc ON p.id = pc.product_id
-  LEFT JOIN categories c ON pc.category_id = c.id
-  LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
-  LEFT JOIN gallery g ON p.id = g.product_id
-  LEFT JOIN product_attributes pa ON p.id = pa.product_id
-  LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
-  LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
-  LEFT JOIN attributes a ON pa.attribute_id = a.id
-  LEFT JOIN product_tags pt ON p.id = pt.product_id
-  LEFT JOIN tags t ON pt.tag_id = t.id
-  LEFT JOIN product_suppliers ps ON p.id = ps.product_id
-  LEFT JOIN suppliers sup ON ps.supplier_id = sup.id
-  LEFT JOIN product_coupons pco ON p.id = pco.product_id
-  GROUP BY p.id;
+SELECT
+  p.id AS product_id,
+  p.slug,
+  p.product_name,
+  p.sku,
+  p.sale_price,
+  p.compare_price,
+  p.buying_price,
+  p.quantity,
+  p.short_description,
+  p.product_description,
+  p.product_type,
+  GROUP_CONCAT(DISTINCT pc.category_id) AS category_ids,
+  MAX(psi.id) AS shipping_info_id,
+  MAX(g.id) AS gallery_id,
+  GROUP_CONCAT(DISTINCT pa.id) AS product_attribute_ids,
+  GROUP_CONCAT(DISTINCT pav.attribute_value_id) AS product_attribute_value_ids,
+  GROUP_CONCAT(DISTINCT av.id) AS attribute_value_ids,
+  GROUP_CONCAT(DISTINCT pt.tag_id) AS tag_ids,
+  GROUP_CONCAT(DISTINCT ps.supplier_id) AS supplier_ids,
+  GROUP_CONCAT(DISTINCT pco.coupon_id) AS coupon_ids
+FROM products p
+LEFT JOIN product_categories pc ON p.id = pc.product_id
+LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
+LEFT JOIN gallery g ON p.id = g.product_id
+LEFT JOIN product_attributes pa ON p.id = pa.product_id
+LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
+LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
+LEFT JOIN product_tags pt ON p.id = pt.product_id
+LEFT JOIN product_suppliers ps ON p.id = ps.product_id
+LEFT JOIN product_coupons pco ON p.id = pco.product_id
+GROUP BY p.id;
+
 `;
 
 
