@@ -57,20 +57,20 @@ export async function getProduct(db, id) {
       p.short_description,
       p.product_description,
       p.product_type,
-      MAX(c.category_name) AS category_name, -- Utilizamos MAX para agrupar categorías
-      MAX(psi.weight) AS weight, -- Utilizamos MAX para agrupar pesos
+      MAX(c.category_name) AS category_name,
+      MAX(psi.weight) AS weight,
       MAX(psi.weight_unit) AS weight_unit,
-      MAX(psi.volume) AS volume, -- Utilizamos MAX para agrupar volúmenes
+      MAX(psi.volume) AS volume,
       MAX(psi.volume_unit) AS volume_unit,
-      MAX(psi.dimension_width) AS dimension_width, -- Utilizamos MAX para agrupar dimensiones
+      MAX(psi.dimension_width) AS dimension_width,
       MAX(psi.dimension_height) AS dimension_height,
       MAX(psi.dimension_depth) AS dimension_depth,
       MAX(psi.dimension_unit) AS dimension_unit,
-      MAX(g.image) AS gallery_image, -- Utilizamos MAX para agrupar imágenes
+      MAX(g.image) AS gallery_image,
       MAX(g.placeholder) AS gallery_placeholder,
       MAX(g.is_thumbnail) AS is_thumbnail,
-      MAX(a.attribute_name) AS attribute_name, -- Utilizamos MAX para agrupar nombres de atributos
-      GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values, -- Concatenamos valores de atributos
+      MAX(a.attribute_name) AS attribute_name,
+      GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values,
       GROUP_CONCAT(DISTINCT av.color) AS colors -- Concatenamos colores
     FROM products p
     LEFT JOIN product_categories pc ON p.id = pc.product_id
@@ -82,9 +82,8 @@ export async function getProduct(db, id) {
     LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
     LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
     WHERE p.id = ?
-    GROUP BY p.id; -- Agrupamos por el ID del producto
+    GROUP BY p.id;
   `;
-
   try {
     // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
     const { results } = await db.prepare(productQuery).bind(id).all();
