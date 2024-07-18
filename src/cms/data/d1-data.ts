@@ -1,6 +1,17 @@
 import { drizzle } from 'drizzle-orm/d1';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, mapColumnsInAliasedSQLToAlias, param, ViewBaseConfig } from 'drizzle-orm';
 import { tableSchemas } from '../../db/routes';
+import { getOperationDeleteResult } from '../auth/auth-helpers';
+import { convertUint8ArrayToHex, validateScryptHash } from 'lucia/dist/utils/crypto';
+import { createFilterOptions, getButtonBaseUtilityClass, tableHeadClasses } from '@mui/material';
+import { isFirstDayOfMonth, secondsInQuarter, weeksToDays } from 'date-fns';
+import { serial, ViewBuilderCore } from 'drizzle-orm/mysql-core';
+import { CognitoUserAuth } from '@lucia-auth/oauth/providers';
+import { defaultConfigOptions } from 'swr/dist/_internal';
+import { validateLuciaPasswordHash } from 'lucia/utils';
+import { createLuciaUser } from '../util/testing';
+import { yellow } from '@mui/material/colors';
+import { loadNewContent } from '../admin/pages/content';
 var qs = require('qs');
 
 
@@ -30,6 +41,7 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
   } 
 }
 
+
 export async function getProduct(db, id) {
   // Consulta para obtener los detalles básicos del producto
   const productQuery = `
@@ -45,21 +57,21 @@ export async function getProduct(db, id) {
       p.short_description,
       p.product_description,
       p.product_type,
-      c.category_name,
-      psi.weight,
-      psi.weight_unit,
-      psi.volume,
-      psi.volume_unit,
-      psi.dimension_width,
-      psi.dimension_height,
-      psi.dimension_depth,
-      psi.dimension_unit,
-      g.image AS gallery_image,
-      g.placeholder AS gallery_placeholder,
-      g.is_thumbnail,
-      a.attribute_name,
-      av.attribute_value,
-      av.color
+      MAX(c.category_name) AS category_name, -- Utilizamos MAX para agrupar categorías
+      MAX(psi.weight) AS weight, -- Utilizamos MAX para agrupar pesos
+      MAX(psi.weight_unit) AS weight_unit,
+      MAX(psi.volume) AS volume, -- Utilizamos MAX para agrupar volúmenes
+      MAX(psi.volume_unit) AS volume_unit,
+      MAX(psi.dimension_width) AS dimension_width, -- Utilizamos MAX para agrupar dimensiones
+      MAX(psi.dimension_height) AS dimension_height,
+      MAX(psi.dimension_depth) AS dimension_depth,
+      MAX(psi.dimension_unit) AS dimension_unit,
+      MAX(g.image) AS gallery_image, -- Utilizamos MAX para agrupar imágenes
+      MAX(g.placeholder) AS gallery_placeholder,
+      MAX(g.is_thumbnail) AS is_thumbnail,
+      MAX(a.attribute_name) AS attribute_name, -- Utilizamos MAX para agrupar nombres de atributos
+      GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values, -- Concatenamos valores de atributos
+      GROUP_CONCAT(DISTINCT av.color) AS colors -- Concatenamos colores
     FROM products p
     LEFT JOIN product_categories pc ON p.id = pc.product_id
     LEFT JOIN categories c ON pc.category_id = c.id
@@ -70,6 +82,7 @@ export async function getProduct(db, id) {
     LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
     LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
     WHERE p.id = ?
+    GROUP BY p.id; -- Agrupamos por el ID del producto
   `;
 
   try {
@@ -83,20 +96,6 @@ export async function getProduct(db, id) {
 }
 
 
-
-
-export async function getD1ProductsTableAndId_view(db, table, id) {
-  // Define la consulta SQL con un parámetro de reemplazo
-  let sql = `SELECT * FROM ${table} WHERE product_id = ?`;
-  try {
-    // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
-    const { results } = await db.prepare(sql).bind(id).all();
-    return results; // Devuelve los resultados de la consulta
-  } catch (error) {
-    console.error('Error executing SQL:', error);
-    throw error; // Lanza el error para que pueda ser manejado en el llamador
-  }
-}
 
 export async function getD1byname_view(db, table) {
   // Define la consulta SQL con un parámetro de reemplazo

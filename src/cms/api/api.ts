@@ -12,7 +12,7 @@ import {
 } from '../data/kv-data';
 import { Bindings } from '../types/bindings';
 import { apiConfig, config } from '../../db/routes';
-import { getD1DataByTable, getD1ByTableAndId, getD1ByTableAndSlug_view,getD1ProductsTableAndId_view,getD1byname_view , getProduct } from '../data/d1-data';
+import { getD1DataByTable, getD1ByTableAndId, getD1ByTableAndSlug_view,getD1byname_view , getProduct } from '../data/d1-data';
 import { getForm } from './forms';
 import qs from 'qs';
 import {
