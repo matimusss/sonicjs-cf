@@ -45,7 +45,7 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 export async function getProduct(db, id) {
   // Consulta para obtener los detalles básicos del producto
   const productQuery = `
-  SELECT
+ SELECT
     p.id AS product_id,
     p.slug,
     p.product_name,
@@ -86,30 +86,23 @@ export async function getProduct(db, id) {
     GROUP_CONCAT(DISTINCT pt.tag_id) AS tag_ids,
     GROUP_CONCAT(DISTINCT t.tag_name) AS tag_names,
     GROUP_CONCAT(DISTINCT t.icon) AS tag_icons
-  FROM products p
-  LEFT JOIN product_categories pc ON p.id = pc.product_id
-  LEFT JOIN categories c ON pc.category_id = c.id
-  LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
-  LEFT JOIN gallery g ON p.id = g.product_id
-  LEFT JOIN product_attributes pa ON p.id = pa.product_id
-  LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
-  LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
-  LEFT JOIN attributes a ON pa.attribute_id = a.id
-  
-  -- Relación con product_suppliers y suppliers
-  LEFT JOIN product_suppliers ps ON p.id = ps.product_id
-  LEFT JOIN suppliers s ON ps.supplier_id = s.id
-  
-  -- Relación con product_coupons y coupons
-  LEFT JOIN product_coupons pc ON p.id = pc.product_id
-  LEFT JOIN coupons co ON pc.coupon_id = co.id
-  
-  -- Relación con product_tags y tags
-  LEFT JOIN product_tags pt ON p.id = pt.product_id
-  LEFT JOIN tags t ON pt.tag_id = t.id
-  
-  WHERE p.id = ?
-  GROUP BY p.id;
+FROM products p
+LEFT JOIN product_categories pc ON p.id = pc.product_id
+LEFT JOIN categories c ON pc.category_id = c.id
+LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
+LEFT JOIN gallery g ON p.id = g.product_id
+LEFT JOIN product_attributes pa ON p.id = pa.product_id
+LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
+LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
+LEFT JOIN attributes a ON pa.attribute_id = a.id
+LEFT JOIN product_suppliers ps ON p.id = ps.product_id
+LEFT JOIN suppliers s ON ps.supplier_id = s.id
+LEFT JOIN product_coupons pco ON p.id = pco.product_id
+LEFT JOIN coupons co ON pco.coupon_id = co.id
+LEFT JOIN product_tags pt ON p.id = pt.product_id
+LEFT JOIN tags t ON pt.tag_id = t.id
+WHERE p.id = ?
+GROUP BY p.id;
 `;
 
 
