@@ -45,48 +45,45 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 export async function getProduct(db, id) {
   // Consulta para obtener los detalles básicos del producto
   const productQuery = `
-  SELECT
-    p.id AS product_id,
-    p.slug,
-    p.product_name,
-    p.sku,
-    p.sale_price,
-    p.compare_price,
-    p.buying_price,
-    p.quantity,
-    p.short_description,
-    p.product_description,
-    p.product_type,
-    GROUP_CONCAT(DISTINCT c.category_name) AS category_name,
-    MAX(psi.weight) AS weight,
-    MAX(psi.weight_unit) AS weight_unit,
-    MAX(psi.volume) AS volume,
-    MAX(psi.volume_unit) AS volume_unit,
-    MAX(psi.dimension_width) AS dimension_width,
-    MAX(psi.dimension_height) AS dimension_height,
-    MAX(psi.dimension_depth) AS dimension_depth,
-    MAX(psi.dimension_unit) AS dimension_unit,
-    MAX(g.image) AS gallery_image,
-    MAX(g.placeholder) AS gallery_placeholder,
-    MAX(g.is_thumbnail) AS is_thumbnail,
-    GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names,
-    GROUP_CONCAT(DISTINCT pav.attribute_value) AS attribute_values,
-    GROUP_CONCAT(DISTINCT av.color) AS colors
-  FROM products p
-  LEFT JOIN product_categories pc ON p.id = pc.product_id
-  LEFT JOIN categories c ON pc.category_id = c.id
-  LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
-  LEFT JOIN gallery g ON p.id = g.product_id
-  LEFT JOIN product_attributes pa ON p.id = pa.product_id
-  LEFT JOIN attributes a ON pa.attribute_id = a.id
-  LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
-  LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
-  WHERE p.id = ?
-  GROUP BY p.id, p.slug, p.product_name, p.sku, p.sale_price, p.compare_price,
-           p.buying_price, p.quantity, p.short_description, p.product_description,
-           p.product_type;
-`;
-
+    SELECT
+      p.id AS product_id,
+      p.slug,
+      p.product_name,
+      p.sku,
+      p.sale_price,
+      p.compare_price,
+      p.buying_price,
+      p.quantity,
+      p.short_description,
+      p.product_description,
+      p.product_type,
+      GROUP_CONCAT(DISTINCT c.category_name) AS category_names,
+      MAX(psi.weight) AS weight,
+      MAX(psi.weight_unit) AS weight_unit,
+      MAX(psi.volume) AS volume,
+      MAX(psi.volume_unit) AS volume_unit,
+      MAX(psi.dimension_width) AS dimension_width,
+      MAX(psi.dimension_height) AS dimension_height,
+      MAX(psi.dimension_depth) AS dimension_depth,
+      MAX(psi.dimension_unit) AS dimension_unit,
+      MAX(g.image) AS gallery_image,
+      MAX(g.placeholder) AS gallery_placeholder,
+      MAX(g.is_thumbnail) AS is_thumbnail,
+      GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names,
+      GROUP_CONCAT(DISTINCT pav.attribute_value) AS attribute_values,
+      GROUP_CONCAT(DISTINCT av.color) AS colors
+    FROM products p
+    LEFT JOIN product_categories pc ON p.id = pc.product_id
+    LEFT JOIN categories c ON pc.category_id = c.id
+    LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
+    LEFT JOIN gallery g ON p.id = g.product_id
+    LEFT JOIN product_attributes pa ON p.id = pa.product_id
+    LEFT JOIN attributes a ON pa.attribute_id = a.id
+    LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
+    LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
+    WHERE p.id = ?
+    GROUP BY p.id;
+  `;
   try {
     // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
     const { results } = await db.prepare(productQuery).bind(id).all();
