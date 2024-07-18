@@ -112,6 +112,7 @@ export async function getProduct(db, id) {
   GROUP BY p.id;
 `;
 
+
   try {
     // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
     const { results } = await db.prepare(productQuery).bind(id).all();
