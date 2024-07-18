@@ -56,23 +56,18 @@ export async function getProduct(db, id) {
     p.short_description,
     p.product_description,
     p.product_type,
+    GROUP_CONCAT(DISTINCT c.id) AS category_ids,
     GROUP_CONCAT(DISTINCT c.category_name) AS category_names,
-    MAX(psi.weight) AS weight,
-    MAX(psi.weight_unit) AS weight_unit,
-    MAX(psi.volume) AS volume,
-    MAX(psi.volume_unit) AS volume_unit,
-    MAX(psi.dimension_width) AS dimension_width,
-    MAX(psi.dimension_height) AS dimension_height,
-    MAX(psi.dimension_depth) AS dimension_depth,
-    MAX(psi.dimension_unit) AS dimension_unit,
-    
-    GROUP_CONCAT(DISTINCT g.image) AS gallery_images,
-    GROUP_CONCAT(DISTINCT g.placeholder) AS gallery_placeholders,
-    GROUP_CONCAT(DISTINCT g.is_thumbnail) AS is_thumbnails,
-    
-    GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names,
-    GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values,
-    GROUP_CONCAT(DISTINCT av.color) AS colors
+    MAX(psi.id) AS shipping_info_id,
+    MAX(g.id) AS gallery_id,
+    MAX(pa.id) AS product_attribute_id,
+    MAX(pav.id) AS product_attribute_value_id,
+    MAX(av.id) AS attribute_value_id,
+    GROUP_CONCAT(DISTINCT av.id) AS attribute_value_ids,
+    GROUP_CONCAT(DISTINCT a.id) AS attribute_ids,
+    GROUP_CONCAT(DISTINCT t.id) AS tag_ids,
+    GROUP_CONCAT(DISTINCT sup.id) AS supplier_ids,
+    GROUP_CONCAT(DISTINCT pc.coupon_id) AS coupon_ids
   FROM products p
   LEFT JOIN product_categories pc ON p.id = pc.product_id
   LEFT JOIN categories c ON pc.category_id = c.id
@@ -82,7 +77,11 @@ export async function getProduct(db, id) {
   LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
   LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
   LEFT JOIN attributes a ON pa.attribute_id = a.id
-  WHERE p.id = ?
+  LEFT JOIN product_tags pt ON p.id = pt.product_id
+  LEFT JOIN tags t ON pt.tag_id = t.id
+  LEFT JOIN product_suppliers ps ON p.id = ps.product_id
+  LEFT JOIN suppliers sup ON ps.supplier_id = sup.id
+  LEFT JOIN product_coupons pco ON p.id = pco.product_id
   GROUP BY p.id;
 `;
 
