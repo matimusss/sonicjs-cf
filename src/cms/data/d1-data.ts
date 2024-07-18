@@ -66,9 +66,11 @@ export async function getProduct(db, id) {
     MAX(psi.dimension_height) AS dimension_height,
     MAX(psi.dimension_depth) AS dimension_depth,
     MAX(psi.dimension_unit) AS dimension_unit,
-    MAX(g.image) AS gallery_image,
-    MAX(g.placeholder) AS gallery_placeholder,
-    MAX(g.is_thumbnail) AS is_thumbnail,
+    
+    GROUP_CONCAT(DISTINCT g.image) AS gallery_images,
+    GROUP_CONCAT(DISTINCT g.placeholder) AS gallery_placeholders,
+    GROUP_CONCAT(DISTINCT g.is_thumbnail) AS is_thumbnails,
+    
     GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names,
     GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values,
     GROUP_CONCAT(DISTINCT av.color) AS colors
@@ -76,11 +78,14 @@ export async function getProduct(db, id) {
   LEFT JOIN product_categories pc ON p.id = pc.product_id
   LEFT JOIN categories c ON pc.category_id = c.id
   LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
+
   LEFT JOIN gallery g ON p.id = g.product_id
   LEFT JOIN product_attributes pa ON p.id = pa.product_id
   LEFT JOIN attributes a ON pa.attribute_id = a.id
   LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
+
   LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
+
   WHERE p.id = ?
   GROUP BY p.id;
 `;
