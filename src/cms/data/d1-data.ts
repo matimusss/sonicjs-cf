@@ -41,10 +41,7 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
   } 
 }
 
-
-export async function getProduct(db, id) {
-  // Consulta para obtener los detalles básicos del producto
-  const productQuery = `
+const productQuery = `
   SELECT
     p.id AS product_id,
     p.slug,
@@ -73,7 +70,19 @@ export async function getProduct(db, id) {
     
     GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names,
     GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values,
-    GROUP_CONCAT(DISTINCT av.color) AS colors
+    GROUP_CONCAT(DISTINCT av.color) AS colors,
+    
+    GROUP_CONCAT(DISTINCT ps.supplier_id) AS supplier_ids,
+    GROUP_CONCAT(DISTINCT s.supplier_name) AS supplier_names,
+    
+    GROUP_CONCAT(DISTINCT pc.coupon_id) AS coupon_ids,
+    GROUP_CONCAT(DISTINCT co.code) AS coupon_codes,
+    GROUP_CONCAT(DISTINCT co.discount_value) AS coupon_discount_values,
+    GROUP_CONCAT(DISTINCT co.discount_type) AS coupon_discount_types,
+    
+    GROUP_CONCAT(DISTINCT pt.tag_id) AS tag_ids,
+    GROUP_CONCAT(DISTINCT t.tag_name) AS tag_names,
+    GROUP_CONCAT(DISTINCT t.icon) AS tag_icons
   FROM products p
   LEFT JOIN product_categories pc ON p.id = pc.product_id
   LEFT JOIN categories c ON pc.category_id = c.id
@@ -83,6 +92,19 @@ export async function getProduct(db, id) {
   LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
   LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
   LEFT JOIN attributes a ON pa.attribute_id = a.id
+  
+  -- Relación con product_suppliers y suppliers
+  LEFT JOIN product_suppliers ps ON p.id = ps.product_id
+  LEFT JOIN suppliers s ON ps.supplier_id = s.id
+  
+  -- Relación con product_coupons y coupons
+  LEFT JOIN product_coupons pc ON p.id = pc.product_id
+  LEFT JOIN coupons co ON pc.coupon_id = co.id
+  
+  -- Relación con product_tags y tags
+  LEFT JOIN product_tags pt ON p.id = pt.product_id
+  LEFT JOIN tags t ON pt.tag_id = t.id
+  
   WHERE p.id = ?
   GROUP BY p.id;
 `;
