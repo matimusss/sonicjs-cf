@@ -49,7 +49,7 @@ export async function getProduct(db, id) {
     p.id AS product_id,
     p.slug,
     p.product_name,
-    p.sku,
+    p.sku, 
     p.sale_price,
     p.compare_price,
     p.buying_price,
