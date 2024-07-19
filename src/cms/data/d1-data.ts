@@ -85,9 +85,8 @@ SELECT
     GROUP_CONCAT(DISTINCT vo.active) AS variant_options_actives,
     GROUP_CONCAT(DISTINCT v.variant_option) AS variant_options,
     GROUP_CONCAT(DISTINCT vv.product_attribute_value_id) AS variant_value_product_attribute_value_ids,
-    GROUP_CONCAT(DISTINCT avv.attribute_value) AS variant_attribute_values,
-    GROUP_CONCAT(DISTINCT av_attr.attribute_name) AS variant_attribute_names
-
+    GROUP_CONCAT(DISTINCT avv.attribute_value || '|' || av_attr.attribute_name, ';') AS variant_attribute_values  -- Concatenación para obtener pares valor-nombre
+    
 FROM products p
 LEFT JOIN product_categories pc ON p.id = pc.product_id
 LEFT JOIN categories c ON pc.category_id = c.id
@@ -112,7 +111,6 @@ LEFT JOIN attributes av_attr ON pavv.product_attribute_id = av_attr.id
 
 WHERE p.id = ?
 GROUP BY p.id;
-
 `;  
 
 
