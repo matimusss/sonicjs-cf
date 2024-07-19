@@ -43,8 +43,7 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 
 
 export async function getProduct(db, id) {
-  const productQuery = `
-SELECT
+  const productQuery = `SELECT
     p.id AS product_id,
     p.slug,
     p.product_name,
@@ -56,7 +55,7 @@ SELECT
     p.short_description,
     p.product_description,
     p.product_type,
-    GROUP_CONCAT(DISTINCT c.category_name) AS category_names,
+    GROUP_CONCAT(c.category_name) AS category_names,
     MAX(psi.weight) AS weight,
     MAX(psi.weight_unit) AS weight_unit,
     MAX(psi.volume) AS volume,
@@ -65,27 +64,27 @@ SELECT
     MAX(psi.dimension_height) AS dimension_height,
     MAX(psi.dimension_depth) AS dimension_depth,
     MAX(psi.dimension_unit) AS dimension_unit,
-    GROUP_CONCAT(DISTINCT g.image) AS gallery_images,
-    GROUP_CONCAT(DISTINCT g.placeholder) AS gallery_placeholders,
-    GROUP_CONCAT(DISTINCT g.is_thumbnail) AS is_thumbnails,
-    GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names,
-    GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values,
-    GROUP_CONCAT(DISTINCT av.color) AS colors,
-    GROUP_CONCAT(DISTINCT s.supplier_name) AS supplier_names,
-    GROUP_CONCAT(DISTINCT co.code) AS coupon_codes,
-    GROUP_CONCAT(DISTINCT co.discount_value) AS coupon_discount_values,
-    GROUP_CONCAT(DISTINCT co.discount_type) AS coupon_discount_types,
-    GROUP_CONCAT(DISTINCT t.tag_name) AS tag_names,
-    GROUP_CONCAT(DISTINCT t.icon) AS tag_icons,
-    GROUP_CONCAT(DISTINCT vo.title) AS variant_options_titles,
-    GROUP_CONCAT(DISTINCT vo.sale_price) AS variant_options_sale_prices,
-    GROUP_CONCAT(DISTINCT vo.compare_price) AS variant_options_compare_prices,
-    GROUP_CONCAT(DISTINCT vo.buying_price) AS variant_options_buying_prices,
-    GROUP_CONCAT(DISTINCT vo.quantity) AS variant_options_quantities,
-    GROUP_CONCAT(DISTINCT vo.active) AS variant_options_actives,
-    GROUP_CONCAT(DISTINCT v.variant_option) AS variant_options,
-    GROUP_CONCAT(DISTINCT vv.product_attribute_value_id) AS variant_value_product_attribute_value_ids,
-    GROUP_CONCAT(DISTINCT avv.attribute_value || '|' || av_attr.attribute_name, ';') AS variant_attribute_values  -- Concatenación para obtener pares valor-nombre
+    GROUP_CONCAT(g.image) AS gallery_images,
+    GROUP_CONCAT(g.placeholder) AS gallery_placeholders,
+    GROUP_CONCAT(g.is_thumbnail) AS is_thumbnails,
+    GROUP_CONCAT(a.attribute_name) AS attribute_names,
+    GROUP_CONCAT(av.attribute_value) AS attribute_values,
+    GROUP_CONCAT(av.color) AS colors,
+    GROUP_CONCAT(s.supplier_name) AS supplier_names,
+    GROUP_CONCAT(co.code) AS coupon_codes,
+    GROUP_CONCAT(co.discount_value) AS coupon_discount_values,
+    GROUP_CONCAT(co.discount_type) AS coupon_discount_types,
+    GROUP_CONCAT(t.tag_name) AS tag_names,
+    GROUP_CONCAT(t.icon) AS tag_icons,
+    GROUP_CONCAT(vo.title) AS variant_options_titles,
+    GROUP_CONCAT(vo.sale_price) AS variant_options_sale_prices,
+    GROUP_CONCAT(vo.compare_price) AS variant_options_compare_prices,
+    GROUP_CONCAT(vo.buying_price) AS variant_options_buying_prices,
+    GROUP_CONCAT(vo.quantity) AS variant_options_quantities,
+    GROUP_CONCAT(vo.active) AS variant_options_actives,
+    GROUP_CONCAT(v.variant_option) AS variant_options,
+    GROUP_CONCAT(vv.product_attribute_value_id) AS variant_value_product_attribute_value_ids,
+    GROUP_CONCAT(avv.attribute_value || '|' || av_attr.attribute_name, ';') AS variant_attribute_values
     
 FROM products p
 LEFT JOIN product_categories pc ON p.id = pc.product_id
@@ -111,6 +110,7 @@ LEFT JOIN attributes av_attr ON pavv.product_attribute_id = av_attr.id
 
 WHERE p.id = ?
 GROUP BY p.id;
+
 `;  
 
 
