@@ -86,8 +86,10 @@ export async function getProduct(db, id) {
   GROUP_CONCAT(DISTINCT vo.compare_price) AS variant_options_compare_prices,
   GROUP_CONCAT(DISTINCT vo.buying_price) AS variant_options_buying_prices,
   GROUP_CONCAT(DISTINCT vo.quantity) AS variant_options_quantities,
-  GROUP_CONCAT(DISTINCT vo.active) AS variant_options_actives
-
+  GROUP_CONCAT(DISTINCT vo.active) AS variant_options_actives,
+  GROUP_CONCAT(DISTINCT v.variant_option) AS variant_options,
+  GROUP_CONCAT(DISTINCT v.variant_option_id) AS variant_options_ids,
+  GROUP_CONCAT(DISTINCT vv.variant_values_product_attribute_value_id) AS variant_value_product_attribute_value_ids
   FROM products p
   LEFT JOIN product_categories pc ON p.id = pc.product_id
   LEFT JOIN categories c ON pc.category_id = c.id
@@ -104,6 +106,9 @@ export async function getProduct(db, id) {
   LEFT JOIN product_tags pt ON p.id = pt.product_id
   LEFT JOIN tags t ON pt.tag_id = t.id
   LEFT JOIN variant_options vo ON p.id = vo.product_id
+  LEFT JOIN variants v ON p.id = v.product_id
+  LEFT JOIN variant_values vv ON v.id = vv.variant_id 
+
   WHERE p.id = ?
   GROUP BY p.id;
 `;
