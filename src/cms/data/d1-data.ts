@@ -90,7 +90,7 @@ export async function getProduct(db, id) {
   GROUP_CONCAT(DISTINCT v.variant_option) AS variant_options,
 
   -- GROUP_CONCAT(DISTINCT v.variant_option_id) AS variant_options_ids, 
- -- GROUP_CONCAT(DISTINCT vv.product_attribute_value_id) AS variant_value_product_attribute_value_ids 
+ GROUP_CONCAT(DISTINCT vv.product_attribute_value_id) AS variant_value_product_attribute_value_ids 
 
 --  GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names_variant,
 --    GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values_variant,
