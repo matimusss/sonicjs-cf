@@ -89,7 +89,7 @@ export async function getProduct(db, id) {
   GROUP_CONCAT(DISTINCT vo.active) AS variant_options_actives,
   GROUP_CONCAT(DISTINCT v.variant_option) AS variant_options,
   GROUP_CONCAT(DISTINCT v.variant_option_id) AS variant_options_ids,
-  GROUP_CONCAT(DISTINCT vv.variant_values_product_attribute_value_id) AS variant_value_product_attribute_value_ids
+  GROUP_CONCAT(DISTINCT vv.product_attribute_value_id) AS variant_value_product_attribute_value_ids
   FROM products p
   LEFT JOIN product_categories pc ON p.id = pc.product_id
   LEFT JOIN categories c ON pc.category_id = c.id
