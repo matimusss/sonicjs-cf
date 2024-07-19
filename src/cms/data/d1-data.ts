@@ -56,7 +56,6 @@ export async function getProduct(db, id) {
     p.short_description,
     p.product_description,
     p.product_type,
-
     GROUP_CONCAT(DISTINCT c.category_name) AS category_names,
     MAX(psi.weight) AS weight,
     MAX(psi.weight_unit) AS weight_unit,
@@ -66,28 +65,21 @@ export async function getProduct(db, id) {
     MAX(psi.dimension_height) AS dimension_height,
     MAX(psi.dimension_depth) AS dimension_depth,
     MAX(psi.dimension_unit) AS dimension_unit,
-    
     GROUP_CONCAT(DISTINCT g.image) AS gallery_images,
     GROUP_CONCAT(DISTINCT g.placeholder) AS gallery_placeholders,
     GROUP_CONCAT(DISTINCT g.is_thumbnail) AS is_thumbnails,
-    
     GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names,
     GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values,
     GROUP_CONCAT(DISTINCT av.color) AS colors,
-    
     -- GROUP_CONCAT(DISTINCT ps.supplier_id) AS supplier_ids,
     GROUP_CONCAT(DISTINCT s.supplier_name) AS supplier_names,
-    
     -- GROUP_CONCAT(DISTINCT pco.coupon_id) AS coupon_ids,
     GROUP_CONCAT(DISTINCT co.code) AS coupon_codes,
     GROUP_CONCAT(DISTINCT co.discount_value) AS coupon_discount_values,
     GROUP_CONCAT(DISTINCT co.discount_type) AS coupon_discount_types,
-    
     -- GROUP_CONCAT(DISTINCT pt.tag_id) AS tag_ids,
     GROUP_CONCAT(DISTINCT t.tag_name) AS tag_names,
     GROUP_CONCAT(DISTINCT t.icon) AS tag_icons,
-
-
   GROUP_CONCAT(DISTINCT vo.title) AS variant_options_titles,
   GROUP_CONCAT(DISTINCT vo.image_id) AS variant_options_image_ids,
   GROUP_CONCAT(DISTINCT vo.sale_price) AS variant_options_sale_prices,
@@ -95,9 +87,6 @@ export async function getProduct(db, id) {
   GROUP_CONCAT(DISTINCT vo.buying_price) AS variant_options_buying_prices,
   GROUP_CONCAT(DISTINCT vo.quantity) AS variant_options_quantities,
   GROUP_CONCAT(DISTINCT vo.active) AS variant_options_actives
-
-
-   
 
   FROM products p
   LEFT JOIN product_categories pc ON p.id = pc.product_id
@@ -110,10 +99,11 @@ export async function getProduct(db, id) {
   LEFT JOIN attributes a ON pa.attribute_id = a.id
   LEFT JOIN product_suppliers ps ON p.id = ps.product_id
   LEFT JOIN suppliers s ON ps.supplier_id = s.id
-  LEFT JOIN product_coupons pco ON p.id = pco.product_id  -- Corregido el alias a pco
-  LEFT JOIN coupons co ON pco.coupon_id = co.id  -- Ajustado para usar pco.coupon_id en lugar de pc.coupon_id
+  LEFT JOIN product_coupons pco ON p.id = pco.product_id
+  LEFT JOIN coupons co ON pco.coupon_id = co.id
   LEFT JOIN product_tags pt ON p.id = pt.product_id
   LEFT JOIN tags t ON pt.tag_id = t.id
+  LEFT JOIN variant_options vo ON p.id = vo.product_id
   WHERE p.id = ?
   GROUP BY p.id;
 `;
