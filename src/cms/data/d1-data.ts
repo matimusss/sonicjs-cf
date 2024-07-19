@@ -44,7 +44,7 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 
 export async function getProduct(db, id) {
   const productQuery = `
-  SELECT
+SELECT
     p.id AS product_id,
     p.slug,
     p.product_name,
@@ -71,46 +71,46 @@ export async function getProduct(db, id) {
     GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names,
     GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values,
     GROUP_CONCAT(DISTINCT av.color) AS colors,
-    -- GROUP_CONCAT(DISTINCT ps.supplier_id) AS supplier_ids,
     GROUP_CONCAT(DISTINCT s.supplier_name) AS supplier_names,
-    -- GROUP_CONCAT(DISTINCT pco.coupon_id) AS coupon_ids,
     GROUP_CONCAT(DISTINCT co.code) AS coupon_codes,
     GROUP_CONCAT(DISTINCT co.discount_value) AS coupon_discount_values,
     GROUP_CONCAT(DISTINCT co.discount_type) AS coupon_discount_types,
-    -- GROUP_CONCAT(DISTINCT pt.tag_id) AS tag_ids,
     GROUP_CONCAT(DISTINCT t.tag_name) AS tag_names,
     GROUP_CONCAT(DISTINCT t.icon) AS tag_icons,
-  GROUP_CONCAT(DISTINCT vo.title) AS variant_options_titles,
-  GROUP_CONCAT(DISTINCT vo.image_id) AS variant_options_image_ids,
-  GROUP_CONCAT(DISTINCT vo.sale_price) AS variant_options_sale_prices,
-  GROUP_CONCAT(DISTINCT vo.compare_price) AS variant_options_compare_prices,
-  GROUP_CONCAT(DISTINCT vo.buying_price) AS variant_options_buying_prices,
-  GROUP_CONCAT(DISTINCT vo.quantity) AS variant_options_quantities,
-  GROUP_CONCAT(DISTINCT vo.active) AS variant_options_actives,
-  GROUP_CONCAT(DISTINCT v.variant_option) AS variant_options,
-  GROUP_CONCAT(DISTINCT v.variant_option_id) AS variant_options_ids,
-  GROUP_CONCAT(DISTINCT vv.product_attribute_value_id) AS variant_value_product_attribute_value_ids
-  FROM products p
-  LEFT JOIN product_categories pc ON p.id = pc.product_id
-  LEFT JOIN categories c ON pc.category_id = c.id
-  LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
-  LEFT JOIN gallery g ON p.id = g.product_id
-  LEFT JOIN product_attributes pa ON p.id = pa.product_id
-  LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
-  LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
-  LEFT JOIN attributes a ON pa.attribute_id = a.id
-  LEFT JOIN product_suppliers ps ON p.id = ps.product_id
-  LEFT JOIN suppliers s ON ps.supplier_id = s.id
-  LEFT JOIN product_coupons pco ON p.id = pco.product_id
-  LEFT JOIN coupons co ON pco.coupon_id = co.id
-  LEFT JOIN product_tags pt ON p.id = pt.product_id
-  LEFT JOIN tags t ON pt.tag_id = t.id
-  LEFT JOIN variant_options vo ON p.id = vo.product_id
-  LEFT JOIN variants v ON p.id = v.product_id
-  LEFT JOIN variant_values vv ON v.id = vv.variant_id 
-
-  WHERE p.id = ?
-  GROUP BY p.id;
+    GROUP_CONCAT(DISTINCT vo.title) AS variant_options_titles,
+    GROUP_CONCAT(DISTINCT vo.image_id) AS variant_options_image_ids,
+    GROUP_CONCAT(DISTINCT vo.sale_price) AS variant_options_sale_prices,
+    GROUP_CONCAT(DISTINCT vo.compare_price) AS variant_options_compare_prices,
+    GROUP_CONCAT(DISTINCT vo.buying_price) AS variant_options_buying_prices,
+    GROUP_CONCAT(DISTINCT vo.quantity) AS variant_options_quantities,
+    GROUP_CONCAT(DISTINCT vo.active) AS variant_options_actives,
+    GROUP_CONCAT(DISTINCT v.variant_option) AS variant_options,
+    GROUP_CONCAT(DISTINCT v.variant_option_id) AS variant_options_ids,
+    GROUP_CONCAT(DISTINCT vv.product_attribute_value_id) AS variant_value_product_attribute_value_ids,
+    GROUP_CONCAT(DISTINCT av2.attribute_name || ': ' || av2.attribute_value) AS variant_attribute_details
+FROM products p
+LEFT JOIN product_categories pc ON p.id = pc.product_id
+LEFT JOIN categories c ON pc.category_id = c.id
+LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
+LEFT JOIN gallery g ON p.id = g.product_id
+LEFT JOIN product_attributes pa ON p.id = pa.product_id
+LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
+LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
+LEFT JOIN attributes a ON pa.attribute_id = a.id
+LEFT JOIN product_suppliers ps ON p.id = ps.product_id
+LEFT JOIN suppliers s ON ps.supplier_id = s.id
+LEFT JOIN product_coupons pco ON p.id = pco.product_id
+LEFT JOIN coupons co ON pco.coupon_id = co.id
+LEFT JOIN product_tags pt ON p.id = pt.product_id
+LEFT JOIN tags t ON pt.tag_id = t.id
+LEFT JOIN variant_options vo ON p.id = vo.product_id
+LEFT JOIN variants v ON p.id = v.product_id
+LEFT JOIN variant_values vv ON v.id = vv.variant_id 
+LEFT JOIN product_attribute_values pav2 ON vv.product_attribute_value_id = pav2.id
+LEFT JOIN attribute_values av2 ON pav2.attribute_value_id = av2.id
+LEFT JOIN attributes a2 ON pav2.attribute_id = a2.id
+WHERE p.id = ?
+GROUP BY p.id;
 `;
 
 
