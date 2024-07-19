@@ -94,7 +94,7 @@ export async function getProduct(db, id) {
   GROUP_CONCAT(DISTINCT vo.compare_price) AS variant_options_compare_prices,
   GROUP_CONCAT(DISTINCT vo.buying_price) AS variant_options_buying_prices,
   GROUP_CONCAT(DISTINCT vo.quantity) AS variant_options_quantities,
-  GROUP_CONCAT(DISTINCT vo.active) AS variant_options_actives,
+  GROUP_CONCAT(DISTINCT vo.active) AS variant_options_actives
 
 
    
