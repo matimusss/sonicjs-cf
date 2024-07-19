@@ -88,13 +88,13 @@ export async function getProduct(db, id) {
     GROUP_CONCAT(DISTINCT t.icon) AS tag_icons
 
 
-  -- GROUP_CONCAT(DISTINCT vo.title) AS variant_option_titles,
-  -- GROUP_CONCAT(DISTINCT vo.image_id) AS variant_option_image_ids,
-  -- GROUP_CONCAT(DISTINCT vo.sale_price) AS variant_option_sale_prices,
-  -- GROUP_CONCAT(DISTINCT vo.compare_price) AS variant_option_compare_prices,
-  -- GROUP_CONCAT(DISTINCT vo.buying_price) AS variant_option_buying_prices,
-  -- GROUP_CONCAT(DISTINCT vo.quantity) AS variant_option_quantities,
-  -- GROUP_CONCAT(DISTINCT vo.active) AS variant_option_actives,
+  GROUP_CONCAT(DISTINCT vo.title) AS variant_option_titles,
+  GROUP_CONCAT(DISTINCT vo.image_id) AS variant_option_image_ids,
+  GROUP_CONCAT(DISTINCT vo.sale_price) AS variant_option_sale_prices,
+  GROUP_CONCAT(DISTINCT vo.compare_price) AS variant_option_compare_prices,
+  GROUP_CONCAT(DISTINCT vo.buying_price) AS variant_option_buying_prices,
+  GROUP_CONCAT(DISTINCT vo.quantity) AS variant_option_quantities,
+  GROUP_CONCAT(DISTINCT vo.active) AS variant_option_actives,
 
 
    
@@ -115,7 +115,7 @@ export async function getProduct(db, id) {
   LEFT JOIN product_tags pt ON p.id = pt.product_id
   LEFT JOIN tags t ON pt.tag_id = t.id
   -- LEFT JOIN variants v ON p.id = v.product_id
-  -- LEFT JOIN variant_options vo ON v.variant_option_id = vo.id
+  LEFT JOIN variant_options vo ON p.id = vo.product_id
   -- LEFT JOIN variant_values vv ON v.id = vv.variant_id
   WHERE p.id = ?
   GROUP BY p.id;
