@@ -116,7 +116,7 @@ LEFT JOIN variant_options vo ON p.id = vo.product_id
 LEFT JOIN variant_values vv ON v.id = vv.variant_id
 LEFT JOIN product_attribute_values pavv ON vv.product_attribute_value_id = pavv.id  -- Agregado para enlazar los valores de atributos de variantes
 LEFT JOIN attribute_values avv ON pavv.attribute_value_id = avv.id  -- Agregado para obtener los valores de atributos de variantes
-LEFT JOIN attributes av_attr ON pavv.attribute_id = av_attr.id  -- Agregado para obtener los nombres de atributos de variantes
+LEFT JOIN attributes av_attr ON pavv.product_attribute_id = av_attr.id  -- Agregado para obtener los nombres de atributos de variantes
 
 WHERE p.id = ?
 GROUP BY p.id;
