@@ -75,11 +75,19 @@ export async function getProduct(db, id) {
             'variant_buying_price', vo.buying_price,
             'variant_quantity', vo.quantity,
             'variant_active', vo.active,
-            json_group_array(
-                DISTINCT json_object(
-                    'variant_attribute_name', av_attr.attribute_name,
-                    'variant_attribute_value', avv.attribute_value
+            -- Agrupación de atributos de variantes
+            (
+                SELECT json_group_array(
+                    DISTINCT json_object(
+                        'variant_attribute_name', av_attr.attribute_name,
+                        'variant_attribute_value', avv.attribute_value
+                    )
                 )
+                FROM variant_values vv2
+                LEFT JOIN product_attribute_values pavv2 ON vv2.product_attribute_value_id = pavv2.id
+                LEFT JOIN attribute_values avv2 ON pavv2.attribute_value_id = avv2.id
+                LEFT JOIN attributes av_attr2 ON pavv2.product_attribute_id = av_attr2.id
+                WHERE vv2.variant_id = v.id
             ) AS variant_attributes
         )
     ) AS variant_details,
@@ -115,7 +123,7 @@ LEFT JOIN tags t ON pt.tag_id = t.id
 -- Filtro y agrupación
 WHERE p.id = ?
 GROUP BY p.id;
-    
+
         `;
 
   
