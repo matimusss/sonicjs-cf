@@ -43,23 +43,159 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 
 
 export async function getProduct(db, id) {
-    const productQuery = `    SELECT 
-            p.id AS product_id,
-            p.slug,
-            p.product_name,
-            json_group_array(
-                json_object(
-                    'attribute_name', a.attribute_name,
-                    'attribute_value', av.attribute_value
+    const productQuery = `SELECT
+    json_object(
+        'product_id', p.id,
+        'slug', p.slug,
+        'product_name', p.product_name,
+        'sku', p.sku,
+        'sale_price', p.sale_price,
+        'compare_price', p.compare_price,
+        'buying_price', p.buying_price,
+        'quantity', p.quantity,
+        'short_description', p.short_description,
+        'product_description', p.product_description,
+        'product_type', p.product_type,
+        'categories', json_array(
+            (
+                SELECT json_array_agg(c.category_name)
+                FROM product_categories pc
+                JOIN categories c ON pc.category_id = c.id
+                WHERE pc.product_id = p.id
+            )
+        ),
+        'shipping_info', json_object(
+            'weight', (SELECT MAX(psi.weight) FROM product_shipping_info psi WHERE psi.product_id = p.id),
+            'weight_unit', (SELECT MAX(psi.weight_unit) FROM product_shipping_info psi WHERE psi.product_id = p.id),
+            'volume', (SELECT MAX(psi.volume) FROM product_shipping_info psi WHERE psi.product_id = p.id),
+            'volume_unit', (SELECT MAX(psi.volume_unit) FROM product_shipping_info psi WHERE psi.product_id = p.id),
+            'dimension_width', (SELECT MAX(psi.dimension_width) FROM product_shipping_info psi WHERE psi.product_id = p.id),
+            'dimension_height', (SELECT MAX(psi.dimension_height) FROM product_shipping_info psi WHERE psi.product_id = p.id),
+            'dimension_depth', (SELECT MAX(psi.dimension_depth) FROM product_shipping_info psi WHERE psi.product_id = p.id),
+            'dimension_unit', (SELECT MAX(psi.dimension_unit) FROM product_shipping_info psi WHERE psi.product_id = p.id)
+        ),
+        'gallery_images', json_array(
+            (
+                SELECT json_array_agg(g.image)
+                FROM gallery g
+                WHERE g.product_id = p.id
+            )
+        ),
+        'gallery_placeholders', json_array(
+            (
+                SELECT json_array_agg(g.placeholder)
+                FROM gallery g
+                WHERE g.product_id = p.id
+            )
+        ),
+        'is_thumbnails', json_array(
+            (
+                SELECT json_array_agg(g.is_thumbnail)
+                FROM gallery g
+                WHERE g.product_id = p.id
+            )
+        ),
+        'attributes', json_array(
+            (
+                SELECT json_array_agg(
+                    json_object(
+                        'attribute_name', a.attribute_name,
+                        'attribute_value', av.attribute_value
+                    )
                 )
-            ) AS variant_attributes
-        FROM products p
-        LEFT JOIN product_attributes pa ON p.id = pa.product_id
-        LEFT JOIN attributes a ON pa.attribute_id = a.id
-        LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
-        LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
-        WHERE p.id = ?
-        GROUP BY p.id;`;
+                FROM product_attributes pa
+                JOIN attributes a ON pa.attribute_id = a.id
+                JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
+                JOIN attribute_values av ON pav.attribute_value_id = av.id
+                WHERE pa.product_id = p.id
+            )
+        ),
+        'suppliers', json_array(
+            (
+                SELECT json_array_agg(s.supplier_name)
+                FROM product_suppliers ps
+                JOIN suppliers s ON ps.supplier_id = s.id
+                WHERE ps.product_id = p.id
+            )
+        ),
+        'coupons', json_array(
+            (
+                SELECT json_array_agg(
+                    json_object(
+                        'code', co.code,
+                        'discount_value', co.discount_value,
+                        'discount_type', co.discount_type
+                    )
+                )
+                FROM product_coupons pco
+                JOIN coupons co ON pco.coupon_id = co.id
+                WHERE pco.product_id = p.id
+            )
+        ),
+        'tags', json_array(
+            (
+                SELECT json_array_agg(
+                    json_object(
+                        'tag_name', t.tag_name,
+                        'icon', t.icon
+                    )
+                )
+                FROM product_tags pt
+                JOIN tags t ON pt.tag_id = t.id
+                WHERE pt.product_id = p.id
+            )
+        ),
+        'variants', json_array(
+            (
+                SELECT json_array_agg(
+                    json_object(
+                        'variant_option', v.variant_option,
+                        'variant_options', json_array(
+                            (
+                                SELECT json_array_agg(
+                                    json_object(
+                                        'title', vo.title,
+                                        'sale_price', vo.sale_price,
+                                        'compare_price', vo.compare_price,
+                                        'buying_price', vo.buying_price,
+                                        'quantity', vo.quantity,
+                                        'active', vo.active
+                                    )
+                                )
+                                FROM variant_options vo
+                                WHERE vo.id IN (
+                                    SELECT variant_option_id
+                                    FROM variants v2
+                                    WHERE v2.id = vv.variant_id
+                                )
+                            )
+                        ),
+                        'variant_values', json_array(
+                            (
+                                SELECT json_array_agg(
+                                    json_object(
+                                        'attribute_value', avv.attribute_value,
+                                        'attribute_name', av_attr.attribute_name
+                                    )
+                                )
+                                FROM variant_values vv
+                                JOIN product_attribute_values pavv ON vv.product_attribute_value_id = pavv.id
+                                JOIN attribute_values avv ON pavv.attribute_value_id = avv.id
+                                JOIN attributes av_attr ON pavv.product_attribute_id = av_attr.id
+                                WHERE vv.variant_id = v.id
+                            )
+                        )
+                    )
+                )
+                FROM variants v
+                LEFT JOIN variant_values vv ON v.id = vv.variant_id
+                WHERE v.product_id = p.id
+            )
+        )
+    ) AS product_details
+FROM products p
+WHERE p.id = ?;
+`;
 
 
 
