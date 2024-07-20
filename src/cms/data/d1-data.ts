@@ -43,22 +43,27 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 
 
 export async function getProduct(db, id) {
-    const productQuery = `
-  SELECT 
-    p.id AS product_id,
-    p.slug,
-    p.product_name,
-    json_group_array(
-        json_object(
-            'attribute_name', a.attribute_name,
-            'attribute_value', av.attribute_value
-        )
-    ) AS variant_attributes
-FROM products p
-LEFT JOIN product_attributes pa ON p.id = pa.product_id
-LEFT JOIN attribute_values av ON pa.attribute_value_id = av.id
-LEFT JOIN attributes a ON pa.attribute_id = a.id
-GROUP BY p.id;`;
+    const productQuery = `    SELECT 
+            p.id AS product_id,
+            p.slug,
+            p.product_name,
+            json_group_array(
+                json_object(
+                    'attribute_name', a.attribute_name,
+                    'attribute_value', av.attribute_value
+                )
+            ) AS variant_attributes
+        FROM products p
+        LEFT JOIN product_attributes pa ON p.id = pa.product_id
+        LEFT JOIN attributes a ON pa.attribute_id = a.id
+        LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
+        LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
+        WHERE p.id = ?
+        GROUP BY p.id;`;
+
+
+
+
   
   const productQuery222 = `SELECT
     p.id AS product_id,
