@@ -55,14 +55,14 @@ export async function getProduct(db, id) {
     p.short_description,
     p.product_description,
     p.product_type,
-            json_group_array(
+           DISTINCT json_group_array(
                 json_object(
                     'attribute_name', a.attribute_name,
                     'attribute_value', av.attribute_value
             
                     )
             ) AS variant_attributes,
-            json_group_array(
+           DISTINCT json_group_array(
                 json_object(
                     'tag_name', t.tag_name,
                     'tag_icon', t.icon
