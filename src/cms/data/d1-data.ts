@@ -62,14 +62,27 @@ export async function getProduct(db, id) {
             
                     )
             ) AS variant_attributes
-        
 
+            json_group_array(
+                json_object(
+                    'tag_name', t.tag_name,
+                    'tag_icon', t.icon
+            
+                    )
+            ) AS tags
+
+       
             FROM products p
-        LEFT JOIN product_attributes pa ON p.id = pa.product_id
+       
+            LEFT JOIN product_attributes pa ON p.id = pa.product_id
         LEFT JOIN attributes a ON pa.attribute_id = a.id
         LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
         LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
        
+
+        LEFT JOIN product_tags pt ON p.id = pt.product_id
+        LEFT JOIN tags t ON pt_tag_id = t.id
+        
         WHERE p.id = ?
         GROUP BY p.id;`;
 
