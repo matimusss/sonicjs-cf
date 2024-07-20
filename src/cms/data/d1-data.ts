@@ -61,13 +61,11 @@ export async function getProduct(db, id) {
                     'attribute_value', av.attribute_value
             
                     )
-            ) AS variant_attributes
-
+            ) AS variant_attributes,
             json_group_array(
                 json_object(
                     'tag_name', t.tag_name,
                     'tag_icon', t.icon
-            
                     )
             ) AS tags
 
