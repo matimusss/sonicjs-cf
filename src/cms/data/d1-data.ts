@@ -43,9 +43,9 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 
 
 export async function getProduct(db, id) {
-    const productQuery = `    SELECT 
-            p.id AS product_id,
-            p.slug,
+    const productQuery = `   SELECT 
+    p.id AS product_id,
+    p.slug,
     p.product_name,
     p.sku,
     p.sale_price,
@@ -55,68 +55,68 @@ export async function getProduct(db, id) {
     p.short_description,
     p.product_description,
     p.product_type,
-          json_group_array(
-                DISTINCT  json_object(
-                    'attribute_name', a.attribute_name,
-                    'attribute_value', av.attribute_value
-                    )
-            ) AS product_attributes,  
-    
-json_object('a', json_group_array(json_result)) json
-FROM (
-  SELECT json_object(
-                      'variant_option', v.variant_option,  
-                      'variant_title', vo.title,  
-                      'variant_image_id', vo.image_id,  
-                      'variant_sale_price', vo.sale_price,  
-                      'variant_compare_price', vo.compare_price,  
-                      'variant_buying_price', vo.buying_price, 
-                      'variant_quantity', vo.quantity,
-                      'variant_active', vo.active, 
-                      'variant_attributes', 
-                      json_group_array(
-                          DISTINCT json_object(
-                              'variant_attribute_name', av_attr.attribute_name,
-                              'variant_attribute_value', avv.attribute_value
-                          )
-                      )
-                    ) json_result
-  FROM ...
-  GROUP BY v.variant_option, vo.title, vo.image_id, vo.sale_price, vo.compare_price, vo.buying_price, vo.quantity, vo.active
-) 
-                  
-            json_group_array(
-                DISTINCT json_object(
-                    'tag_name', t.tag_name,
-                    'tag_icon', t.icon
-                    )
-            ) AS tags
 
-            FROM products p        
--- variantes, 
-        LEFT JOIN variants v ON p.id = v.product_id
+    -- Atributos del producto
+    json_group_array(
+        DISTINCT json_object(
+            'attribute_name', a.attribute_name,
+            'attribute_value', av.attribute_value
+        )
+    ) AS product_attributes,
+
+    -- Tags del producto
+    json_group_array(
+        DISTINCT json_object(
+            'tag_name', t.tag_name,
+            'tag_icon', t.icon
+        )
+    ) AS tags,
+
+    -- Detalles de variantes
+    (SELECT json_group_array(json_result)
+     FROM (
+        SELECT DISTINCT json_object(
+                          'variant_option', v.variant_option,  
+                          'variant_title', vo.title,  
+                          'variant_image_id', vo.image_id,  
+                          'variant_sale_price', vo.sale_price,  
+                          'variant_compare_price', vo.compare_price,  
+                          'variant_buying_price', vo.buying_price, 
+                          'variant_quantity', vo.quantity,
+                          'variant_active', vo.active, 
+                          'variant_attributes', 
+                          json_group_array(
+                              DISTINCT json_object(
+                                  'variant_attribute_name', av_attr.attribute_name,
+                                  'variant_attribute_value', avv.attribute_value
+                              )
+                          )
+                        ) json_result
+        FROM variants v
         LEFT JOIN variant_options vo ON v.variant_option_id = vo.id
         LEFT JOIN variant_values vv ON v.id = vv.variant_id
-
-
         LEFT JOIN product_attribute_values pavv ON vv.product_attribute_value_id = pavv.id
-        LEFT JOIN attribute_values avv ON pavv.attribute_value_id = avv.id --atributos
+        LEFT JOIN attribute_values avv ON pavv.attribute_value_id = avv.id
         LEFT JOIN product_attributes av_pattr ON pavv.product_attribute_id = av_pattr.id
-        LEFT JOIN attributes av_attr ON av_pattr.attribute_id = av_attr.id    
+        LEFT JOIN attributes av_attr ON av_pattr.attribute_id = av_attr.id
+        WHERE v.product_id = p.id
+        GROUP BY v.variant_option, vo.title, vo.image_id, vo.sale_price, vo.compare_price, vo.buying_price, vo.quantity, vo.active
+    )) AS variant_details
 
--- atributos generales del producto       
+FROM products p
+-- Atributos generales del producto       
+LEFT JOIN product_attributes pa ON p.id = pa.product_id
+LEFT JOIN attributes a ON pa.attribute_id = a.id
+LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
+LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
 
-        LEFT JOIN product_attributes pa ON p.id = pa.product_id
-        LEFT JOIN attributes a ON pa.attribute_id = a.id
-        LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
-        LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
-  -- tags
-        LEFT JOIN product_tags pt ON p.id = pt.product_id
-        LEFT JOIN tags t ON pt.tag_id = t.id
--- where, group, etc
-        WHERE p.id = ?
-        GROUP BY p.id;
-        
+-- Tags
+LEFT JOIN product_tags pt ON p.id = pt.product_id
+LEFT JOIN tags t ON pt.tag_id = t.id
+
+WHERE p.id = ?
+GROUP BY p.id;
+
         `;
 
   
