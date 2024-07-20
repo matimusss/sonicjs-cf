@@ -81,7 +81,7 @@ export async function getProduct(db, id) {
        
 
         LEFT JOIN product_tags pt ON p.id = pt.product_id
-        LEFT JOIN tags t ON pt_tag_id = t.id
+        LEFT JOIN tags t ON pt.tag_id = t.id
         
         WHERE p.id = ?
         GROUP BY p.id;`;
