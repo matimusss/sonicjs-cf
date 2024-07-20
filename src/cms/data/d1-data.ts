@@ -71,7 +71,7 @@ export async function getProduct(db, id) {
             'variant_compare_price', vo.compare_price,  
             'variant_buying_price', vo.buying_price, 
             'variant_quantity', vo.quantity,
-            'variant_active', vo.active, 
+            'variant_active', vo.active
         )
     ) AS variant_details,
                   
@@ -87,15 +87,12 @@ export async function getProduct(db, id) {
         LEFT JOIN variants v ON p.id = v.product_id
         LEFT JOIN variant_options vo ON v.variant_option_id = vo.id
         LEFT JOIN variant_values vv ON v.id = vv.variant_id
-
-
+--
         LEFT JOIN product_attribute_values pavv ON vv.product_attribute_value_id = pavv.id
         LEFT JOIN attribute_values avv ON pavv.attribute_value_id = avv.id --atributos
         LEFT JOIN product_attributes av_pattr ON pavv.product_attribute_id = av_pattr.id
         LEFT JOIN attributes av_attr ON av_pattr.attribute_id = av_attr.id    
-
 -- atributos generales del producto       
-
         LEFT JOIN product_attributes pa ON p.id = pa.product_id
         LEFT JOIN attributes a ON pa.attribute_id = a.id
         LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
