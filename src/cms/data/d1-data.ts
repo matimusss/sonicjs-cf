@@ -175,6 +175,7 @@ export async function getProduct(db, id) {
 FROM products p
 WHERE p.id = ?;
 
+
 `;
 
 
