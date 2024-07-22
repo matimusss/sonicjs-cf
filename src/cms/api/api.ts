@@ -100,31 +100,22 @@ tables.forEach((entry) => {
       // Llama a la función getProduct para obtener los datos del producto
       const data = await getProduct(ctx.env.D1DATA, id);
   
-      if (data && data.length > 0) {
+      if (data) {
         let transformedData = { ...data[0] }; // Acceder al primer objeto en el array
   
         try {
           // Intenta parsear los campos de texto JSON
-          if (transformedData.product_attributes) {
-            transformedData.product_attributes = JSON.parse(transformedData.product_attributes);
+          if (data[0].product_attributes) {
+            transformedData.product_attributes = JSON.parse(data[0].product_attributes);
           }
   
-          if (transformedData.tags) {
-            transformedData.tags = JSON.parse(transformedData.tags);
+          if (data[0].tags) {
+            transformedData.tags = JSON.parse(data[0].tags);
           }
   
-          if (transformedData.variant_details) {
-            const variantDetails = JSON.parse(transformedData.variant_details);
-            const variantAttributes = variantDetails.flatMap(variant => 
-              JSON.parse(variant).variant_attributes.map(attr => attr.variant_attribute_name)
-            );
-  
-            // Filtrar los atributos del producto para eliminar los que están en variantes
-            if (transformedData.product_attributes) {
-              transformedData.product_attributes = transformedData.product_attributes.filter(attr => 
-                !variantAttributes.includes(attr.attribute_name)
-              );
-            }
+          if (data[0].variant_details) {
+            const variantDetails = JSON.parse(data[0].variant_details);
+            transformedData.variant_details = variantDetails.map(variant => JSON.parse(variant));
           }
         } catch (parseError) {
           console.error('Error parsing JSON fields:', parseError);
@@ -140,8 +131,6 @@ tables.forEach((entry) => {
       return ctx.text('Error retrieving product full details', 500);
     }
   });
-  
-
 
   api.get('/product-min-details', async (ctx) => {
     try {
