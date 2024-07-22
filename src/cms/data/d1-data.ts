@@ -17,10 +17,7 @@ var qs = require('qs');
 
 export async function getProductMinDetails(db, table) {
   // Asegúrate de que el nombre de la tabla sea seguro y válido
-  const validTables = ['product_min_details', 'another_table']; // Lista de tablas válidas
-  if (!validTables.includes(table)) {
-    throw new Error('Invalid table name');
-  }
+
 
   // Define la consulta SQL para seleccionar todos los registros de la tabla especificada
   const sql = `SELECT * FROM ${table}`;
