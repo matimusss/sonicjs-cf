@@ -104,7 +104,7 @@ tables.forEach((entry) => {
         let transformedData = { ...data[0] }; // Acceder al primer objeto en el array
   
         try {
-          // Parsear JSON de campos
+          // Intenta parsear los campos de texto JSON
           if (transformedData.product_attributes) {
             transformedData.product_attributes = JSON.parse(transformedData.product_attributes);
           }
@@ -113,21 +113,19 @@ tables.forEach((entry) => {
             transformedData.tags = JSON.parse(transformedData.tags);
           }
   
-          let variantAttributes = [];
           if (transformedData.variant_details) {
             const variantDetails = JSON.parse(transformedData.variant_details);
-            variantAttributes = variantDetails.flatMap(variant => 
+            const variantAttributes = variantDetails.flatMap(variant => 
               JSON.parse(variant).variant_attributes.map(attr => attr.variant_attribute_name)
             );
-          }
   
-          // Filtrar los atributos del producto para eliminar los que están en variantes
-          if (transformedData.product_attributes) {
-            transformedData.product_attributes = transformedData.product_attributes.filter(attr => 
-              !variantAttributes.includes(attr.attribute_name)
-            );
+            // Filtrar los atributos del producto para eliminar los que están en variantes
+            if (transformedData.product_attributes) {
+              transformedData.product_attributes = transformedData.product_attributes.filter(attr => 
+                !variantAttributes.includes(attr.attribute_name)
+              );
+            }
           }
-  
         } catch (parseError) {
           console.error('Error parsing JSON fields:', parseError);
           return ctx.text('Error parsing product details', 500);
@@ -143,7 +141,6 @@ tables.forEach((entry) => {
     }
   });
   
-
 
 
   api.get('/product-min-details', async (ctx) => {
