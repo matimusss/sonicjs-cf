@@ -74,7 +74,7 @@ export async function getProduct(db, id) {
 
     -- Detalles de variantes
     (SELECT json_group_array(json_result)
-     FROM (z
+     FROM (
         SELECT DISTINCT json_object(
                           'variant_option', v.variant_option,  
                           'variant_title', vo.title,  

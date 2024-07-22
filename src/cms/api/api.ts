@@ -93,28 +93,23 @@ tables.forEach((entry) => {
       return ctx.text('Error retrieving product full details', 500);
     }
   });
+
   api.get('/getProduct/:id', async (ctx) => {
     const { id } = ctx.req.param(); // Obtén el parámetro ID de la URL
     try {
-      // Llama a la función getProduct para obtener los datos del producto
+      // Llama a la función getD1ByTableAndId para obtener los datos del producto
       const data = await getProduct(ctx.env.D1DATA, id);
       if (data) {
-        // Transforma los campos de texto JSON en objetos JSON
-        const transformedData = {
-          ...data,
-          product_attributes: JSON.parse(data.product_attributes),
-          tags: JSON.parse(data.tags),
-          variant_details: JSON.parse(data.variant_details).map(variant => JSON.parse(variant))
-        };
-        return ctx.json(transformedData);
+        return ctx.json(data);
       } else {
         return ctx.text('Product not found', 404);
       }
     } catch (error) {
-      console.error('Error retrieving product full details:', error);
+      console.error('Erroar retrieving product full details:', error);
       return ctx.text('Error retrieving product full details', 500);
     }
   });
+
 
 
 
