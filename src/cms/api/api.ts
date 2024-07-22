@@ -12,7 +12,7 @@ import {
 } from '../data/kv-data';
 import { Bindings } from '../types/bindings';
 import { apiConfig, config } from '../../db/routes';
-import { getD1DataByTable, getD1ByTableAndId, getD1ByTableAndSlug_view,getD1byname_view , getProduct } from '../data/d1-data';
+import { getD1DataByTable, getD1ByTableAndSlug_view , getProduct, getProductBySlug,  } from '../data/d1-data';
 import { getForm } from './forms';
 import qs from 'qs';
 import {
@@ -57,11 +57,11 @@ tables.forEach((entry) => {
 
 //EJEMPLO DE RUTA CON RUTA DINAMICA Y REFIRIENDOSE A UNA VISTA.
 
-  api.get('/product_by_slug/:slug', async (ctx) => {
+  api.get('/getProductBySlug/:slug', async (ctx) => {
     const { slug } = ctx.req.param(); // Obtén el parámetro ID de la URL
     try {
       // Llama a la función getD1ByTableAndId para obtener los datos del producto
-      const data = await getD1ByTableAndSlug_view(   ctx.env.D1DATA, 'full_product_view', slug);
+      const data = await getProductBySlug(   ctx.env.D1DATA, slug);
       if (data) {
         return ctx.json(data);
       } else {
@@ -72,30 +72,6 @@ tables.forEach((entry) => {
       return ctx.text('Error retrieving product full details', 500);
     }
   });
-
-
-
-
-
-
-  api.get('/full-product-view/:id', async (ctx) => {
-    const { id } = ctx.req.param(); // Obtén el parámetro ID de la URL
-    try {
-      // Llama a la función getD1ByTableAndId para obtener los datos del producto
-      const data = await getProduct(   ctx.env.D1DATA, 'full_product_view', id);
-      if (data) {
-        return ctx.json(data);
-      } else {
-        return ctx.text('Product not found', 404);
-      }
-    } catch (error) {
-      console.error('Erroar retrieving product full details:', error);
-      return ctx.text('Error retrieving product full details', 500);
-    }
-  });
-
-
-
 
 
 
