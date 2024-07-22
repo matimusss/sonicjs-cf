@@ -43,7 +43,8 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 
 
 export async function getProduct(db, id) {
-    const productQuery = `   SELECT 
+    const productQuery = `
+    SELECT 
     p.id AS product_id,
     p.slug,
     p.product_name,
@@ -56,7 +57,6 @@ export async function getProduct(db, id) {
     p.product_description,
     p.product_type,
 
-    -- Atributos del producto
     json_group_array(
         DISTINCT json_object(
             'attribute_name', a.attribute_name,
@@ -64,7 +64,6 @@ export async function getProduct(db, id) {
         )
     ) AS product_attributes,
 
-    -- Tags del producto
     json_group_array(
         DISTINCT json_object(
             'tag_name', t.tag_name,
@@ -72,7 +71,6 @@ export async function getProduct(db, id) {
         )
     ) AS tags,
 
--- CUPONES del producto
 json_group_array(
     DISTINCT json_object(
         'code', cd.code,
@@ -81,7 +79,6 @@ json_group_array(
     )
 ) AS coupons,
 
--- IMAGENES del producto
 json_group_array(
     DISTINCT json_object(
         'image', ga.image,
@@ -90,15 +87,12 @@ json_group_array(
     )
 ) AS product_images,
 
--- Suppliers del producto
 json_group_array(
     DISTINCT json_object(
         'supplier_name', sp.supplier_name
     )
 ) AS suppliers
-
   
-    -- Detalles de variantes
     (SELECT json_group_array(json_result)
      FROM (
         SELECT DISTINCT json_object(
@@ -130,14 +124,11 @@ json_group_array(
     )) AS variant_details
 
 FROM products p
--- Atributos generales del producto       
+
 LEFT JOIN product_attributes pa ON p.id = pa.product_id
 LEFT JOIN attributes a ON pa.attribute_id = a.id
 LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
 LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
-
--- add 22-7
-
 
 LEFT JOIN product_coupons p_co ON p.id = p_co.product_id
 LEFT JOIN coupons cd ON p_co.coupon_id = cd.id
@@ -145,103 +136,12 @@ LEFT JOIN gallery ga ON p.id = ga.product_id
 LEFT JOIN product_suppliers p_su ON p.id = p_su.product_id
 LEFT JOIN suppliers sp ON p_su.supplier_id = sp.id
 
-
-
--- Tags
 LEFT JOIN product_tags pt ON p.id = pt.product_id
 LEFT JOIN tags t ON pt.tag_id = t.id
 
 WHERE p.id = ?
 GROUP BY p.id;
-
         `;
-
-  
-  const productQuery222 = `SELECT
-    p.id AS product_id,
-    p.slug,
-    p.product_name,
-    p.sku,
-    p.sale_price,
-    p.compare_price,
-    p.buying_price,
-    p.quantity,
-    p.short_description,
-    p.product_description,
-    p.product_type,
-    GROUP_CONCAT(DISTINCT c.category_name) AS category_names,
-    MAX(psi.weight) AS weight,
-    MAX(psi.weight_unit) AS weight_unit,
-    MAX(psi.volume) AS volume,
-    MAX(psi.volume_unit) AS volume_unit,
-    MAX(psi.dimension_width) AS dimension_width,
-    MAX(psi.dimension_height) AS dimension_height,
-    MAX(psi.dimension_depth) AS dimension_depth,
-    MAX(psi.dimension_unit) AS dimension_unit,
-    GROUP_CONCAT(DISTINCT g.image) AS gallery_images,
-    GROUP_CONCAT(DISTINCT g.placeholder) AS gallery_placeholders,
-    GROUP_CONCAT(DISTINCT g.is_thumbnail) AS is_thumbnails,
-    GROUP_CONCAT(DISTINCT a.attribute_name) AS attribute_names,
-    GROUP_CONCAT(DISTINCT av.attribute_value) AS attribute_values,
-    GROUP_CONCAT(DISTINCT av.color) AS colors,
-    -- GROUP_CONCAT(DISTINCT ps.supplier_id) AS supplier_ids,
-    GROUP_CONCAT(DISTINCT s.supplier_name) AS supplier_names,
-    -- GROUP_CONCAT(DISTINCT pco.coupon_id) AS coupon_ids,
-    GROUP_CONCAT(DISTINCT co.code) AS coupon_codes,
-    GROUP_CONCAT(DISTINCT co.discount_value) AS coupon_discount_values,
-    GROUP_CONCAT(DISTINCT co.discount_type) AS coupon_discount_types,
-    -- GROUP_CONCAT(DISTINCT pt.tag_id) AS tag_ids,
-    GROUP_CONCAT(DISTINCT t.tag_name) AS tag_names,
-    GROUP_CONCAT(DISTINCT t.icon) AS tag_icons,
-    GROUP_CONCAT(DISTINCT vo.title) AS variant_options_titles,
-    -- GROUP_CONCAT(DISTINCT vo.image_id) AS variant_options_image_ids, 
-    GROUP_CONCAT(DISTINCT vo.sale_price) AS variant_options_sale_prices,
-    GROUP_CONCAT(DISTINCT vo.compare_price) AS variant_options_compare_prices,
-    GROUP_CONCAT(DISTINCT vo.buying_price) AS variant_options_buying_prices,
-    GROUP_CONCAT(DISTINCT vo.quantity) AS variant_options_quantities,
-    GROUP_CONCAT(DISTINCT vo.active) AS variant_options_actives,
-    GROUP_CONCAT(DISTINCT v.variant_option) AS variant_options,
-
-
-    -- GROUP_CONCAT(DISTINCT v.variant_option_id) AS variant_options_ids, 
-    
-    GROUP_CONCAT(DISTINCT vv.product_attribute_value_id) AS variant_value_product_attribute_value_ids,
-    
-    -- Añadido para valores de atributos específicos de variantes
-    
-    GROUP_CONCAT(DISTINCT avv.attribute_value) AS variant_attribute_values,  -- Agregado para obtener los valores de atributos de variantes
-    GROUP_CONCAT(DISTINCT av_attr.attribute_name) AS variant_attribute_names  -- Agregado para obtener los nombres de atributos de variantes
-
-
-
-FROM products p
-LEFT JOIN product_categories pc ON p.id = pc.product_id
-LEFT JOIN categories c ON pc.category_id = c.id
-LEFT JOIN product_shipping_info psi ON p.id = psi.product_id
-LEFT JOIN gallery g ON p.id = g.product_id
-LEFT JOIN product_attributes pa ON p.id = pa.product_id
-LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
-LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
-LEFT JOIN attributes a ON pa.attribute_id = a.id
-LEFT JOIN product_suppliers ps ON p.id = ps.product_id
-LEFT JOIN suppliers s ON ps.supplier_id = s.id
-LEFT JOIN product_coupons pco ON p.id = pco.product_id
-LEFT JOIN coupons co ON pco.coupon_id = co.id
-LEFT JOIN product_tags pt ON p.id = pt.product_id
-LEFT JOIN tags t ON pt.tag_id = t.id
-
-LEFT JOIN variants v ON p.id = v.product_id
-LEFT JOIN variant_options vo ON p.id = vo.product_id  
-LEFT JOIN variant_values vv ON v.id = vv.variant_id
-LEFT JOIN product_attribute_values pavv ON vv.product_attribute_value_id = pavv.id  -- Agregado para enlazar los valores de atributos de variantes
-LEFT JOIN attribute_values avv ON pavv.attribute_value_id = avv.id  -- Agregado para obtener los valores de atributos de variantes
-LEFT JOIN attributes av_attr ON pavv.product_attribute_id = av_attr.id  -- Agregado para obtener los nombres de atributos de variantes
-WHERE p.id = ?
-GROUP BY p.id; 
-`;  
-
-
-
   try {
     // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
     const { results } = await db.prepare(productQuery).bind(id).all();
