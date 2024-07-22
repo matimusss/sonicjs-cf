@@ -15,20 +15,25 @@ import { loadNewContent } from '../admin/pages/content';
 var qs = require('qs');
 //  ENDPOINTS MIOS:
 
+export async function getProductMinDetails(db, table) {
+  // Asegúrate de que el nombre de la tabla sea seguro y válido
+  const validTables = ['product_min_details', 'another_table']; // Lista de tablas válidas
+  if (!validTables.includes(table)) {
+    throw new Error('Invalid table name');
+  }
 
-export async function getD1ByTableAndSlug_view(db, table, id) {
-  // Define la consulta SQL con un parámetro de reemplazo
-  let sql = `SELECT * FROM ${table} WHERE slug = ?`;
+  // Define la consulta SQL para seleccionar todos los registros de la tabla especificada
+  const sql = `SELECT * FROM ${table}`;
+
   try {
-    // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
-    const { results } = await db.prepare(sql).bind(id).all();
+    // Prepara y ejecuta la consulta SQL sin parámetros
+    const { results } = await db.prepare(sql).all();
     return results; // Devuelve los resultados de la consulta
   } catch (error) {
     console.error('Error executing SQL:', error);
     throw error; // Lanza el error para que pueda ser manejado en el llamador
-  } 
+  }
 }
-
 
 
 

@@ -12,7 +12,7 @@ import {
 } from '../data/kv-data';
 import { Bindings } from '../types/bindings';
 import { apiConfig, config } from '../../db/routes';
-import { getD1DataByTable, getD1ByTableAndSlug_view , getProduct, getProductBySlug  } from '../data/d1-data';
+import { getD1DataByTable, getD1ByTableAndSlug_view , getProduct, getProductBySlug, getProductMinDetails  } from '../data/d1-data';
 import { getForm } from './forms';
 import qs from 'qs';
 import {
@@ -150,7 +150,7 @@ tables.forEach((entry) => {
   api.get('/product-min-details', async (ctx) => {
     try {
       // Llama a la función getD1ByTableAndId para obtener los datos del producto
-      const data = await getProduct(   ctx.env.D1DATA, 'product_min_details');
+      const data = await getProductMinDetails(   ctx.env.D1DATA, 'product_min_details');
       if (data) {
         return ctx.json(data);
       } else {
