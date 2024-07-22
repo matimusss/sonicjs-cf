@@ -93,6 +93,11 @@ tables.forEach((entry) => {
       return ctx.text('Error retrieving product full details', 500);
     }
   });
+
+
+
+
+
   api.get('/getProduct/:id', async (ctx) => {
     const { id } = ctx.req.param(); // Obtén el parámetro ID de la URL
     try {
@@ -100,20 +105,20 @@ tables.forEach((entry) => {
       const data = await getProduct(ctx.env.D1DATA, id);
   
       if (data) {
-        let transformedData = { ...data };
+        let transformedData = { ...data[0] }; // Acceder al primer objeto en el array
   
         try {
           // Intenta parsear los campos de texto JSON
-          if (data.product_attributes) {
-            transformedData.product_attributes = JSON.parse(data.product_attributes);
+          if (data[0].product_attributes) {
+            transformedData.product_attributes = JSON.parse(data[0].product_attributes);
           }
   
-          if (data.tags) {
-            transformedData.tags = JSON.parse(data.tags);
+          if (data[0].tags) {
+            transformedData.tags = JSON.parse(data[0].tags);
           }
   
-          if (data.variant_details) {
-            const variantDetails = JSON.parse(data.variant_details);
+          if (data[0].variant_details) {
+            const variantDetails = JSON.parse(data[0].variant_details);
             transformedData.variant_details = variantDetails.map(variant => JSON.parse(variant));
           }
         } catch (parseError) {
@@ -131,7 +136,6 @@ tables.forEach((entry) => {
     }
   });
   
-
 
 
 
