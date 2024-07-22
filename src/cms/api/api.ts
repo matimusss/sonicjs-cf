@@ -117,12 +117,31 @@ tables.forEach((entry) => {
             const variantDetails = JSON.parse(data[0].variant_details);
             transformedData.variant_details = variantDetails.map(variant => JSON.parse(variant));
           }
-        } catch (parseError) {
+
+        }
+        
+      
+        catch (parseError) {
           console.error('Error parsing JSON fields:', parseError);
           return ctx.text('Error parsing product details', 500);
         }
   
-        return ctx.json(transformedData);
+      
+//FILTRADO DE ATRIBUTOS
+
+// Paso 1: Recopilar todos los nombres de atributos de las variantes
+const variantAttributeNames = new Set();
+transformedData.variant_details.forEach(variant => {
+  variant.variant_attributes.forEach(attr => {
+    variantAttributeNames.add(attr.variant_attribute_name);
+  });
+});
+// Paso 2: Filtrar los product_attributes utilizando la lista de nombres de atributos
+const filteredProductAttributes = transformedData.product_attributes.filter(attr =>
+  variantAttributeNames.has(attr.attribute_name)
+);
+
+        return ctx.json(filteredProductAttributes);
       } else {
         return ctx.text('Product not found', 404);
       }
