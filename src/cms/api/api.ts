@@ -119,6 +119,25 @@ tables.forEach((entry) => {
             transformedData.tags = JSON.parse(data[0].tags);
           }
   
+
+          if (data[0].coupons) {
+            transformedData.coupons = JSON.parse(data[0].coupons);
+          }
+  
+
+
+          if (data[0].product_images) {
+            transformedData.product_images = JSON.parse(data[0].product_images);
+          }
+
+
+
+          if (data[0].suppliers) {
+            transformedData.suppliers = JSON.parse(data[0].suppliers);
+          }
+
+
+
           if (data[0].variant_details) {
             const variantDetails = JSON.parse(data[0].variant_details);
             transformedData.variant_details = variantDetails.map(variant => JSON.parse(variant));
