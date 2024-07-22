@@ -97,20 +97,48 @@ tables.forEach((entry) => {
   api.get('/getProduct/:id', async (ctx) => {
     const { id } = ctx.req.param(); // Obtén el parámetro ID de la URL
     try {
-      // Llama a la función getD1ByTableAndId para obtener los datos del producto
+      // Llama a la función getProduct para obtener los datos del producto
       const data = await getProduct(ctx.env.D1DATA, id);
+  
       if (data) {
-        return ctx.json(data);
+        let transformedData = { ...data };
+  
+        try {
+          // Intenta parsear los campos de texto JSON
+          if (data.product_attributes) {
+            transformedData.product_attributes = JSON.parse(data.product_attributes);
+          }
+  
+          if (data.tags) {
+            transformedData.tags = JSON.parse(data.tags);
+          }
+  
+          if (data.variant_details) {
+            const variantDetails = JSON.parse(data.variant_details);
+            transformedData.variant_details = variantDetails.map(variant => {
+              try {
+                return JSON.parse(variant);
+              } catch (variantParseError) {
+                console.error('Error parsing variant JSON:', variantParseError);
+                return variant;
+              }
+            });
+          }
+        } catch (parseError) {
+          console.error('Error parsing JSON fields:', parseError);
+          return ctx.text('Error parsing product details', 500);
+        }
+  
+        return ctx.json(transformedData);
       } else {
         return ctx.text('Product not found', 404);
       }
     } catch (error) {
-      console.error('Erroar retrieving product full details:', error);
+      console.error('Error retrieving product full details:', error);
       return ctx.text('Error retrieving product full details', 500);
     }
   });
-
-
+  
 
 
 
