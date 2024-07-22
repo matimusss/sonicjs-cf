@@ -32,7 +32,7 @@ export async function getD1ByTableAndSlug_view(db, table, id) {
 
 
 
-export async function getProductByTag(db, id) {
+export async function getProductBySlug(db, id) {
   const productQuery = `
 SELECT 
     p.id AS product_id,
@@ -131,6 +131,7 @@ try {
   throw error; // Lanza el error para que pueda ser manejado en el llamador
 }
 }
+
 
 
 
