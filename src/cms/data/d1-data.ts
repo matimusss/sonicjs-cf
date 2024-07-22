@@ -72,9 +72,6 @@ export async function getProduct(db, id) {
         )
     ) AS tags,
 
-  --ADD 22/7
-
-
 -- CUPONES del producto
 json_group_array(
     DISTINCT json_object(
@@ -100,8 +97,6 @@ json_group_array(
     )
 ) AS suppliers
 
-
-  --ADD 22/7
   
     -- Detalles de variantes
     (SELECT json_group_array(json_result)
@@ -149,9 +144,6 @@ LEFT JOIN coupons cd ON p_co.coupon_id = cd.id
 LEFT JOIN gallery ga ON p.id = ga.product_id
 LEFT JOIN product_suppliers p_su ON p.id = p_su.product_id
 LEFT JOIN suppliers sp ON p_su.supplier_id = sp.id
-
---
-
 
 
 
