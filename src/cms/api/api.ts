@@ -61,7 +61,94 @@ tables.forEach((entry) => {
     const { slug } = ctx.req.param(); // Obtén el parámetro ID de la URL
     try {
       // Llama a la función getD1ByTableAndId para obtener los datos del producto
-      const data = await getProductBySlug(   ctx.env.D1DATA, slug);
+      if (data) {
+        let transformedData = { ...data[0] }; // Acceder al primer objeto en el array
+  
+        try {
+          // Intenta parsear los campos de texto JSON
+          if (data[0].product_attributes) {
+            transformedData.product_attributes = JSON.parse(data[0].product_attributes);
+          }
+  
+          if (data[0].tags) {
+            transformedData.tags = JSON.parse(data[0].tags);
+          }
+  
+
+          if (data[0].coupons) {
+            transformedData.coupons = JSON.parse(data[0].coupons);
+          }
+  
+
+
+          if (data[0].product_images) {
+            transformedData.product_images = JSON.parse(data[0].product_images);
+          }
+
+
+
+          if (data[0].suppliers) {
+            transformedData.suppliers = JSON.parse(data[0].suppliers);
+          }
+
+
+
+          if (data[0].variant_details) {
+            const variantDetails = JSON.parse(data[0].variant_details);
+            transformedData.variant_details = variantDetails.map(variant => JSON.parse(variant));
+          }
+        } catch (parseError) {
+          console.error('Error parsing JSON fields:', parseError);
+          return ctx.text('Error parsing product details', 500);
+        }
+  
+        // FILTRADO DE ATRIBUTOS
+  
+        // Paso 1: Recopilar todos los nombres de atributos de las variantes
+        const variantAttributeNames = new Set();
+        transformedData.variant_details.forEach(variant => {
+          variant.variant_attributes.forEach(attr => {
+            variantAttributeNames.add(attr.variant_attribute_name);
+          });
+        });
+  
+        // Paso 2: Filtrar los product_attributes utilizando la lista de nombres de atributos
+        const filteredProductAttributes = transformedData.product_attributes.filter(attr =>
+          !variantAttributeNames.has(attr.attribute_name)
+        );
+  
+        // Crear un nuevo objeto con los product_attributes filtrados
+        const filteredData = {
+          ...transformedData,
+          product_attributes: filteredProductAttributes
+        };
+  
+        return ctx.json(filteredData);
+      } else {
+        return ctx.text('Product not found', 404);
+      }
+    } catch (error) {
+      console.error('Error retrieving product full details:', error);
+      return ctx.text('Error retrieving product full details', 500);
+    }
+  });
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  api.get('/product-min-details', async (ctx) => {
+    try {
+      // Llama a la función getD1ByTableAndId para obtener los datos del producto
+      const data = await getProduct(   ctx.env.D1DATA, 'product_min_details');
       if (data) {
         return ctx.json(data);
       } else {
@@ -70,6 +157,83 @@ tables.forEach((entry) => {
     } catch (error) {
       console.error('Error retrieving product full details:', error);
       return ctx.text('Error retrieving product full details', 500);
+    }
+  });
+
+
+
+
+
+
+
+
+////////////////////////          
+
+
+  //ie /v1/users
+  api.get(`/${entry.route}`, async (ctx) => {
+    const start = Date.now();
+    const query = ctx.req.query();
+    const params = qs.parse(query);
+
+    if (entry.hooks?.beforeOperation) {
+      await entry.hooks.beforeOperation(ctx, 'read', params.id);
+    }
+    const accessControlResult = await getApiAccessControlResult(
+      entry?.access?.operation?.read || true,
+      entry?.access?.filter?.read || true,
+      true,
+      ctx,
+      params.id,
+      entry.table
+    );
+
+    if (typeof accessControlResult === 'object') {
+      params.accessControlResult= {...accessControlResult };
+    }
+
+    if (!accessControlResult) {
+      return ctx.text('Unauthorized', 401);
+    }
+
+    try {
+      params.limit = params.limit ?? '1000';
+      ctx.env.D1DATA = ctx.env.D1DATA;
+      let data = await getRecords(
+        ctx,
+        entry.table,
+        params,
+        ctx.req.url,
+        'fastest',
+        undefined
+      );
+
+      if (entry.access?.item?.read) {
+        const accessControlResult = await getItemReadResult(
+          entry.access.item.read,
+          ctx,
+          data
+        );
+        if (!accessControlResult) {
+          return ctx.text('Unauthorized', 401);
+        }
+      }
+      data.data = await filterReadFieldAccess(
+        entry.access?.fields,
+        ctx,
+        data.data
+      );
+
+      if (entry.hooks?.afterOperation) {
+        await entry.hooks.afterOperation(ctx, 'read', params.id, null, data);
+      }
+      const end = Date.now();
+      const executionTime = end - start;
+
+      return ctx.json({ ...data, executionTime });
+    } catch (error) {
+      console.log(error);
+      return ctx.text(error);
     }
   });
 
