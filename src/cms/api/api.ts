@@ -59,6 +59,8 @@ tables.forEach((entry) => {
 
   api.get('/getProductBySlug/:slug', async (ctx) => {
     const { slug } = ctx.req.param(); // Obtén el parámetro ID de la URL
+
+    const data = await getProductBySlug(ctx.env.D1DATA, slug);
     try {
       // Llama a la función getD1ByTableAndId para obtener los datos del producto
       if (data) {
