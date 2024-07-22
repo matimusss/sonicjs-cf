@@ -137,11 +137,14 @@ transformedData.variant_details.forEach(variant => {
   });
 });
 // Paso 2: Filtrar los product_attributes utilizando la lista de nombres de atributos
-const filteredProductAttributes = transformedData.product_attributes.filter(attr =>
-  variantAttributeNames.has(attr.attribute_name)
+const filteredProductAttributes = data.product_attributes.filter(attr =>
+  !variantAttributeNames.has(attr.attribute_name)
 );
-
-        return ctx.json(filteredProductAttributes);
+const filteredData = {
+  ...data,
+  product_attributes: filteredProductAttributes
+};
+        return ctx.json(filteredData);
       } else {
         return ctx.text('Product not found', 404);
       }
