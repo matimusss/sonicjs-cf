@@ -1,8 +1,11 @@
 let tagsForm; // Declara la variable para almacenar la instancia del formulario
 let attributesForm; // Declara la variable para almacenar la instancia del formulario
 let variantsForm; // Declara la variable para almacenar la instancia del formulario
-
 let productsForm; // Declara la variable para almacenar la instancia del formulario
+
+
+
+
 
 (function () {  
 Formio.createForm(document.getElementById('formio-attributes'), {
@@ -44,7 +47,7 @@ Formio.createForm(document.getElementById('formio-attributes'), {
           type: 'select',
           input: true,
           data: {
-            values: [
+            values: [ //popular con attribute_names_general
               {
                 value: 'color',
                 label: 'Color'
@@ -62,6 +65,10 @@ Formio.createForm(document.getElementById('formio-attributes'), {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
+
+
+
+ // por cada atribute name, tenemos que buscar todos sus attribute_values y hacer un objeto como el siguiente
         {
           label: 'Valores',
           key: 'value',
@@ -74,12 +81,12 @@ Formio.createForm(document.getElementById('formio-attributes'), {
               {
                 component: 'attribute',
                 operator: 'isEqual',
-                value: 'peso'
+                value: 'peso'                     //importante modificar aca poniendo attribute_name
               }
             ]
           },
           data: {
-            values: [
+            values: [ // populate with attribute_name.(values)
               {
                 value: '15kg',
                 label: '15kg'
@@ -97,6 +104,13 @@ Formio.createForm(document.getElementById('formio-attributes'), {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
+  
+  
+
+
+
+
+//relleno
         {
           label: 'Valores2',
           key: 'value2',
@@ -132,6 +146,8 @@ Formio.createForm(document.getElementById('formio-attributes'), {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
+        
+        
         {
           label: 'Valores3',
           key: 'value3',
@@ -167,6 +183,13 @@ Formio.createForm(document.getElementById('formio-attributes'), {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
+//relleno
+
+
+
+
+
+
 
 
       ]
@@ -177,6 +200,8 @@ Formio.createForm(document.getElementById('formio-attributes'), {
   attributesForm = form;
 
 // Provide a default submission.
+// mediante esta "SUBMIT" cargamos los valores que YA TIENE EL PRODUCTO CARGADOS:
+
 form.submission = {
   data: {
     attributes_form: [
@@ -317,6 +342,7 @@ form.submission = {
   const formularioJson = generarFormularioJson();
   
   function generarFormularioJson() {
+
     const formularioJson = 
   {
   type: "form",
@@ -517,6 +543,9 @@ form.submission = {
 } ;
 return formularioJson;
 }
+
+
+
   (function () {  
 Formio.createForm(document.getElementById('formio-variants'),formularioJson )
 .then(function(form) {
@@ -558,6 +587,7 @@ form.on('editGridSaveRow', (event) => {
 
 (async function() {
   // Fetch the product data
+  // aca tendriamos que tomar el id del producto a editar, esta hardcodeado ahora,
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/products/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
   const productData = await response.json();
 
@@ -707,30 +737,32 @@ form.on('editGridSaveRow', (event) => {
       form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
     });
 
-
+//SI YA TIENE INTIAL VALUE, NO HACE FALTA SUBMISION?
     // Set initial submission data
-    form.submission = {
-      data: {
-        id: data.id,
-        slug: data.slug,
-        product_name: data.product_name,
-        sku: data.sku,
-        sale_price: data.sale_price,
-        compare_price: data.compare_price,
-        buying_price: data.buying_price,
-        quantity: data.quantity,
-        short_description: data.short_description,
-        product_description: data.product_description,
-        product_type: data.product_type,
-        published: data.published,
-        disable_out_of_stock: data.disable_out_of_stock,
-        note: data.note,
-        created_by: data.created_by,
-        updated_by: data.updated_by,
-        createdOn: new Date(data.createdOn).toLocaleString(),
-        updatedOn: new Date(data.updatedOn).toLocaleString()
-      }
-    };
+    //form.submission = {
+    //  data: {
+     //   id: data.id,
+      //  slug: data.slug,
+      //  product_name: data.product_name,
+      //  sku: data.sku,
+      //  sale_price: data.sale_price,
+       // compare_price: data.compare_price,
+       // buying_price: data.buying_price,
+        ///quantity: data.quantity,
+      //  short_description: data.short_description,
+      //  product_description: data.product_description,
+       // product_type: data.product_type,
+        //published: data.published,
+        //disable_out_of_stock: data.disable_out_of_stock,
+        //note: data.note,
+        //created_by: data.created_by,
+        //updated_by: data.updated_by,
+       // createdOn: new Date(data.createdOn).toLocaleString(),
+      //  updatedOn: new Date(data.updatedOn).toLocaleString()
+    //  }
+  //  };
+
+
   });
 
 })();
