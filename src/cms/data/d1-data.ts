@@ -245,6 +245,70 @@ GROUP BY p.id;
 
 
 
+
+export async function getConfig(db, id) {
+  const productQuery = `
+
+  SELECT 
+  json_group_array(
+      json_object(
+          'suppliers', (SELECT json_group_array(json_object(
+              'id', s.id,
+              'supplier_name', s.supplier_name
+          )) FROM suppliers s),
+          'attributes', (SELECT json_group_array(json_object(
+              'id', a.id,
+              'attribute_name', a.attribute_name
+          )) FROM attributes a),
+          'attribute_values', (SELECT json_group_array(json_object(
+              'id', av.id,
+              'attribute_id', av.attribute_id,
+              'attribute_value', av.attribute_value
+          )) FROM attribute_values av),
+          'categories', (SELECT json_group_array(json_object(
+              'id', c.id,
+              'category_name', c.category_name
+          )) FROM categories c),
+          'coupons', (SELECT json_group_array(json_object(
+              'id', cd.id,
+              'code', cd.code,
+              'discount_value', cd.discount_value,
+              'discount_type', cd.discount_type
+          )) FROM coupons cd),
+          'tags', (SELECT json_group_array(json_object(
+              'id', t.id,
+              'tag_name', t.tag_name,
+              'icon', t.icon
+          )) FROM tags t)
+      )
+  ) AS data;
+
+
+`;
+try {
+  // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
+  const { results } = await db.prepare(productQuery).all();
+  return results; // Devuelve los resultados de la consulta
+} catch (error) {
+  console.error('Error executing SQL:', error);
+  throw error; // Lanza el error para que pueda ser manejado en el llamador
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export async function getAllContent(db) {
   const { results } = await db.prepare('SELECT * FROM users').all();
   return results;

@@ -12,7 +12,7 @@ import {
 } from '../data/kv-data';
 import { Bindings } from '../types/bindings';
 import { apiConfig, config } from '../../db/routes';
-import { getD1DataByTable, getD1ByTableAndSlug_view , getProduct, getProductBySlug, getProductMinDetails  } from '../data/d1-data';
+import { getD1DataByTable, getD1ByTableAndSlug_view , getProduct, getConfig, getProductBySlug, getProductMinDetails  } from '../data/d1-data';
 import { getForm } from './forms';
 import qs from 'qs';
 import {
@@ -142,6 +142,20 @@ tables.forEach((entry) => {
 
 
 
+  api.get('/getConfig', async (ctx) => {
+    try {
+      // Llama a la función getD1ByTableAndId para obtener los datos del producto
+      const data = await getConfig(   ctx.env.D1DATA, '');
+      if (data) {
+        return ctx.json(data);
+      } else {
+        return ctx.text('Product not found', 404);
+      }
+    } catch (error) {
+      console.error('Error retrieving product full details:', error);
+      return ctx.text('Error retrieving product full details', 500);
+    }
+  });
 
 
 
