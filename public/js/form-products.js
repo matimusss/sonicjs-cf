@@ -1,7 +1,23 @@
-let tagsForm; // Declara la variable para almacenar la instancia del formulario
-let attributesForm; // Declara la variable para almacenar la instancia del formulario
-let variantsForm; // Declara la variable para almacenar la instancia del formulario
-let productsForm; // Declara la variable para almacenar la instancia del formulario
+let tagsForm;         // Declara la variable para almacenar la instancia del formulario
+let attributesForm;   // Declara la variable para almacenar la instancia del formulario
+let variantsForm;     // Declara la variable para almacenar la instancia del formulario
+let productsForm;     // Declara la variable para almacenar la instancia del formulario
+
+
+
+
+async function fetchData() {
+  const response = await fetch('https://sonicjs-cf2.pages.dev/v1/products/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
+  const productData = await response.json();
+  const data = productData.data;
+return data
+}
+
+// Llama a fetchData al cargar la página
+const data = fetchData();
+
+
+
 
 
 
@@ -47,7 +63,7 @@ Formio.createForm(document.getElementById('formio-attributes'), {
           type: 'select',
           input: true,
           data: {
-            values: [ //popular con attribute_names_general
+            values: [ //popular con attribute_names_general (DE GETCONFIG)
               {
                 value: 'color',
                 label: 'Color'
@@ -65,10 +81,7 @@ Formio.createForm(document.getElementById('formio-attributes'), {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
-
-
-
- // por cada atribute name, tenemos que buscar todos sus attribute_values y hacer un objeto como el siguiente
+ // por cada atribute name, tenemos que buscar todos sus attribute_values (DE GETCONFIG) y hacer un objeto como el siguiente
         {
           label: 'Valores',
           key: 'value',
@@ -81,12 +94,12 @@ Formio.createForm(document.getElementById('formio-attributes'), {
               {
                 component: 'attribute',
                 operator: 'isEqual',
-                value: 'peso'                     //importante modificar aca poniendo attribute_name
+                value: 'peso'                     //importante modificar aca poniendo attribute_name (DE GETCONFIG)
               }
             ]
           },
           data: {
-            values: [ // populate with attribute_name.(values)
+            values: [ // populate with attribute_name.(value.name) (DE GETCONFIG)
               {
                 value: '15kg',
                 label: '15kg'
@@ -104,94 +117,6 @@ Formio.createForm(document.getElementById('formio-attributes'), {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
-  
-  
-
-
-
-
-//relleno
-        {
-          label: 'Valores2',
-          key: 'value2',
-          type: 'select',
-          input: true,
-          conditional: {
-            show: true,
-            conjunction: "all",
-            conditions: [
-              {
-                component: 'attribute',
-                operator: 'isEqual',
-                value: 'color'
-              }
-            ]
-          },
-          data: {
-            values: [
-              {
-                value: 'Rojo',
-                label: 'Rojo'
-              },
-              {
-                value: 'Negro',
-                label: 'Negro'
-              },
-              {
-                value: 'Azul',
-                label: 'Azul'
-              }
-            ]
-          },
-          dataSrc: 'values',
-          template: '<span>{{ item.label }}</span>'
-        },
-        
-        
-        {
-          label: 'Valores3',
-          key: 'value3',
-          type: 'select',
-          input: true,
-          conditional: {
-            show: true,
-            conjunction: "all",
-            conditions: [
-              {
-                component: 'attribute',
-                operator: 'isEqual',
-                value: 'material'
-              }
-            ]
-          },
-          data: {
-            values: [
-              {
-                value: 'Polyester',
-                label: 'Polyester'
-              },
-              {
-                value: 'Madera',
-                label: 'Madera'
-              },
-              {
-                value: 'Algodon',
-                label: 'Algodon'
-              }
-            ]
-          },
-          dataSrc: 'values',
-          template: '<span>{{ item.label }}</span>'
-        },
-//relleno
-
-
-
-
-
-
-
-
       ]
     }
   ]
@@ -200,11 +125,11 @@ Formio.createForm(document.getElementById('formio-attributes'), {
   attributesForm = form;
 
 // Provide a default submission.
-// mediante esta "SUBMIT" cargamos los valores que YA TIENE EL PRODUCTO CARGADOS:
+// mediante esta "SUBMIT" cargamos los valores que YA TIENE EL PRODUCTO CARGADOS: (DE GETPRODUCT)
 
 form.submission = {
   data: {
-    attributes_form: [
+    attributes_form: [  // popular con datos de producto
       {
         attribute: 'Peso',
         value: '15kg',
@@ -387,6 +312,8 @@ form.submission = {
       },
       components: [
         
+//FALTAN EL RESTO DE LOS COMPONENTES, PRECIOS , ETC.
+
         {
           type: 'textfield',
           key: 'variantName',
@@ -395,13 +322,18 @@ form.submission = {
           input: true,
           tableView: true,
         },
-        {
+
+
+        {             //especial atencion a este componente hidden que junta los valores para mostrarlos en una sola columna.
+          // SINO ES UN KIULOMBO
           label: 'Valores juntados',
           key: 'a',
           type: 'hidden',
           input: true,
           tableView: true,
         },
+
+// POPULAR CON CADA ATTRIBUTE_NAME DE LA VARIANTE:
 
         {
           label: 'Atributos de la variante',
@@ -429,6 +361,8 @@ form.submission = {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
+        
+        // POR CADA ATTRIBUTE NAME_ MOSTRAMOS SUS ATTRIBUTE VALUES
         {
           label: 'Valores',
           key: 'variantAttributeValueWeigh',
@@ -441,13 +375,13 @@ form.submission = {
               {
                 component: 'variantAttribute',
                 operator: 'isEqual',
-                value: 'peso'
+                value: 'peso'               //MODIFICAR, = ATTRIBUTE_NAME
               }
             ]
           },
-          tableView:  false,
+          tableView:  false,   //NO SACAR EL TABLEVIEW FALSE, LA ONDA ES QUE NO SE VEA ESTO, Y SE VEA EL CAMPO OCUTLO "a"
           data: {
-            values: [
+            values: [                //POPULAR CON LOS/EL ATTRIBUTE_VALUES ASOCIADOS.
               {
                 value: '15kg',
                 label: '15kg'
@@ -465,6 +399,15 @@ form.submission = {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
+
+
+
+
+
+
+
+        //RELLENO 
+
         {
           label: 'Valores color',
           key: 'variantAttributeValueColor',
@@ -501,6 +444,9 @@ form.submission = {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
+
+
+
         {
           label: 'Valores Material',
           key: 'variantAttributeValueMaterial',
@@ -537,6 +483,12 @@ form.submission = {
           template: '<span>{{ item.label }}</span>',
           tableView:  false,
         },
+//RELLENO
+
+
+
+
+
       ]
     }
   ]
@@ -565,7 +517,7 @@ form.on('editGridSaveRow', (event) => {
   if (gridComponent) {
     const rowIndex = gridComponent.editRows.findIndex(r => r.data === row);
     if (rowIndex !== -1) {
-      gridComponent.editRows[rowIndex].data.a = "choto";
+      gridComponent.editRows[rowIndex].data.a = "choto";   //ACA MODIFICAMOS EL VALOR DEL CAMPO OCULTO QUE JUNTA LOS OTROS CAMPOS Q ESTAN EN NO DISPLAY..
       gridComponent.redraw(); // Asegúrate de redibujar el componente para reflejar los cambios
     }
   }
@@ -585,13 +537,12 @@ form.on('editGridSaveRow', (event) => {
 
 
 
-(async function() {
-  // Fetch the product data
-  // aca tendriamos que tomar el id del producto a editar, esta hardcodeado ahora,
-  const response = await fetch('https://sonicjs-cf2.pages.dev/v1/products/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
-  const productData = await response.json();
 
-  const data = productData.data;
+
+(function() {
+
+  // Fetch the product data
+ 
 
   // Create the form
   Formio.createForm(document.getElementById('formio-product'), {
@@ -736,6 +687,8 @@ form.on('editGridSaveRow', (event) => {
       // Actualizar el valor de otro componente, por ejemplo 'slug'
       form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
     });
+
+
 
 //SI YA TIENE INTIAL VALUE, NO HACE FALTA SUBMISION?
     // Set initial submission data
