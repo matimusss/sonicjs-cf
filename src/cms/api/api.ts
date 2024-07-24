@@ -136,18 +136,21 @@ tables.forEach((entry) => {
   });
   
 
-
-
-
-
-
-
   api.get('/getConfig', async (ctx) => {
     try {
-      // Llama a la función getD1ByTableAndId para obtener los datos del producto
-      const data = await getConfig(   ctx.env.D1DATA, '');
-      if (data) {
-        return ctx.json(data);
+      // Llama a la función getConfig para obtener los datos del producto
+      const data = await getConfig(ctx.env.D1DATA, '');
+      
+      if (data && data.length > 0) {
+        // Parsear la propiedad data de cada elemento del array
+        const parsedData = data.map(item => {
+          return {
+            ...item,
+            data: JSON.parse(item.data)
+          };
+        });
+        
+        return ctx.json(parsedData);
       } else {
         return ctx.text('Product not found', 404);
       }
@@ -156,7 +159,7 @@ tables.forEach((entry) => {
       return ctx.text('Error retrieving product full details', 500);
     }
   });
-
+  
 
 
 
