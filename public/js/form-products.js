@@ -11,11 +11,15 @@ async function fetchProductData() {
   return productData.data;
 }
 
+
+
 async function fetchConfigData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getConfig');
   const productData = await response.json();
   const data = productData[0].data[0];
 
+
+//ESTO HABRIA QUE HACERLO EN EL ENDPOINT DE HONO (/API.JSX?)
   // Extraer los atributos y valores de atributos
   const attributes = data.attributes;
   const attributeValues = data.attribute_values;
@@ -35,7 +39,9 @@ async function fetchConfigData() {
   delete data.attribute_values;
 
   // Añadir el nuevo arreglo de atributos agrupados al objeto principal
-  data.grouped_attributes = groupedAttributes;
+  data.grouped_attributes = attributes;
+//END DE ESTO HABRIA QUE ETC...
+
 
   console.log(data);
 
@@ -60,210 +66,108 @@ main();
 
 
 
+
 function createAttributesForm(configData, productData) { 
+  const attributes = configData.grouped_attributes;
 
-  const attributes = configData;
-console.log (attributes);
+  // Generar los objetos de atributos
+  const attributeNames = attributes.map(attr => ({
+    value: attr.attribute_name,
+    label: attr.attribute_name
+  }));
 
-  // Mapea los atributos a la estructura deseada
+  // Generar los valores para cada atributo
+  const attributeValues = attributes.reduce((acc, attr) => {
+    acc[attr.attribute_name] = attr.values.map(value => ({
+      value: value,
+      label: value
+    }));
+    return acc;
+  }, {});
 
-Formio.createForm(document.getElementById('formio-attributes'), {
-  components: [
-    {
-      label: 'Atributos',
-      key: 'attributes_form',
-      type: 'editgrid',
-      input: true,
-      templates: {
-        header: '' +
-          '<div class="row">' +
-          '  {% util.eachComponent(components, function(component) { %} ' +
-          '    <div class="col-sm-2">' +
-          '      <strong>{{ component.label }}</strong>' +
-          '    </div>' +
-          '  {% }) %}' +
-          '</div>',
-        row: '' +
-          '<div class="row">' +
-          '  {%util.eachComponent(components, function(component) { %}' +
-          '    <div class="col-sm-2">' +
-          '      {{ row[component.key] }}' +
-          '    </div>' +
-          '  {% }) %}' +
-          '  <div class="col-sm-2">' +
-          '    <div class="btn-group pull-right">' +
-          '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
-          '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
-          '    </div>' +
-          '  </div>' +
-          '</div>',
-        footer: ''
-      },
-      components: [
+  console.log(attributes);
+
+  // Crear componentes dinámicamente para cada atributo
+  const attributeComponents = attributes.map(attr => ({
+    label: 'Valores',
+    key: `value_${attr.attribute_name}`,
+    type: 'select',
+    input: true,
+    conditional: {
+      show: true,
+      conjunction: 'all',
+      conditions: [
         {
-          label: 'Atributo',
-          key: 'attribute',
-          type: 'select',
-          input: true,
-          data: {
-            values: [ //popular con attribute_names_general (DE GETCONFIG)
-              {
-                value: 'color',
-                label: 'Color'
-              },
-              {
-                value: 'peso',
-                label: 'peso'
-              },
-              {
-                value: 'material',
-                label: 'Material'
-              }
-            ]
-          },
-          dataSrc: 'values',
-          template: '<span>{{ item.label }}</span>'
-        },
-
-
-
- // por cada atribute name, tenemos que buscar todos sus attribute_values (DE GETCONFIG) y hacer un objeto como el siguiente
-        {
-          label: 'Valores',
-          key: 'value',
-          type: 'select',
-          input: true,
-          conditional: {
-            show: true,
-            conjunction: "all",
-            conditions: [
-              {
-                component: 'attribute',
-                operator: 'isEqual',
-                value: 'peso'                     //importante modificar aca poniendo attribute_name (DE GETCONFIG)
-              }
-            ]
-          },
-          data: {
-            values: [ // populate with attribute_name.(value.name) (DE GETCONFIG)
-              {
-                value: '15kg',
-                label: '15kg'
-              },
-              {
-                value: '10kg',
-                label: '10kg'
-              },
-              {
-                value: '11kg',
-                label: '11kg'
-              }
-            ]
-          },
-          dataSrc: 'values',
-          template: '<span>{{ item.label }}</span>'
-        },
-  
-  
-
-
-
-
-//relleno
-        {
-          label: 'Valores2',
-          key: 'value2',
-          type: 'select',
-          input: true,
-          conditional: {
-            show: true,
-            conjunction: "all",
-            conditions: [
-              {
-                component: 'attribute',
-                operator: 'isEqual',
-                value: 'color'
-              }
-            ]
-          },
-          data: {
-            values: [
-              {
-                value: 'Rojo',
-                label: 'Rojo'
-              },
-              {
-                value: 'Negro',
-                label: 'Negro'
-              },
-              {
-                value: 'Azul',
-                label: 'Azul'
-              }
-            ]
-          },
-          dataSrc: 'values',
-          template: '<span>{{ item.label }}</span>'
-        },
-        
-        
-        {
-          label: 'Valores3',
-          key: 'value3',
-          type: 'select',
-          input: true,
-          conditional: {
-            show: true,
-            conjunction: "all",
-            conditions: [
-              {
-                component: 'attribute',
-                operator: 'isEqual',
-                value: 'material'
-              }
-            ]
-          },
-          data: {
-            values: [
-              {
-                value: 'Polyester',
-                label: 'Polyester'
-              },
-              {
-                value: 'Madera',
-                label: 'Madera'
-              },
-              {
-                value: 'Algodon',
-                label: 'Algodon'
-              }
-            ]
-          },
-          dataSrc: 'values',
-          template: '<span>{{ item.label }}</span>'
-        },
-//relleno
-
-
-
-
-
-
-
-
+          component: 'attribute',
+          operator: 'isEqual',
+          value: attr.attribute_name // Establecer el atributo asociado a estos valores
+        }
       ]
-    }
-  ]
-}).then(function(form) {
+    },
+    data: {
+      values: attributeValues[attr.attribute_name]
+    },
+    dataSrc: 'values',
+    template: '<span>{{ item.label }}</span>'
+  }));
+
+  Formio.createForm(document.getElementById('formio-attributes'), {
+    components: [
+      {
+        label: 'Atributos',
+        key: 'attributes_form',
+        type: 'editgrid',
+        input: true,
+        templates: {
+          header: '' +
+            '<div class="row">' +
+            '  {% util.eachComponent(components, function(component) { %} ' +
+            '    <div class="col-sm-2">' +
+            '      <strong>{{ component.label }}</strong>' +
+            '    </div>' +
+            '  {% }) %}' +
+            '</div>',
+          row: '' +
+            '<div class="row">' +
+            '  {%util.eachComponent(components, function(component) { %}' +
+            '    <div class="col-sm-2">' +
+            '      {{ row[component.key] }}' +
+            '    </div>' +
+            '  {% }) %}' +
+            '  <div class="col-sm-2">' +
+            '    <div class="btn-group pull-right">' +
+            '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
+            '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
+            '    </div>' +
+            '  </div>' +
+            '</div>',
+          footer: ''
+        },
+        components: [
+          {
+            label: 'Atributo',
+            key: 'attribute',
+            type: 'select',
+            input: true,
+            data: {
+              values: attributeNames
+            },
+            dataSrc: 'values',
+            template: '<span>{{ item.label }}</span>'
+          },
+          ...attributeComponents // Añadir dinámicamente los componentes de valores
+        ]
+      }
+    ]
+  }).then(function(form) {
 
   attributesForm = form;
 
-// Provide a default submission.
-// mediante esta "SUBMIT" cargamos los valores que YA TIENE EL PRODUCTO CARGADOS: (DE GETPRODUCT)
+
 
 form.submission = {
   data: {
-    attributes_form: [  // popular con datos de producto
+    attributes_form: [ 
       {
         attribute: 'Peso',
         value: '15kg',
