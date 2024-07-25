@@ -5,25 +5,26 @@ let productsForm;     // Declara la variable para almacenar la instancia del for
 
 
 
-
 async function fetchData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/products/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
   const productData = await response.json();
-  const data = productData.data;
-return data
+  return productData.data;
 }
 
-// Llama a fetchData al cargar la página
-const data = fetchData();
+async function main() {
+  const data = await fetchData();
+  createAttributesForm(data);
+  createTagsForm(data);
+  createVariantsForm(data);
+  createProductsForm(data);
+}
+
+// Llama a la función main al cargar la página
+main();
 
 
 
-
-
-
-
-
-(function () {  
+function createAttributesForm(data) { 
 Formio.createForm(document.getElementById('formio-attributes'), {
   components: [
     {
@@ -81,6 +82,9 @@ Formio.createForm(document.getElementById('formio-attributes'), {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
+
+
+
  // por cada atribute name, tenemos que buscar todos sus attribute_values (DE GETCONFIG) y hacer un objeto como el siguiente
         {
           label: 'Valores',
@@ -117,6 +121,94 @@ Formio.createForm(document.getElementById('formio-attributes'), {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
+  
+  
+
+
+
+
+//relleno
+        {
+          label: 'Valores2',
+          key: 'value2',
+          type: 'select',
+          input: true,
+          conditional: {
+            show: true,
+            conjunction: "all",
+            conditions: [
+              {
+                component: 'attribute',
+                operator: 'isEqual',
+                value: 'color'
+              }
+            ]
+          },
+          data: {
+            values: [
+              {
+                value: 'Rojo',
+                label: 'Rojo'
+              },
+              {
+                value: 'Negro',
+                label: 'Negro'
+              },
+              {
+                value: 'Azul',
+                label: 'Azul'
+              }
+            ]
+          },
+          dataSrc: 'values',
+          template: '<span>{{ item.label }}</span>'
+        },
+        
+        
+        {
+          label: 'Valores3',
+          key: 'value3',
+          type: 'select',
+          input: true,
+          conditional: {
+            show: true,
+            conjunction: "all",
+            conditions: [
+              {
+                component: 'attribute',
+                operator: 'isEqual',
+                value: 'material'
+              }
+            ]
+          },
+          data: {
+            values: [
+              {
+                value: 'Polyester',
+                label: 'Polyester'
+              },
+              {
+                value: 'Madera',
+                label: 'Madera'
+              },
+              {
+                value: 'Algodon',
+                label: 'Algodon'
+              }
+            ]
+          },
+          dataSrc: 'values',
+          template: '<span>{{ item.label }}</span>'
+        },
+//relleno
+
+
+
+
+
+
+
+
       ]
     }
   ]
@@ -142,7 +234,7 @@ form.submission = {
   }
 };
 });
-})();
+};
 
 
 
@@ -164,7 +256,8 @@ form.submission = {
 
 
 
-  (function () {
+function createTagsForm(data) {
+
     Formio.createForm(document.getElementById('formio-tags'), {
       components: [
           {
@@ -239,8 +332,7 @@ form.submission = {
         }
       };
     });
-  })
-();
+  };
 
 
 
@@ -267,7 +359,6 @@ form.submission = {
   const formularioJson = generarFormularioJson();
   
   function generarFormularioJson() {
-
     const formularioJson = 
   {
   type: "form",
@@ -496,9 +587,9 @@ form.submission = {
 return formularioJson;
 }
 
+function createVariantsForm(data) {
 
 
-  (function () {  
 Formio.createForm(document.getElementById('formio-variants'),formularioJson )
 .then(function(form) {
 //variante para identificar la instancia del formulario, nos referimos a ella en el submit global y etceteras.
@@ -523,7 +614,7 @@ form.on('editGridSaveRow', (event) => {
   }
 });
 });
-})();
+};
 
 
 
@@ -537,12 +628,9 @@ form.on('editGridSaveRow', (event) => {
 
 
 
+function createProductsForm(data) {
 
 
-(function() {
-
-  // Fetch the product data
- 
 
   // Create the form
   Formio.createForm(document.getElementById('formio-product'), {
@@ -718,7 +806,7 @@ form.on('editGridSaveRow', (event) => {
 
   });
 
-})();
+};
 
 
 
