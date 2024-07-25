@@ -64,7 +64,6 @@ async function fetchConfigData() {
 
 
 
-
                           function createAttributesCreationForm(configData, productData) {
                             Formio.createForm(document.getElementById('formio-create-attributes'), {
                               components: [
@@ -81,39 +80,15 @@ async function fetchConfigData() {
                                   label: 'Values',
                                   placeholder: 'Selecciona los valores posibles',
                                   multiple: true,
+                                  dataSrc: 'resource', // Cambia la fuente de datos a 'resource'
                                   data: {
-                                    values: configData.values ? configData.values.map(value => ({ label: value, value: value })) : []
+                                    resource: '<resourceId>', // ID del recurso que contiene los valores
+                                    // Assumes that the resource has been created and populated with data
                                   },
+                                  valueProperty: 'name', // Propiedad de valor del campo de texto del recurso
+                                  addResource: true, // Habilitar 'Add Resource'
+                                  addResourceLabel: 'Add New Value', // Cambiar la etiqueta del botón de 'Add Resource'
                                   input: true
-                                },
-                                {
-                                  type: 'textfield',
-                                  key: 'newValue',
-                                  label: 'Add New Value',
-                                  placeholder: 'Escribe un nuevo valor',
-                                  input: true
-                                },
-                                {
-                                  type: 'button',
-                                  label: 'Add Value',
-                                  key: 'addValue',
-                                  input: true,
-                                  theme: 'primary',
-                                  action: 'custom',
-                                  custom: `
-                                    const newValue = instance.getComponent('newValue').getValue();
-                                    if (newValue) {
-                                      const valuesComponent = instance.getComponent('values');
-                                      const existingValues = valuesComponent.getValue() || [];
-                                      if (!existingValues.includes(newValue)) {
-                                        existingValues.push(newValue);
-                                        valuesComponent.setValue(existingValues);
-                                        instance.getComponent('newValue').setValue(''); // Limpia el campo de texto
-                                      } else {
-                                        alert('Este valor ya está en la lista.');
-                                      }
-                                    }
-                                  `
                                 },
                                 {
                                   type: 'button',
@@ -125,20 +100,7 @@ async function fetchConfigData() {
                                 }
                               ]
                             }).then(function(form) {
-                              form.getComponent('addValue').on('click', function() {
-                                const newValue = form.getComponent('newValue').getValue();
-                                if (newValue) {
-                                  const valuesComponent = form.getComponent('values');
-                                  const existingValues = valuesComponent.getValue() || [];
-                                  if (!existingValues.includes(newValue)) {
-                                    existingValues.push(newValue);
-                                    valuesComponent.setValue(existingValues);
-                                    form.getComponent('newValue').setValue(''); // Limpia el campo de texto
-                                  } else {
-                                    alert('Este valor ya está en la lista.');
-                                  }
-                                }
-                              });
+                              // Aquí puedes agregar cualquier lógica adicional si es necesario
                             });
                           }
                           
