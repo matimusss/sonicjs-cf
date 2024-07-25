@@ -185,16 +185,9 @@ function createAttributesForm(configData, productData) {
     attributesForm = form;
 
     // Llenar el formulario con los atributos del producto
-    const productAttributes = productData.product_attributes.map(attr => ({
-      attribute: attr.attribute_name,
-      value: attr.attribute_value,
-    }));
+    const productAttributes = productData;
 
-    form.submission = {
-      data: {
-        attributes_form: productAttributes
-      }
-    };
+    console.log(productAttributes);
   });
 } 
   
@@ -610,7 +603,7 @@ const data = productData;
         key: 'id',
         label: 'ID',
         input: true,
-        defaultValue: data.id,
+        defaultValue: data.product_id,      
         disabled: true
       },
       {
