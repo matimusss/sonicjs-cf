@@ -8,7 +8,7 @@ let productsForm;     // Declara la variable para almacenar la instancia del for
 async function fetchProductData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getProduct/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
   const productData = await response.json();
-  return productData.data;
+  return productData;
 }
 
 async function fetchConfigData() {
@@ -185,9 +185,18 @@ function createAttributesForm(configData, productData) {
     attributesForm = form;
 
     // Llenar el formulario con los atributos del producto
-    const productAttributes = productData;
+    const productAttributes = productData.product_attributes.map(attr => ({
+      attribute: attr.attribute_name,
+      value: attr.attribute_value,
+    }));
 
-    console.log(productAttributes);
+    console.log(productData);
+
+    form.submission = {
+      data: {
+        attributes_form: productAttributes
+      }
+    };
   });
 } 
   
