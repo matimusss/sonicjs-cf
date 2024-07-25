@@ -65,9 +65,6 @@ async function fetchConfigData() {
 
 
 
-
-
-
                           function createAttributesCreationForm(configData, productData) {
                             Formio.createForm(document.getElementById('formio-create-attributes'), {
                               components: [
@@ -104,14 +101,15 @@ async function fetchConfigData() {
                                   theme: 'primary',
                                   action: 'custom',
                                   custom: `
-                                    const newValue = instance.getComponent('newValue').getValue();
+                                    const formio = this; // Referencia al formulario
+                                    const newValue = formio.getComponent('newValue').getValue();
                                     if (newValue) {
-                                      const valuesComponent = instance.getComponent('values');
+                                      const valuesComponent = formio.getComponent('values');
                                       const existingValues = valuesComponent.getValue() || [];
                                       if (!existingValues.includes(newValue)) {
                                         existingValues.push(newValue);
                                         valuesComponent.setValue(existingValues);
-                                        instance.getComponent('newValue').setValue(''); // Limpia el campo de texto
+                                        formio.getComponent('newValue').setValue(''); // Limpia el campo de texto
                                       } else {
                                         alert('Este valor ya está en la lista.');
                                       }
