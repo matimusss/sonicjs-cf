@@ -49,21 +49,17 @@ async function fetchConfigData() {
 
 
              async function main()
-                       {
-   
-  const productData = await fetchProductData();
-     const configData = await fetchConfigData();
-
-  createAttributesForm(configData, productData);
-        createTagsForm(configData, productData);
-    createVariantsForm(configData, productData);
-    createProductsForm(configData, productData);
-
-                        }
-
-
-// Llama a la función main al cargar la página //
-//                      V                      //
+                            {
+            const productData = await fetchProductData();
+             const configData = await fetchConfigData();
+                  createTagsForm(configData, productData);
+              createVariantsForm(configData, productData);
+              createProductsForm(configData, productData);
+            createAttributesForm(configData, productData);   
+    createAttributesCreationForm(configData, productData);
+                            }
+//     Llama a la función main al cargar la página      //
+//                          V                           //
                       main();
 
 
