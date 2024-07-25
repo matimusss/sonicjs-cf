@@ -242,7 +242,6 @@ export const Layout: FC<{
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <!-- Contenedor del formulario de Form.io -->
           <div id="formio-create-attributes"></div>
         </div>
         <div class="modal-footer">
