@@ -39,10 +39,6 @@ function createAttributesForm(configData, productData) {
 console.log (attributes);
 
   // Mapea los atributos a la estructura deseada
-  const attributeOptions = attributes.map(attr => ({
-    value: attr.attribute_name.toLowerCase(), // Usamos el nombre en minúsculas para el valor
-    label: attr.attribute_name // El nombre del atributo para la etiqueta
-  }));
 
 Formio.createForm(document.getElementById('formio-attributes'), {
   components: [
