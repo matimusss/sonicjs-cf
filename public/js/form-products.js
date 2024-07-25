@@ -62,10 +62,7 @@ async function fetchConfigData() {
 //                          V                           //
                           main();
 
-
-                          function createAttributesCreationForm(configData, productData) {
-                            let currentValues = configData.values || [];
-                          
+                          function createAttributesCreationForm(configData) {
                             Formio.createForm(document.getElementById('formio-create-attributes'), {
                               components: [
                                 {
@@ -81,9 +78,8 @@ async function fetchConfigData() {
                                   label: 'Values',
                                   placeholder: 'Selecciona los valores posibles',
                                   multiple: true,
-                                  dataSrc: 'json',
                                   data: {
-                                    json: JSON.stringify(currentValues)
+                                    values: configData.values || [] // Proporcionar valores predeterminados si es necesario
                                   },
                                   input: true
                                 },
@@ -100,24 +96,8 @@ async function fetchConfigData() {
                                   key: 'addValue',
                                   input: true,
                                   theme: 'primary',
-                                  custom: `
-                                    const formio = this; // Referencia al formulario
-                                    const newValue = formio.getComponent('newValue').getValue();
-                                    if (newValue) {
-                                      const valuesComponent = formio.getComponent('values');
-                                      let existingValues = valuesComponent.getValue() || [];
-                                      if (!existingValues.includes(newValue)) {
-                                        existingValues.push(newValue);
-                                        valuesComponent.setValue(existingValues);
-                                        formio.getComponent('newValue').setValue(''); // Limpia el campo de texto
-                                        // Actualiza el componente select con los nuevos valores
-                                        valuesComponent.component.data.json = JSON.stringify(existingValues);
-                                        valuesComponent.triggerUpdate();
-                                      } else {
-                                        alert('Este valor ya está en la lista.');
-                                      }
-                                    }
-                                  `
+                                  action: 'event',
+                                  event: 'addValue'
                                 },
                                 {
                                   type: 'button',
@@ -129,13 +109,36 @@ async function fetchConfigData() {
                                 }
                               ]
                             }).then(function(form) {
-                              // Lógica adicional si es necesario
-                              console.log('Formulario creado con éxito.');
-                            }).catch(function(error) {
-                              console.error('Error al crear el formulario:', error);
+                              // Configurar el evento personalizado para el botón 'Add Value'
+                              form.on('addValue', function() {
+                                const newValue = form.getComponent('newValue').getValue();
+                                if (newValue) {
+                                  const valuesComponent = form.getComponent('values');
+                                  const existingValues = valuesComponent.getValue() || [];
+                                  if (!existingValues.includes(newValue)) {
+                                    existingValues.push(newValue);
+                                    valuesComponent.setValue(existingValues);
+                                    form.getComponent('newValue').setValue(''); // Limpiar el campo de texto
+                                  } else {
+                                    alert('Este valor ya está en la lista.');
+                                  }
+                                }
+                              });
+                            }).catch(function(err) {
+                              console.error(err);
                             });
                           }
                           
+                          // Ejemplo de uso
+                          const configData = {
+                            values: [
+                              { label: 'Value 1', value: 'value1' },
+                              { label: 'Value 2', value: 'value2' }
+                            ]
+                          };
+                          
+                          createAttributesCreationForm(configData);
+                                                    
 
 
                     function createAttributesValuesCreationForm(configData, productData) { 
