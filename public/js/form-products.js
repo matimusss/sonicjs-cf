@@ -48,19 +48,19 @@ async function fetchConfigData() {
 
 
 
-             async function main()
-                            {
+             async function main() {
             const productData = await fetchProductData();
-             const configData = await fetchConfigData();
-                  createTagsForm(configData, productData);
-              createVariantsForm(configData, productData);
-              createProductsForm(configData, productData);
-            createAttributesForm(configData, productData);   
-    createAttributesCreationForm(configData, productData);
-                            }
+              const configData = await fetchConfigData();
+                        createTagsForm(configData, productData);
+                    createVariantsForm(configData, productData);
+                    createProductsForm(configData, productData);
+                  createAttributesForm(configData, productData);   
+          createAttributesCreationForm(configData, productData);
+    createAttributesValuesCreationForm(configData, productData);
+                                  }
 //     Llama a la función main al cargar la página      //
 //                          V                           //
-                      main();
+                          main();
 
 
 
@@ -68,30 +68,81 @@ async function fetchConfigData() {
 
 
 
-                      function createAttributesCreationForm(configData, productData) { 
-                      Formio.createForm(document.getElementById('formio-create-attributes'), {
+                          function createAttributesCreationForm(configData, productData) {
+                            Formio.createForm(document.getElementById('formio-create-attributes'), {
+                              components: [
+                                {
+                                  type: 'textfield',
+                                  key: 'name',
+                                  label: 'Name',
+                                  placeholder: 'Nombre del nuevo atributo',
+                                  input: true
+                                },
+                                {
+                                  type: 'select',
+                                  key: 'values',
+                                  label: 'Values',
+                                  placeholder: 'Selecciona los valores posibles',
+                                  multiple: true,
+                                  data: {
+                                    values: configData.values || [] // Asegúrate de proporcionar una lista de valores predeterminados si es necesario
+                                  },
+                                  input: true
+                                },
+                                {
+                                  type: 'textfield',
+                                  key: 'newValue',
+                                  label: 'Add New Value',
+                                  placeholder: 'Escribe un nuevo valor',
+                                  input: true
+                                },
+                                {
+                                  type: 'button',
+                                  label: 'Add Value',
+                                  key: 'addValue',
+                                  input: true,
+                                  theme: 'primary',
+                                  action: 'custom',
+                                  custom: `
+                                    const newValue = instance.getComponent('newValue').getValue();
+                                    if (newValue) {
+                                      const valuesComponent = instance.getComponent('values');
+                                      const existingValues = valuesComponent.getValue() || [];
+                                      if (!existingValues.includes(newValue)) {
+                                        existingValues.push(newValue);
+                                        valuesComponent.setValue(existingValues);
+                                        instance.getComponent('newValue').setValue(''); // Limpia el campo de texto
+                                      } else {
+                                        alert('Este valor ya está en la lista.');
+                                      }
+                                    }
+                                  `
+                                },
+                                {
+                                  type: 'button',
+                                  label: 'Submit',
+                                  key: 'submit',
+                                  input: true,
+                                  theme: 'primary',
+                                  action: 'submit'
+                                }
+                              ]
+                            });
+                          };
+                          
+
+
+                    function createAttributesValuesCreationForm(configData, productData) { 
+                      Formio.createForm(document.getElementById('formio-create-attributes-values'), {
                         components: [
                           {
                             type: 'textfield',
                             key: 'name',
                             label: 'Name',
-                            placeholder: 'Enter your name',
+                            placeholder: 'Nombre del nuevo Value - atributo',
                             input: true
                           },
-                          {
-                            type: 'email',
-                            key: 'email',
-                            label: 'Email',
-                            placeholder: 'Enter your email',
-                            input: true
-                          },
-                          {
-                            type: 'textarea',
-                            key: 'message',
-                            label: 'Message',
-                            placeholder: 'Enter your message',
-                            input: true
-                          },
+//poner un multiple select y un add a ese select, de modo que se puedan agregar muchas values a este att (al que se refiere ahora) 
                           {
                             type: 'button',
                             label: 'Submit',
@@ -103,8 +154,6 @@ async function fetchConfigData() {
                         ]
                       });
                     };
-
-
 
 
 
