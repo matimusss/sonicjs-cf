@@ -180,24 +180,37 @@ function createAttributesForm(configData, productData) {
   
   
   
-  
   .then(function(form) {
     attributesForm = form;
-
+  
     // Llenar el formulario con los atributos del producto
-    const productAttributes = productData.product_attributes.map(attr => ({
-      attribute: attr.attribute_name,
-      value: attr.attribute_value,
-    }));
-
+    const productAttributes = productData.product_attributes.map(attr => {
+      let attributeObj = {
+        attribute: attr.attribute_name
+      };
+      attributeObj[`value_${attr.attribute_name}`] = attr.attribute_value;
+      return attributeObj;
+    });
+  
     console.log(productData);
-
+  
+    // Llenar el formulario con los valores de los atributos
+    productAttributes.forEach(attr => {
+      const attributeKey = `value_${attr.attribute}`;
+      form.components.forEach(component => {
+        if (component.key === attributeKey) {
+          component.setValue(attr[attributeKey]);
+        }
+      });
+    });
+  
     form.submission = {
       data: {
         attributes_form: productAttributes
       }
     };
   });
+  
 } 
   
   
