@@ -68,7 +68,7 @@ main();
 
 
 function createAttributesForm(configData, productData) { 
-  const attributes = configData.grouped_attributes;
+  const attributes = configData.attributes;
 
   // Generar los objetos de atributos
   const attributeNames = attributes.map(attr => ({
