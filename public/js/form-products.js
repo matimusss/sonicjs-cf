@@ -39,7 +39,7 @@ async function fetchConfigData() {
   delete data.attribute_values;
 
   // Añadir el nuevo arreglo de atributos agrupados al objeto principal
-  data.grouped_attributes = attributes;
+  data.attributes = groupedAttributes;
 //END DE ESTO HABRIA QUE ETC...
 
 
