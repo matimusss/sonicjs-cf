@@ -82,7 +82,7 @@ async function fetchConfigData() {
                                   placeholder: 'Selecciona los valores posibles',
                                   multiple: true,
                                   data: {
-                                    values: configData.values || [] // Asegúrate de proporcionar una lista de valores predeterminados si es necesario
+                                    values: configData.values ? configData.values.map(value => ({ label: value, value: value })) : []
                                   },
                                   input: true
                                 },
@@ -101,15 +101,14 @@ async function fetchConfigData() {
                                   theme: 'primary',
                                   action: 'custom',
                                   custom: `
-                                    const formio = this; // Referencia al formulario
-                                    const newValue = formio.getComponent('newValue').getValue();
+                                    const newValue = instance.getComponent('newValue').getValue();
                                     if (newValue) {
-                                      const valuesComponent = formio.getComponent('values');
+                                      const valuesComponent = instance.getComponent('values');
                                       const existingValues = valuesComponent.getValue() || [];
                                       if (!existingValues.includes(newValue)) {
                                         existingValues.push(newValue);
                                         valuesComponent.setValue(existingValues);
-                                        formio.getComponent('newValue').setValue(''); // Limpia el campo de texto
+                                        instance.getComponent('newValue').setValue(''); // Limpia el campo de texto
                                       } else {
                                         alert('Este valor ya está en la lista.');
                                       }
@@ -125,8 +124,23 @@ async function fetchConfigData() {
                                   action: 'submit'
                                 }
                               ]
+                            }).then(function(form) {
+                              form.getComponent('addValue').on('click', function() {
+                                const newValue = form.getComponent('newValue').getValue();
+                                if (newValue) {
+                                  const valuesComponent = form.getComponent('values');
+                                  const existingValues = valuesComponent.getValue() || [];
+                                  if (!existingValues.includes(newValue)) {
+                                    existingValues.push(newValue);
+                                    valuesComponent.setValue(existingValues);
+                                    form.getComponent('newValue').setValue(''); // Limpia el campo de texto
+                                  } else {
+                                    alert('Este valor ya está en la lista.');
+                                  }
+                                }
+                              });
                             });
-                          };
+                          }
                           
 
 
