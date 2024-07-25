@@ -15,8 +15,11 @@ async function fetchConfigData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getConfig');
   const productData = await response.json();
   const data = productData[0].data[0];
+
+  // Extraer los atributos y valores de atributos
   const attributes = data.attributes;
   const attributeValues = data.attribute_values;
+
   // Crear un objeto para agrupar los atributos con sus valores
   const groupedAttributes = attributes.map(attribute => {
     return {
@@ -26,13 +29,20 @@ async function fetchConfigData() {
         .map(value => value.attribute_value)
     };
   });
-  
-  console.log(groupedAttributes);
 
+  // Eliminar los attributes y attribute_values del objeto principal
+  delete data.attributes;
+  delete data.attribute_values;
 
+  // Añadir el nuevo arreglo de atributos agrupados al objeto principal
+  data.grouped_attributes = groupedAttributes;
 
-  return groupedAttributes;
+  console.log(data);
+
+  return data;
 }
+
+
 
 
 async function main() {
@@ -53,7 +63,7 @@ main();
 function createAttributesForm(configData, productData) { 
 
   const attributes = configData;
-console.log (attributes.attributes);
+console.log (attributes);
 
   // Mapea los atributos a la estructura deseada
 
