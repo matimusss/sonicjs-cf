@@ -153,7 +153,7 @@ function createAttributesForm(configData, productData) {
             '    </div>' +
             '  </div>' +
             '</div>',
-          footer: ''
+          footer: '  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">  Open Form.io Modal  </button>'
         },
         components: [
           {
@@ -579,6 +579,11 @@ Formio.createForm(document.getElementById('formio-variants'),formularioJson )
 //variante para identificar la instancia del formulario, nos referimos a ella en el submit global y etceteras.
   variantsForm = form;
 // Suponiendo que 'form' es tu instancia del formulario
+
+
+
+
+
 form.on('editGridSaveRow', (event) => {
   const { component, row } = event;  
   // Aquí puedes ejecutar cualquier acción cuando se guarda una fila en el EditGrid
