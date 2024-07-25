@@ -14,7 +14,24 @@ async function fetchProductData() {
 async function fetchConfigData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getConfig');
   const productData = await response.json();
-  return productData[0].data[0];
+  const data = productData[0].data[0];
+  const attributes = data.attributes;
+  const attributeValues = data.attribute_values;
+  // Crear un objeto para agrupar los atributos con sus valores
+  const groupedAttributes = attributes.map(attribute => {
+    return {
+      attribute_name: attribute.attribute_name,
+      values: attributeValues
+        .filter(value => value.attribute_id === attribute.id)
+        .map(value => value.attribute_value)
+    };
+  });
+  
+  console.log(groupedAttributes);
+
+
+
+  return groupedAttributes;
 }
 
 
