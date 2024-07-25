@@ -185,7 +185,7 @@ function createAttributesForm(configData, productData) {
     attributesForm = form;
 
     // Llenar el formulario con los atributos del producto
-    const productAttributes = productData.product_attributes;
+    const productAttributes = productData;
 console.log(productAttributes);
     form.submission = {
       data: {
