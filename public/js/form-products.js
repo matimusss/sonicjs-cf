@@ -63,8 +63,9 @@ async function fetchConfigData() {
                           main();
 
 
-
                           function createAttributesCreationForm(configData, productData) {
+                            let currentValues = configData.values || [];
+                          
                             Formio.createForm(document.getElementById('formio-create-attributes'), {
                               components: [
                                 {
@@ -80,15 +81,43 @@ async function fetchConfigData() {
                                   label: 'Values',
                                   placeholder: 'Selecciona los valores posibles',
                                   multiple: true,
-                                  dataSrc: 'resource', // Cambia la fuente de datos a 'resource'
+                                  dataSrc: 'json',
                                   data: {
-                                    resource: '<resourceId>', // ID del recurso que contiene los valores
-                                    // Assumes that the resource has been created and populated with data
+                                    json: JSON.stringify(currentValues)
                                   },
-                                  valueProperty: 'name', // Propiedad de valor del campo de texto del recurso
-                                  addResource: true, // Habilitar 'Add Resource'
-                                  addResourceLabel: 'Add New Value', // Cambiar la etiqueta del botón de 'Add Resource'
                                   input: true
+                                },
+                                {
+                                  type: 'textfield',
+                                  key: 'newValue',
+                                  label: 'Add New Value',
+                                  placeholder: 'Escribe un nuevo valor',
+                                  input: true
+                                },
+                                {
+                                  type: 'button',
+                                  label: 'Add Value',
+                                  key: 'addValue',
+                                  input: true,
+                                  theme: 'primary',
+                                  custom: `
+                                    const formio = this; // Referencia al formulario
+                                    const newValue = formio.getComponent('newValue').getValue();
+                                    if (newValue) {
+                                      const valuesComponent = formio.getComponent('values');
+                                      let existingValues = valuesComponent.getValue() || [];
+                                      if (!existingValues.includes(newValue)) {
+                                        existingValues.push(newValue);
+                                        valuesComponent.setValue(existingValues);
+                                        formio.getComponent('newValue').setValue(''); // Limpia el campo de texto
+                                        // Actualiza el componente select con los nuevos valores
+                                        valuesComponent.component.data.json = JSON.stringify(existingValues);
+                                        valuesComponent.triggerUpdate();
+                                      } else {
+                                        alert('Este valor ya está en la lista.');
+                                      }
+                                    }
+                                  `
                                 },
                                 {
                                   type: 'button',
@@ -100,7 +129,10 @@ async function fetchConfigData() {
                                 }
                               ]
                             }).then(function(form) {
-                              // Aquí puedes agregar cualquier lógica adicional si es necesario
+                              // Lógica adicional si es necesario
+                              console.log('Formulario creado con éxito.');
+                            }).catch(function(error) {
+                              console.error('Error al crear el formulario:', error);
                             });
                           }
                           
