@@ -5,18 +5,27 @@ let productsForm;     // Declara la variable para almacenar la instancia del for
 
 
 
-async function fetchData() {
+async function fetchProductData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/products/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
   const productData = await response.json();
   return productData.data;
 }
 
+async function fetchConfigData() {
+  const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getConfig');
+  const productData = await response.json();
+  return productData.data;
+}
+
+
 async function main() {
-  const data = await fetchData();
-  createAttributesForm(data);
-  createTagsForm(data);
-  createVariantsForm(data);
-  createProductsForm(data);
+  const productData = await fetchProductData();
+  const configData = await fetchProductData();
+
+  createAttributesForm(configData, productData);
+  createTagsForm(configData, productData);
+  createVariantsForm(configData, productData);
+  createProductsForm(configData, productData);
 }
 
 // Llama a la función main al cargar la página
@@ -24,7 +33,7 @@ main();
 
 
 
-function createAttributesForm(data) { 
+function createAttributesForm(configData, productData) { 
 Formio.createForm(document.getElementById('formio-attributes'), {
   components: [
     {
@@ -256,7 +265,7 @@ form.submission = {
 
 
 
-function createTagsForm(data) {
+function createTagsForm(configData, productData) {
 
     Formio.createForm(document.getElementById('formio-tags'), {
       components: [
@@ -587,9 +596,9 @@ function createTagsForm(data) {
 return formularioJson;
 }
 
-function createVariantsForm(data) {
 
 
+function createVariantsForm(configData, productData) {
 Formio.createForm(document.getElementById('formio-variants'),formularioJson )
 .then(function(form) {
 //variante para identificar la instancia del formulario, nos referimos a ella en el submit global y etceteras.
@@ -628,9 +637,10 @@ form.on('editGridSaveRow', (event) => {
 
 
 
-function createProductsForm(data) {
+function createProductsForm(configData, productData) {
 
 
+const data = productData;
 
   // Create the form
   Formio.createForm(document.getElementById('formio-product'), {
