@@ -183,18 +183,17 @@ function createAttributesForm(configData, productData) {
   
   .then(function(form) {
     attributesForm = form;
+  // Llenar dinámicamente el formulario con los atributos del producto
+  const productAttributes = productData.product_attributes || [];
+  form.submission = {
+    data: {
+      attributes_form: productAttributes.map(attr => ({
+        attribute: attr.attribute_name,
+        value: attr.attribute_value
+      }))
+    }
+  };
 
-    // Llenar el formulario con los atributos del producto
-    const productAttributes = productData.product_attributes.map(attr => ({
-      attribute: attr.attribute_name,
-      value: attr.attribute_value,
-    }));
-
-    form.submission = {
-      data: {
-        attributes_form: productAttributes
-      }
-    };
   });
 } 
   
