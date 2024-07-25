@@ -35,7 +35,7 @@ main();
 
 function createAttributesForm(configData, productData) { 
 
-  const attributes = productData.data[0].attributes;
+  const attributes = productData.attributes;
 console.log (attributes);
 
   // Mapea los atributos a la estructura deseada
