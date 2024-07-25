@@ -14,7 +14,7 @@ async function fetchProductData() {
 async function fetchConfigData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getConfig');
   const productData = await response.json();
-  return productData.data;
+  return productData;
 }
 
 
@@ -35,7 +35,7 @@ main();
 
 function createAttributesForm(configData, productData) { 
 
-  const attributes = configData.attributes;
+  const attributes = configData;
 console.log (attributes);
 
   // Mapea los atributos a la estructura deseada
