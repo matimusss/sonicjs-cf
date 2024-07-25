@@ -20,7 +20,7 @@ async function fetchConfigData() {
 
 async function main() {
   const productData = await fetchProductData();
-  const configData = await fetchProductData();
+  const configData = await fetchConfigData();
 
   createAttributesForm(configData, productData);
   createTagsForm(configData, productData);
@@ -35,7 +35,7 @@ main();
 
 function createAttributesForm(configData, productData) { 
 
-  const attributes = configData;
+  const attributes = configData.attributes;
 console.log (attributes);
 
   // Mapea los atributos a la estructura deseada
