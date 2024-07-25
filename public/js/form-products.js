@@ -72,6 +72,48 @@ async function fetchConfigData() {
 
 
 
+                      function createAttributesCreationForm(configData, productData) { 
+                      Formio.createForm(document.getElementById('formio-create-attributes'), {
+                        components: [
+                          {
+                            type: 'textfield',
+                            key: 'name',
+                            label: 'Name',
+                            placeholder: 'Enter your name',
+                            input: true
+                          },
+                          {
+                            type: 'email',
+                            key: 'email',
+                            label: 'Email',
+                            placeholder: 'Enter your email',
+                            input: true
+                          },
+                          {
+                            type: 'textarea',
+                            key: 'message',
+                            label: 'Message',
+                            placeholder: 'Enter your message',
+                            input: true
+                          },
+                          {
+                            type: 'button',
+                            label: 'Submit',
+                            key: 'submit',
+                            input: true,
+                            theme: 'primary',
+                            action: 'submit'
+                          }
+                        ]
+                      });
+                    };
+
+
+
+
+
+
+
 
 
 
@@ -132,22 +174,6 @@ function createAttributesForm(configData, productData) {
         input: true,
         templates: {
           header: '' +
-         ' <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
-          ' <div class="modal-dialog">' +
-            ' <div class="modal-content">' +
-              ' <div class="modal-header">' +
-              '   <h5 class="modal-title" id="exampleModalLabel">Form.io Form</h5>' +
-               '  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
-               '</div>' +
-               '<div class="modal-body">' +
-           'asdasdasdasdasd' +
-               '</div>' +
-               '<div class="modal-footer">' +
-                 '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>' +
-               '</div>' +
-             '</div>'+
-           '</div>'+
-         '</div>'+
             '<div class="row">' +
             '  {% util.eachComponent(components, function(component) { %} ' +
             '    <div class="col-sm-2">' +
