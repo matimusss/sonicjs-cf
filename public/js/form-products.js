@@ -11,13 +11,10 @@ async function fetchProductData() {
   return productData.data;
 }
 
-
-
 async function fetchConfigData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getConfig');
   const productData = await response.json();
   const data = productData[0].data[0];
-
 
 //ESTO HABRIA QUE HACERLO EN EL ENDPOINT DE HONO (/API.JSX?)
   // Extraer los atributos y valores de atributos
@@ -51,18 +48,33 @@ async function fetchConfigData() {
 
 
 
-async function main() {
+             async function main()
+                       {
+   
   const productData = await fetchProductData();
-  const configData = await fetchConfigData();
+     const configData = await fetchConfigData();
 
   createAttributesForm(configData, productData);
-  createTagsForm(configData, productData);
-  createVariantsForm(configData, productData);
-  createProductsForm(configData, productData);
-}
+        createTagsForm(configData, productData);
+    createVariantsForm(configData, productData);
+    createProductsForm(configData, productData);
 
-// Llama a la función main al cargar la página
-main();
+                        }
+
+
+// Llama a la función main al cargar la página //
+//                      V                      //
+                      main();
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -159,28 +171,39 @@ function createAttributesForm(configData, productData) {
         ]
       }
     ]
-  }).then(function(form) {
-
-  attributesForm = form;
 
 
 
-form.submission = {
-  data: {
-    attributes_form: [ 
-      {
-        attribute: 'Peso',
-        value: '15kg',
-      },
-      {
-        attribute: 'Color',
-        value: 'Rojo',
-      },
-    ]
-  }
-};
-});
-};
+
+  })
+  
+  
+  
+  
+  
+  .then(function(form) {
+    attributesForm = form;
+
+    // Llenar el formulario con los atributos del producto
+    const productAttributes = productData.product_attributes.map(attr => ({
+      attribute: attr.attribute_name,
+      value: attr.attribute_value,
+    }));
+
+    form.submission = {
+      data: {
+        attributes_form: productAttributes
+      }
+    };
+  });
+} 
+  
+  
+  
+  
+  
+  
+
 
 
 
