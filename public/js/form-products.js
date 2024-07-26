@@ -456,31 +456,17 @@ const tagNames = tags.map(tags => ({
         let tagObj = {
           tagName: tag.tag_name
         };
-        
+
+        console.log(productData);        
         return tagObj;
       });
 
-
-      console.log(productData);
-    
-    
       form.submission = {
         data: {
           tags: productTags
         }
       };
 
-
-
-
-
-
-
-
-
-
-
-      
     });
   };
 
@@ -506,11 +492,12 @@ const tagNames = tags.map(tags => ({
   
   
   
-  const formularioJson = generarFormularioJson();
-  
-  function generarFormularioJson() {
-    const formularioJson = 
-  {
+
+
+
+
+function createVariantsForm(configData, productData) {
+Formio.createForm(document.getElementById('formio-variants'),   {
   type: "form",
   display: "form",
   components: [
@@ -733,14 +720,7 @@ const tagNames = tags.map(tags => ({
       ]
     }
   ]
-} ;
-return formularioJson;
-}
-
-
-
-function createVariantsForm(configData, productData) {
-Formio.createForm(document.getElementById('formio-variants'),formularioJson )
+}  )
 .then(function(form) {
 //variante para identificar la instancia del formulario, nos referimos a ella en el submit global y etceteras.
   variantsForm = form;
@@ -939,33 +919,6 @@ const data = productData;
       // Actualizar el valor de otro componente, por ejemplo 'slug'
       form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
     });
-
-
-
-//SI YA TIENE INTIAL VALUE, NO HACE FALTA SUBMISION?
-    // Set initial submission data
-    //form.submission = {
-    //  data: {
-     //   id: data.id,
-      //  slug: data.slug,
-      //  product_name: data.product_name,
-      //  sku: data.sku,
-      //  sale_price: data.sale_price,
-       // compare_price: data.compare_price,
-       // buying_price: data.buying_price,
-        ///quantity: data.quantity,
-      //  short_description: data.short_description,
-      //  product_description: data.product_description,
-       // product_type: data.product_type,
-        //published: data.published,
-        //disable_out_of_stock: data.disable_out_of_stock,
-        //note: data.note,
-        //created_by: data.created_by,
-        //updated_by: data.updated_by,
-       // createdOn: new Date(data.createdOn).toLocaleString(),
-      //  updatedOn: new Date(data.updatedOn).toLocaleString()
-    //  }
-  //  };
 
 
   });
