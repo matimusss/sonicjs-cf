@@ -447,21 +447,39 @@ const tagNames = tags.map(tags => ({
     })
     .then(function(form) {
 
+
       tagsForm = form;
-      // simulamos los envios "anteriores" osea, los tags que ya tiene agregados el producto, hacemos como que los enviamos ,quedan disponibles para editar y borrar.
+
+  
+      // Llenar el formulario con los atributos del producto
+      const productTags = productData.tags.map(tag => {
+        let tagObj = {
+          tagName: tag.tag_name
+        };
+        
+        return tagObj;
+      });
+
+
+      console.log(productData);
+    
+    
       form.submission = {
         data: {
-          tags: [
-            {
-              //{tagId: 'tag.id', tagName: 'tag.name'},
-              tagName: 'Corbatas'
-            },
-            {
-              tagName: 'Guantes'
-            }
-          ]
+          tags: productTags
         }
       };
+
+
+
+
+
+
+
+
+
+
+
       
     });
   };
