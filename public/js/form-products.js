@@ -226,8 +226,6 @@ function createAttributesForm(configData, productData) {
   }));
 
 
-  
-
 
 
   // Generar los valores para cada atributo (ATTRIBUTE_VALUES)
@@ -386,7 +384,7 @@ function createTagsForm(configData, productData) {
 //(1) iteramos sobre el objeto y listo, no requiere mas pasos 
 const tags = configData.tags;
 
-const tagNames = tags.map(attr => ({
+const tagNames = tags.map(tags => ({
   value: tags.tag_name,
   label: tags.tag_name,
 }));
