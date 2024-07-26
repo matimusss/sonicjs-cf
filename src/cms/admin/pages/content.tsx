@@ -758,10 +758,10 @@ export async function ProductFORM(ctx) {
       username={ctx.get('user')?.email}
       screenTitle={'productos'}>
        
+       <div id='formio-product'></div>
        <div id='formio-tags'></div>
        <div id='formio-attributes'></div>
        <div id='formio-variants'></div>
-       <div id='formio-product'></div>
        <button id="globalSubmit">Submit All Forms</button>
 
     </Layout>

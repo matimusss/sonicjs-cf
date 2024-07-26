@@ -5,6 +5,10 @@ let productsForm;     // Declara la variable para almacenar la instancia del for
 
 
 
+
+//FETCHS 
+
+
 async function fetchProductData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getProduct/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
   const productData = await response.json();
@@ -38,29 +42,61 @@ async function fetchConfigData() {
   // Añadir el nuevo arreglo de atributos agrupados al objeto principal
   data.attributes = groupedAttributes;
 //END DE ESTO HABRIA QUE ETC...
-
-
   console.log(data);
-
   return data;
 }
 
 
 
 
+
+
+
+
+
+// EJECUCION DE LAS FUNCIONES DE FORM.IO //
              async function main() {
             const productData = await fetchProductData();
               const configData = await fetchConfigData();
+                  
                         createTagsForm(configData, productData);
                     createVariantsForm(configData, productData);
                     createProductsForm(configData, productData);
-                  createAttributesForm(configData, productData);   
+                  createAttributesForm(configData, productData);
+                  
+                  
+                  
           createAttributesCreationForm(configData, productData);
     createAttributesValuesCreationForm(configData, productData);
-                                  }
+                          
+  
+                                    }
+
+
+
+
+
+                                  
 //     Llama a la función main al cargar la página      //
 //                          V                           //
                           main();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                           function createAttributesCreationForm(configData) {
                             Formio.createForm(document.getElementById('formio-create-attributes'), {
@@ -129,19 +165,21 @@ async function fetchConfigData() {
                             });
                           }
                           
-                          // Ejemplo de uso
-                          const configData = {
-                            values: [
-                              { label: 'Value 1', value: 'value1' },
-                              { label: 'Value 2', value: 'value2' }
-                            ]
-                          };
-                          
-                          createAttributesCreationForm(configData);
-                                                    
+             
+
+
+
+
+
 
 
                     function createAttributesValuesCreationForm(configData, productData) { 
+
+                      //este es para agregar nuevos VALORES DE ATRIBUTOS ;
+                      //por tanto deberia recibir el atributo al que se refiere
+                      // o los modals pueden ser un editgrid de su type. 
+
+
                       Formio.createForm(document.getElementById('formio-create-attributes-values'), {
                         components: [
                           {
@@ -178,25 +216,32 @@ async function fetchConfigData() {
 function createAttributesForm(configData, productData) { 
   const attributes = configData.attributes;
 
-  // Generar los objetos de atributos
+
+
+  // Generar los objetos de atributos (ATTRIBUTES)
+//(1) iteramos sobre el objeto y listo, no requiere mas pasos 
   const attributeNames = attributes.map(attr => ({
     value: attr.attribute_name,
     label: attr.attribute_name
   }));
 
-  // Generar los valores para cada atributo
+
+  
+
+
+
+  // Generar los valores para cada atributo (ATTRIBUTE_VALUES)
+ // (1) armamos el objeto
   const attributeValues = attributes.reduce((acc, attr) => {
     acc[attr.attribute_name] = attr.values.map(value => ({
       value: value,
       label: value
     }));
     return acc;
-  }, {});
-
-  console.log(attributes);
-
-  // Crear componentes dinámicamente para cada atributo
-  const attributeComponents = attributes.map(attr => ({
+  }, {});                                 // console.log(attributes);
+// Crear componentes dinámicamente para cada atributo
+// (2) iteramos sobre el objeto y creamos cada component.
+const attributeComponents = attributes.map(attr => ({
     label: 'Valores',
     key: `value_${attr.attribute_name}`,
     type: 'select',
@@ -218,6 +263,13 @@ function createAttributesForm(configData, productData) {
     dataSrc: 'values',
     template: '<span>{{ item.label }}</span>'
   }));
+
+
+
+
+
+
+
 
   Formio.createForm(document.getElementById('formio-attributes'), {
     components: [
@@ -267,15 +319,7 @@ function createAttributesForm(configData, productData) {
         ]
       }
     ]
-
-
-
-
   })
-  
-  
-  
-  
   .then(function(form) {
     attributesForm = form;
   
@@ -287,7 +331,6 @@ function createAttributesForm(configData, productData) {
       attributeObj[`value_${attr.attribute_name}`] = attr.attribute_value;
       return attributeObj;
     });
-  
     console.log(productData);
   
     // Llenar el formulario con los valores de los atributos
@@ -306,7 +349,6 @@ function createAttributesForm(configData, productData) {
       }
     };
   });
-  
 } 
   
   
@@ -337,6 +379,20 @@ function createAttributesForm(configData, productData) {
 
 
 function createTagsForm(configData, productData) {
+
+
+
+// Generar los objetos de tags (TAGS)
+//(1) iteramos sobre el objeto y listo, no requiere mas pasos 
+const tags = configData.tags;
+
+const tagNames = tags.map(attr => ({
+  value: tags.tag_name,
+  label: tags.tag_name,
+}));
+
+
+
 
     Formio.createForm(document.getElementById('formio-tags'), {
       components: [
@@ -377,13 +433,9 @@ function createTagsForm(configData, productData) {
                 type: 'select',
                 input: true,
                 data: {
-                  values: [ // map sobre TODOS los tag_name y tag_id que NO esten aplicados al producto (tags- product_tags)
-                    //{value: 'tag.id', label: 'tag.name'},
-                    {value: 'Remeras', label: 'Remeras'},
-                    {value: 'Batas', label: 'Batas'},
-                    {value: 'Ojotas', label: 'Ojotas'},
-                    {value: 'Buzos', label: 'Buzos'}
-                  ]
+                  values: tagNames
+                  // map sobre TODOS los tag_name y tag_id que NO esten aplicados al producto (tags- product_tags)
+                  //{value: 'tag.id', label: 'tag.name'}    
                 },
                 dataSrc: "values",
                 template: '<span>{{ item.label }}</span>'
@@ -396,6 +448,7 @@ function createTagsForm(configData, productData) {
         ]
     })
     .then(function(form) {
+
       tagsForm = form;
       // simulamos los envios "anteriores" osea, los tags que ya tiene agregados el producto, hacemos como que los enviamos ,quedan disponibles para editar y borrar.
       form.submission = {
@@ -411,6 +464,7 @@ function createTagsForm(configData, productData) {
           ]
         }
       };
+      
     });
   };
 
@@ -785,11 +839,19 @@ const data = productData;
         input: true,
         defaultValue: data.short_description
       },
+
       {
         type: 'textarea',
-        key: 'product_description',
         label: 'Product Description',
+        wysiwyg: {
+          theme: 'snow',
+          modules: {
+            toolbar: ['bold', 'italic', 'underline', 'strike']
+          }
+        },
+        key: 'product_description',
         input: true,
+        inputType: 'text',
         defaultValue: data.product_description
       },
       {
