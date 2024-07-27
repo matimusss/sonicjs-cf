@@ -3,12 +3,7 @@ let attributesForm;   // Declara la variable para almacenar la instancia del for
 let variantsForm;     // Declara la variable para almacenar la instancia del formulario
 let productsForm;     // Declara la variable para almacenar la instancia del formulario
 
-
-
-
 //FETCHS 
-
-
 async function fetchProductData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getProduct/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
   const productData = await response.json();
@@ -48,12 +43,6 @@ async function fetchConfigData() {
 
 
 
-
-
-
-
-
-
 // EJECUCION DE LAS FUNCIONES DE FORM.IO //
              async function main() {
             const productData = await fetchProductData();
@@ -62,9 +51,7 @@ async function fetchConfigData() {
                         createTagsForm(configData, productData);
                     createVariantsForm(configData, productData);
                     createProductsForm(configData, productData);
-                  createAttributesForm(configData, productData);
-                  
-                  
+                  createAttributesForm(configData, productData);                  
                   
           createAttributesCreationForm(configData, productData);
     createAttributesValuesCreationForm(configData, productData);
@@ -80,16 +67,6 @@ async function fetchConfigData() {
 //     Llama a la función main al cargar la página      //
 //                          V                           //
                           main();
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -228,7 +205,7 @@ function createAttributesForm(configData, productData) {
 
 
 
-  // Generar los valores para cada atributo (ATTRIBUTE_VALUES)
+// Generar los valores para cada atributo (ATTRIBUTE_VALUES)
  // (1) armamos el objeto
   const attributeValues = attributes.reduce((acc, attr) => {
     acc[attr.attribute_name] = attr.values.map(value => ({
@@ -236,7 +213,7 @@ function createAttributesForm(configData, productData) {
       label: value
     }));
     return acc;
-  }, {});                                 // console.log(attributes);
+  }, {});                                 
 // Crear componentes dinámicamente para cada atributo
 // (2) iteramos sobre el objeto y creamos cada component.
 const attributeComponents = attributes.map(attr => ({
@@ -497,6 +474,48 @@ const tagNames = tags.map(tags => ({
 
 
 function createVariantsForm(configData, productData) {
+
+
+
+
+  //seleccionar los atributos aplicados al  producto en el form de atributes
+  //mostrar los names para que se elija uno sobre el que se aplica la variante.
+
+  
+  // mas adelante, tenemos que tener un select por cada atributo elegido, con los values de ese select.
+
+// Crear componentes dinámicamente para cada atributo
+// (2) iteramos sobre el objeto y creamos cada component.
+const attributeComponents = attributes.map(attr => ({
+  label: 'Valores',
+  key: `value_${attr.attribute_name}`,
+  type: 'select',
+  input: true,
+  conditional: {
+    show: true,
+    conjunction: 'all',
+    conditions: [
+      {
+        component: 'attribute',
+        operator: 'isEqual',
+        value: attr.attribute_name // Establecer el atributo asociado a estos valores
+      }
+    ]
+  },
+  data: {
+    values: attributeValues[attr.attribute_name]
+  },
+  dataSrc: 'values',
+  template: '<span>{{ item.label }}</span>'
+}));
+
+
+
+
+
+
+
+
 Formio.createForm(document.getElementById('formio-variants'),   {
   type: "form",
   display: "form",
@@ -540,16 +559,65 @@ Formio.createForm(document.getElementById('formio-variants'),   {
       },
       components: [
         
-//FALTAN EL RESTO DE LOS COMPONENTES, PRECIOS , ETC.
-
+//Componentes "SIMPLES"
         {
           type: 'textfield',
-          key: 'variantName',
+          key: 'variant_option',
           label: 'Nombre de la variante',
           placeholder: 'Nombre de la variante',
           input: true,
           tableView: true,
         },
+        {
+          type: 'textfield',
+          key: 'variant_title',
+          label: 'titulo de la variante',
+          placeholder: 'titulo de la variante',
+          input: true,
+          tableView: true,
+        },
+        {
+          type: 'textfield',
+          key: 'variant_sale_price',
+          label: 'Nombre de la variante',
+          placeholder: 'Nombre de la variante',
+          input: true,
+          tableView: true,
+        },
+        {
+          type: 'textfield',
+          key: 'variant_compare_price',
+          label: 'Nombre de la variante',
+          placeholder: 'Nombre de la variante',
+          input: true,
+          tableView: true,
+        },
+
+        {
+          type: 'textfield',
+          key: 'variant_buying_price',
+          label: 'Nombre de la variante',
+          placeholder: 'Nombre de la variante',
+          input: true,
+          tableView: true,
+        },
+        {
+          type: 'textfield',
+          key: 'variant_quantity',
+          label: 'Nombre de la variante',
+          placeholder: 'Nombre de la variante',
+          input: true,
+          tableView: true,
+        },
+        {
+          type: 'textfield',
+          key: 'variant_active',
+          label: 'Nombre de la variante',
+          placeholder: 'Nombre de la variante',
+          input: true,
+          tableView: true,
+        },
+ 
 
 
         {             //especial atencion a este componente hidden que junta los valores para mostrarlos en una sola columna.
@@ -561,16 +629,15 @@ Formio.createForm(document.getElementById('formio-variants'),   {
           tableView: true,
         },
 
-// POPULAR CON CADA ATTRIBUTE_NAME DE LA VARIANTE:
-
-        {
+// POPULAR CON CADA ATTRIBUTo DEL PRODUCTO (desde el FORM)
+{
           label: 'Atributos de la variante',
           key: 'variantAttribute',
           type: 'select',
           input: true,
           tableView: true,
           data: {
-            values: [
+            values: [ // = atributos ya aplicados al producto
               { 
                 value: 'color',
                 label: 'color'
@@ -589,9 +656,15 @@ Formio.createForm(document.getElementById('formio-variants'),   {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
-        
-        // POR CADA ATTRIBUTE NAME_ MOSTRAMOS SUS ATTRIBUTE VALUES
-        {
+
+
+
+
+
+
+
+// POR CADA ATTRIBUTE que tiene el producto,  MOSTRAMOS SUS ATTRIBUTE VALUES, tomarlo del form
+{
           label: 'Valores',
           key: 'variantAttributeValueWeigh',
           type: 'select',
@@ -627,97 +700,9 @@ Formio.createForm(document.getElementById('formio-variants'),   {
           dataSrc: 'values',
           template: '<span>{{ item.label }}</span>'
         },
-
-
-
-
-
-
-
-        //RELLENO 
-
-        {
-          label: 'Valores color',
-          key: 'variantAttributeValueColor',
-          type: 'select',
-          input: true,
-          tableView:  false,
-          conditional: {
-            show: true,
-            conjunction: "all",
-            conditions: [
-              {
-                component: 'variantAttribute',
-                operator: 'isEqual',
-                value: 'color'
-              }
-            ]
-          },
-          data: {
-            values: [
-              {
-                value: 'Rojo',
-                label: 'Rojo'
-              },
-              {
-                value: 'Negro',
-                label: 'Negro'
-              },
-              {
-                value: 'Azul',
-                label: 'Azul'
-              }
-            ]
-          },
-          dataSrc: 'values',
-          template: '<span>{{ item.label }}</span>'
-        },
-
-
-
-        {
-          label: 'Valores Material',
-          key: 'variantAttributeValueMaterial',
-          type: 'select',
-          input: true,
-          conditional: {
-            show: true,
-            conjunction: "all",
-            conditions: [
-              {
-                component: 'variantAttribute',
-                operator: 'isEqual',
-                value: 'material'
-              }
-            ]
-          },
-          data: {
-            values: [
-              {
-                value: 'Polyester',
-                label: 'Polyester'
-              },
-              {
-                value: 'Madera',
-                label: 'Madera'
-              },
-              {
-                value: 'Algodon',
-                label: 'Algodon'
-              }
-            ]
-          },
-          dataSrc: 'values',
-          template: '<span>{{ item.label }}</span>',
-          tableView:  false,
-        },
-//RELLENO
-
-
-
-
-
       ]
+
+
     }
   ]
 }  )
@@ -725,9 +710,6 @@ Formio.createForm(document.getElementById('formio-variants'),   {
 //variante para identificar la instancia del formulario, nos referimos a ella en el submit global y etceteras.
   variantsForm = form;
 // Suponiendo que 'form' es tu instancia del formulario
-
-
-
 
 
 form.on('editGridSaveRow', (event) => {
@@ -909,7 +891,13 @@ const data = productData;
         disabled: true
       }
     ]
-  }).then(function(form) {
+  })
+  
+  
+  
+  
+  
+  .then(function(form) {
     productsForm = form;
   // Configurar el evento change para escuchar cambios en 'product_name'
     form.getComponent('product_name').on('change', function(value) {
@@ -917,7 +905,7 @@ const data = productData;
       console.log('El valor de product_name ha cambiado:', value);
       
       // Actualizar el valor de otro componente, por ejemplo 'slug'
-      form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
+    //  form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
     });
 
 
@@ -926,6 +914,31 @@ const data = productData;
 };
 
 
+function getEditGridValues() {
+  if (!attributesForm) {
+    console.error("El formulario aún no se ha creado.");
+    return [];
+  }
+
+  // Obtener los datos del componente editgrid
+  const editGridComponent = attributesForm.getComponent('attributes_form');
+  if (editGridComponent) {
+    return editGridComponent.dataValue;
+  } else {
+    console.error("No se encontró el componente editgrid.");
+    return [];
+  }
+}
+
+function getAllFieldValues() {
+  if (!attributesForm) {
+    console.error("El formulario aún no se ha creado.");
+    return {};
+  }
+
+  // Obtener todos los valores del formulario
+  return attributesForm.submission.data;
+}
 
 
 
