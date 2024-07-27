@@ -910,7 +910,28 @@ function getAllFieldValues() {
 }
 
 
+function getFieldOptions() {
+  if (!attributesForm) {
+    console.error("El formulario aún no se ha creado.");
+    return {};
+  }
 
+  // Obtener el componente del campo 'attribute'
+  const attributeComponent = attributesForm.getComponent('attribute');
+  const attributeOptions = attributeComponent ? attributeComponent.data.values : [];
+
+  // Obtener los componentes de los campos 'value_XXX'
+  const valueComponents = attributesForm.getComponents().filter(component => component.key.startsWith('value_'));
+  const valueOptions = valueComponents.reduce((acc, component) => {
+    acc[component.key] = component.data.values || [];
+    return acc;
+  }, {});
+
+  return {
+    attributeOptions,
+    valueOptions
+  };
+}
 
 
 
