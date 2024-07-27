@@ -484,37 +484,6 @@ const attributes  = productData;
   
   // mas adelante, tenemos que tener un select por cada atributo elegido, con los values de ese select.
 
-// Crear componentes dinámicamente para cada atributo
-// (2) iteramos sobre el objeto y creamos cada component.
-const attributeComponents = attributes.map(attr => ({
-  label: 'Valores',
-  key: `value_${attr.attribute_name}`,
-  type: 'select',
-  input: true,
-  conditional: {
-    show: true,
-    conjunction: 'all',
-    conditions: [
-      {
-        component: 'attribute',
-        operator: 'isEqual',
-        value: attr.attribute_name // Establecer el atributo asociado a estos valores
-      }
-    ]
-  },
-  data: {
-    values: attributeValues[attr.attribute_name]
-  },
-  dataSrc: 'values',
-  template: '<span>{{ item.label }}</span>'
-}));
-
-
-
-
-
-
-
 
 Formio.createForm(document.getElementById('formio-variants'),   {
   type: "form",
