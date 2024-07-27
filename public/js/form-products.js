@@ -476,7 +476,7 @@ const tagNames = tags.map(tags => ({
 function createVariantsForm(configData, productData) {
 
 
-
+const attributes  = productData;
 
   //seleccionar los atributos aplicados al  producto en el form de atributes
   //mostrar los names para que se elija uno sobre el que se aplica la variante.
