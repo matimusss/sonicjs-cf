@@ -916,12 +916,24 @@ function getFieldOptions() {
     return {};
   }
 
-  // Obtener el componente del campo 'attribute'
+  // Verificar y obtener el componente del campo 'attribute'
   const attributeComponent = attributesForm.getComponent('attribute');
-  const attributeOptions = attributeComponent ? attributeComponent.data.values : [];
+  if (!attributeComponent) {
+    console.error("El componente 'attribute' no se encontró.");
+    return {};
+  }
+  const attributeOptions = attributeComponent.data.values || [];
 
   // Obtener los componentes de los campos 'value_XXX'
   const valueComponents = attributesForm.getComponents().filter(component => component.key.startsWith('value_'));
+  if (!valueComponents.length) {
+    console.error("No se encontraron componentes 'value_XXX'.");
+    return {
+      attributeOptions,
+      valueOptions: {}
+    };
+  }
+
   const valueOptions = valueComponents.reduce((acc, component) => {
     acc[component.key] = component.data.values || [];
     return acc;
@@ -932,7 +944,6 @@ function getFieldOptions() {
     valueOptions
   };
 }
-
 
 
 
