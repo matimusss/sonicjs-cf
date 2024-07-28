@@ -218,6 +218,7 @@ export const ToggleTheme = () => {
 
 
 
+
 export const Layout: FC<{
   formComponents?: any[];
   screenTitle?: string;
@@ -226,11 +227,54 @@ export const Layout: FC<{
   env: Bindings;
 }> = (props) => {
   const tables = apiConfig;
-
+  const onEditor = (editor: Editor) => {
+    console.log('Editor loaded', { editor });
+  };
   return (
     <html lang='en' data-bs-theme='auto'>
       <Head />
       <body>
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Form.io Form</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="formio-create-attributes"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+        
+  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Form.io Form</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="formio-create-attributes-values"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
         <ToggleTheme />
         <header class='navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow'>
           <a
@@ -266,11 +310,17 @@ export const Layout: FC<{
             >
               <div class='position-sticky pt-3 sidebar-sticky'>
                 <ul class='nav flex-column'>
+
+                  
                   <li class='nav-item'>
+                   
+                   
                     <a class='nav-link' href='/admin'>
                       API
                     </a>
                   </li>
+
+                  
                   <h6 class='sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'>
                     <span>Tables</span>
                   </h6>
@@ -289,6 +339,8 @@ export const Layout: FC<{
                       );
                     })}
                   <>
+
+
                     <h6 class='sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'>
                       <span>Auth</span>
                     </h6>
@@ -331,17 +383,89 @@ export const Layout: FC<{
                       Clear All Caches
                     </a>
                   </li>
+           
+                  <h6 class='sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'>
+                    <span>General</span>
+                  </h6>
+                  <li class='nav-item'>
+                    <a class='nav-link'  href='/admin/prueba'>
+                      Configuracion
+                    </a>
+                  </li>
+
+
+                  <h6 class='sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'>
+                    <span>CRUD´S</span>
+                  </h6>
+                  <li class='nav-item'>
+                    <a class='nav-link'  href='/admin/OrdersCRUD'>
+                    Panel de ordenes
+                    </a>
+                  </li>
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/admin/AttributesCRUD'>
+                    Panel de atributos
+                    </a>
+                  </li>
+
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/admin/CategoriesCRUD'>
+                    Panel de categorias
+                    </a>
+                  </li>
+
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/admin/ProductCRUD'>
+                    Panel de products
+                    </a>
+                  </li>
+
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/admin/TagsCRUD'>
+                    Panel de etiquetas
+                    </a>
+                  </li>
+                  <li class='nav-item'>
+                    <a class='nav-link' href='/admin/CouponsCRUD'>
+                      Panel de cupones
+                    </a>
+                  </li>
+                  
+           
+
+                  <h6 class='sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'>
+                    <span>Agregados</span>
+                  </h6>
+                  <li class='nav-item'>
+                    <a class='nav-link'  href='/admin/prueba'>
+                      Editor de paginas/recursos HTML
+                    </a>
+                  </li>
+  
+
+            
+           
+
+
+
+           
                 </ul>
+           
+           
               </div>
             </nav>
 
-            <main class='col-md-9 ms-sm-auto col-lg-10 px-md-4'>
-              <div class='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom'>
+            <main class='col-md-9 ms-sm-auto col-lg-10  px-md-4'>
+                  
+                            <div class='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom'>
                 <h1 class='h2'>{props.screenTitle}</h1>
               </div>
 
               {props.children}
+
+   
             </main>
+            
           </div>
         </div>
 
