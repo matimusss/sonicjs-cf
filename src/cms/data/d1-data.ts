@@ -34,7 +34,7 @@ export async function getProductMinDetails(db, table) {
 
 
 
-export async function getProductBySlug(db, id) {
+export async function getProduct(db, id) {
   const productQuery = `
 SELECT 
     p.id AS product_id,
@@ -149,7 +149,7 @@ try {
 
 
 
-export async function getProduct(db, id) {
+export async function getProductBySlug(db, id) {
     const productQuery = `
 SELECT 
     p.id AS product_id,
