@@ -52,7 +52,7 @@ SELECT
         DISTINCT json_object(
             'attribute_id', a.id,
             'attribute_name', a.attribute_name,
-            'attribute_value', av.id,
+            'attribute_id', av.id,
             'attribute_value', av.attribute_value
         )
     ) AS product_attributes,
