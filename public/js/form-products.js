@@ -193,64 +193,130 @@ fetchConfigData().then(data => console.log(data));
 
 
 
+                    function createAttributesForm(configData, productData) {
+                      // Obtener los atributos del objeto configData
+                      const attributes = configData.attributes;
+                    
+                      // Generar los nombres de atributos para el select principal
+                      const attributeNames = attributes.map(attr => ({
+                        value: attr.attribute_id,
+                        label: attr.attribute_name
+                      }));
+                    
+                      // Generar los valores para cada atributo
+                      const attributeValues = attributes.reduce((acc, attr) => {
+                        acc[attr.attribute_name] = attr.values.map(value => ({
+                          value: value.value_id,
+                          label: value.attribute_value
+                        }));
+                        return acc;
+                      }, {});
+                    
+                      // Crear componentes dinámicamente para cada atributo
+                      const attributeComponents = attributes.map(attr => ({
+                        label: 'Valores',
+                        key: `value_${attr.attribute_name}`,
+                        type: 'select',
+                        input: true,
+                        conditional: {
+                          show: true,
+                          conjunction: 'all',
+                          conditions: [
+                            {
+                              component: 'attribute',
+                              operator: 'isEqual',
+                              value: attr.attribute_name // Establecer el atributo asociado a estos valores
+                            }
+                          ]
+                        },
+                        data: {
+                          values: attributeValues[attr.attribute_name]
+                        },
+                        dataSrc: 'values',
+                        template: '<span>{{ item.label }}</span>'
+                      }));
+                    
+                      // Crear el formulario usando Formio
+                      Formio.createForm(document.getElementById('formio-attributes'), {
+                        components: [
+                          {
+                            label: 'Atributos',
+                            key: 'attributes_form',
+                            type: 'editgrid',
+                            input: true,
+                            templates: {
+                              header: '' +
+                                '<div class="row">' +
+                                '  {% util.eachComponent(components, function(component) { %} ' +
+                                '    <div class="col-sm-2">' +
+                                '      <strong>{{ component.label }}</strong>' +
+                                '    </div>' +
+                                '  {% }) %}' +
+                                '</div>',
+                              row: '' +
+                                '<div class="row">' +
+                                '  {% util.eachComponent(components, function(component) { %}' +
+                                '    <div class="col-sm-2">' +
+                                '      {{ row[component.key] }}' +
+                                '    </div>' +
+                                '  {% }) %}' +
+                                '  <div class="col-sm-2">' +
+                                '    <div class="btn-group pull-right">' +
+                                '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
+                                '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
+                                '    </div>' +
+                                '  </div>' +
+                                '</div>',
+                              footer: '  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">  Open Form.io Modal  </button>'
+                            },
+                            components: [
+                              {
+                                label: 'Atributo',
+                                key: 'attribute',
+                                type: 'select',
+                                input: true,
+                                data: {
+                                  values: attributeNames
+                                },
+                                dataSrc: 'values',
+                                template: '<span>{{ item.label }}</span>'
+                              },
+                              ...attributeComponents // Añadir dinámicamente los componentes de valores
+                            ]
+                          }
+                        ]
+                      })
+                      .then(function(form) {
+                        attributesForm = form;  
+                        // Llenar el formulario con los atributos del producto
+                        const productAttributes = productData.product_attributes.map(attr => {
+                          let attributeObj = {
+                            attribute: attr.attribute_name
+                          };
+                          attributeObj[`value_${attr.attribute_name}`] = attr.attribute_value;
+                          return attributeObj;
+                        });
+                    
+                        console.log(productData);
+                        // Llenar el formulario con los valores de los atributos
+                        productAttributes.forEach(attr => {
+                          const attributeKey = `value_${attr.attribute}`;
+                          form.components.forEach(component => {
+                            if (component.key === attributeKey) {
+                              component.setValue(attr[attributeKey]);
+                            }
+                          });
+                        });
+                      
+                        form.submission = {
+                          data: {
+                            attributes_form: productAttributes
+                          }
+                        };
+                      });
+                    }
+                    
 
-function createAttributesForm(configData, productData) {
-  const attributes = configData.attributes;
-// Generar los objetos de atributos (ATTRIBUTES)
-//(1) iteramos sobre el objeto y listo, no requiere mas pasos 
-  const attributeNames = attributes.map(attr => ({
-    value: attr.attribute_id,
-    label: attr.attribute_name
-  }));
-
-
-// Generar los valores para cada atributo (ATTRIBUTE_VALUES)
-// (1) armamos el objeto
-//  const attributeValuesDEPRECATED = attributes.reduce((acc, attr) => {
-//    acc[attr.attribute_name] = attr.values.map(value => ({
-//      value: value,
-//      label: value
-//    }));
-//    return acc;
-//  }, {});         
-  
-const attributeValues = attributes.reduce((acc, attr) => {
-  acc[attr.attribute_name] = attr.values.map(value => ({
-    value: value.value_id,    // Asignar el campo value_id a value
-    label: value.attribute_value  // Asignar attribute_value a label
-  }));
-  return acc;
-}, {});
-
-  
-
-
-// Crear componentes dinámicamente para cada atributo
-// (2) iteramos sobre el objeto y creamos cada component.
-const attributeComponents = attributes.map(attr => ({
-    label: 'Valores',
-    key: `value_${attr.attribute_name}`,
-    type: 'select',
-    input: true,
-    conditional: {
-      show: true,
-      conjunction: 'all',
-      conditions: [
-        {
-          component: 'attribute',
-          operator: 'isEqual',
-          value: attr.attribute_name // Establecer el atributo asociado a estos valores
-        }
-      ]
-    },
-    
-    data: {
-      values: attributeValues[attr.attribute_name]
-    },
-    dataSrc: 'values',
-    template: '<span>{{ item.label }}</span>'
-  }));
- 
 
 
 
@@ -263,86 +329,25 @@ const attributeComponents = attributes.map(attr => ({
 
 
 
-  Formio.createForm(document.getElementById('formio-attributes'), {
-    components: [
-      {
-        label: 'Atributos',
-        key: 'attributes_form',
-        type: 'editgrid',
-        input: true,
-        templates: {
-          header: '' +
-            '<div class="row">' +
-            '  {% util.eachComponent(components, function(component) { %} ' +
-            '    <div class="col-sm-2">' +
-            '      <strong>{{ component.label }}</strong>' +
-            '    </div>' +
-            '  {% }) %}' +
-            '</div>',
-          row: '' +
-            '<div class="row">' +
-            '  {%util.eachComponent(components, function(component) { %}' +
-            '    <div class="col-sm-2">' +
-            '      {{ row[component.key] }}' +
-            '    </div>' +
-            '  {% }) %}' +
-            '  <div class="col-sm-2">' +
-            '    <div class="btn-group pull-right">' +
-            '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
-            '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
-            '    </div>' +
-            '  </div>' +
-            '</div>',
-          footer: '  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">  Open Form.io Modal  </button>'
-        },
-        components: [
-          {
-            label: 'Atributo',
-            key: 'attribute',
-            type: 'select',
-            input: true,
-            data: {
-              values: attributeNames
-            },
-            dataSrc: 'values',
-            template: '<span>{{ item.label }}</span>'
-          },
-          ...attributeComponents // Añadir dinámicamente los componentes de valores
-        ]
-      }
-    ]
-  })
-  .then(function(form) {
-    attributesForm = form;  
-    // Llenar el formulario con los atributos del producto
-    const productAttributes = productData.product_attributes.map(attr => {
-      let attributeObj = {
-        attribute: attr.attribute_name
- 
-      };
-      attributeObj[`value_${attr.attribute_name}`] = attr.attribute_value;
-      return attributeObj;
-    });
- 
- 
-    console.log(productData);
-    // Llenar el formulario con los valores de los atributos
-    productAttributes.forEach(attr => {
-      const attributeKey = `value_${attr.attribute}`;
-      form.components.forEach(component => {
-        if (component.key === attributeKey) {
-          component.setValue(attr[attributeKey]);
-        }
-      });
-    });
-  
-    form.submission = {
-      data: {
-        attributes_form: productAttributes
-      }
-    };
-  });
-} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function createTagsForm(configData, productData) {
 // Generar los objetos de tags (TAGS)
