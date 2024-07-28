@@ -100,7 +100,7 @@ SELECT
             'variant_attributes', 
             json_group_array(
                 DISTINCT json_object(
-                    'variant_attribute_name_id', av_id,
+                    'variant_attribute_name_id', av_attr.id,
                     'variant_attribute_name', av_attr.attribute_name,
                     'variant_attribute_value_id', avv.id,
                     'variant_attribute_value', avv.attribute_value
