@@ -251,7 +251,7 @@ fetchConfigData().then(data => console.log(data));
                                 '<div class="row">' +
                                 '  {% util.eachComponent(components, function(component) { %}' +
                                 '    <div class="col-sm-2">' +
-                                '      {{ row[component.key] }}' +
+                                '      {{ row[component.label] }}' +
                                 '    </div>' +
                                 '  {% }) %}' +
                                 '  <div class="col-sm-2">' +
