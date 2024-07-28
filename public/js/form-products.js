@@ -280,18 +280,22 @@ fetchConfigData().then(data => console.log(data));
                           }
                         ]
                       })
-                      .then(function(form) {
+                      .tableViewhen(function(form) {
+
                         attributesForm = form;  
                         // Llenar el formulario con los atributos del producto
+                        
+                        
                         const productAttributes = productData.product_attributes.map(attr => {
                           let attributeObj = {
                             attribute: attr.attribute_id // Cambiar attribute_name a attribute_id
                           };
-                          attributeObj[`value_${attr.attribute_id}`] = attr.attribute_value;
+                          attributeObj[`value_${attr.attribute_id}`] = attr.attribute_value_id;
                           return attributeObj;
                         });
-                    
+                        
                         console.log(productData);
+                        
                         // Llenar el formulario con los valores de los atributos
                         productAttributes.forEach(attr => {
                           const attributeKey = `value_${attr.attribute}`;
@@ -301,6 +305,9 @@ fetchConfigData().then(data => console.log(data));
                             }
                           });
                         });
+                        
+                        
+             
                     
                         form.submission = {
                           data: {
@@ -310,6 +317,28 @@ fetchConfigData().then(data => console.log(data));
                       });
                     }
                     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -400,6 +429,23 @@ Formio.createForm(document.getElementById('formio-tags'), {
       };
     });
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
