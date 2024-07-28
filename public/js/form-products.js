@@ -241,7 +241,7 @@ const attributeComponents = attributes.map(attr => ({
     },
     
     data: {
-      values: attributeValues
+      values: attributeValues[attr.attribute_name]
     },
     dataSrc: 'values',
     template: '<span>{{ item.label }}</span>'
