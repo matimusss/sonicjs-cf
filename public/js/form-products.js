@@ -882,12 +882,15 @@ const data = productData;
 
 };
 
-
+ 
 function getEditGridValues() {
   if (!attributesForm) {
     console.error("El formulario aún no se ha creado.");
     return [];
   }
+
+//HABRIA QUE AGREGARLE QUE SI SE CREAN DE 0 NUEVOS ATRIBUTOS, Y VALUES SEAN AGREGADOS A UNA VAR GLOBAL Y AGREGADOS ACA A LOS DEL EDITGRID?
+
 
   // Obtener los datos del componente editgrid
   const editGridComponent = attributesForm.getComponent('attributes_form');
@@ -899,38 +902,9 @@ function getEditGridValues() {
   }
 }
 
-function getAllFieldValues() {
-  if (!attributesForm) {
-    console.error("El formulario aún no se ha creado.");
-    return {};
-  }
-
-  // Obtener todos los valores del formulario
-  return attributesForm.submission.data;
-}
-
-
-function getFieldOptions() {
-  if (!attributesForm) {
-    console.error("El formulario aún no se ha creado.");
-    return {};
-  }
-
-  // Verificar y obtener el componente del campo 'attribute'
-  const attributeComponent = attributesForm.getComponent('attribute');
-  if (!attributeComponent) {
-    console.error("El componente 'attribute' no se encontró.");
-    return {};
-  }
-  const attributeOptions = attributeComponent.data.values || [];
 
 
 
-  return {
-    attributeOptions,
-
-  };
-}
 
 
 

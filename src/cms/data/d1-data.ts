@@ -142,92 +142,101 @@ try {
 
 export async function getProduct(db, id) {
     const productQuery = `
-SELECT 
-    p.id AS product_id,
-    p.slug,
-    p.product_name,
-    p.sku,
-    p.sale_price,
-    p.compare_price,
-    p.buying_price,
-    p.quantity,
-    p.short_description,
-    p.product_description,
-    p.product_type,
-    json_group_array(
-        DISTINCT json_object(
-            'attribute_name', a.attribute_name,
-            'attribute_value', av.attribute_value
-        )
-    ) AS product_attributes,
-    json_group_array(
-        DISTINCT json_object(
-            'tag_name', t.tag_name,
-            'tag_icon', t.icon
-        )
-    ) AS tags,
-    json_group_array(
-        DISTINCT json_object(
-            'code', cd.code,
-            'discount_value', cd.discount_value,
-            'discount_type', cd.discount_type
-        )
-    ) AS coupons,
-    json_group_array(
-        DISTINCT json_object(
-            'image', ga.image,
-            'placeholder', ga.placeholder,
-            'is_thumb', ga.is_thumbnail
-        )
-    ) AS product_images,
-    json_group_array(
-        DISTINCT json_object(
-            'supplier_name', sp.supplier_name
-        )
-    ) AS suppliers,
-    (SELECT json_group_array(json_result)
-     FROM (
-        SELECT DISTINCT json_object(
-            'variant_option', v.variant_option,  
-            'variant_title', vo.title,  
-            'variant_image_id', vo.image_id,  
-            'variant_sale_price', vo.sale_price,  
-            'variant_compare_price', vo.compare_price,  
-            'variant_buying_price', vo.buying_price, 
-            'variant_quantity', vo.quantity,
-            'variant_active', vo.active, 
-            'variant_attributes', 
-            json_group_array(
-                DISTINCT json_object(
-                    'variant_attribute_name', av_attr.attribute_name,
-                    'variant_attribute_value', avv.attribute_value
-                )
-            )
-        ) json_result
-        FROM variants v
-        LEFT JOIN variant_options vo ON v.variant_option_id = vo.id
-        LEFT JOIN variant_values vv ON v.id = vv.variant_id
-        LEFT JOIN product_attribute_values pavv ON vv.product_attribute_value_id = pavv.id
-        LEFT JOIN attribute_values avv ON pavv.attribute_value_id = avv.id
-        LEFT JOIN product_attributes av_pattr ON pavv.product_attribute_id = av_pattr.id
-        LEFT JOIN attributes av_attr ON av_pattr.attribute_id = av_attr.id
-        WHERE v.product_id = p.id
-        GROUP BY v.variant_option, vo.title, vo.image_id, vo.sale_price, vo.compare_price, vo.buying_price, vo.quantity, vo.active
-    )) AS variant_details
+    SELECT 
+  p.id AS product_id,
+  p.slug,
+  p.product_name,
+  p.sku,
+  p.sale_price,
+  p.compare_price,
+  p.buying_price,
+  p.quantity,
+  p.short_description,
+  p.product_description,
+  p.product_type,
+  p.published,
+  p.disable_out_of_stock,
+  p.note,
+  p.created_by,
+  
+  -- Product Attributes
+  json_agg(json_build_object(
+    'attribute_id', a.id,
+    'attribute_name', a.attribute_name,
+    'attribute_value_id', av.id,
+    'attribute_value', av.attribute_value
+  )) AS product_attributes,
+
+  -- Tags
+  json_agg(json_build_object(
+    'tag_id', t.id,
+    'tag_name', t.tag_name,
+    'tag_icon', t.icon
+  )) AS tags,
+
+  -- Coupons
+  json_agg(json_build_object(
+    'coupon_id', c.id,
+    'code', c.code,
+    'discount_value', c.discount_value,
+    'discount_type', c.discount_type
+  )) AS coupons,
+
+  -- Product Images
+  json_agg(json_build_object(
+    'image_id', g.id,
+    'image', g.image,
+    'placeholder', g.placeholder,
+    'is_thumb', g.is_thumbnail
+  )) AS product_images,
+
+  -- Suppliers
+  json_agg(json_build_object(
+    'supplier_id', s.id,
+    'supplier_name', s.supplier_name
+  )) AS suppliers,
+
+  -- Variant Details
+  json_agg(json_build_object(
+    'variant_id', vo.id,
+    'variant_option', v.variant_option,
+    'variant_title', vo.title,
+    'variant_image_id', vo.image_id,
+    'variant_sale_price', vo.sale_price,
+    'variant_compare_price', vo.compare_price,
+    'variant_buying_price', vo.buying_price,
+    'variant_quantity', vo.quantity,
+    'variant_active', vo.active,
+    'variant_attributes', json_agg(json_build_object(
+      'variant_attribute_id', pav.id,
+      'variant_attribute_name', a2.attribute_name,
+      'variant_attribute_value_id', av2.id,
+      'variant_attribute_value', av2.attribute_value
+    ))
+  )) AS variant_details
+
 FROM products p
 LEFT JOIN product_attributes pa ON p.id = pa.product_id
 LEFT JOIN attributes a ON pa.attribute_id = a.id
+LEFT JOIN attribute_values av ON pa.attribute_id = av.attribute_id
 LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
-LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
-LEFT JOIN product_coupons p_co ON p.id = p_co.product_id
-LEFT JOIN coupons cd ON p_co.coupon_id = cd.id
-LEFT JOIN gallery ga ON p.id = ga.product_id
-LEFT JOIN product_suppliers p_su ON p.id = p_su.product_id
-LEFT JOIN suppliers sp ON p_su.supplier_id = sp.id
+LEFT JOIN attribute_values av2 ON pav.attribute_value_id = av2.id
+
 LEFT JOIN product_tags pt ON p.id = pt.product_id
 LEFT JOIN tags t ON pt.tag_id = t.id
-WHERE p.id = ?
-GROUP BY p.id;
+
+LEFT JOIN product_coupons pc ON p.id = pc.product_id
+LEFT JOIN coupons c ON pc.coupon_id = c.id
+
+LEFT JOIN gallery g ON p.id = g.product_id
+
+LEFT JOIN product_suppliers ps ON p.id = ps.product_id
+LEFT JOIN suppliers s ON ps.supplier_id = s.id
+
+LEFT JOIN variants v ON p.id = v.product_id
+LEFT JOIN variant_options vo ON v.variant_option_id = vo.id
+
+GROUP BY p.id, p.slug, p.product_name, p.sku, p.sale_price, p.compare_price, p.buying_price, p.quantity, p.short_description, p.product_description, p.product_type, p.published, p.disable_out_of_stock, p.note, p.created_by;
 `;
   try {
     // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
