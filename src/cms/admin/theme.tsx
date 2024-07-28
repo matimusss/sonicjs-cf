@@ -9,6 +9,16 @@ var Slugify = require('slugifyjs');
 
 
 export const Head = () => {
+//gjs css
+//  <link rel="stylesheet" href="/public/css/grapes.min.css?v0.21.10"></link>
+//  <link rel="stylesheet" href="/public/css/grapesjs-preset-webpage.min.css"></link>
+//  <link rel="stylesheet" href="/public/css/demos.css?v3"></link>
+
+
+
+
+
+
   return (
     <head>
       <script src='/public/js/color-modes.js'></script>
@@ -16,7 +26,7 @@ export const Head = () => {
       <meta charset='utf-8' />
       <meta name='viewport' content='width=device-width, initial-scale=1' />
       <meta name='description' content='' />
-74
+
       <title>SonicJs Admin</title>
       <link rel='icon' type='image/x-icon' href='/public/images/favicon.ico' />
 
@@ -24,10 +34,10 @@ export const Head = () => {
 
       <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link>
       <link rel="stylesheet" href="/public/css/toastr.min.css"></link>
-    <link rel="stylesheet" href="/public/css/grapes.min.css?v0.21.10"></link>
-    <link rel="stylesheet" href="/public/css/grapesjs-preset-webpage.min.css"></link>
+
     <link rel="stylesheet" href="/public/css/tooltip.css"></link>
-    <link rel="stylesheet" href="/public/css/demos.css?v3"></link>
+
+   
     <link href="https://unpkg.com/grapick/dist/grapick.min.css" rel="stylesheet"></link>
 
       <link
