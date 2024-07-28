@@ -60,7 +60,6 @@ SELECT
     ) AS product_attributes,
     json_group_array(
         DISTINCT json_object(
-            'p_tag_id', pt.id,
             'tag_id', t.id,
             'tag_name', t.tag_name,
             'tag_icon', t.icon
