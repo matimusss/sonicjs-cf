@@ -129,9 +129,8 @@ LEFT JOIN product_suppliers p_su ON p.id = p_su.product_id
 LEFT JOIN suppliers sp ON p_su.supplier_id = sp.id
 LEFT JOIN product_tags pt ON p.id = pt.product_id
 LEFT JOIN tags t ON pt.tag_id = t.id
-WHERE p.slug = ?
+WHERE p.id = ?
 GROUP BY p.id;
-
 `;
 try {
   // Prepara y ejecuta la consulta SQL con el parámetro proporcionado
@@ -235,7 +234,7 @@ LEFT JOIN product_suppliers p_su ON p.id = p_su.product_id
 LEFT JOIN suppliers sp ON p_su.supplier_id = sp.id
 LEFT JOIN product_tags pt ON p.id = pt.product_id
 LEFT JOIN tags t ON pt.tag_id = t.id
-WHERE p.id = ?
+WHERE p.slug = ?
 GROUP BY p.id;
 `;
   try {
