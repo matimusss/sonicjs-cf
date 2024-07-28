@@ -190,30 +190,37 @@ async function fetchConfigData() {
 
 
 
-function createAttributesForm(configData, productData) { 
+function createAttributesForm(configData, productData) {
   const attributes = configData.attributes;
-
-
-
-  // Generar los objetos de atributos (ATTRIBUTES)
+// Generar los objetos de atributos (ATTRIBUTES)
 //(1) iteramos sobre el objeto y listo, no requiere mas pasos 
   const attributeNames = attributes.map(attr => ({
-    value: attr.attribute_name,
+    value: attr.id,
     label: attr.attribute_name
   }));
 
 
-
-
 // Generar los valores para cada atributo (ATTRIBUTE_VALUES)
  // (1) armamos el objeto
-  const attributeValues = attributes.reduce((acc, attr) => {
+  const attributeValuesDEPRECATED = attributes.reduce((acc, attr) => {
     acc[attr.attribute_name] = attr.values.map(value => ({
       value: value,
       label: value
     }));
     return acc;
-  }, {});                                 
+  }, {});         
+  
+ 
+  const attributeValues = attributes.reduce((acc, attr) => {
+    acc[attr.attribute_name] = attr.values.map(value => ({
+      value: value.id,    // Asignar el campo id a value
+      label: attr.attribute_name  // Asignar attribute_name a label
+    }));
+    return acc;
+  }, {});
+  
+
+
 // Crear componentes dinámicamente para cada atributo
 // (2) iteramos sobre el objeto y creamos cada component.
 const attributeComponents = attributes.map(attr => ({
@@ -238,13 +245,6 @@ const attributeComponents = attributes.map(attr => ({
     dataSrc: 'values',
     template: '<span>{{ item.label }}</span>'
   }));
-
-
-
-
-
-
-
 
   Formio.createForm(document.getElementById('formio-attributes'), {
     components: [
@@ -296,8 +296,7 @@ const attributeComponents = attributes.map(attr => ({
     ]
   })
   .then(function(form) {
-    attributesForm = form;
-  
+    attributesForm = form;  
     // Llenar el formulario con los atributos del producto
     const productAttributes = productData.product_attributes.map(attr => {
       let attributeObj = {
@@ -307,7 +306,6 @@ const attributeComponents = attributes.map(attr => ({
       return attributeObj;
     });
     console.log(productData);
-  
     // Llenar el formulario con los valores de los atributos
     productAttributes.forEach(attr => {
       const attributeKey = `value_${attr.attribute}`;
@@ -325,38 +323,8 @@ const attributeComponents = attributes.map(attr => ({
     };
   });
 } 
-  
-  
-  
-  
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function createTagsForm(configData, productData) {
-
-
-
 // Generar los objetos de tags (TAGS)
 //(1) iteramos sobre el objeto y listo, no requiere mas pasos 
 const tags = configData.tags;
@@ -366,10 +334,7 @@ const tagNames = tags.map(tags => ({
   label: tags.tag_name,
 }));
 
-
-
-
-    Formio.createForm(document.getElementById('formio-tags'), {
+Formio.createForm(document.getElementById('formio-tags'), {
       components: [
           {
             label: 'Tags',
@@ -415,25 +380,18 @@ const tagNames = tags.map(tags => ({
                 dataSrc: "values",
                 template: '<span>{{ item.label }}</span>'
               }
-
 //agregar componente oculto o bloqueado para ID,
-
             ]
           }
         ]
     })
     .then(function(form) {
-
-
       tagsForm = form;
-
-  
       // Llenar el formulario con los atributos del producto
       const productTags = productData.tags.map(tag => {
         let tagObj = {
           tagName: tag.tag_name
         };
-
         console.log(productData);        
         return tagObj;
       });
@@ -443,7 +401,6 @@ const tagNames = tags.map(tags => ({
           tags: productTags
         }
       };
-
     });
   };
 
