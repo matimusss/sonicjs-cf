@@ -9,13 +9,11 @@ async function fetchProductData() {
   const productData = await response.json();
   return productData;
 }
-
 async function fetchConfigData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getConfig');
   const productData = await response.json();
   const data = productData[0].data[0];
 
-//ESTO HABRIA QUE HACERLO EN EL ENDPOINT DE HONO (/API.JSX?)
   // Extraer los atributos y valores de atributos
   const attributes = data.attributes;
   const attributeValues = data.attribute_values;
@@ -23,10 +21,14 @@ async function fetchConfigData() {
   // Crear un objeto para agrupar los atributos con sus valores
   const groupedAttributes = attributes.map(attribute => {
     return {
+      attribute_id: attribute.id,  // Incluir el ID del atributo
       attribute_name: attribute.attribute_name,
       values: attributeValues
         .filter(value => value.attribute_id === attribute.id)
-        .map(value => value.attribute_value)
+        .map(value => ({
+          value_id: value.id,  // Incluir el ID del valor del atributo
+          attribute_value: value.attribute_value
+        }))
     };
   });
 
@@ -36,11 +38,13 @@ async function fetchConfigData() {
 
   // Añadir el nuevo arreglo de atributos agrupados al objeto principal
   data.attributes = groupedAttributes;
-//END DE ESTO HABRIA QUE ETC...
+
   console.log(data);
   return data;
 }
 
+// Llamar a la función para obtener los datos
+fetchConfigData().then(data => console.log(data));
 
 
 // EJECUCION DE LAS FUNCIONES DE FORM.IO //
@@ -86,7 +90,7 @@ async function fetchConfigData() {
                                   input: true
                                 },
                                 {
-                                  type: 'select',
+                                      type: 'select',
                                   key: 'values',
                                   label: 'Values',
                                   placeholder: 'Selecciona los valores posibles',
@@ -247,6 +251,18 @@ const attributeComponents = attributes.map(attr => ({
     template: '<span>{{ item.label }}</span>'
   }));
  
+
+
+
+
+
+
+
+
+
+
+
+
   Formio.createForm(document.getElementById('formio-attributes'), {
     components: [
       {
