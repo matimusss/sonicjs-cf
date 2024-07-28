@@ -12,7 +12,7 @@ import {
 } from '../data/kv-data';
 import { Bindings } from '../types/bindings';
 import { apiConfig, config } from '../../db/routes';
-import { getD1DataByTable, getD1ByTableAndSlug_view , getProduct,  getConfig, getProductBySlug, getProductMinDetails  } from '../data/d1-data';
+import { getD1DataByTable, getD1ByTableAndSlug_view , getProduct, getConfig, getProductBySlug, getProductMinDetails  } from '../data/d1-data';
 import { getForm } from './forms';
 import qs from 'qs';
 import {
@@ -256,7 +256,9 @@ tables.forEach((entry) => {
     }
   });
 
-  
+
+
+
   api.get('/getProduct/:id', async (ctx) => {
     const { id } = ctx.req.param(); // Obtén el parámetro ID de la URL
     try {
@@ -276,26 +278,28 @@ tables.forEach((entry) => {
             transformedData.tags = JSON.parse(data[0].tags);
           }
   
+
           if (data[0].coupons) {
             transformedData.coupons = JSON.parse(data[0].coupons);
           }
   
+
+
           if (data[0].product_images) {
             transformedData.product_images = JSON.parse(data[0].product_images);
           }
-  
+
+
+
           if (data[0].suppliers) {
             transformedData.suppliers = JSON.parse(data[0].suppliers);
           }
-  
+
+
+
           if (data[0].variant_details) {
             const variantDetails = JSON.parse(data[0].variant_details);
-            transformedData.variant_details = variantDetails.map(variant => {
-              if (typeof variant.variant_attributes === 'string') {
-                variant.variant_attributes = JSON.parse(variant.variant_attributes);
-              }
-              return variant;
-            });
+            transformedData.variant_details = variantDetails.map(variant => JSON.parse(variant));
           }
         } catch (parseError) {
           console.error('Error parsing JSON fields:', parseError);
@@ -332,7 +336,8 @@ tables.forEach((entry) => {
       return ctx.text('Error retrieving product full details', 500);
     }
   });
-    
+  
+
 
 
 
