@@ -50,6 +50,7 @@ SELECT
     p.product_type,
     json_group_array(
         DISTINCT json_object(
+            'p_attribute_id', pa.id,
             'attribute_id', a.id,
             'attribute_name', a.attribute_name,
             'attribute_value_id', av.id,
