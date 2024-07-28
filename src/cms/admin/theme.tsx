@@ -1,4 +1,4 @@
-import { ApiConfig, apiConfig } from '../../db/routes';
+ import { ApiConfig, apiConfig } from '../../db/routes';
 import { Bindings } from '../types/bindings';
 import { FC } from 'hono/jsx';
 import * as React from 'react';
@@ -444,18 +444,13 @@ export const Layout: FC<{
   
 
             
-           
+      
+      
 
-
-
-           
-                </ul>
-           
-           
-              </div>
+             </div>
             </nav>
 
-            <main class='col-md-9 ms-sm-auto col-lg-10  '>
+            <main class='col-md-9 ms-sm-auto col-lg-10  px-md-4'>
               <div class='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom'>
                 <h1 class='h2'>{props.screenTitle}</h1>
               </div>
