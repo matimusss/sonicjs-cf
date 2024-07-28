@@ -201,14 +201,14 @@ function createAttributesForm(configData, productData) {
 
 
 // Generar los valores para cada atributo (ATTRIBUTE_VALUES)
- // (1) armamos el objeto
-  const attributeValuesDEPRECATED = attributes.reduce((acc, attr) => {
-    acc[attr.attribute_name] = attr.values.map(value => ({
-      value: value,
-      label: value
-    }));
-    return acc;
-  }, {});         
+// (1) armamos el objeto
+//  const attributeValuesDEPRECATED = attributes.reduce((acc, attr) => {
+//    acc[attr.attribute_name] = attr.values.map(value => ({
+//      value: value,
+//      label: value
+//    }));
+//    return acc;
+//  }, {});         
   
  
   const attributeValues = attributes.reduce((acc, attr) => {
@@ -239,13 +239,14 @@ const attributeComponents = attributes.map(attr => ({
         }
       ]
     },
+    
     data: {
-      values: attributeValues[attr.attribute_name]
+      values: attributeValues
     },
     dataSrc: 'values',
     template: '<span>{{ item.label }}</span>'
   }));
-
+ 
   Formio.createForm(document.getElementById('formio-attributes'), {
     components: [
       {
@@ -301,10 +302,13 @@ const attributeComponents = attributes.map(attr => ({
     const productAttributes = productData.product_attributes.map(attr => {
       let attributeObj = {
         attribute: attr.attribute_name
+ 
       };
       attributeObj[`value_${attr.attribute_name}`] = attr.attribute_value;
       return attributeObj;
     });
+ 
+ 
     console.log(productData);
     // Llenar el formulario con los valores de los atributos
     productAttributes.forEach(attr => {
