@@ -187,12 +187,6 @@ fetchConfigData().then(data => console.log(data));
 
 
 
-
-
-
-
-
-
                     function createAttributesForm(configData, productData) {
                       // Obtener los atributos del objeto configData
                       const attributes = configData.attributes;
@@ -205,7 +199,7 @@ fetchConfigData().then(data => console.log(data));
                     
                       // Generar los valores para cada atributo
                       const attributeValues = attributes.reduce((acc, attr) => {
-                        acc[attr.attribute_name] = attr.values.map(value => ({
+                        acc[attr.attribute_id] = attr.values.map(value => ({
                           value: value.value_id,
                           label: value.attribute_value
                         }));
@@ -215,7 +209,7 @@ fetchConfigData().then(data => console.log(data));
                       // Crear componentes dinámicamente para cada atributo
                       const attributeComponents = attributes.map(attr => ({
                         label: 'Valores',
-                        key: `value_${attr.attribute_name}`,
+                        key: `value_${attr.attribute_id}`,
                         type: 'select',
                         input: true,
                         conditional: {
@@ -225,12 +219,12 @@ fetchConfigData().then(data => console.log(data));
                             {
                               component: 'attribute',
                               operator: 'isEqual',
-                              value: attr.attribute_name // Establecer el atributo asociado a estos valores
+                              value: attr.attribute_id // Establecer el atributo asociado a estos valores
                             }
                           ]
                         },
                         data: {
-                          values: attributeValues[attr.attribute_name]
+                          values: attributeValues[attr.attribute_id]
                         },
                         dataSrc: 'values',
                         template: '<span>{{ item.label }}</span>'
@@ -291,9 +285,9 @@ fetchConfigData().then(data => console.log(data));
                         // Llenar el formulario con los atributos del producto
                         const productAttributes = productData.product_attributes.map(attr => {
                           let attributeObj = {
-                            attribute: attr.attribute_name
+                            attribute: attr.attribute_id // Cambiar attribute_name a attribute_id
                           };
-                          attributeObj[`value_${attr.attribute_name}`] = attr.attribute_value;
+                          attributeObj[`value_${attr.attribute_id}`] = attr.attribute_value;
                           return attributeObj;
                         });
                     
@@ -307,7 +301,7 @@ fetchConfigData().then(data => console.log(data));
                             }
                           });
                         });
-                      
+                    
                         form.submission = {
                           data: {
                             attributes_form: productAttributes
@@ -316,28 +310,6 @@ fetchConfigData().then(data => console.log(data));
                       });
                     }
                     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
