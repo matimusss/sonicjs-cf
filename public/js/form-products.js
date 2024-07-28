@@ -199,7 +199,7 @@ function createAttributesForm(configData, productData) {
 // Generar los objetos de atributos (ATTRIBUTES)
 //(1) iteramos sobre el objeto y listo, no requiere mas pasos 
   const attributeNames = attributes.map(attr => ({
-    value: attr.id,
+    value: attr.attribute_id,
     label: attr.attribute_name
   }));
 
@@ -214,14 +214,14 @@ function createAttributesForm(configData, productData) {
 //    return acc;
 //  }, {});         
   
- 
-  const attributeValues = attributes.reduce((acc, attr) => {
-    acc[attr.attribute_name] = attr.values.map(value => ({
-      value: value.id,    // Asignar el campo id a value
-      label: attr.attribute_name  // Asignar attribute_name a label
-    }));
-    return acc;
-  }, {});
+const attributeValues = attributes.reduce((acc, attr) => {
+  acc[attr.attribute_name] = attr.values.map(value => ({
+    value: value.value_id,    // Asignar el campo value_id a value
+    label: value.attribute_value  // Asignar attribute_value a label
+  }));
+  return acc;
+}, {});
+
   
 
 
