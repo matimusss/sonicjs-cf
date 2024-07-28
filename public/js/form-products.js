@@ -280,7 +280,7 @@ fetchConfigData().then(data => console.log(data));
                           }
                         ]
                       })
-                      .tableViewhen(function(form) {
+                      .then(function(form) {
 
                         attributesForm = form;  
                         // Llenar el formulario con los atributos del producto
