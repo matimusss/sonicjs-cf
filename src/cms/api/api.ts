@@ -291,7 +291,6 @@ tables.forEach((entry) => {
           if (data[0].variant_details) {
             const variantDetails = JSON.parse(data[0].variant_details);
             transformedData.variant_details = variantDetails.map(variant => {
-              // Asegúrate de parsear también los campos internos JSON de las variantes
               if (typeof variant.variant_attributes === 'string') {
                 variant.variant_attributes = JSON.parse(variant.variant_attributes);
               }
