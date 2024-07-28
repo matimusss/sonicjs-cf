@@ -51,6 +51,7 @@ SELECT
     json_group_array(
         DISTINCT json_object(
             'p_attribute_id', pa.id,
+            'p_attribute_value_id', pav.id,
             'attribute_id', a.id,
             'attribute_name', a.attribute_name,
             'attribute_value_id', av.id,
@@ -59,6 +60,7 @@ SELECT
     ) AS product_attributes,
     json_group_array(
         DISTINCT json_object(
+            'p_tag_id', pt.id,
             'tag_id', t.id,
             'tag_name', t.tag_name,
             'tag_icon', t.icon
@@ -66,6 +68,7 @@ SELECT
     ) AS tags,
     json_group_array(
         DISTINCT json_object(
+            'p_coupon_id', p_co.id,
             'coupon_id', cd.id,        
             'code', cd.code,
             'discount_value', cd.discount_value,
@@ -101,6 +104,8 @@ SELECT
             'variant_attributes', 
             json_group_array(
                 DISTINCT json_object(
+                    'p_variant_attribute_id', pa.id,
+                    'p_variant_attribute_value_id', av_pattr.id,
                     'variant_attribute_name_id', av_attr.id,
                     'variant_attribute_name', av_attr.attribute_name,
                     'variant_attribute_value_id', avv.id,
