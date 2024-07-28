@@ -332,7 +332,7 @@ tables.forEach((entry) => {
       return ctx.text('Error retrieving product full details', 500);
     }
   });
-  
+    
 
 
 

@@ -144,58 +144,54 @@ export async function getProduct(db, id) {
     const productQuery = `
 SELECT 
   p.id AS product_id, 
-  p.name, 
-  p.description, 
-  p.price, 
-  p.created_at,
-  -- Agregar IDs de atributos de producto
+  p.product_name, 
+  p.short_description, 
+  p.product_description, 
+  p.sale_price, 
+  p.compare_price, 
+  p.quantity,
   json_group_array(
     json_object(
-      'attribute_id', pa.id,
-      'attribute_name', a.name,
+      'attribute_id', a.id,
+      'attribute_name', a.attribute_name,
       'attribute_value_id', av.id,
-      'attribute_value', av.value
+      'attribute_value', av.attribute_value
     )
   ) AS product_attributes,
-  -- Agregar IDs de tags
   json_group_array(
     json_object(
-      'tag_id', pt.id,
-      'tag_name', t.name
+      'tag_id', t.id,
+      'tag_name', t.tag_name
     )
   ) AS tags,
-  -- Agregar IDs de cupones
   json_group_array(
     json_object(
       'coupon_id', c.id,
       'coupon_code', c.code
     )
   ) AS coupons,
-  -- Agregar IDs de imágenes
   json_group_array(
     json_object(
-      'image_id', pi.id,
-      'image_url', pi.url
+      'image_id', g.id,
+      'image_url', g.image
     )
   ) AS product_images,
-  -- Agregar IDs de proveedores
   json_group_array(
     json_object(
       'supplier_id', s.id,
-      'supplier_name', s.name
+      'supplier_name', s.supplier_name
     )
   ) AS suppliers,
-  -- Agregar IDs de detalles de variantes
   json_group_array(
     json_object(
       'variant_id', v.id,
-      'variant_name', v.name,
+      'variant_option', v.variant_option,
       'variant_attributes', json_group_array(
         json_object(
-          'variant_attribute_id', va.id,
-          'variant_attribute_name', a2.name,
-          'variant_attribute_value_id', av2.id,
-          'variant_attribute_value', av2.value
+          'variant_attribute_id', pa.id,
+          'variant_attribute_name', a2.attribute_name,
+          'variant_attribute_value_id', pav.id,
+          'variant_attribute_value', av2.attribute_value
         )
       )
     )
@@ -203,18 +199,21 @@ SELECT
 FROM products p
 LEFT JOIN product_attributes pa ON p.id = pa.product_id
 LEFT JOIN attributes a ON pa.attribute_id = a.id
-LEFT JOIN attribute_values av ON pa.attribute_value_id = av.id
+LEFT JOIN product_attribute_values pav ON pa.id = pav.product_attribute_id
+LEFT JOIN attribute_values av ON pav.attribute_value_id = av.id
 LEFT JOIN product_tags pt ON p.id = pt.product_id
 LEFT JOIN tags t ON pt.tag_id = t.id
 LEFT JOIN product_coupons pc ON p.id = pc.product_id
 LEFT JOIN coupons c ON pc.coupon_id = c.id
-LEFT JOIN product_images pi ON p.id = pi.product_id
+LEFT JOIN gallery g ON p.id = g.product_id
 LEFT JOIN product_suppliers ps ON p.id = ps.product_id
 LEFT JOIN suppliers s ON ps.supplier_id = s.id
 LEFT JOIN variants v ON p.id = v.product_id
-LEFT JOIN variant_attributes va ON v.id = va.variant_id
-LEFT JOIN attributes a2 ON va.attribute_id = a2.id
-LEFT JOIN attribute_values av2 ON va.attribute_value_id = av2.id
+LEFT JOIN variant_options vo ON v.variant_option_id = vo.id
+LEFT JOIN variant_values vv ON v.id = vv.variant_id
+LEFT JOIN product_attribute_values pav2 ON vv.product_attribute_value_id = pav2.id
+LEFT JOIN attributes a2 ON pav2.attribute_id = a2.id
+LEFT JOIN attribute_values av2 ON pav2.attribute_value_id = av2.id
 WHERE p.id = ?
 GROUP BY p.id;
     `;
