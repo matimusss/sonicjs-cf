@@ -59,7 +59,53 @@ fetchConfigData().then(data => console.log(data));
                   
           createAttributesCreationForm(configData, productData);
     createAttributesValuesCreationForm(configData, productData);
-                          
+    function getEditGridValues() {
+      if (!attributesForm) {
+        console.error("El formulario aún no se ha creado.");
+        return [];
+      }
+    
+      // Obtener los datos del componente editgrid
+      const editGridComponent = attributesForm.getComponent('attributes_form');
+      if (editGridComponent) {
+        const dataValues = editGridComponent.dataValue;
+    
+        // Juntar todos los campos "attribute" y sus valores
+        const attributeData = dataValues.map(item => {
+          const attributeId = item.attribute;
+          const attributeValues = Object.keys(item)
+            .filter(key => key.startsWith('value_'))
+            .map(key => item[key]);
+          return { attributeId, attributeValues };
+        });
+    
+        // Acceder al objeto configData y mapear los atributos
+        const mappedAttributes = attributeData.map(({ attributeId, attributeValues }) => {
+          const attribute = configData.attributes.find(attr => attr.attribute_id === attributeId);
+          if (attribute) {
+            const values = attributeValues.map(valueId => {
+              const value = attribute.values.find(val => val.value_id === valueId);
+              return value ? {
+                value_id: value.value_id,
+                attribute_value: value.attribute_value
+              } : null;
+            }).filter(val => val !== null);
+            return {
+              attribute_id: attribute.attribute_id,
+              attribute_name: attribute.attribute_name,
+              values
+            };
+          }
+          return null;
+        }).filter(attr => attr !== null);
+    
+        return mappedAttributes;
+      } else {
+        console.error("No se encontró el componente editgrid.");
+        return [];
+      }
+    }
+    
   
                                     }
 
@@ -896,52 +942,6 @@ const data = productData;
 };
 
  
-function getEditGridValues() {
-  if (!attributesForm) {
-    console.error("El formulario aún no se ha creado.");
-    return [];
-  }
-
-  // Obtener los datos del componente editgrid
-  const editGridComponent = attributesForm.getComponent('attributes_form');
-  if (editGridComponent) {
-    const dataValues = editGridComponent.dataValue;
-
-    // Juntar todos los campos "attribute" y sus valores
-    const attributeData = dataValues.map(item => {
-      const attributeId = item.attribute;
-      const attributeValues = Object.keys(item)
-        .filter(key => key.startsWith('value_'))
-        .map(key => item[key]);
-      return { attributeId, attributeValues };
-    });
-
-    // Acceder al objeto configData y mapear los atributos
-    const mappedAttributes = attributeData.map(({ attributeId, attributeValues }) => {
-      const attribute = configData.attributes.find(attr => attr.attribute_id === attributeId);
-      if (attribute) {
-        const values = attributeValues.map(valueId => {
-          const value = attribute.values.find(val => val.value_id === valueId);
-          return value ? {
-            value_id: value.value_id,
-            attribute_value: value.attribute_value
-          } : null;
-        }).filter(val => val !== null);
-        return {
-          attribute_id: attribute.attribute_id,
-          attribute_name: attribute.attribute_name,
-          values
-        };
-      }
-      return null;
-    }).filter(attr => attr !== null);
-
-    return mappedAttributes;
-  } else {
-    console.error("No se encontró el componente editgrid.");
-    return [];
-  }
-}
 
 
 
