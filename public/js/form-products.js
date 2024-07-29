@@ -526,7 +526,10 @@ function createVariantsForm(configData, productData) {
     }
   }
   
-console.log(getEditGridValues());
+  setTimeout(() => {console.log(getEditGridValues());
+
+  }, 1000);
+  
 
 
 
