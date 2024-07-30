@@ -319,7 +319,7 @@ fetchConfigData().then(data => console.log(data));
                                 {
                                   component: 'variantAttribute',
                                   operator: 'isEqual',
-                                  value: 'culohecho'               //MODIFICAR, = ATTRIBUTE_NAME
+                                  value: 'd6785ab0-bc81-4e57-b0f9-7c3d5e55fb7a'               //MODIFICAR, = ATTRIBUTE_NAME
                                 }
                               ]
                             },
