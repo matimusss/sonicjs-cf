@@ -53,13 +53,12 @@ export const Head = () => {
 
       <meta name='theme-color' content='#712cf9' />
 
-      <link href='/public/css/admin.css' rel='stylesheet' />
+  
       <link href='/public/css/gridjs.css' rel='stylesheet' />
       <link href='/public/css/uppy.css' rel='stylesheet' />
       <link href='/public/css/gallery.css' rel='stylesheet' />
 
     
-
 
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -80,6 +79,7 @@ export const Head = () => {
     <script src="https://unpkg.com/grapesjs-style-bg@2.0.1"></script>
 
 
+    <link href='/public/css/admin.css' rel='stylesheet' />
 
     </head>
   );
