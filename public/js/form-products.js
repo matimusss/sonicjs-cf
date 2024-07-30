@@ -231,11 +231,7 @@ fetchConfigData().then(data => console.log(data));
 
 
 
-
                     function createAttributesForm(configData, productData) {
-
-
-
                       // Obtener los atributos del objeto configData
                       const attributes = configData.attributes;
                     
@@ -272,65 +268,32 @@ fetchConfigData().then(data => console.log(data));
                           ]
                         },
                         data: {
-                          values: attributeValues[attr.attribute_id]
+                          values: attributeValues[attr.attribute_id] || [] // Asegurarse de que haya valores
                         },
                         dataSrc: 'values',
                         template: '<span>{{ item.label }}</span>'
                       }));
-
-
-     
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     
                       // Crear el formulario usando Formio
                       Formio.createForm(document.getElementById('formio-attributes'), {
                         components: [
-                 
-                  {
+                          {
                             label: 'Atributos de la variante',
                             key: 'variantAttribute',
                             type: 'select',
                             input: true,
                             tableView: true,
                             data: {
-                              values: attributeNames //POR CADA ATRIBUTO, una opcion
+                              values: attributeNames // POR CADA ATRIBUTO, una opción
                             },
                             multiple: true,
                             dataSrc: 'values',
                             template: '<span>{{ item.label }}</span>'
-                  },       
-
-
-                  ...attributeComponents // Añadir dinámicamente los componentes de valores
-
-
-
-
-                //fin componentes 
-                ] 
+                          },
+                          ...attributeComponents // Añadir dinámicamente los componentes de valores
+                        ]
                       })
                       .then(function(form) {
-
-                        attributesForm = form;  
                         // Llenar el formulario con los atributos del producto
                         const productAttributes = productData.product_attributes.map(attr => {
                           let attributeObj = {
@@ -339,9 +302,9 @@ fetchConfigData().then(data => console.log(data));
                           attributeObj[`value_${attr.attribute_id}`] = attr.attribute_value_id;
                           return attributeObj;
                         });
-                        
+                    
                         console.log(productData);
-                        
+                    
                         // Llenar el formulario con los valores de los atributos
                         productAttributes.forEach(attr => {
                           const attributeKey = `value_${attr.attribute}`;
@@ -359,9 +322,6 @@ fetchConfigData().then(data => console.log(data));
                       });
                     }
                     
-
-
-
 
 
 
