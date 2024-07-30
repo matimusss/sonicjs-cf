@@ -198,9 +198,7 @@ fetchConfigData().then(data => console.log(data));
 
 
 
-
                     function createAttributesForm(configData, productData) {
-
                       // Obtener los atributos del objeto configData
                       const attributes = configData.attributes;
                     
@@ -240,11 +238,12 @@ fetchConfigData().then(data => console.log(data));
                           values: attributeValues[attr.attribute_id] || [] // Asegurarse de que haya valores
                         },
                         dataSrc: 'values',
-                        template: '<span>{{ item.label }}</span>'
+                        template: '<span>{{ item.label }}</span>',
+                        defaultValue: (productData.product_attributes.find(pAttr => pAttr.attribute_id === attr.attribute_id) || {}).attribute_value_id || [] // Establecer valor predeterminado
                       }));
                     
                       // Crear el formulario usando Formio
-                      Formio.createForm(document.getElementById('formio-attributes'), {
+                      const formDefinition = {
                         components: [
                           {
                             label: 'Atributos de la variante',
@@ -257,43 +256,20 @@ fetchConfigData().then(data => console.log(data));
                             },
                             multiple: true,
                             dataSrc: 'values',
-                            template: '<span>{{ item.label }}</span>'
+                            template: '<span>{{ item.label }}</span>',
+                            defaultValue: productData.product_attributes.map(attr => attr.attribute_id) // Valores iniciales
                           },
                           ...attributeComponents // Añadir dinámicamente los componentes de valores
                         ]
-                      })
-                      .then(function(form) {
-                        // Establecer valores iniciales en el select múltiple
-                        const selectedAttributes = productData.product_attributes.map(attr => attr.attribute_id);
+                      };
                     
-                        form.getComponent('variantAttribute').setValue(selectedAttributes);
-                    
-                        // Establecer valores iniciales en los campos secundarios
-                        productData.product_attributes.forEach(attr => {
-                          const attributeKey = `value_${attr.attribute_id}`;
-                          const valueComponent = form.getComponent(attributeKey);
-                          if (valueComponent) {
-                            valueComponent.setValue(attr.attribute_value_id);
-                          }
+                      // Crear el formulario
+                      Formio.createForm(document.getElementById('formio-attributes'), formDefinition)
+                        .then(form => {
+                          // Aquí, si es necesario, puedes ajustar los valores después de que el formulario haya sido creado
                         });
-                    
-                        // Configurar la presentación del formulario
-                        form.submission = {
-                          data: {
-                            variantAttribute: productData.product_attributes.map(attr => ({
-                              attribute_id: attr.attribute_id,
-                              value_id: attr.attribute_value_id
-                            }))
-                          }
-                        };
-                      });
                     }
                     
-
-
-
-
-
 
 
 
