@@ -39,12 +39,11 @@ async function fetchConfigData() {
   // Añadir el nuevo arreglo de atributos agrupados al objeto principal
   data.attributes = groupedAttributes;
 
-  console.log(data);
   return data;
 }
 
 // Llamar a la función para obtener los datos
-fetchConfigData().then(data => console.log(data));
+fetchConfigData();
 
 
 // EJECUCION DE LAS FUNCIONES DE FORM.IO //
@@ -335,6 +334,9 @@ fetchConfigData().then(data => console.log(data));
 
 
                     function createTagsForm(configData, productData) {
+                      console.log(productData);
+                      console.log(configData);
+                      
                       // Generar los objetos de tags (TAGS)
                       const tags = configData.tags;
                     
@@ -361,7 +363,10 @@ fetchConfigData().then(data => console.log(data));
                             },
                             dataSrc: 'values',
                             template: '<span>{{ item.label }}</span>',
-                            defaultValue: productTagIds // Establecer valores predeterminados con los IDs
+                            defaultValue: (productData.product_attributes.find(pAttr => pAttr.attribute_id === attr.attribute_id) || {}).attribute_value_id || [] // Establecer valor predeterminado
+
+
+
                           }
                         ]
                       });
