@@ -320,7 +320,7 @@ fetchConfigData().then(data => console.log(data));
                         });
                         form.submission = {
                           data: {
-                            attributes_form: productAttributes
+                            variantAttribute: productAttributes
                           }
                         };
                       });
