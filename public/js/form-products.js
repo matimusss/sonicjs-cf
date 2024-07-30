@@ -359,19 +359,17 @@ fetchConfigData();
                             input: true,
                             multiple: true,
                             data: {
-                              values: tagNames
+                              values: productData.tags.map(tag => ({
+                                value: tag.id,       // ID del tag para identificarlo en el backend
+                                label: tag.tag_name // Nombre del tag para mostrar en la interfaz
+                              }))
                             },
                             dataSrc: 'values',
                             template: '<span>{{ item.label }}</span>',
-                            defaultValue: (productData.tags.map(tag => ({
-                              value: tag.tag_id,
-                              label: tag.tag_name
-                          })).filter(tag => productData.product_tags && productData.product_tags.find(pTag => pTag.tag_id === tag.value)) || [])
-                          
-
-
+                            defaultValue: productData.tags.map(tag => tag.id) // IDs de los tags que deben estar seleccionados por defecto
                           }
                         ]
+                        
                       });
                     }
                     
