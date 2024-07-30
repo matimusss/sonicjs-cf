@@ -187,12 +187,6 @@ fetchConfigData().then(data => console.log(data));
 
 
 
-
-
-
-
-
-
                     function createAttributesForm(configData, productData) {
                       // Obtener los atributos del objeto configData
                       const attributes = configData.attributes;
@@ -257,11 +251,7 @@ fetchConfigData().then(data => console.log(data));
                                 '<div class="row">' +
                                 '  {% util.eachComponent(components, function(component) { %}' +
                                 '    <div class="col-sm-2">' +
-                                '      {% if (component.key === "attribute") { %}' +
-                                '        {{ row[component.key].label }}' + // Mostrar el label del atributo
-                                '      {% else %}' +
-                                '        {{ row[component.key].label }}' + // Mostrar el label del valor
-                                '      {% endif %}' +
+                                '      {{ row[component.key] }}' +
                                 '    </div>' +
                                 '  {% }) %}' +
                                 '  <div class="col-sm-2">' +
@@ -289,23 +279,23 @@ fetchConfigData().then(data => console.log(data));
                             ]
                           }
                         ]
-                      }).then(function(form) {
+                      })
+                      .then(function(form) {
+
                         attributesForm = form;  
                         // Llenar el formulario con los atributos del producto
+                        
+                        
                         const productAttributes = productData.product_attributes.map(attr => {
                           let attributeObj = {
-                            attribute: {
-                              value: attr.attribute_id,
-                              label: attributes.find(a => a.attribute_id === attr.attribute_id).attribute_name
-                            }
+                            attribute: attr.attribute_id // Cambiar attribute_name a attribute_id
                           };
-                          attributeObj[`value_${attr.attribute_id}`] = {
-                            value: attr.attribute_value_id,
-                            label: attributeValues[attr.attribute_id].find(v => v.value === attr.attribute_value_id).label
-                          };
+                          attributeObj[`value_${attr.attribute_id}`] = attr.attribute_value_id;
                           return attributeObj;
                         });
-                    
+                        
+                        console.log(productData);
+                        
                         // Llenar el formulario con los valores de los atributos
                         productAttributes.forEach(attr => {
                           const attributeKey = `value_${attr.attribute}`;
@@ -315,6 +305,9 @@ fetchConfigData().then(data => console.log(data));
                             }
                           });
                         });
+                        
+                        
+             
                     
                         form.submission = {
                           data: {
@@ -324,6 +317,10 @@ fetchConfigData().then(data => console.log(data));
                       });
                     }
                     
+
+
+
+
 
 
 
