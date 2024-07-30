@@ -261,7 +261,7 @@ fetchConfigData().then(data => console.log(data));
                           conjunction: 'all',
                           conditions: [
                             {
-                              component: 'attribute',
+                              component: 'variantAttribute',
                               operator: 'isEqual',
                               value: attr.attribute_id // Establecer el atributo asociado a estos valores
                             }
@@ -273,6 +273,9 @@ fetchConfigData().then(data => console.log(data));
                         dataSrc: 'values',
                         template: '<span>{{ item.label }}</span>'
                       }));
+
+
+
                     
                       // Crear el formulario usando Formio
                       Formio.createForm(document.getElementById('formio-attributes'), {
