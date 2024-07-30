@@ -303,10 +303,11 @@ fetchConfigData().then(data => console.log(data));
                             attribute: attr.attribute_id // Cambiar attribute_name a attribute_id
                           };
                           attributeObj[`value_${attr.attribute_id}`] = attr.attribute_value_id;
+                          
+                        console.log(attributeObj);
                           return attributeObj;
                         });
                     
-                        console.log(productData);
                     
                         // Llenar el formulario con los valores de los atributos
                         productAttributes.forEach(attr => {
