@@ -352,6 +352,7 @@ fetchConfigData();
   {
     label: 'Tags',
     key: 'tags',
+    placeholder: 'eLEGI LOS TAGS',
     type: 'select',
     input: true,
     multiple: true,
