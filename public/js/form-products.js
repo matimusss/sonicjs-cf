@@ -369,8 +369,14 @@ fetchConfigData();
   }
 ]
 
-                      });
-                    }
+                      }).then(form => {
+                      // Aquí, si es necesario, puedes ajustar los valores después de que el formulario haya sido creado
+                     tagsForm = form;
+
+                    });
+                }
+                
+
                     
 
 
