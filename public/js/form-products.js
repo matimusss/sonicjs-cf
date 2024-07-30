@@ -221,6 +221,7 @@ fetchConfigData();
                         label: 'Valores',
                         key: `value_${attr.attribute_id}`,
                         type: 'select',
+    placeholder: '+ATRIBUTOS',
                         input: true,
                         conditional: {
                           show: true,
