@@ -361,14 +361,13 @@ fetchConfigData();
     dataSrc: 'values',
     template: '<span>{{ item.label }}</span>',
     defaultValue: productData.tags.map(attr => attr.tag_id) // Valores iniciales
-
+    customClass: "choto",
   }
 ]
 
                       }).then(form => {
                       // Aquí, si es necesario, puedes ajustar los valores después de que el formulario haya sido creado
                      tagsForm = form;
-
                     });
                 }
                 
