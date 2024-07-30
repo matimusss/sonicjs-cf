@@ -346,13 +346,6 @@ fetchConfigData();
                         label: tag.tag_name,
                       }));
                     
-                      const productTags = productData.tags;
-
-              // Crear los nombres de tags para el select, pero con los valores como IDs
-              const tagValues = productTags.map(tag => ({
-                value: tag.tag_id,
-                label: tag.tag_name,
-              }));
 
 
 
@@ -371,7 +364,8 @@ fetchConfigData();
     },
     dataSrc: 'values',
     template: '<span>{{ item.label }}</span>',
-    defaultValue: tagValues
+    defaultValue: productData.tags.map(attr => attr.tag_id) // Valores iniciales
+
   }
 ]
 
