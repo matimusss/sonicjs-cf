@@ -346,30 +346,35 @@ fetchConfigData();
                         label: tag.tag_name,
                       }));
                     
-                      // Obtener los IDs de los tags del producto para establecer valores predeterminados
-                      const productTagIds = productData.tags.map(tag => tag.id);
-                    
+                      const productTags = productData.tags;
+
+              // Crear los nombres de tags para el select, pero con los valores como IDs
+              const tagValues = productTags.map(tag => ({
+                value: tag.tag_id,
+                label: tag.tag_name,
+              }));
+
+
+
+            
                       // Crear el formulario usando Formio
                       Formio.createForm(document.getElementById('formio-tags'), {
-                        components: [
-                          {
-                            label: 'Tags',
-                            key: 'tags',
-                            type: 'select',
-                            input: true,
-                            multiple: true,
-                            data: {
-                              values: productData.tags.map(tag => ({
-                                value: tag.id,       // ID del tag para identificarlo en el backend
-                                label: tag.tag_name // Nombre del tag para mostrar en la interfaz
-                              }))
-                            },
-                            dataSrc: 'values',
-                            template: '<span>{{ item.label }}</span>',
-                            defaultValue: productData.tags.map(tag => tag.id) // IDs de los tags que deben estar seleccionados por defecto
-                          }
-                        ]
-                        
+      components: [
+  {
+    label: 'Tags',
+    key: 'tags',
+    type: 'select',
+    input: true,
+    multiple: true,
+    data: {
+      values: tagNames
+    },
+    dataSrc: 'values',
+    template: '<span>{{ item.label }}</span>',
+    defaultValue: tagValues
+  }
+]
+
                       });
                     }
                     
