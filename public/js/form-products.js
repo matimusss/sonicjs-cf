@@ -277,6 +277,29 @@ fetchConfigData().then(data => console.log(data));
                         dataSrc: 'values',
                         template: '<span>{{ item.label }}</span>'
                       }));
+
+
+     
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     
                       // Crear el formulario usando Formio
                       Formio.createForm(document.getElementById('formio-attributes'), {
@@ -297,36 +320,11 @@ fetchConfigData().then(data => console.log(data));
                   },       
 
 
+                  ...attributeComponents // Añadir dinámicamente los componentes de valores
 
 
-                  // POR CADA ATTRIBUTE que hay, tenemos ya cargados los valores, se muestran si el atributo se elige en el select anterior.
-                  {
-                            label: 'Valores',
-                            key: 'variantAttributeValueWeigh',
-                            type: 'select',
-                            input: true,
-                            conditional: {
-                              show: true,
-                              conjunction: "all",
-                              conditions: [ 
-                                {
-                                  component: 'variantAttribute',
-                                  operator: 'isEqual',
-                                  value: 'd6785ab0-bc81-4e57-b0f9-7c3d5e55fb7a' //id del atributo  asociadoobviamente
-                                }
-                              ]
-                            },
-                             // tableView:  false,   // YA NO HAY TABLA
-                            data: {
-                              values: [                //POPULAR CON LOS/EL ATTRIBUTE_VALUES ASOCIADOS.
-                              ]
-                            },
-                            dataSrc: 'values',
-                            template: '<span>{{ item.label }}</span>'
-                  },
 
 
-                  
                 //fin componentes 
                 ] 
                       })
