@@ -235,3 +235,26 @@ html[data-bs-theme="dark"] .btn-warning {
   padding: 5px 10px; /* Cambiar el relleno */
   border-radius: 3px; /* Cambiar el borde del botón */
 }
+
+
+.choices__list--multiple .choices__item {
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 3.75px;
+  margin-bottom: 3.75px;
+  background-color: #000000;
+  border: 1px solid #ffffff;
+  color: #fff;
+  word-break: break-all;
+  box-sizing: border-box
+}
+
+
+.choices__list--multiple .choices__item.is-highlighted {
+  background-color: #1c393d;
+  border: 1px solid #ffffff
+}
