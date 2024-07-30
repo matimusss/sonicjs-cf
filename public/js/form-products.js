@@ -267,6 +267,8 @@ fetchConfigData().then(data => console.log(data));
                       Formio.createForm(document.getElementById('formio-attributes'), formDefinition)
                         .then(form => {
                           // Aquí, si es necesario, puedes ajustar los valores después de que el formulario haya sido creado
+                          attributesForm = form;
+
                         });
                     }
                     
