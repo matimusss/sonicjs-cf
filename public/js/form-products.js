@@ -334,88 +334,39 @@ fetchConfigData().then(data => console.log(data));
 
 
 
-
-
-function createTagsForm(configData, productData) {
-// Generar los objetos de tags (TAGS)
-//(1) iteramos sobre el objeto y listo, no requiere mas pasos 
-const tags = configData.tags;
-
-const tagNames = tags.map(tags => ({
-  value: tags.tag_name,
-  label: tags.tag_name,
-}));
-
-Formio.createForm(document.getElementById('formio-tags'), {
-      components: [
-          {
-            label: 'Tags',
-            key: 'tags',
-            type: 'editgrid',
-            input: true,
-            templates: {
-              header: '' +
-                '<div class="row">' +
-                '  {% util.eachComponent(components, function(component) { %} ' +
-                '    <div class="col-sm-2">' +
-                '      <strong>{{ component.label }}</strong>' +
-                '    </div>' +
-                '  {% }) %}' +
-                '</div>',
-              row: '' +
-                '<div class="row">' +
-                '  {%util.eachComponent(components, function(component) { %}' +
-                '    <div class="col-sm-2">' +
-                '      {{ row[component.key] }}' +
-                '    </div>' +
-                '  {% }) %}' +
-                '  <div class="col-sm-2">' +
-                '    <div class="btn-group pull-right">' +
-                '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
-                '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
-                '    </div>' +
-                '  </div>' +
-                '</div>',
-              footer: ''
-            },
-            components: [
-              {
-                label: 'Nombre de Tag',
-                key: 'tagName',
-                type: 'select',
-                input: true,
-                data: {
-                  values: tagNames
-                  // map sobre TODOS los tag_name y tag_id que NO esten aplicados al producto (tags- product_tags)
-                  //{value: 'tag.id', label: 'tag.name'}    
-                },
-                dataSrc: "values",
-                template: '<span>{{ item.label }}</span>'
-              }
-//agregar componente oculto o bloqueado para ID,
-            ]
-          }
-        ]
-    })
-    .then(function(form) {
-      tagsForm = form;
-      // Llenar el formulario con los atributos del producto
-      const productTags = productData.tags.map(tag => {
-        let tagObj = {
-          tagName: tag.tag_name
-        };
-        console.log(productData);        
-        return tagObj;
-      });
-
-      form.submission = {
-        data: {
-          tags: productTags
-        }
-      };
-    });
-  };
-
+                    function createTagsForm(configData, productData) {
+                      // Generar los objetos de tags (TAGS)
+                      const tags = configData.tags;
+                    
+                      // Crear los nombres de tags para el select, pero con los valores como IDs
+                      const tagNames = tags.map(tag => ({
+                        value: tag.id,
+                        label: tag.tag_name,
+                      }));
+                    
+                      // Obtener los IDs de los tags del producto para establecer valores predeterminados
+                      const productTagIds = productData.tags.map(tag => tag.id);
+                    
+                      // Crear el formulario usando Formio
+                      Formio.createForm(document.getElementById('formio-tags'), {
+                        components: [
+                          {
+                            label: 'Tags',
+                            key: 'tags',
+                            type: 'select',
+                            input: true,
+                            multiple: true,
+                            data: {
+                              values: tagNames
+                            },
+                            dataSrc: 'values',
+                            template: '<span>{{ item.label }}</span>',
+                            defaultValue: productTagIds // Establecer valores predeterminados con los IDs
+                          }
+                        ]
+                      });
+                    }
+                    
 
 
 
