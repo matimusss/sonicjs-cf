@@ -363,8 +363,11 @@ fetchConfigData();
                             },
                             dataSrc: 'values',
                             template: '<span>{{ item.label }}</span>',
-                            defaultValue: (productData.product_attributes.find(pAttr => pAttr.attribute_id === attr.attribute_id) || {}).attribute_value_id || [] // Establecer valor predeterminado
-
+                            defaultValue: (productData.tags.map(tag => ({
+                              value: tag.tag_id,
+                              label: tag.tag_name
+                          })).filter(tag => productData.product_tags && productData.product_tags.find(pTag => pTag.tag_id === tag.value)) || [])
+                          
 
 
                           }
