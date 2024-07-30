@@ -345,11 +345,7 @@ fetchConfigData();
                         value: tag.id,
                         label: tag.tag_name,
                       }));
-                    
 
-
-
-            
                       // Crear el formulario usando Formio
                       Formio.createForm(document.getElementById('formio-tags'), {
       components: [
