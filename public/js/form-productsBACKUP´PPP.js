@@ -187,55 +187,7 @@ fetchConfigData().then(data => console.log(data));
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     function createAttributesForm(configData, productData) {
-
-
-
                       // Obtener los atributos del objeto configData
                       const attributes = configData.attributes;
                     
@@ -281,59 +233,52 @@ fetchConfigData().then(data => console.log(data));
                       // Crear el formulario usando Formio
                       Formio.createForm(document.getElementById('formio-attributes'), {
                         components: [
-                          {             //especial atencion a este componente hidden que junta los valores para mostrarlos en una sola columna.
-                            // SINO ES UN KIULOMBO
-                            label: 'Valores juntados',
-                            key: 'a',
-                            type: 'hidden',
+                          {
+                            label: 'Atributos',
+                            key: 'attributes_form',
+                            type: 'editgrid',
                             input: true,
-                            tableView: true,
-                          },
-                  
-                  // POPULAR CON CADA ATTRIBUTo DEL PRODUCTO (desde el FORM)
-                  {
-                            label: 'Atributos de la variante',
-                            key: 'variantAttribute',
-                            type: 'select',
-                            input: true,
-                            tableView: true,
-                            data: {
-                              values: attributeNames
+                            templates: {
+                              header: '' +
+                                '<div class="row">' +
+                                '  {% util.eachComponent(components, function(component) { %} ' +
+                                '    <div class="col-sm-2">' +
+                                '      <strong>{{ component.label }}</strong>' +
+                                '    </div>' +
+                                '  {% }) %}' +
+                                '</div>',
+                              row: '' +
+                                '<div class="row">' +
+                                '  {% util.eachComponent(components, function(component) { %}' +
+                                '    <div class="col-sm-2">' +
+                                '      {{ row[component.key] }}' +
+                                '    </div>' +
+                                '  {% }) %}' +
+                                '  <div class="col-sm-2">' +
+                                '    <div class="btn-group pull-right">' +
+                                '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
+                                '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
+                                '    </div>' +
+                                '  </div>' +
+                                '</div>',
+                              footer: '  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">  Open Form.io Modal  </button>'
                             },
-                            multiple: true,
-                            dataSrc: 'values',
-                            template: '<span>{{ item.label }}</span>'
-                  },
-                  
-
-                  // POR CADA ATTRIBUTE que tiene el producto,  MOSTRAMOS SUS ATTRIBUTE VALUES, tomarlo del form
-                  {
-                            label: 'Valores',
-                            key: 'variantAttributeValueWeigh',
-                            type: 'select',
-                            input: true,
-                            conditional: {
-                              show: true,
-                              conjunction: "all",
-                              conditions: [ 
-                                {
-                                  component: 'variantAttribute',
-                                  operator: 'isEqual',
-                                  value: 'culohecho'               //MODIFICAR, = ATTRIBUTE_NAME
-                                }
-                              ]
-                            },
-                            tableView:  false,   //NO SACAR EL TABLEVIEW FALSE, LA ONDA ES QUE NO SE VEA ESTO, Y SE VEA EL CAMPO OCUTLO "a"
-                            data: {
-                              values: [                //POPULAR CON LOS/EL ATTRIBUTE_VALUES ASOCIADOS.
-                            
-                              ]
-                            },
-                            dataSrc: 'values',
-                            template: '<span>{{ item.label }}</span>'
-                  },
-                            ] 
-                    
+                            components: [
+                              {
+                                label: 'Atributo',
+                                key: 'attribute',
+                                type: 'select',
+                                input: true,
+                                data: {
+                                  values: attributeNames
+                                },
+                                dataSrc: 'values',
+                                template: '<span>{{ item.label }}</span>'
+                              },
+                              ...attributeComponents // Añadir dinámicamente los componentes de valores
+                            ]
+                          }
+                        ]
                       })
                       .then(function(form) {
 
@@ -372,56 +317,6 @@ fetchConfigData().then(data => console.log(data));
                       });
                     }
                     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -803,7 +698,7 @@ Formio.createForm(document.getElementById('formio-variants'),   {
           conditional: {
             show: true,
             conjunction: "all",
-            conditions: [ 
+            conditions: [
               {
                 component: 'variantAttribute',
                 operator: 'isEqual',
