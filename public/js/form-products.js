@@ -199,39 +199,8 @@ fetchConfigData().then(data => console.log(data));
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     function createAttributesForm(configData, productData) {
+
                       // Obtener los atributos del objeto configData
                       const attributes = configData.attributes;
                     
@@ -273,9 +242,6 @@ fetchConfigData().then(data => console.log(data));
                         dataSrc: 'values',
                         template: '<span>{{ item.label }}</span>'
                       }));
-
-
-
                     
                       // Crear el formulario usando Formio
                       Formio.createForm(document.getElementById('formio-attributes'), {
@@ -287,7 +253,7 @@ fetchConfigData().then(data => console.log(data));
                             input: true,
                             tableView: true,
                             data: {
-                              values: attributeNames // POR CADA ATRIBUTO, una opción
+                              values: attributeNames // Por cada atributo, una opción
                             },
                             multiple: true,
                             dataSrc: 'values',
@@ -297,46 +263,32 @@ fetchConfigData().then(data => console.log(data));
                         ]
                       })
                       .then(function(form) {
-                        // Llenar el formulario con los atributos del producto
-                        const productAttributes = productData.product_attributes.map(attr => {
-                          let attributeObj = {
-                            attribute: attr.attribute_id // Cambiar attribute_name a attribute_id
-                          };
-                          attributeObj[`value_${attr.attribute_id}`] = attr.attribute_value_id;
-                          
-                        console.log(attributeObj);
-                          return attributeObj;
+                        // Establecer valores iniciales en el select múltiple
+                        const selectedAttributes = productData.product_attributes.map(attr => attr.attribute_id);
+                    
+                        form.getComponent('variantAttribute').setValue(selectedAttributes);
+                    
+                        // Establecer valores iniciales en los campos secundarios
+                        productData.product_attributes.forEach(attr => {
+                          const attributeKey = `value_${attr.attribute_id}`;
+                          const valueComponent = form.getComponent(attributeKey);
+                          if (valueComponent) {
+                            valueComponent.setValue(attr.attribute_value_id);
+                          }
                         });
                     
-                    
-                        // Llenar el formulario con los valores de los atributos
-                        productAttributes.forEach(attr => {
-                          const attributeKey = `value_${attr.attribute}`;
-                          form.components.forEach(component => {
-                            if (component.key === attributeKey) {
-                              component.setValue(attr[attributeKey]);
-                            }
-                          });
-                        });
+                        // Configurar la presentación del formulario
                         form.submission = {
                           data: {
-                            variantAttribute: productAttributes
+                            variantAttribute: productData.product_attributes.map(attr => ({
+                              attribute_id: attr.attribute_id,
+                              value_id: attr.attribute_value_id
+                            }))
                           }
                         };
                       });
                     }
                     
-
-
-
-
-
-
-
-
-
-
-
 
 
 
