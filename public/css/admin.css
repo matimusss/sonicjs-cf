@@ -213,7 +213,7 @@ html[data-bs-theme="dark"] .btn-warning {
 
 
 
-.choices__item {
+.choices__item--selectable {
   background-color: #f0f0f0; /* Cambiar el fondo */
   color: #333; /* Cambiar el color del texto */
   border-radius: 5px; /* Cambiar el borde */
