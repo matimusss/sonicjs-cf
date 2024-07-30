@@ -281,16 +281,7 @@ fetchConfigData().then(data => console.log(data));
                       // Crear el formulario usando Formio
                       Formio.createForm(document.getElementById('formio-attributes'), {
                         components: [
-                          {             //especial atencion a este componente hidden que junta los valores para mostrarlos en una sola columna.
-                            // SINO ES UN KIULOMBO
-                            label: 'Valores juntados',
-                            key: 'a',
-                            type: 'hidden',
-                            input: true,
-                            tableView: true,
-                          },
-                  
-                  // POPULAR CON CADA ATTRIBUTo DEL PRODUCTO (desde el FORM)
+                 
                   {
                             label: 'Atributos de la variante',
                             key: 'variantAttribute',
@@ -298,15 +289,17 @@ fetchConfigData().then(data => console.log(data));
                             input: true,
                             tableView: true,
                             data: {
-                              values: attributeNames
+                              values: attributeNames //POR CADA ATRIBUTO, una opcion
                             },
                             multiple: true,
                             dataSrc: 'values',
                             template: '<span>{{ item.label }}</span>'
-                  },
-                  
+                  },       
 
-                  // POR CADA ATTRIBUTE que tiene el producto,  MOSTRAMOS SUS ATTRIBUTE VALUES, tomarlo del form
+
+
+
+                  // POR CADA ATTRIBUTE que hay, tenemos ya cargados los valores, se muestran si el atributo se elige en el select anterior.
                   {
                             label: 'Valores',
                             key: 'variantAttributeValueWeigh',
@@ -319,28 +312,28 @@ fetchConfigData().then(data => console.log(data));
                                 {
                                   component: 'variantAttribute',
                                   operator: 'isEqual',
-                                  value: 'd6785ab0-bc81-4e57-b0f9-7c3d5e55fb7a'               //MODIFICAR, = ATTRIBUTE_NAME
+                                  value: 'd6785ab0-bc81-4e57-b0f9-7c3d5e55fb7a' //id del atributo  asociadoobviamente
                                 }
                               ]
                             },
-                            tableView:  false,   //NO SACAR EL TABLEVIEW FALSE, LA ONDA ES QUE NO SE VEA ESTO, Y SE VEA EL CAMPO OCUTLO "a"
+                             // tableView:  false,   // YA NO HAY TABLA
                             data: {
                               values: [                //POPULAR CON LOS/EL ATTRIBUTE_VALUES ASOCIADOS.
-                            
                               ]
                             },
                             dataSrc: 'values',
                             template: '<span>{{ item.label }}</span>'
                   },
-                            ] 
-                    
+
+
+                  
+                //fin componentes 
+                ] 
                       })
                       .then(function(form) {
 
                         attributesForm = form;  
                         // Llenar el formulario con los atributos del producto
-                        
-                        
                         const productAttributes = productData.product_attributes.map(attr => {
                           let attributeObj = {
                             attribute: attr.attribute_id // Cambiar attribute_name a attribute_id
@@ -360,10 +353,6 @@ fetchConfigData().then(data => console.log(data));
                             }
                           });
                         });
-                        
-                        
-             
-                    
                         form.submission = {
                           data: {
                             attributes_form: productAttributes
