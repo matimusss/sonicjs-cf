@@ -360,8 +360,8 @@ fetchConfigData();
     },
     dataSrc: 'values',
     template: '<span>{{ item.label }}</span>',
-    defaultValue: productData.tags.map(attr => attr.tag_id) // Valores iniciales
-    customClass: "choto",
+    defaultValue: productData.tags.map(attr => attr.tag_id), // Valores iniciales
+    customClass: "choto"
   }
 ]
 
