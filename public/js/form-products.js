@@ -193,9 +193,11 @@ fetchConfigData();
 
 
 
-                    function createVariantsForm(configData, productData) {
-                      const variants = productData.variant_details;
-                    
+
+
+
+
+                    function createAttributesForm(configData, productData) {
                       // Obtener los atributos del objeto configData
                       const attributes = configData.attributes;
                     
@@ -219,6 +221,7 @@ fetchConfigData();
                         label: 'Valores',
                         key: `value_${attr.attribute_id}`,
                         type: 'select',
+    placeholder: '+ATRIBUTOS0',
                         input: true,
                         conditional: {
                           show: true,
@@ -235,173 +238,38 @@ fetchConfigData();
                           values: attributeValues[attr.attribute_id] || [] // Asegurarse de que haya valores
                         },
                         dataSrc: 'values',
-                        template: '<span>{{ item.label }}</span>'
+                        template: '<span>{{ item.label }}</span>',
+                        defaultValue: (productData.product_attributes.find(pAttr => pAttr.attribute_id === attr.attribute_id) || {}).attribute_value_id || [] // Establecer valor predeterminado
                       }));
                     
-                      Formio.createForm(document.getElementById('formio-variants'), {
-                        type: "form",
-                        display: "form",
+                      // Crear el formulario usando Formio
+                      const formDefinition = {
                         components: [
                           {
-                            rowDraft: false,
-                            label: 'Variantes',
-                            key: 'variants_form',
-                            type: 'editgrid',
+                            label: 'Atributos de la variante',
+                            key: 'variantAttribute',
+                            type: 'select',
                             input: true,
-                            tableView: false,
-                            displayAsTable: false,
-                            templates: {
-                              header: '' +
-                                '<div class="row">' +
-                                '  {% util.eachComponent(components, function(component) { %}' +
-                                '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}' +
-                                '    <div class="col-sm-2">' +
-                                '      <strong>{{ component.label }}</strong>' +
-                                '    </div>' +
-                                '  {% } %}' +
-                                '  {% }) %}' +
-                                '</div>',
-                              row: '' +
-                                '<div class="row">' +
-                                '  {% util.eachComponent(components, function(component) { %}' +
-                                '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}' +
-                                '    <div class="col-sm-2">' +
-                                '      {{ row[component.key] }}' +
-                                '    </div>' +
-                                '  {% } %}' +
-                                '  {% }) %}' +
-                                '  <div class="col-sm-2">' +
-                                '    <div class="btn-group pull-right">' +
-                                '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
-                                '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
-                                '    </div>' +
-                                '  </div>' +
-                                '</div>',
-                              footer: ''
+                            tableView: true,
+                            data: {
+                              values: attributeNames // Por cada atributo, una opción
                             },
-                            components: [
-                              {
-                                type: 'textfield',
-                                key: 'variant_title',
-                                label: 'Titulo',
-                                input: true,
-                                disabled: true
-                              },
-                              {
-                                type: 'textfield',
-                                key: 'variant_title',
-                                label: 'nombre de la variante',
-                                placeholder: 'titulo de la variante',
-                                input: true,
-                                tableView: true
-                              },
-                              {
-                                type: 'textfield',
-                                key: 'variant_sale_price',
-                                label: 'Precio de venta',
-                                placeholder: 'Precio de venta',
-                                input: true,
-                                tableView: true
-                              },
-                              {
-                                type: 'textfield',
-                                key: 'variant_compare_price',
-                                label: 'Precio de comparación',
-                                placeholder: 'Precio de comparación',
-                                input: true,
-                                tableView: true
-                              },
-                              {
-                                type: 'textfield',
-                                key: 'variant_buying_price',
-                                label: 'Precio de compra',
-                                placeholder: 'Precio de compra',
-                                input: true,
-                                tableView: true
-                              },
-                              {
-                                type: 'textfield',
-                                key: 'variant_quantity',
-                                label: 'Cantidad',
-                                placeholder: 'Cantidad',
-                                input: true,
-                                tableView: true
-                              },
-                              {
-                                type: 'textfield',
-                                key: 'variant_active',
-                                label: 'Activo',
-                                placeholder: 'Activo',
-                                input: true,
-                                tableView: true
-                              },
-                              {
-                                label: 'Atributos de la variante',
-                                key: 'variantAttribute',
-                                type: 'select',
-                                input: true,
-                                tableView: true,
-                                data: {
-                                  values: attributeNames // Por cada atributo, una opción
-                                },
-                                multiple: true,
-                                dataSrc: 'values',
-                                template: '<span>{{ item.label }}</span>'
-                              },
-                              ...attributeComponents // Añadir dinámicamente los componentes de valores
-                            ]
-                          }
+                            multiple: true,
+                            dataSrc: 'values',
+                            template: '<span>{{ item.label }}</span>',
+                            defaultValue: productData.product_attributes.map(attr => attr.attribute_id) // Valores iniciales
+                          },
+                          ...attributeComponents // Añadir dinámicamente los componentes de valores
                         ]
-                      }).then(function (form) {
-                        // Guardar la instancia del formulario para referencia posterior
-                        variantsForm = form;
+                      };
                     
-                        // Suponiendo que 'form' es tu instancia del formulario
-                        const variantDetails = productData.variant_details.map(variant => {
-                          let variantObj = {
-                            variant_option: variant.variant_option,
-                            variant_title: variant.variant_title,
-                            variant_sale_price: variant.variant_sale_price,
-                            variant_compare_price: variant.variant_compare_price,
-                            variant_buying_price: variant.variant_buying_price,
-                            variant_quantity: variant.variant_quantity,
-                            variant_active: variant.variant_active,
-                          };
-                    
-                          // Agregar los atributos de la variante
-                          variant.variant_attributes.forEach(attr => {
-                            variantObj[`attribute_${attr.variant_attribute_name_id}`] = attr.variant_attribute_value_id;
-                          });
-                    
-                          return variantObj;
+                      // Crear el formulario
+                      Formio.createForm(document.getElementById('formio-attributes'), formDefinition)
+                        .then(form => {
+                          // Aquí, si es necesario, puedes ajustar los valores después de que el formulario haya sido creado
+                          attributesForm = form;
+
                         });
-                    
-                        console.log(variantDetails);
-                    
-                        // Llenar el formulario con los valores de las variantes
-                        variantDetails.forEach((variant, index) => {
-                          Object.keys(variant).forEach(key => {
-                            form.components.forEach(component => {
-                              if (component.key === `${key}_${index}`) {
-                                component.setValue(variant[key]);
-                              }
-                            });
-                          });
-                        });
-                    
-                        form.submission = {
-                          data: {
-                            variants_form: variantDetails
-                          }
-                        };
-                    
-                        form.on('editGridSaveRow', (event) => {
-                          const { component, row } = event;
-                          // Aquí puedes ejecutar cualquier acción cuando se guarda una fila en el EditGrid
-                          console.log('Componente EditGrid:', component);
-                          console.log('Fila guardada:', row);
-                        });
-                      });
                     }
                     
 
@@ -536,278 +404,217 @@ fetchConfigData();
 
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-
-function createVariantsForm(configData, productData) {
-
-const variants  = productData.variant_details;
-
-Formio.createForm(document.getElementById('formio-variants'),   {
-  type: "form",
-  display: "form",
-  components: [
-    {
-      rowDraft: false,
-      label: 'Variantes',
-      key: 'variants_form',
-      type: 'editgrid',
-      input: true,
-      tableView: false,
-      displayAsTable: false,
-      templates: {
-        header: '' +
-          '<div class="row">' +
-          '  {% util.eachComponent(components, function(component) { %}' +
-          '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}'+
-          '    <div class="col-sm-2">' +
-          '      <strong>{{ component.label }}</strong>' +
-          '    </div>' +
-          '  {% } %}'+
-          '  {% }) %}' +
-          '</div>',
-        row: '' +
-          '<div class="row">' +
-          '  {% util.eachComponent(components, function(component) { %}' +
-          '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}'+
-          '    <div class="col-sm-2">' +
-          '      {{ row[component.key] }}' +
-          '    </div>' +
-          '  {% } %}' +
-          '  {% }) %}' +
-          '  <div class="col-sm-2">' +
-          '    <div class="btn-group pull-right">' +
-          '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
-          '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
-          '    </div>' +
-          '  </div>' +
-          '</div>',
-        footer: ''
-      },
-      components: [
-        {
-          type: 'textfield',
-          key: 'variant_title',
-          label: 'Titulo',
-          input: true,
-          
-          disabled: true
-        },
-
-        {
-          type: 'textfield',
-          key: 'variant_title',
-          label: 'nombre de la variante',
-          placeholder: 'titulo de la variante',
-          input: true,
-          tableView: true,
-        },
-        {
-          type: 'textfield',
-          key: 'variant_sale_price',
-          label: 'Nombre de la variante',
-          placeholder: 'Nombre de la variante', 
-          input: true,
-          tableView: true,
-        },
-        {
-          type: 'textfield',
-          key: 'variant_compare_price',
-          label: 'Nombre de la variante',
-          placeholder: 'Nombre de la variante',
-          input: true,
-          tableView: true,
-        },
-
-        {
-          type: 'textfield',
-          key: 'variant_buying_price',
-          label: 'Nombre de la variante',
-          placeholder: 'Nombre de la variante',
-          input: true,
-          tableView: true,
-        },
-        {
-          type: 'textfield',
-          key: 'variant_quantity',
-          label: 'Nombre de la variante',
-          placeholder: 'Nombre de la variante',
-          input: true,
-          tableView: true,
-        },
-        {
-          type: 'textfield',
-          key: 'variant_active',
-          label: 'Nombre de la variante',
-          placeholder: 'Nombre de la variante',
-          input: true,
-          tableView: true,
-        },
- 
-
-// POPULAR CON CADA ATTRIBUTo DEL PRODUCTO (desde el FORM)
-{
-          label: 'Atributos de la variante',
-          key: 'variantAttribute',
-          type: 'select',
-          input: true,
-          tableView: true,
-          data: {
-            values: [ // = atributos ya aplicados al producto
-              { 
-                value: 'color',
-                label: 'color'
-              },
-              {
-                value: 'peso',
-                label: 'peso'
-              },
-              {
-                value: 'material',
-                label: 'material'
-              }
-            ]
-          },
-          multiple: true,
-          dataSrc: 'values',
-          template: '<span>{{ item.label }}</span>'
-        },
-
-
-
-
-
-
-
-// POR CADA ATTRIBUTE que tiene el producto,  MOSTRAMOS SUS ATTRIBUTE VALUES, tomarlo del form
-{
-          label: 'Valores',
-          key: 'variantAttributeValueWeigh',
-          type: 'select',
-          input: true,
-          conditional: {
-            show: true,
-            conjunction: "all",
-            conditions: [ 
-              {
-                component: 'variantAttribute',
-                operator: 'isEqual',
-                value: 'peso'               //MODIFICAR, = ATTRIBUTE_NAME
-              }
-            ]
-          },
-          tableView:  false,   //NO SACAR EL TABLEVIEW FALSE, LA ONDA ES QUE NO SE VEA ESTO, Y SE VEA EL CAMPO OCUTLO "a"
-          data: {
-            values: [                //POPULAR CON LOS/EL ATTRIBUTE_VALUES ASOCIADOS.
-              {
-                value: '15kg',
-                label: '15kg'
-              },
-              {
-                value: '10kg',
-                label: '10kg'
-              },
-              {
-                value: '11kg',
-                label: '11kg'
-              }
-            ]
-          },
-          dataSrc: 'values',
-          template: '<span>{{ item.label }}</span>'
-        },
-      ]
-
-
-    }
-  ]
-}  )
-.then(function(form) {
-//variante para identificar la instancia del formulario, nos referimos a ella en el submit global y etceteras.
-  variantsForm = form;
-// Suponiendo que 'form' es tu instancia del formulario
-
-
-
-
-const variantDetails = productData.variant_details.map(variant => {
-  let variantObj = {
-    variant_option: variant.variant_option,
-    variant_title: variant.variant_title,
-    variant_sale_price: variant.variant_sale_price,
-    variant_compare_price: variant.variant_compare_price,
-    variant_buying_price: variant.variant_buying_price,
-    variant_quantity: variant.variant_quantity,
-    variant_active: variant.variant_active,
-  };
-
-  // Agregar los atributos de la variante
-  variant.variant_attributes.forEach(attr => {
-    variantObj[`attribute_${attr.variant_attribute_name_id}`] = attr.variant_attribute_value_id;
-  });
-
-  return variantObj;
-});
-
-console.log(variantDetails);
-
-// Llenar el formulario con los valores de las variantes
-variantDetails.forEach((variant, index) => {
-  Object.keys(variant).forEach(key => {
-    form.components.forEach(component => {
-      if (component.key === `${key}_${index}`) {
-        component.setValue(variant[key]);
-      }
-    });
-  });
-});
-
-form.submission = {
-  data: {
-    variants_form: variantDetails
-  }
-};
-
-
-
-
-form.on('editGridSaveRow', (event) => {
-
-
-  const { component, row } = event;  
-  // Aquí puedes ejecutar cualquier acción cuando se guarda una fila en el EditGrid
-  console.log('Componente EditGrid:', component);
-  console.log('Fila guardada:', row);
-  // Por ejemplo, puedes acceder a un campo específico en la fila guardada
-  //if (row.hasOwnProperty('campoEspecifico')) {
-  //    console.log('Valor del campo específico:', row.campoEspecifico);
-  //}
-  //const gridComponent = form.getComponent('variants_form');
-  //if (gridComponent) {
-   // const rowIndex = gridComponent.editRows.findIndex(r => r.data === row);
-    //if (rowIndex !== -1) {
-     // gridComponent.editRows[rowIndex].data.a = "choto";   //ACA MODIFICAMOS EL VALOR DEL CAMPO OCULTO QUE JUNTA LOS OTROS CAMPOS Q ESTAN EN NO DISPLAY..
-     // gridComponent.redraw(); // Asegúrate de redibujar el componente para reflejar los cambios
-    //}
- // }
-
-
-});
-
-
-});
-};
-
-
+                function createVariantsForm(configData, productData) {
+                  const variants = productData.variant_details;
+                
+                  // Obtener los atributos del objeto configData
+                  const attributes = configData.attributes;
+                
+                  // Generar los nombres de atributos para el select principal
+                  const attributeNames = attributes.map(attr => ({
+                    value: attr.attribute_id,
+                    label: attr.attribute_name
+                  }));
+                
+                  // Generar los valores para cada atributo
+                  const attributeValues = attributes.reduce((acc, attr) => {
+                    acc[attr.attribute_id] = attr.values.map(value => ({
+                      value: value.value_id,
+                      label: value.attribute_value
+                    }));
+                    return acc;
+                  }, {});
+                
+                  // Crear componentes dinámicamente para cada atributo
+                  const attributeComponents = attributes.map(attr => ({
+                    label: 'Valores',
+                    key: `value_${attr.attribute_id}`,
+                    type: 'select',
+                    input: true,
+                    conditional: {
+                      show: true,
+                      conjunction: 'all',
+                      conditions: [
+                        {
+                          component: 'variantAttribute',
+                          operator: 'isEqual',
+                          value: attr.attribute_id // Establecer el atributo asociado a estos valores
+                        }
+                      ]
+                    },
+                    data: {
+                      values: attributeValues[attr.attribute_id] || [] // Asegurarse de que haya valores
+                    },
+                    dataSrc: 'values',
+                    template: '<span>{{ item.label }}</span>'
+                  }));
+                
+                  Formio.createForm(document.getElementById('formio-variants'), {
+                    type: "form",
+                    display: "form",
+                    components: [
+                      {
+                        rowDraft: false,
+                        label: 'Variantes',
+                        key: 'variants_form',
+                        type: 'editgrid',
+                        input: true,
+                        tableView: false,
+                        displayAsTable: false,
+                        templates: {
+                          header: '' +
+                            '<div class="row">' +
+                            '  {% util.eachComponent(components, function(component) { %}' +
+                            '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}' +
+                            '    <div class="col-sm-2">' +
+                            '      <strong>{{ component.label }}</strong>' +
+                            '    </div>' +
+                            '  {% } %}' +
+                            '  {% }) %}' +
+                            '</div>',
+                          row: '' +
+                            '<div class="row">' +
+                            '  {% util.eachComponent(components, function(component) { %}' +
+                            '  {% if (!component.hasOwnProperty("tableView") || component.tableView) { %}' +
+                            '    <div class="col-sm-2">' +
+                            '      {{ row[component.key] }}' +
+                            '    </div>' +
+                            '  {% } %}' +
+                            '  {% }) %}' +
+                            '  <div class="col-sm-2">' +
+                            '    <div class="btn-group pull-right">' +
+                            '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
+                            '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
+                            '    </div>' +
+                            '  </div>' +
+                            '</div>',
+                          footer: ''
+                        },
+                        components: [
+                          {
+                            type: 'textfield',
+                            key: 'variant_title',
+                            label: 'Titulo',
+                            input: true,
+                            disabled: true
+                          },
+                          {
+                            type: 'textfield',
+                            key: 'variant_title',
+                            label: 'nombre de la variante',
+                            placeholder: 'titulo de la variante',
+                            input: true,
+                            tableView: true
+                          },
+                          {
+                            type: 'textfield',
+                            key: 'variant_sale_price',
+                            label: 'Precio de venta',
+                            placeholder: 'Precio de venta',
+                            input: true,
+                            tableView: true
+                          },
+                          {
+                            type: 'textfield',
+                            key: 'variant_compare_price',
+                            label: 'Precio de comparación',
+                            placeholder: 'Precio de comparación',
+                            input: true,
+                            tableView: true
+                          },
+                          {
+                            type: 'textfield',
+                            key: 'variant_buying_price',
+                            label: 'Precio de compra',
+                            placeholder: 'Precio de compra',
+                            input: true,
+                            tableView: true
+                          },
+                          {
+                            type: 'textfield',
+                            key: 'variant_quantity',
+                            label: 'Cantidad',
+                            placeholder: 'Cantidad',
+                            input: true,
+                            tableView: true
+                          },
+                          {
+                            type: 'textfield',
+                            key: 'variant_active',
+                            label: 'Activo',
+                            placeholder: 'Activo',
+                            input: true,
+                            tableView: true
+                          },
+                          {
+                            label: 'Atributos de la variante',
+                            key: 'variantAttribute',
+                            type: 'select',
+                            input: true,
+                            tableView: true,
+                            data: {
+                              values: attributeNames // Por cada atributo, una opción
+                            },
+                            multiple: true,
+                            dataSrc: 'values',
+                            template: '<span>{{ item.label }}</span>'
+                          },
+                          ...attributeComponents // Añadir dinámicamente los componentes de valores
+                        ]
+                      }
+                    ]
+                  }).then(function (form) {
+                    // Guardar la instancia del formulario para referencia posterior
+                    variantsForm = form;
+                
+                    // Suponiendo que 'form' es tu instancia del formulario
+                    const variantDetails = productData.variant_details.map(variant => {
+                      let variantObj = {
+                        variant_option: variant.variant_option,
+                        variant_title: variant.variant_title,
+                        variant_sale_price: variant.variant_sale_price,
+                        variant_compare_price: variant.variant_compare_price,
+                        variant_buying_price: variant.variant_buying_price,
+                        variant_quantity: variant.variant_quantity,
+                        variant_active: variant.variant_active,
+                      };
+                
+                      // Agregar los atributos de la variante
+                      variant.variant_attributes.forEach(attr => {
+                        variantObj[`attribute_${attr.variant_attribute_name_id}`] = attr.variant_attribute_value_id;
+                      });
+                
+                      return variantObj;
+                    });
+                
+                    console.log(variantDetails);
+                
+                    // Llenar el formulario con los valores de las variantes
+                    variantDetails.forEach((variant, index) => {
+                      Object.keys(variant).forEach(key => {
+                        form.components.forEach(component => {
+                          if (component.key === `${key}_${index}`) {
+                            component.setValue(variant[key]);
+                          }
+                        });
+                      });
+                    });
+                
+                    form.submission = {
+                      data: {
+                        variants_form: variantDetails
+                      }
+                    };
+                
+                    form.on('editGridSaveRow', (event) => {
+                      const { component, row } = event;
+                      // Aquí puedes ejecutar cualquier acción cuando se guarda una fila en el EditGrid
+                      console.log('Componente EditGrid:', component);
+                      console.log('Fila guardada:', row);
+                    });
+                  });
+                }
+                
 
 
 
