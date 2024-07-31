@@ -221,7 +221,7 @@ fetchConfigData();
                         label: 'Valores',
                         key: `value_${attr.attribute_id}`,
                         type: 'select',
-    placeholder: '+ATRIBUTOS',
+    placeholder: '+ATRIBUTOS0',
                         input: true,
                         conditional: {
                           show: true,
@@ -415,77 +415,12 @@ fetchConfigData();
   
   
 
-
+.0
 
 
 function createVariantsForm(configData, productData) {
 
-
-
-
-
-  function getEditGridValues() {
-    if (!attributesForm) {
-      console.error("El formulario aún no se ha creado.");
-      return [];
-    }
-  
-    // Obtener los datos del componente editgrid
-    const editGridComponent = attributesForm.getComponent('attributes_form');
-    if (editGridComponent) {
-      const dataValues = editGridComponent.dataValue;
-  
-      // Juntar todos los campos "attribute" y sus valores
-      const attributeData = dataValues.map(item => {
-        const attributeId = item.attribute;
-        const attributeValues = Object.keys(item)
-          .filter(key => key.startsWith('value_'))
-          .map(key => item[key]);
-        return { attributeId, attributeValues };
-      });
-  
-      // Acceder al objeto configData y mapear los atributos
-      const mappedAttributes = attributeData.map(({ attributeId, attributeValues }) => {
-        const attribute = configData.attributes.find(attr => attr.attribute_id === attributeId);
-        if (attribute) {
-          const values = attributeValues.map(valueId => {
-            const value = attribute.values.find(val => val.value_id === valueId);
-            return value ? {
-              value_id: value.value_id,
-              attribute_value: value.attribute_value
-            } : null;
-          }).filter(val => val !== null);
-          return {
-            attribute_id: attribute.attribute_id,
-            attribute_name: attribute.attribute_name,
-            values
-          };
-        }
-        return null;
-      }).filter(attr => attr !== null);
-  
-      return mappedAttributes;
-    } else {
-      console.error("No se encontró el componente editgrid.");
-      return [];
-    }
-  }
-  
-  setTimeout(() => {console.log(getEditGridValues());
-
-  }, 1000);
-  
-
-
-
-const attributes  = productData;
-
-  //seleccionar los atributos aplicados al  producto en el form de atributes
-  //mostrar los names para que se elija uno sobre el que se aplica la variante.
-
-  
-  // mas adelante, tenemos que tener un select por cada atributo elegido, con los values de ese select.
-
+const variants  = productData.variant_details;
 
 Formio.createForm(document.getElementById('formio-variants'),   {
   type: "form",
@@ -529,20 +464,19 @@ Formio.createForm(document.getElementById('formio-variants'),   {
         footer: ''
       },
       components: [
-        
-//Componentes "SIMPLES"
-        {
-          type: 'textfield',
-          key: 'variant_option',
-          label: 'Nombre de la variante',
-          placeholder: 'Nombre de la variante',
-          input: true,
-          tableView: true,
-        },
         {
           type: 'textfield',
           key: 'variant_title',
-          label: 'titulo de la variante',
+          label: 'Titulo',
+          input: true,
+          
+          disabled: true
+        },
+
+        {
+          type: 'textfield',
+          key: 'variant_title',
+          label: 'nombre de la variante',
           placeholder: 'titulo de la variante',
           input: true,
           tableView: true,
@@ -551,7 +485,7 @@ Formio.createForm(document.getElementById('formio-variants'),   {
           type: 'textfield',
           key: 'variant_sale_price',
           label: 'Nombre de la variante',
-          placeholder: 'Nombre de la variante',
+          placeholder: 'Nombre de la variante', 
           input: true,
           tableView: true,
         },
@@ -589,16 +523,6 @@ Formio.createForm(document.getElementById('formio-variants'),   {
           tableView: true,
         },
  
-
-
-        {             //especial atencion a este componente hidden que junta los valores para mostrarlos en una sola columna.
-          // SINO ES UN KIULOMBO
-          label: 'Valores juntados',
-          key: 'a',
-          type: 'hidden',
-          input: true,
-          tableView: true,
-        },
 
 // POPULAR CON CADA ATTRIBUTo DEL PRODUCTO (desde el FORM)
 {
@@ -684,6 +608,8 @@ Formio.createForm(document.getElementById('formio-variants'),   {
 
 
 form.on('editGridSaveRow', (event) => {
+
+
   const { component, row } = event;  
   // Aquí puedes ejecutar cualquier acción cuando se guarda una fila en el EditGrid
   console.log('Componente EditGrid:', component);
@@ -692,15 +618,19 @@ form.on('editGridSaveRow', (event) => {
   //if (row.hasOwnProperty('campoEspecifico')) {
   //    console.log('Valor del campo específico:', row.campoEspecifico);
   //}
-  const gridComponent = form.getComponent('variants_form');
-  if (gridComponent) {
-    const rowIndex = gridComponent.editRows.findIndex(r => r.data === row);
-    if (rowIndex !== -1) {
-      gridComponent.editRows[rowIndex].data.a = "choto";   //ACA MODIFICAMOS EL VALOR DEL CAMPO OCULTO QUE JUNTA LOS OTROS CAMPOS Q ESTAN EN NO DISPLAY..
-      gridComponent.redraw(); // Asegúrate de redibujar el componente para reflejar los cambios
-    }
-  }
+  //const gridComponent = form.getComponent('variants_form');
+  //if (gridComponent) {
+   // const rowIndex = gridComponent.editRows.findIndex(r => r.data === row);
+    //if (rowIndex !== -1) {
+     // gridComponent.editRows[rowIndex].data.a = "choto";   //ACA MODIFICAMOS EL VALOR DEL CAMPO OCULTO QUE JUNTA LOS OTROS CAMPOS Q ESTAN EN NO DISPLAY..
+     // gridComponent.redraw(); // Asegúrate de redibujar el componente para reflejar los cambios
+    //}
+ // }
+
+
 });
+
+
 });
 };
 
@@ -883,15 +813,8 @@ const data = productData;
   
   .then(function(form) {
     productsForm = form;
-  // Configurar el evento change para escuchar cambios en 'product_name'
-    form.getComponent('product_name').on('change', function(value) {
-      // Aquí puedes ejecutar cualquier acción cuando cambie 'product_name'
-      console.log('El valor de product_name ha cambiado:', value);
-      
-      // Actualizar el valor de otro componente, por ejemplo 'slug'
-    //  form.getComponent('slug').setValue(value + '-slug'); // Ejemplo de cómo actualizar 'slug'
-    });
-
+ 
+    
 
   });
 
