@@ -760,11 +760,9 @@ export async function ProductFORM(ctx) {
        
        <div id='formio-product'></div>
        
-       <hr className="my-4"/>
-
        <div id='formio-tags'></div>
        
-       <hr className="my-4"/>
+       <hr className="my-5"/>
 
        <div id='formio-attributes'></div>
        
