@@ -759,10 +759,22 @@ export async function ProductFORM(ctx) {
       screenTitle={'productos'}>
        
        <div id='formio-product'></div>
+       
+       <hr className="my-4"/>
+
        <div id='formio-tags'></div>
+       
+       <hr className="my-4"/>
+
        <div id='formio-attributes'></div>
+       
+       <hr className="my-4"/>
+
        <div id='formio-variants'></div>
-       <button id="globalSubmit">Submit All Forms</button>
+       
+       <hr className="my-4"/>
+
+       <button id="globalSubmit" className="btn btn-primary">Submit All Forms</button>
 
     </Layout>
   );
