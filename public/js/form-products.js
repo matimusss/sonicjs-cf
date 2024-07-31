@@ -607,6 +607,49 @@ Formio.createForm(document.getElementById('formio-variants'),   {
 // Suponiendo que 'form' es tu instancia del formulario
 
 
+
+
+const variantDetails = productData.variant_details.map(variant => {
+  let variantObj = {
+    variant_option: variant.variant_option,
+    variant_title: variant.variant_title,
+    variant_sale_price: variant.variant_sale_price,
+    variant_compare_price: variant.variant_compare_price,
+    variant_buying_price: variant.variant_buying_price,
+    variant_quantity: variant.variant_quantity,
+    variant_active: variant.variant_active,
+  };
+
+  // Agregar los atributos de la variante
+  variant.variant_attributes.forEach(attr => {
+    variantObj[`attribute_${attr.variant_attribute_name_id}`] = attr.variant_attribute_value_id;
+  });
+
+  return variantObj;
+});
+
+console.log(variantDetails);
+
+// Llenar el formulario con los valores de las variantes
+variantDetails.forEach((variant, index) => {
+  Object.keys(variant).forEach(key => {
+    form.components.forEach(component => {
+      if (component.key === `${key}_${index}`) {
+        component.setValue(variant[key]);
+      }
+    });
+  });
+});
+
+form.submission = {
+  data: {
+    variant_details: variantDetails
+  }
+};
+
+
+
+
 form.on('editGridSaveRow', (event) => {
 
 
