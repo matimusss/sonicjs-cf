@@ -643,7 +643,7 @@ variantDetails.forEach((variant, index) => {
 
 form.submission = {
   data: {
-    variant_details: variantDetails
+    variants_form: variantDetails
   }
 };
 
