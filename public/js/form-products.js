@@ -221,14 +221,14 @@ fetchConfigData();
                         label: 'Valores',
                         key: `value_${attr.attribute_id}`,
                         type: 'select',
-    placeholder: '+ATRIBUTOS0',
+                        placeholder: '+ATRIBUTOS0',
                         input: true,
                         conditional: {
                           show: true,
                           conjunction: 'all',
                           conditions: [
                             {
-                              component: 'variantAttribute',
+                              component: 'productAttributes',
                               operator: 'isEqual',
                               value: attr.attribute_id // Establecer el atributo asociado a estos valores
                             }
@@ -247,7 +247,7 @@ fetchConfigData();
                         components: [
                           {
                             label: 'Atributos de la variante',
-                            key: 'variantAttribute',
+                            key: 'productAttributes',
                             type: 'select',
                             input: true,
                             tableView: true,
