@@ -433,6 +433,8 @@ fetchConfigData();
                 
 
 
+
+
                 function createVariantsForm(configData, productData) {
                   const variants = productData.variant_details;
                 
@@ -520,6 +522,7 @@ fetchConfigData();
                           footer:  '  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">  Open Form.io Modal  </button>'
                         },
                         components: [
+                      
                           {
                             type: 'hidden',
                             key: 'variant_option_id',
@@ -535,7 +538,9 @@ fetchConfigData();
                             input: true,
                             defaultValue: "NEW",
                             tableView: false
+                            
                           },
+                          
                           {
                             type: 'textfield',
                             key: 'variant_title',
@@ -613,12 +618,13 @@ fetchConfigData();
                     variantsForm = form;
                 
                     // Suponiendo que 'form' es tu instancia del formulario
-                    const variantDetails = variants.map(variant => {
+                    const variantDetails = productData.variant_details.map(variant => {
                       let variantObj = {
                         variant_id: variant.variant_id,
                         variant_option_id: variant.variant_option_id,
                         variant_option: variant.variant_option,
                         variant_title: variant.variant_title,
+                        variant_attributes: variant.variant_attributes.variant_attribute_name,
                         variant_sale_price: variant.variant_sale_price,
                         variant_compare_price: variant.variant_compare_price,
                         variant_buying_price: variant.variant_buying_price,
@@ -628,9 +634,7 @@ fetchConfigData();
                 
                       // Agregar los atributos de la variante
                       variant.variant_attributes.forEach(attr => {
-                        variantObj[`attribute_${attr.variant_attribute_name_id}`] = attr.variant_attribute_value;
-                        // También puedes agregar el ID del valor si lo necesitas
-                        variantObj[`attribute_value_id_${attr.variant_attribute_name_id}`] = attr.variant_attribute_value_id;
+                        variantObj[`attribute_${attr.variant_attribute_name_id}`] = attr.variant_attribute_value_id;
                       });
                 
                       return variantObj;
@@ -642,7 +646,7 @@ fetchConfigData();
                     variantDetails.forEach((variant, index) => {
                       Object.keys(variant).forEach(key => {
                         form.components.forEach(component => {
-                          if (component.key === key) {
+                          if (component.key === `${key}_${index}`) {
                             component.setValue(variant[key]);
                           }
                         });
@@ -666,9 +670,7 @@ fetchConfigData();
                 
 
 
-
-
-
+                
 
 function createProductsForm(configData, productData) {
 
