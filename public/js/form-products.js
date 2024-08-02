@@ -72,12 +72,10 @@ fetchConfigData();
                   createAttributesForm(configData, productData);                  
                   
 
-                  createSuppliersForm(configData, productData);
-                  createCategoriesForm(configData, productData);
-                  createCouponsForm(configData, productData);
+                    createSuppliersForm(configData, productData);
+                   createCategoriesForm(configData, productData);
+                      createCouponsForm(configData, productData);
                   
-
-
           createAttributesCreationForm(configData, productData);
     createAttributesValuesCreationForm(configData, productData);
                           
@@ -702,6 +700,25 @@ fetchConfigData();
                           footer:  '  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">  Open Form.io Modal  </button>'
                         },
                         components: [
+                      
+                          {
+                            type: 'hidden',
+                            key: 'variant_option_id',
+                            label: 'variant_option_id',
+                            input: true,
+                            defaultValue: "NEW",
+                            tableView: false
+                          },
+                          {
+                            type: 'hidden',
+                            key: 'variant_id',
+                            label: 'variant_id',
+                            input: true,
+                            defaultValue: "NEW",
+                            tableView: false
+                            
+                          },
+                          
                           {
                             type: 'textfield',
                             key: 'variant_title',
@@ -781,6 +798,8 @@ fetchConfigData();
                     // Suponiendo que 'form' es tu instancia del formulario
                     const variantDetails = productData.variant_details.map(variant => {
                       let variantObj = {
+                        variant_id: variant.variant_id,
+                        variant_option_id: variant.variant_option_id,
                         variant_option: variant.variant_option,
                         variant_title: variant.variant_title,
                         variant_sale_price: variant.variant_sale_price,
