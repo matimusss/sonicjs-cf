@@ -2,6 +2,9 @@ let tagsForm;         // Declara la variable para almacenar la instancia del for
 let attributesForm;   // Declara la variable para almacenar la instancia del formulario
 let variantsForm;     // Declara la variable para almacenar la instancia del formulario
 let productsForm;     // Declara la variable para almacenar la instancia del formulario
+let couponsForm;
+let categoriesForm;
+let suppliersForm;
 
 
 
@@ -1024,9 +1027,12 @@ setTimeout(() => {
       // Enviar todos los formularios
       Promise.all([
           productsForm.submit(),
+          attributesForm.submit(),
           variantsForm.submit(),
           tagsForm.submit(),
-          attributesForm.submit()
+          suppliersForm.submit(),
+          couponsForm.submit(),
+          categoriesForm.submit(),
       ]).then((results) => {
           console.log('Todos los formularios se enviaron correctamente', results);
       }).catch((error) => {
