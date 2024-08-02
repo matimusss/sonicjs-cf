@@ -3,12 +3,16 @@ let attributesForm;   // Declara la variable para almacenar la instancia del for
 let variantsForm;     // Declara la variable para almacenar la instancia del formulario
 let productsForm;     // Declara la variable para almacenar la instancia del formulario
 
+
+
 //FETCHS 
 async function fetchProductData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getProduct/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
   const productData = await response.json();
   return productData;
 }
+
+
 async function fetchConfigData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getConfig');
   const productData = await response.json();
@@ -18,6 +22,8 @@ async function fetchConfigData() {
   const attributes = data.attributes;
   const attributeValues = data.attribute_values;
 
+
+  
   // Crear un objeto para agrupar los atributos con sus valores
   const groupedAttributes = attributes.map(attribute => {
     return {
@@ -42,6 +48,12 @@ async function fetchConfigData() {
   return data;
 }
 
+
+
+
+
+
+
 // Llamar a la función para obtener los datos
 fetchConfigData();
 
@@ -56,6 +68,13 @@ fetchConfigData();
                     createProductsForm(configData, productData);
                   createAttributesForm(configData, productData);                  
                   
+
+                  createSuppliersForm(configData, productData);
+                  createCategoriesForm(configData, productData);
+                  createCouponsForm(configData, productData);
+                  
+
+
           createAttributesCreationForm(configData, productData);
     createAttributesValuesCreationForm(configData, productData);
                           
@@ -70,6 +89,196 @@ fetchConfigData();
 //     Llama a la función main al cargar la página      //
 //                          V                           //
                           main();
+
+
+
+
+
+
+
+                          function createSuppliersForm(configData, productData) {
+                            console.log(productData);
+                            console.log(configData);
+                            
+                            // Generar los objetos de suppliers
+                            const suppliers = configData.suppliers;
+                          
+                            // Crear los nombres de suppliers para el select, pero con los valores como IDs
+                            const supplierNames = suppliers.map(supplier => ({
+                              value: supplier.id,
+                              label: supplier.supplier_name,
+                            }));
+                          
+                            // Crear el formulario usando Formio
+                            Formio.createForm(document.getElementById('formio-suppliers'), {
+                              components: [
+                                {
+                                  label: 'Suppliers',
+                                  key: 'suppliers',
+                                  placeholder: 'Elige los suppliers',
+                                  type: 'select',
+                                  input: true,
+                                  multiple: true,
+                                  data: {
+                                    values: supplierNames
+                                  },
+                                  dataSrc: 'values',
+                                  template: '<span>{{ item.label }}</span>',
+                                  defaultValue: productData.suppliers.map(supplier => supplier.supplier_name), // Valores iniciales
+                                  customClass: "choto"
+                                }
+                              ]
+                            }).then(form => {
+                              // Aquí, si es necesario, puedes ajustar los valores después de que el formulario haya sido creado
+                              suppliersForm = form;
+                            });
+                          }
+                          
+
+
+
+
+
+
+
+
+
+
+
+
+
+                          function createCategoriesForm(configData, productData) {
+                            console.log(productData);
+                            console.log(configData);
+                            
+                            // Generar los objetos de categories
+                            const categories = configData.categories;
+                          
+                            // Crear los nombres de categories para el select, pero con los valores como IDs
+                            const categoryNames = categories.map(category => ({
+                              value: category.id,
+                              label: category.category_name,
+                            }));
+                          
+                            // Crear el formulario usando Formio
+                            Formio.createForm(document.getElementById('formio-categories'), {
+                              components: [
+                                {
+                                  label: 'Categories',
+                                  key: 'categories',
+                                  placeholder: 'Elige las categories',
+                                  type: 'select',
+                                  input: true,
+                                  multiple: true,
+                                  data: {
+                                    values: categoryNames
+                                  },
+                                  dataSrc: 'values',
+                                  template: '<span>{{ item.label }}</span>',
+                                  defaultValue: productData.categories.map(category => category.cat_name), // Valores iniciales
+                                  customClass: "choto"
+                                }
+                              ]
+                            }).then(form => {
+                              // Aquí, si es necesario, puedes ajustar los valores después de que el formulario haya sido creado
+                              categoriesForm = form;
+                            });
+
+
+
+
+
+
+
+
+
+
+                          }
+                          
+
+
+
+
+
+
+
+
+
+
+
+                          function createCouponsForm(configData, productData) {
+                            console.log(productData);
+                            console.log(configData);
+                            
+                            // Generar los objetos de coupons
+                            const coupons = configData.coupons;
+                          
+                            // Crear los objetos para los campos del formulario
+                            const couponComponents = coupons.map(coupon => ({
+                              label: `Coupon: ${coupon.code}`,
+                              key: `coupon_${coupon.id}`,
+                              type: 'container',
+                              input: false,
+                              components: [
+                                {
+                                  label: 'Code',
+                                  key: `coupon_code_${coupon.id}`,
+                                  type: 'textfield',
+                                  input: true,
+                                  defaultValue: coupon.code,
+                                  placeholder: 'Coupon Code',
+                                  disabled: true  // Disabled if you don't want users to change it
+                                },
+                                {
+                                  label: 'Discount Value',
+                                  key: `discount_value_${coupon.id}`,
+                                  type: 'number',
+                                  input: true,
+                                  defaultValue: coupon.discount_value,
+                                  placeholder: 'Discount Value'
+                                },
+                                {
+                                  label: 'Discount Type',
+                                  key: `discount_type_${coupon.id}`,
+                                  type: 'textfield',
+                                  input: true,
+                                  defaultValue: coupon.discount_type,
+                                  placeholder: 'Discount Type'
+                                }
+                              ]
+                            }));
+                          
+                            // Crear el formulario usando Formio
+                            Formio.createForm(document.getElementById('formio-coupons'), {
+                              components: [
+                                {
+                                  label: 'Coupons',
+                                  key: 'coupons',
+                                  type: 'container',
+                                  input: false,
+                                  components: couponComponents
+                                }
+                              ]
+                            }).then(form => {
+                              // Aquí, si es necesario, puedes ajustar los valores después de que el formulario haya sido creado
+                              couponsForm = form;
+                            });
+                          }
+                          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -327,13 +536,6 @@ fetchConfigData();
 
 
 
-
-
-
-
-
-
-
                     function createTagsForm(configData, productData) {
                       console.log(productData);
                       console.log(configData);
@@ -374,7 +576,13 @@ fetchConfigData();
                 }
                 
 
-                    
+
+
+
+
+
+
+
 
 
 
