@@ -108,7 +108,7 @@ fetchConfigData();
                           
                             // Crear los nombres de suppliers para el select, pero con los valores como IDs
                             const supplierNames = suppliers.map(supplier => ({
-                              value: supplier.id,
+                              value: supplier.supplier_id,
                               label: supplier.supplier_name,
                             }));
                           
@@ -127,7 +127,7 @@ fetchConfigData();
                                   },
                                   dataSrc: 'values',
                                   template: '<span>{{ item.label }}</span>',
-                                  defaultValue: productData.suppliers.map(supplier => supplier.supplier_name), // Valores iniciales
+                                  defaultValue: productData.suppliers.map(supplier => supplier.supplier_id), // Valores iniciales
                                   customClass: "choto"
                                 }
                               ]
@@ -178,7 +178,7 @@ fetchConfigData();
                                   },
                                   dataSrc: 'values',
                                   template: '<span>{{ item.label }}</span>',
-                                  defaultValue: productData.categories.map(category => category.cat_name), // Valores iniciales
+                                  defaultValue: productData.categories.map(category => category.cat_id), // Valores iniciales
                                   customClass: "choto"
                                 }
                               ]
