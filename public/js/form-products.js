@@ -6,15 +6,12 @@ let couponsForm;
 let categoriesForm;
 let suppliersForm;
 
-
-
 //FETCHS 
 async function fetchProductData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getProduct/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
   const productData = await response.json();
   return productData;
 }
-
 
 async function fetchConfigData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getConfig');
@@ -24,8 +21,6 @@ async function fetchConfigData() {
   // Extraer los atributos y valores de atributos
   const attributes = data.attributes;
   const attributeValues = data.attribute_values;
-
-
   
   // Crear un objeto para agrupar los atributos con sus valores
   const groupedAttributes = attributes.map(attribute => {
@@ -52,11 +47,6 @@ async function fetchConfigData() {
 }
 
 
-
-
-
-
-
 // Llamar a la función para obtener los datos
 fetchConfigData();
 
@@ -78,24 +68,12 @@ fetchConfigData();
                   
           createAttributesCreationForm(configData, productData);
     createAttributesValuesCreationForm(configData, productData);
-                          
-  
+                      
                                     }
-
-
-
-
-
-                                  
+            
 //     Llama a la función main al cargar la página      //
 //                          V                           //
                           main();
-
-
-
-
-
-
 
                           function createSuppliersForm(configData, productData) {
                             console.log(productData);
@@ -134,20 +112,7 @@ fetchConfigData();
                               suppliersForm = form;
                             });
                           }
-                          
-
-
-
-
-
-
-
-
-
-
-
-
-
+           
                           function createCategoriesForm(configData, productData) {
                             console.log(productData);
                             console.log(configData);
@@ -185,26 +150,8 @@ fetchConfigData();
                               categoriesForm = form;
                             });
 
-
-
-
-
-
-
-
-
-
                           }
                           
-
-
-
-
-
-
-
-
-
 
 
                           function createCouponsForm(configData, productData) {
@@ -266,25 +213,6 @@ fetchConfigData();
                             });
                           }
                           
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -356,13 +284,6 @@ fetchConfigData();
                           }
                           
              
-
-
-
-
-
-
-
                     function createAttributesValuesCreationForm(configData, productData) { 
 
                       //este es para agregar nuevos VALORES DE ATRIBUTOS ;
@@ -391,19 +312,6 @@ fetchConfigData();
                         ]
                       });
                     };
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -484,59 +392,6 @@ fetchConfigData();
                     
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     function createTagsForm(configData, productData) {
                       console.log(productData);
                       console.log(configData);
@@ -580,39 +435,6 @@ fetchConfigData();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 function createVariantsForm(configData, productData) {
                   const variants = productData.variant_details;
                 
@@ -645,7 +467,7 @@ fetchConfigData();
                       conjunction: 'all',
                       conditions: [
                         {
-                          component: 'variant-',
+                          component: 'variant-attributes',
                           operator: 'isEqual',
                           value: attr.attribute_id // Establecer el atributo asociado a estos valores
                         }
@@ -847,31 +669,7 @@ fetchConfigData();
                 }
                 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function createProductsForm(configData, productData) {
-
 
 const data = productData;
 
@@ -1017,26 +815,10 @@ const data = productData;
       }
     ]
   })
-  
-  
-  
-  
-  
   .then(function(form) {
     productsForm = form;
- 
-    
-
   });
-
 };
-
- 
-
-
-
-
-
 
 
 
