@@ -459,7 +459,7 @@ fetchConfigData();
                   // Crear componentes dinámicamente para cada atributo
                   const attributeComponents = attributes.map(attr => ({
                     label: 'Valores',
-                    key: `value_${attr.attribute_id}`,
+                    key: `attributes_${attr.attribute_id}`,
                     type: 'select',
                     input: true,
                     conditional: {
@@ -624,7 +624,7 @@ fetchConfigData();
                         variant_option_id: variant.variant_option_id,
                         variant_option: variant.variant_option,
                         variant_title: variant.variant_title,
-                        variant_attributes: variant.variant_attributes,
+                        variant_attributes: variant.variant_attributes.variant_attributes_name,
                         variant_sale_price: variant.variant_sale_price,
                         variant_compare_price: variant.variant_compare_price,
                         variant_buying_price: variant.variant_buying_price,
