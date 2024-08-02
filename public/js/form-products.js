@@ -467,7 +467,7 @@ fetchConfigData();
                       conjunction: 'all',
                       conditions: [
                         {
-                          component: 'variant-attributes',
+                          component: 'variant_attributes',
                           operator: 'isEqual',
                           value: attr.attribute_id // Establecer el atributo asociado a estos valores
                         }
