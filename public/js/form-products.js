@@ -108,7 +108,7 @@ fetchConfigData();
                           
                             // Crear los nombres de suppliers para el select, pero con los valores como IDs
                             const supplierNames = suppliers.map(supplier => ({
-                              value: supplier.supplier_id,
+                              value: supplier.id,
                               label: supplier.supplier_name,
                             }));
                           
