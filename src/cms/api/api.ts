@@ -282,21 +282,16 @@ tables.forEach((entry) => {
           if (data[0].coupons) {
             transformedData.coupons = JSON.parse(data[0].coupons);
           }
-  
-
 
           if (data[0].product_images) {
             transformedData.product_images = JSON.parse(data[0].product_images);
           }
-
-
-
           if (data[0].suppliers) {
             transformedData.suppliers = JSON.parse(data[0].suppliers);
           }
-
-
-
+          if (data[0].categories) {
+            transformedData.categories = JSON.parse(data[0].categories);
+          }
           if (data[0].variant_details) {
             const variantDetails = JSON.parse(data[0].variant_details);
             transformedData.variant_details = variantDetails.map(variant => JSON.parse(variant));
@@ -335,7 +330,7 @@ tables.forEach((entry) => {
       console.error('Error retrieving product full details:', error);
       return ctx.text('Error retrieving product full details', 500);
     }
-  });
+   });
   
 
 
