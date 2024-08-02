@@ -67,6 +67,12 @@ SELECT
     ) AS tags,
     json_group_array(
         DISTINCT json_object(
+            'cat_id', ct.id,
+            'cat_name', ct.category_name
+        )
+    ) AS categories,
+    json_group_array(
+        DISTINCT json_object(
             'p_coupon_id', p_co.id,
             'coupon_id', cd.id,        
             'code', cd.code,
@@ -134,6 +140,8 @@ LEFT JOIN product_suppliers p_su ON p.id = p_su.product_id
 LEFT JOIN suppliers sp ON p_su.supplier_id = sp.id
 LEFT JOIN product_tags pt ON p.id = pt.product_id
 LEFT JOIN tags t ON pt.tag_id = t.id
+LEFT JOIN product_categories pct ON p.id = pct.product_id
+LEFT JOIN categories ct ON pct.category_id = ct.id
 WHERE p.id = ?
 GROUP BY p.id;
 `;
