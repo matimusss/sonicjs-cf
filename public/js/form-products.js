@@ -645,7 +645,7 @@ fetchConfigData();
                       conjunction: 'all',
                       conditions: [
                         {
-                          component: 'variantAttribute',
+                          component: 'variant-',
                           operator: 'isEqual',
                           value: attr.attribute_id // Establecer el atributo asociado a estos valores
                         }
@@ -776,7 +776,7 @@ fetchConfigData();
                           },
                           {
                             label: 'Atributos de la variante',
-                            key: 'variantAttribute',
+                            key: 'variant_attributes',
                             type: 'select',
                             input: true,
                             tableView: true,
