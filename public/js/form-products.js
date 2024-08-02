@@ -624,7 +624,7 @@ fetchConfigData();
                         variant_option_id: variant.variant_option_id,
                         variant_option: variant.variant_option,
                         variant_title: variant.variant_title,
-                        variant_attributes: variant.variant_attributes.variant_attributes_name,
+                        variant_attributes: variant.variant_attributes.variant_attribute_name,
                         variant_sale_price: variant.variant_sale_price,
                         variant_compare_price: variant.variant_compare_price,
                         variant_buying_price: variant.variant_buying_price,
