@@ -90,6 +90,7 @@ SELECT
     ) AS product_images,
     json_group_array(
         DISTINCT json_object(
+            'supplier_id', sp.id
             'supplier_name', sp.supplier_name
         )
     ) AS suppliers,
@@ -203,7 +204,6 @@ SELECT
     ) AS product_images,
     json_group_array(
         DISTINCT json_object(
-                'supplier_id', sp.id,
             'supplier_name', sp.supplier_name
         )
     ) AS suppliers,
