@@ -793,7 +793,7 @@ fetchConfigData();
                         variant_id: variant.variant_id,
                         variant_option_id: variant.variant_option_id,
                         variant_option: variant.variant_option,
-                        variant_attributes: variant.variant_attributes.map(attr => attr.attribute_id), // Cambiar aquí
+                        variantAttribute: variant.variant_attributes.map(attr => attr.attribute_id), // Cambiar aquí
                         variant_title: variant.variant_title,
                         variant_sale_price: variant.variant_sale_price,
                         variant_compare_price: variant.variant_compare_price,
