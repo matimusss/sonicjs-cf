@@ -632,7 +632,7 @@ fetchConfigData();
                   // Crear componentes dinámicamente para cada atributo
                   const attributeComponents = attributes.map(attr => ({
                     label: 'Valores',
-                    key: `value_${attr.attribute_id}`,
+                    key: `attribute_${attr.attribute_id}`,
                     type: 'select',
                     input: true,
                     conditional: {
