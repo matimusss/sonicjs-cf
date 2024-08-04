@@ -608,11 +608,6 @@ fetchConfigData();
 
 
 
-
-
-
-
-
                 function createVariantsForm(configData, productData) {
                   const variants = productData.variant_details;
                 
@@ -700,7 +695,6 @@ fetchConfigData();
                           footer:  '  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">  Open Form.io Modal  </button>'
                         },
                         components: [
-                      
                           {
                             type: 'hidden',
                             key: 'variant_option_id',
@@ -716,9 +710,7 @@ fetchConfigData();
                             input: true,
                             defaultValue: "NEW",
                             tableView: false
-                            
                           },
-                          
                           {
                             type: 'textfield',
                             key: 'variant_title',
@@ -801,12 +793,13 @@ fetchConfigData();
                         variant_id: variant.variant_id,
                         variant_option_id: variant.variant_option_id,
                         variant_option: variant.variant_option,
+                        variant_attributes: variant.variant_attributes.map(attr => attr.attribute_id), // Cambiar aquí
                         variant_title: variant.variant_title,
                         variant_sale_price: variant.variant_sale_price,
                         variant_compare_price: variant.variant_compare_price,
                         variant_buying_price: variant.variant_buying_price,
                         variant_quantity: variant.variant_quantity,
-                        variant_active: variant.variant_active,
+                        variant_active: variant.variant_active
                       };
                 
                       // Agregar los atributos de la variante
@@ -845,14 +838,6 @@ fetchConfigData();
                   });
                 }
                 
-
-
-
-
-
-
-
-
 
 
 
