@@ -602,91 +602,7 @@ fetchConfigData();
 
 
 
-                function transformData(input) {
-                  return input.map(item => {
-                      const { data, metadata } = item;
-              
-                      // Inicializa el nuevo objeto transformado
-                      let transformed = {};
-              
-                      // Si hay datos de producto
-                      if (data) {
-                          transformed = {
-                              ...transformed,
-                              ...data,
-                              id: data.id || null,
-                              slug: data.slug || '',
-                              product_name: data.product_name || '',
-                              sku: data.sku || '',
-                              sale_price: data.sale_price || 0,
-                              compare_price: data.compare_price || 0,
-                              buying_price: data.buying_price || 0,
-                              quantity: data.quantity || 0,
-                              short_description: data.short_description || '',
-                              product_description: data.product_description || '',
-                              product_type: data.product_type || '',
-                              published: data.published || '',
-                              disable_out_of_stock: data.disable_out_of_stock || '',
-                              note: data.note || '',
-                              created_by: data.created_by || '',
-                              updated_by: data.updated_by || '',
-                              createdOn: new Date(data.createdOn),
-                              updatedOn: new Date(data.updatedOn)
-                          };
-              
-                          // Si hay atributos de producto
-                          if (data.productAttributes) {
-                              transformed.productAttributes = data.productAttributes.map(attrId => {
-                                  const valueKey = `value_${attrId}`;
-                                  return {
-                                      attributeId: attrId,
-                                      value: data[valueKey] || ''
-                                  };
-                              });
-                          }
-              
-                          // Si hay variantes
-                          if (data.variants_form) {
-                              transformed.variants = data.variants_form.map(variant => {
-                                  const variantData = {
-                                      ...variant,
-                                      attributes: {}
-                                  };
-              
-                                  if (variant.variantAttribute) {
-                                      variant.variantAttribute.forEach(attrId => {
-                                          const attributeKey = `attribute_${attrId}`;
-                                          variantData.attributes[attrId] = variant[attributeKey] || '';
-                                      });
-                                  }
-              
-                                  return variantData;
-                              });
-                          }
-                      }
-              
-                      // Si hay metadatos
-                      if (metadata) {
-                          transformed.metadata = {
-                              ...metadata,
-                              selectData: metadata.selectData || {}
-                          };
-                      }
-              
-                      // Si hay etiquetas
-                      if (data.tags) {
-                          transformed.tags = data.tags.map(tagId => {
-                              return {
-                                  tagId,
-                                  label: metadata.selectData.tags[tagId].label || ''
-                              };
-                          });
-                      }
-              
-                      return transformed;
-                  });
-              }
-              
+
 
 
 
@@ -1121,12 +1037,11 @@ setTimeout(() => {
           suppliersForm.submit(),
           couponsForm.submit(),
           categoriesForm.submit(),
-
       ]).then((results) => {
-        const transformedData = transformData(results);
-console.log(transformedData);  
-        
-        console.log('Todos los formularios se enviaron correctamente', results);
+        const results2 = results.reduce((acc, result) => acc + result.data, 0);
+
+
+          console.log('Todos los formularios se enviaron correctamente', results2);
       }).catch((error) => {
           console.error('Error al enviar uno o más formularios', error);
       });
