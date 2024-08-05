@@ -1038,7 +1038,8 @@ setTimeout(() => {
           couponsForm.submit(),
           categoriesForm.submit(),
       ]).then((results) => {
-        const results2 = results.reduce((acc, result) => acc + result.data, 0);
+        
+        const results2 = results.map(result => JSON.stringify(result.data)).join(',');
 
 
           console.log('Todos los formularios se enviaron correctamente', results2);
