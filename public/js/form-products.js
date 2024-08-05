@@ -1038,13 +1038,19 @@ setTimeout(() => {
           couponsForm.submit(),
           categoriesForm.submit(),
       ]).then((results) => {
-        
-        const results2 = results.map(result => JSON.stringify(result.data)).join(',');
+        const results1 = results.reduce((acc, result) => Object.assign(acc, result.data), {});
+        const results2 = results.reduce((acc, result) => ({ ...acc, ...result.data }), {});
 
+        const results3 = results.map(result => JSON.stringify(result.data)).join(',');
+        console.log('Todos los formularios se enviaron correctamente', results1);
+        console.log('Todos los formularios se enviaron correctamente', results2);
+          console.log('Todos los formularios se enviaron correctamente', results3);
 
-          console.log('Todos los formularios se enviaron correctamente', results2);
       }).catch((error) => {
           console.error('Error al enviar uno o más formularios', error);
       });
+
+
+
   });
 }, 1000);
