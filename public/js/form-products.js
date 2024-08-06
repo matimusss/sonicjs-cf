@@ -1041,10 +1041,87 @@ setTimeout(() => {
         const results1 = results.reduce((acc, result) => Object.assign(acc, result.data), {});
         const results2 = results.reduce((acc, result) => ({ ...acc, ...result.data }), {});
 
-        const results3 = results.map(result => JSON.stringify(result.data)).join(',');
+    
         console.log('Todos los formularios se enviaron correctamente', results1);
         console.log('Todos los formularios se enviaron correctamente', results2);
-          console.log('Todos los formularios se enviaron correctamente', results3);
+
+const obj2 = results1;
+
+        function convertObj2ToObj1(obj2) {
+          // Helper function to map attributes within variants
+          const mapAttributes = (attributes) => {
+              return attributes.reduce((acc, attributeId) => {
+                  acc[`attribute_${attributeId}`] = obj2[`attribute_${attributeId}`] || null;
+                  return acc;
+              }, {});
+          };
+      
+          // Map `variants_form` to `variants`
+          const mapVariantsFormToVariants = (variantsForm) => {
+              return variantsForm.map(variant => {
+                  return {
+                      variant_id: variant.variant_id || null,
+                      variant_option_id: variant.variant_option_id || null,
+                      variant_option: variant.variant_option || null,
+                      ...mapAttributes(variant.variantAttribute || []),
+                      variant_title: variant.variant_title || null,
+                      variant_sale_price: variant.variant_sale_price || null,
+                      variant_compare_price: variant.variant_compare_price || null,
+                      variant_buying_price: variant.variant_buying_price || null,
+                      variant_quantity: variant.variant_quantity || null,
+                      variant_active: variant.variant_active || null,
+                  };
+              });
+          };
+      
+          // Convert `obj2` to match `OBJ1` structure
+          const obj1 = {
+              id: obj2.id || null,
+              slug: obj2.slug || null,
+              product_name: obj2.product_name || null,
+              sku: obj2.sku || null,
+              sale_price: obj2.sale_price || null,
+              compare_price: obj2.compare_price || null,
+              buying_price: obj2.buying_price || null,
+              quantity: obj2.quantity || null,
+              short_description: obj2.short_description || null,
+              product_description: obj2.product_description || null,
+              product_type: obj2.product_type || null,
+              published: obj2.published || null,
+              disable_out_of_stock: obj2.disable_out_of_stock || null,
+              note: obj2.note || null,
+              created_by: obj2.created_by || null,
+              updated_by: obj2.updated_by || null,
+              createdOn: obj2.createdOn && new Date(obj2.createdOn).toISOString() || null,
+              updatedOn: obj2.updatedOn && new Date(obj2.updatedOn).toISOString() || null,
+              product_attributes: obj2.productAttributes || [],
+              ...mapAttributes(obj2.productAttributes || []),
+              variants: mapVariantsFormToVariants(obj2.variants_form || []),
+              tags: obj2.tags || [],
+              suppliers: obj2.suppliers || [],
+              coupons: Object.keys(obj2.coupons || {}).reduce((acc, couponId) => {
+                  const coupon = obj2.coupons[couponId];
+                  acc[couponId] = {
+                      coupon_code: coupon[`coupon_code_${couponId}`] || null,
+                      discount_value: coupon[`discount_value_${couponId}`] || null,
+                      discount_type: coupon[`discount_type_${couponId}`] || null,
+                  };
+                  return acc;
+              }, {}),
+              categories: obj2.categories || [],
+          };
+      
+          return obj1;
+      }
+      const obj1 = convertObj2ToObj1(obj2);
+      console.log(obj1);              
+
+
+
+
+
+        
+        
 
       }).catch((error) => {
           console.error('Error al enviar uno o más formularios', error);
