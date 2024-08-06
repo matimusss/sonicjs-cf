@@ -1063,7 +1063,16 @@ function transformProductData(data) {
       short_description: data.short_description,
       product_description: data.product_description.replace(/<[^>]*>/g, ''), // Removing HTML tags
       product_type: data.product_type,
-  
+      product_attributes: data.product_attributes.map(attrId => {
+          return {
+              p_attribute_id: '', // Placeholder, adjust as needed
+              p_attribute_value_id: '', // Placeholder, adjust as needed
+              attribute_id: attrId,
+              attribute_name: '', // Placeholder, adjust as needed
+              attribute_value_id: '', // Placeholder, adjust as needed
+              attribute_value: '' // Placeholder, adjust as needed
+          };
+      }),
       tags: data.tags.map(tagId => {
           return {
               tag_id: tagId,
@@ -1077,6 +1086,22 @@ function transformProductData(data) {
               cat_name: '' // Placeholder, adjust as needed
           };
       }),
+      coupons: Object.entries(data.coupons).map(([couponId, couponDetails]) => {
+          return {
+              p_coupon_id: '', // Placeholder, adjust as needed
+              coupon_id: couponId,
+              code: couponDetails.coupon_code,
+              discount_value: couponDetails.discount_value,
+              discount_type: couponDetails.discount_type
+          };
+      }),
+      product_images: [], // Placeholder, add image data if available
+      suppliers: data.suppliers.map(supplierId => {
+          return {
+              supplier_id: supplierId,
+              supplier_name: '' // Placeholder, adjust as needed
+          };
+      }),
       variant_details: data.variants.map(variant => {
           return {
               variant_id: variant.variant_id,
@@ -1088,7 +1113,17 @@ function transformProductData(data) {
               variant_compare_price: variant.variant_compare_price,
               variant_buying_price: variant.variant_buying_price,
               variant_quantity: variant.variant_quantity,
-              variant_active: variant.variant_active
+              variant_active: variant.variant_active,
+              variant_attributes: Object.keys(variant).filter(key => key.startsWith('attribute_')).map(attrKey => {
+                  return {
+                      p_variant_attribute_id: '', // Placeholder, adjust as needed
+                      p_variant_attribute_value_id: '', // Placeholder, adjust as needed
+                      variant_attribute_name_id: attrKey.replace('attribute_', ''),
+                      variant_attribute_name: '', // Placeholder, adjust as needed
+                      variant_attribute_value_id: '', // Placeholder, adjust as needed
+                      variant_attribute_value: '' // Placeholder, adjust as needed
+                  };
+              })
           };
       })
   };
