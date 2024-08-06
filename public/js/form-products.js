@@ -1077,7 +1077,7 @@ function transformProductData(data) {
               cat_name: '' // Placeholder, adjust as needed
           };
       }),
-      variant_details: data.variants.map(variant => {
+      variant_details: data.variant_details.map(variant => {
           return {
               variant_id: variant.variant_id,
               variant_option: variant.variant_option,
