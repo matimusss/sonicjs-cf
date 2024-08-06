@@ -1094,9 +1094,6 @@ function transformProductData(data) {
   };
 }
 
-const obj1 = transformProductData(obj2);
-      console.log(obj1);              
-
 
 
 
