@@ -1047,73 +1047,89 @@ setTimeout(() => {
 
 const obj2 = results1;
 
-        function convertObj2ToObj1(obj2) {
-          // Helper function to map attributes within variants
-          const mapAttributes = (attributes) => {
-              return attributes.reduce((acc, attributeId) => {
-                  acc[`attribute_${attributeId}`] = obj2[`attribute_${attributeId}`] || null;
-                  return acc;
-              }, {});
+
+
+
+function transformProductData(data) {
+  return {
+      product_id: data.id,
+      slug: data.slug,
+      product_name: data.product_name,
+      sku: data.sku,
+      sale_price: data.sale_price,
+      compare_price: data.compare_price,
+      buying_price: data.buying_price,
+      quantity: data.quantity,
+      short_description: data.short_description,
+      product_description: data.product_description.replace(/<[^>]*>/g, ''), // Removing HTML tags
+      product_type: data.product_type,
+      product_attributes: data.product_attributes.map(attrId => {
+          return {
+              p_attribute_id: '', // Placeholder, adjust as needed
+              p_attribute_value_id: '', // Placeholder, adjust as needed
+              attribute_id: attrId,
+              attribute_name: '', // Placeholder, adjust as needed
+              attribute_value_id: '', // Placeholder, adjust as needed
+              attribute_value: '' // Placeholder, adjust as needed
           };
-      
-          // Map `variants_form` to `variants`
-          const mapVariantsFormToVariants = (variantsForm) => {
-              return variantsForm.map(variant => {
+      }),
+      tags: data.tags.map(tagId => {
+          return {
+              tag_id: tagId,
+              tag_name: '', // Placeholder, adjust as needed
+              tag_icon: '' // Placeholder, adjust as needed
+          };
+      }),
+      categories: data.categories.map(catId => {
+          return {
+              cat_id: catId,
+              cat_name: '' // Placeholder, adjust as needed
+          };
+      }),
+      coupons: Object.entries(data.coupons).map(([couponId, couponDetails]) => {
+          return {
+              p_coupon_id: '', // Placeholder, adjust as needed
+              coupon_id: couponId,
+              code: couponDetails.coupon_code,
+              discount_value: couponDetails.discount_value,
+              discount_type: couponDetails.discount_type
+          };
+      }),
+      product_images: [], // Placeholder, add image data if available
+      suppliers: data.suppliers.map(supplierId => {
+          return {
+              supplier_id: supplierId,
+              supplier_name: '' // Placeholder, adjust as needed
+          };
+      }),
+      variant_details: data.variants.map(variant => {
+          return {
+              variant_id: variant.variant_id,
+              variant_option: variant.variant_option,
+              variant_title: variant.variant_title,
+              variant_option_id: variant.variant_option_id,
+              variant_image_id: '', // Placeholder, adjust as needed
+              variant_sale_price: variant.variant_sale_price,
+              variant_compare_price: variant.variant_compare_price,
+              variant_buying_price: variant.variant_buying_price,
+              variant_quantity: variant.variant_quantity,
+              variant_active: variant.variant_active,
+              variant_attributes: Object.keys(variant).filter(key => key.startsWith('attribute_')).map(attrKey => {
                   return {
-                      variant_id: variant.variant_id || null,
-                      variant_option_id: variant.variant_option_id || null,
-                      variant_option: variant.variant_option || null,
-                      ...mapAttributes(variant.variantAttribute || []),
-                      variant_title: variant.variant_title || null,
-                      variant_sale_price: variant.variant_sale_price || null,
-                      variant_compare_price: variant.variant_compare_price || null,
-                      variant_buying_price: variant.variant_buying_price || null,
-                      variant_quantity: variant.variant_quantity || null,
-                      variant_active: variant.variant_active || null,
+                      p_variant_attribute_id: '', // Placeholder, adjust as needed
+                      p_variant_attribute_value_id: '', // Placeholder, adjust as needed
+                      variant_attribute_name_id: attrKey.replace('attribute_', ''),
+                      variant_attribute_name: '', // Placeholder, adjust as needed
+                      variant_attribute_value_id: '', // Placeholder, adjust as needed
+                      variant_attribute_value: '' // Placeholder, adjust as needed
                   };
-              });
+              })
           };
-      
-          // Convert `obj2` to match `OBJ1` structure
-          const obj1 = {
-              id: obj2.id || null,
-              slug: obj2.slug || null,
-              product_name: obj2.product_name || null,
-              sku: obj2.sku || null,
-              sale_price: obj2.sale_price || null,
-              compare_price: obj2.compare_price || null,
-              buying_price: obj2.buying_price || null,
-              quantity: obj2.quantity || null,
-              short_description: obj2.short_description || null,
-              product_description: obj2.product_description || null,
-              product_type: obj2.product_type || null,
-              published: obj2.published || null,
-              disable_out_of_stock: obj2.disable_out_of_stock || null,
-              note: obj2.note || null,
-              created_by: obj2.created_by || null,
-              updated_by: obj2.updated_by || null,
-              createdOn: obj2.createdOn  || null,
-              updatedOn: obj2.updatedOn  || null,
-              product_attributes: obj2.productAttributes || [],
-              ...mapAttributes(obj2.productAttributes || []),
-              variants: mapVariantsFormToVariants(obj2.variants_form || []),
-              tags: obj2.tags || [],
-              suppliers: obj2.suppliers || [],
-              coupons: Object.keys(obj2.coupons || {}).reduce((acc, couponId) => {
-                  const coupon = obj2.coupons[couponId];
-                  acc[couponId] = {
-                      coupon_code: coupon[`coupon_code_${couponId}`] || null,
-                      discount_value: coupon[`discount_value_${couponId}`] || null,
-                      discount_type: coupon[`discount_type_${couponId}`] || null,
-                  };
-                  return acc;
-              }, {}),
-              categories: obj2.categories || [],
-          };
-      
-          return obj1;
-      }
-      const obj1 = convertObj2ToObj1(obj2);
+      })
+  };
+}
+
+const obj1 = transformProductData(obj2);
       console.log(obj1);              
 
 
