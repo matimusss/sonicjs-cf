@@ -1038,7 +1038,7 @@ setTimeout((productData) => {
           suppliersForm.submit(),
           couponsForm.submit(),
           categoriesForm.submit(),
-      ]).then((results) => {
+      ]).then((results, productData) => {
         const results1 = results.reduce((acc, result) => Object.assign(acc, result.data), {});
         const results2 = results.reduce((acc, result) => ({ ...acc, ...result.data }), {});
 
@@ -1231,7 +1231,7 @@ const obj1 = transformProductData(obj2);
     }
 
     
-    const differences = compareObjects(obj1, obj1);
+    const differences = compareObjects(obj1,  productData);
     console.log(differences);
     
 
