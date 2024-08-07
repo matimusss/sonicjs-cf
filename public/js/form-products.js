@@ -1184,6 +1184,57 @@ const obj1 = transformProductData(obj2);
       console.log(obj1);              
 
 
+      function compareObjects(obj1, obj2) {
+        // Utilidad para obtener un conjunto de IDs de un array de objetos
+        function extractIds(array) {
+            return array.map(item => item._id || item.variant_id || item.tag_id || item.cat_id || item.supplier_id || null).filter(id => id);
+        }
+    
+        // Utilidad para encontrar diferencias entre dos arrays de objetos por ID
+        function findDifferences(array1, array2) {
+            const ids1 = new Set(extractIds(array1));
+            const ids2 = new Set(extractIds(array2));
+            const diff1 = array1.filter(item => !ids2.has(item._id || item.variant_id || item.tag_id || item.cat_id || item.supplier_id));
+            const diff2 = array2.filter(item => !ids1.has(item._id || item.variant_id || item.tag_id || item.cat_id || item.supplier_id));
+            return { diff1, diff2 };
+        }
+    
+        // Paso 2: Campos que están en obj1 pero no en obj2
+        const obj1ProductAttributes = obj1.product_attributes || [];
+        const obj2ProductAttributes = obj2.product_attributes || [];
+        const { diff1: diff1ProductAttributes, diff2: diff2ProductAttributes } = findDifferences(obj1ProductAttributes, obj2ProductAttributes);
+    
+        // Paso 3: Campos que están en obj2 pero no en obj1
+        const obj1VariantDetails = obj1.variant_details || [];
+        const obj2VariantDetails = obj2.variant_details || [];
+        const { diff1: diff1VariantDetails, diff2: diff2VariantDetails } = findDifferences(obj1VariantDetails, obj2VariantDetails);
+    
+        // Paso 4: Campos que son distintos
+        function findValueDifferences(array1, array2) {
+            return array1.filter(item1 => {
+                const item2 = array2.find(item => item._id === item1._id || item.variant_id === item1.variant_id);
+                return item2 && JSON.stringify(item1) !== JSON.stringify(item2);
+            });
+        }
+    
+        const differencesInProductAttributes = findValueDifferences(obj1ProductAttributes, obj2ProductAttributes);
+        const differencesInVariantDetails = findValueDifferences(obj1VariantDetails, obj2VariantDetails);
+    
+        return {
+            diff1ProductAttributes,
+            diff2ProductAttributes,
+            differencesInProductAttributes,
+            diff1VariantDetails,
+            diff2VariantDetails,
+            differencesInVariantDetails
+        };
+    }
+
+    
+    const differences = compareObjects(obj1, productData);
+    console.log(differences);
+    
+
 
 
 
