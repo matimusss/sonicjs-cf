@@ -1200,8 +1200,8 @@ const obj1 = transformProductData(obj2);
         }
     
         // Paso 2: Campos que están en obj1 pero no en obj2
-        const obj1ProductAttributes = obj1.product_attributes || [];
-        const obj2ProductAttributes = obj2.product_attributes || [];
+        const obj1ProductAttributes = obj1.data.product_attributes || [];
+        const obj2ProductAttributes = obj2.data.product_attributes || [];
         const { diff1: diff1ProductAttributes, diff2: diff2ProductAttributes } = findDifferences(obj1ProductAttributes, obj2ProductAttributes);
     
         // Paso 3: Campos que están en obj2 pero no en obj1
