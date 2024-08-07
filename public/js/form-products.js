@@ -55,8 +55,6 @@ async function fetchConfigData() {
 
 
 
-
-
 // Llamar a la función para obtener los datos
 fetchConfigData();
 
@@ -70,7 +68,7 @@ fetchConfigData();
                     createVariantsForm(configData, productData);
                     createProductsForm(configData, productData);
                   createAttributesForm(configData, productData);                  
-                  
+                  submitActions(productData);   
 
                     createSuppliersForm(configData, productData);
                    createCategoriesForm(configData, productData);
@@ -1020,169 +1018,106 @@ const data = productData;
 
 
 
-
-
-
-
-
-setTimeout((productData) => {
+// Tu función con setTimeout
+ function submitActions(productData) {
   const globalSubmitButton = document.getElementById('globalSubmit');
 
   globalSubmitButton.addEventListener('click', () => {
-      // Enviar todos los formularios
-      Promise.all([
-          productsForm.submit(),
-          attributesForm.submit(),
-          variantsForm.submit(),
-          tagsForm.submit(),
-          suppliersForm.submit(),
-          couponsForm.submit(),
-          categoriesForm.submit(),
-      ]).then((results, productData) => {
-        const results1 = results.reduce((acc, result) => Object.assign(acc, result.data), {});
-        const results2 = results.reduce((acc, result) => ({ ...acc, ...result.data }), {});
+    // Enviar todos los formularios
+    Promise.all([
+      productsForm.submit(),
+      attributesForm.submit(),
+      variantsForm.submit(),
+      tagsForm.submit(),
+      suppliersForm.submit(),
+      couponsForm.submit(),
+      categoriesForm.submit(),
+    ]).then((results) => {
+      const results1 = results.reduce((acc, result) => Object.assign(acc, result.data), {});
+      const obj2 = results1;
 
-    
-        console.log('Todos los formularios se enviaron correctamente', results1);
-        console.log('Todos los formularios se enviaron correctamente', results2);
-
-const obj2 = results1;
-
-
-
-
-function transformProductDatabkp(data) {
-  return {
-      product_id: data.id,
-      slug: data.slug,
-      product_name: data.product_name,
-      sku: data.sku,
-      sale_price: data.sale_price,
-      compare_price: data.compare_price,
-      buying_price: data.buying_price,
-      quantity: data.quantity,
-      short_description: data.short_description,
-      product_description: data.product_description.replace(/<[^>]*>/g, ''), // Removing HTML tags
-      product_type: data.product_type,
-  
-      tags: data.tags.map(tagId => {
+      function transformProductData(data) {
+        // Aquí puedes usar la variable productData global
+        const productAttributes = data.productAttributes.map(attrId => {
           return {
-              tag_id: tagId,
-              tag_name: '', // Placeholder, adjust as needed
-              tag_icon: '' // Placeholder, adjust as needed
+            p_variant_attribute_id: attrId,
+            p_variant_attribute_value_id: data[`value_${attrId}`]
           };
-      }),
-      categories: data.categories.map(catId => {
+        });
+
+        const variantDetails = data.variants_form.map(variant => {
+          const variantAttributes = variant.variantAttribute.map(attrId => {
+            return {
+              variant_attribute_name_id: attrId,
+              variant_attribute_value_id: variant[`attribute_${attrId}`]
+            };
+          });
+
           return {
-              cat_id: catId,
-              cat_name: '' // Placeholder, adjust as needed
+            variant_id: variant.variant_id,
+            variant_option: variant.variant_option,
+            variant_title: variant.variant_title,
+            variant_option_id: variant.variant_option_id,
+            variant_image_id: '',
+            variant_sale_price: variant.variant_sale_price,
+            variant_compare_price: variant.variant_compare_price,
+            variant_buying_price: variant.variant_buying_price,
+            variant_quantity: variant.variant_quantity,
+            variant_active: variant.variant_active,
+            variant_attributes: variantAttributes
           };
-      }),
-      variant_details: data.variants_form.map(variant => {
+        });
+
+        const coupons = Object.keys(data.coupons).map(key => {
+          const coupon = data.coupons[key];
           return {
-              variant_id: variant.variant_id,
-              variant_option: variant.variant_option,
-              variant_title: variant.variant_title,
-              variant_option_id: variant.variant_option_id,
-              variant_image_id: '', // Placeholder, adjust as needed
-              variant_sale_price: variant.variant_sale_price,
-              variant_compare_price: variant.variant_compare_price,
-              variant_buying_price: variant.variant_buying_price,
-              variant_quantity: variant.variant_quantity,
-              variant_active: variant.variant_active
+            coupon_code: coupon[`coupon_code_${key}`],
+            discount_value: coupon[`discount_value_${key}`],
+            discount_type: coupon[`discount_type_${key}`]
           };
-      })
-  };
-}
+        });
 
+        return {
+          product_id: data.id,
+          slug: data.slug,
+          product_name: data.product_name,
+          sku: data.sku,
+          sale_price: data.sale_price,
+          compare_price: data.compare_price,
+          buying_price: data.buying_price,
+          quantity: data.quantity,
+          short_description: data.short_description,
+          product_description: data.product_description.replace(/<[^>]*>/g, ''),
+          product_type: data.product_type,
+          published: data.published,
+          disable_out_of_stock: data.disable_out_of_stock,
+          note: data.note,
+          created_by: data.created_by,
+          updated_by: data.updated_by,
+          createdOn: data.createdOn,
+          updatedOn: data.updatedOn,
+          product_attributes: productAttributes,
+          variant_details: variantDetails,
+          tags: data.tags.map(tagId => ({
+            tag_id: tagId,
+            tag_name: '',
+            tag_icon: ''
+          })),
+          categories: data.categories.map(catId => ({
+            cat_id: catId,
+            cat_name: ''
+          })),
+          coupons: coupons,
+          suppliers: data.suppliers.map(supplierId => ({
+            supplier_id: supplierId,
+            supplier_name: ''
+          })),
+          product_images: []
+        };
+      }
 
-function transformProductData(data) {
-  const productAttributes = data.productAttributes.map(attrId => {
-    return {
-      p_variant_attribute_id: attrId,
-      p_variant_attribute_value_id: data[`value_${attrId}`] // Valor asociado al atributo
-    };
-  });
-
-  const variantDetails = data.variants_form.map(variant => {
-    const variantAttributes = variant.variantAttribute.map(attrId => {
-      return {
-        variant_attribute_name_id: attrId,
-        variant_attribute_value_id: variant[`attribute_${attrId}`]
-      };
-    });
-
-    return {
-      variant_id: variant.variant_id,
-      variant_option: variant.variant_option,
-      variant_title: variant.variant_title,
-      variant_option_id: variant.variant_option_id,
-      variant_image_id: '', // Placeholder, adjust as needed
-      variant_sale_price: variant.variant_sale_price,
-      variant_compare_price: variant.variant_compare_price,
-      variant_buying_price: variant.variant_buying_price,
-      variant_quantity: variant.variant_quantity,
-      variant_active: variant.variant_active,
-      variant_attributes: variantAttributes
-    };
-  });
-
-  const coupons = Object.keys(data.coupons).map(key => {
-    const coupon = data.coupons[key];
-    return {
-      coupon_code: coupon[`coupon_code_${key}`],
-      discount_value: coupon[`discount_value_${key}`],
-      discount_type: coupon[`discount_type_${key}`]
-    };
-  });
-
-  return {
-    product_id: data.id,
-    slug: data.slug,
-    product_name: data.product_name,
-    sku: data.sku,
-    sale_price: data.sale_price,
-    compare_price: data.compare_price,
-    buying_price: data.buying_price,
-    quantity: data.quantity,
-    short_description: data.short_description,
-    product_description: data.product_description.replace(/<[^>]*>/g, ''), // Removing HTML tags
-    product_type: data.product_type,
-    published: data.published,
-    disable_out_of_stock: data.disable_out_of_stock,
-    note: data.note,
-    created_by: data.created_by,
-    updated_by: data.updated_by,
-    createdOn: data.createdOn,
-    updatedOn: data.updatedOn,
-    product_attributes: productAttributes,
-    variant_details: variantDetails,
-    tags: data.tags.map(tagId => ({
-      tag_id: tagId,
-      tag_name: '', // Placeholder, adjust as needed
-      tag_icon: '' // Placeholder, adjust as needed
-    })),
-    categories: data.categories.map(catId => ({
-      cat_id: catId,
-      cat_name: '' // Placeholder, adjust as needed
-    })),
-    coupons: coupons,
-    suppliers: data.suppliers.map(supplierId => ({
-      supplier_id: supplierId,
-      supplier_name: '' // Placeholder, adjust as needed
-    })),
-    product_images: [] // Placeholder, adjust as needed
-  };
-}
-
-
-
-
-
-
-const obj1 = transformProductData(obj2);
-      console.log(obj1);              
-
+      const obj1 = transformProductData(obj2);
+      console.log(obj1);
 
       function compareObjects(obj1, obj2) {
         // Utilidad para obtener un conjunto de IDs de un array de objetos
@@ -1231,21 +1166,11 @@ const obj1 = transformProductData(obj2);
     }
 
     
-    const differences = compareObjects(obj1,  productData);
+    const differences = compareObjects(obj1, productData);
     console.log(differences);
-    
 
-
-
-
-        
-        
-
-      }).catch((error) => {
-          console.error('Error al enviar uno o más formularios', error);
-      });
-
-
-
-  });
-}, 1000);
+ 
+    }).catch((error) => {
+      console.error('Error al enviar uno o más formularios', error);
+    });
+  });}
