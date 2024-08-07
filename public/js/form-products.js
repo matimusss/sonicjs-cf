@@ -1025,7 +1025,7 @@ const data = productData;
 
 
 
-setTimeout(() => {
+setTimeout((productData) => {
   const globalSubmitButton = document.getElementById('globalSubmit');
 
   globalSubmitButton.addEventListener('click', () => {
