@@ -1215,8 +1215,8 @@ const data = productData;
         // Aquí puedes usar la variable productData global
         const productAttributes = data.productAttributes.map(attrId => {
           return {
-            attribute_id: attrId,
-            attribute_value_id: data[`value_${attrId}`]
+            attribute_id: attrId.attribute,
+            attribute_value_id: data[`value_${attrId.attribute}`]
           };
         });
 
