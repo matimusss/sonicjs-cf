@@ -1237,8 +1237,8 @@ const data = productData;
           return {
             attribute_id: attrId.attribute,
             attribute_value_id: attrId[`value_${attrId.attribute}`],
-            p_variant_attribute_id: ,  // COMPLETAR 
-            p_variant_attribute_value_id: , // COMPLETAR
+            p_attribute_id: attrId.p_attribute_id,  // COMPLETAR 
+            p_attribute_value_id: attrId.p_attribute_value_id , // COMPLETAR
 
           };
         });
