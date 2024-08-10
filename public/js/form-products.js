@@ -1062,7 +1062,7 @@ const data = productData;
             return {
               variant_attribute_name_id: attrId,
               variant_attribute_value_id: variant[`attribute_${attrId}`],
-              variant_attribute_value_id: variant[`p_attribute_${attrId}`],
+              p_variant_attribute_value_id: variant[`p_attribute_${attrId}`],
                 
       
                             
