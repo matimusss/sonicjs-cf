@@ -399,12 +399,6 @@ fetchConfigData();
 
 
 
-
-
-
-
-
-
                     function createAttributesForm(configData, productData) {
                       // Obtener los atributos del objeto configData
                       const attributes = configData.attributes;
@@ -422,6 +416,152 @@ fetchConfigData();
                           label: value.attribute_value
                         }));
                         return acc;
+                      }, {});
+                    
+                      // Crear componentes dinámicamente para cada atributo
+                      const attributeComponents = attributes.map(attr => ({
+                        label: 'Valores',
+                        key: `value_${attr.attribute_id}`,
+                        type: 'select',
+                        input: true,
+                        conditional: {
+                          show: true,
+                          conjunction: 'all',
+                          conditions: [
+                            {
+                              component: 'attribute',
+                              operator: 'isEqual',
+                              value: attr.attribute_id // Establecer el atributo asociado a estos valores
+                            }
+                          ]
+                        },
+                        data: {
+                          values: attributeValues[attr.attribute_id]
+                        },
+                        dataSrc: 'values',
+                        template: '<span>{{ item.label }}</span>'
+                      }));
+                    
+                      // Crear el formulario usando Formio
+                      Formio.createForm(document.getElementById('formio-attributes'), {
+                        components: [
+                          {
+                            label: 'Atributos',
+                            key: 'attributes_form',
+                            type: 'editgrid',
+                            input: true,
+                            templates: {
+                              header: '' +
+                                '<div class="row">' +
+                                '  {% util.eachComponent(components, function(component) { %} ' +
+                                '    <div class="col-sm-2">' +
+                                '      <strong>{{ component.label }}</strong>' +
+                                '    </div>' +
+                                '  {% }) %}' +
+                                '</div>',
+                              row: '' +
+                                '<div class="row">' +
+                                '  {% util.eachComponent(components, function(component) { %}' +
+                                '    <div class="col-sm-2">' +
+                                '      {{ row[component.key] }}' +
+                                '    </div>' +
+                                '  {% }) %}' +
+                                '  <div class="col-sm-2">' +
+                                '    <div class="btn-group pull-right">' +
+                                '      <div class="btn btn-default btn-sm editRow"><i class="bi bi-edit"></i></div>' +
+                                '      <div class="btn btn-danger btn-sm removeRow"><i class="bi bi-trash"></i></div>' +
+                                '    </div>' +
+                                '  </div>' +
+                                '</div>',
+                              footer: '  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">  Open Form.io Modal  </button>'
+                            },
+                            components: [
+                              {
+                                label: 'Atributo',
+                                key: 'attribute',
+                                type: 'select',
+                                input: true,
+                                data: {
+                                  values: attributeNames
+                                },
+                                dataSrc: 'values',
+                                template: '<span>{{ item.label }}</span>'
+                              },
+                              ...attributeComponents // Añadir dinámicamente los componentes de valores
+                            ]
+                          }
+                        ]
+                      })
+                      .then(function(form) {
+
+                        attributesForm = form;  
+                        // Llenar el formulario con los atributos del producto
+                        
+                        
+                        const productAttributes = productData.product_attributes.map(attr => {
+                          let attributeObj = {
+                            attribute: attr.attribute_id // Cambiar attribute_name a attribute_id
+                          };
+                          attributeObj[`value_${attr.attribute_id}`] = attr.attribute_value_id;
+                          return attributeObj;
+                        });
+                        
+                        console.log(productData);
+                        
+                        // Llenar el formulario con los valores de los atributos
+                        productAttributes.forEach(attr => {
+                          const attributeKey = `value_${attr.attribute}`;
+                          form.components.forEach(component => {
+                            if (component.key === attributeKey) {
+                              component.setValue(attr[attributeKey]);
+                            }
+                          });
+                        });
+                        
+                        
+             
+                    
+                        form.submission = {
+                          data: {
+                            attributes_form: productAttributes
+                          }
+                        };
+                      });
+                    }
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    function createAttributesFormBKPPP(configData, productData) {
+                      // Obtener los atributos del objeto configData
+                      const attributes = configData.attributes;
+                    
+                      // Generar los nombres de atributos para el select principal
+                      const attributeNames = attributes.map(attr => ({
+                        value: attr.attribute_id,
+                        label: attr.attribute_name
+                      }));
+                    
+                      // Generar los valores para cada atributo
+                      const attributeValues = attributes.reduce((acc, attr) => {
+                        acc[attr.attribute_id] = attr.values.map(value => ({
+                          value: value.value_id,
+                          label: value.attribute_value
+                        }));
+                        return acc;
+                    
+                    
+                    
                       }, {});
                     
                       // Crear componentes dinámicamente para cada atributo
@@ -449,6 +589,23 @@ fetchConfigData();
                         template: '<span>{{ item.label }}</span>',
                         defaultValue: (productData.product_attributes.find(pAttr => pAttr.attribute_id === attr.attribute_id) || {}).attribute_value_id || [] // Establecer valor predeterminado
                       }));
+
+
+
+
+
+
+            //por cada atributo, un campo hidden con su id
+
+
+
+// que desaparece si el atributo es borrado!
+
+
+
+
+
+
                     
                       // Crear el formulario usando Formio
                       const formDefinition = {
@@ -467,6 +624,9 @@ fetchConfigData();
                             template: '<span>{{ item.label }}</span>',
                             defaultValue: productData.product_attributes.map(attr => attr.attribute_id) // Valores iniciales
                           },
+
+
+              
                           ...attributeComponents // Añadir dinámicamente los componentes de valores
                         ]
                       };
