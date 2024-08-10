@@ -765,30 +765,6 @@ fetchConfigData();
                             input: true,
                             tableView: true
                           },
-    
-
-
-                          {
-                            type: 'hidden',
-                            key: 'variant_attribute_id',
-                            label: 'variant_attribute_id',
-                            input: true,
-                            defaultValue: "NEW",
-                            tableView: false
-                          },
-                          {
-                            type: 'hidden',
-                            key: 'variant_attribute_value_id',
-                            label: 'variant_attribute_value_id',
-                            input: true,
-                            defaultValue: "NEW",
-                            tableView: false
-                          },
-                          
-
-
-
-
                           {
                             label: 'Atributos de la variante',
                             key: 'variantAttribute',
@@ -817,8 +793,6 @@ fetchConfigData();
                         variant_option_id: variant.variant_option_id,
                         variant_option: variant.variant_option,
                         variantAttribute: variant.variant_attributes.map(attr => attr.variant_attribute_name_id), // Cambiar aquí
-                        variant_attribute_id:  variant.variant_attributes.map(attr => attr.p_variant_attribute_id), // Cambiar aquí
-                        variant_attribute_value_id: variant.variant_attributes.p_variant_attribute_value_id,
                         variant_title: variant.variant_title,
                         variant_sale_price: variant.variant_sale_price,
                         variant_compare_price: variant.variant_compare_price,
