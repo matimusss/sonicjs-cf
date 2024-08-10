@@ -808,11 +808,14 @@ fetchConfigData();
 
                                 // Agregar los atributos de la variante
                                 variant.variant_attributes.forEach(attr => {
-                                  variantObj[`p_attribute_${attr.variant_attribute_name_id}`] = attr.p_variant_attribute_value_id;
+                                  variantObj[`p_attribute_${attr.variant_attribute_name_id}`] = attr.p_variant_attribute_id;
                                 });
           
+                        // Agregar los atributos de la variante
+                        variant.variant_attributes.forEach(attr => {
+                          variantObj[`p_attribute_value_${attr.variant_attribute_name_id}`] = attr.p_variant_attribute_value_id;
+                        });
 
-                      
 
 
 
@@ -1062,10 +1065,8 @@ const data = productData;
             return {
               variant_attribute_name_id: attrId,
               variant_attribute_value_id: variant[`attribute_${attrId}`],
-              p_variant_attribute_value_id: variant[`p_attribute_${attrId}`],
-                
-      
-                            
+              p_variant_attribute_value_id: variant[`p_attribute_value_${attrId}`],
+              p_variant_attribute_id: variant[`p_attribute_${attrId}`],
             };
           });
 
