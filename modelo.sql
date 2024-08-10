@@ -308,9 +308,8 @@ CREATE INDEX idx_code_coupons ON coupons (code);
 CREATE INDEX idx_product_id_coupon_id_product_coupons ON product_coupons (product_id, coupon_id);
 -- shipping_country_zones
 CREATE INDEX idx_shipping_zone_id_shipping_country_zones ON shipping_country_zones (shipping_zone_id);
-CREATE INDEX idx_country_id_shipping_country_zones ON shipping_country_zones (country_id);
--- orders
-CREATE INDEX idx_order_customer_id ON orders (customer_id);
+CREATE INDEX idx_country_id_shipping_country_zones ON shipping_country_zones (country_id);  
+-- ordersw
 -- order_items
 CREATE INDEX idx_product_id_order_item ON order_items (product_id);
 CREATE INDEX idx_order_id_order_item ON order_items (order_id);
