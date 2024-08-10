@@ -487,6 +487,24 @@ fetchConfigData();
                                 dataSrc: 'values',
                                 template: '<span>{{ item.label }}</span>'
                               },
+                              {
+                                type: 'hidden',
+                                key: 'p_attribute_id',
+                                label: 'p_attribute_id',
+                                input: true,
+                                defaultValue: "NEW",
+                                tableView: false
+                              },
+                              {
+                                type: 'hidden',
+                                key: 'p_attribute_value_id',
+                                label: 'p_attribute_value_id',
+                                input: true,
+                                defaultValue: "NEW",
+                                tableView: false
+                              },
+
+                              //COMPONENTE DE ID PARA CADA FILA
                               ...attributeComponents // Añadir dinámicamente los componentes de valores
                             ]
                           }
@@ -500,7 +518,9 @@ fetchConfigData();
                         
                         const productAttributes = productData.product_attributes.map(attr => {
                           let attributeObj = {
-                            attribute: attr.attribute_id // Cambiar attribute_name a attribute_id
+                            attribute: attr.attribute_id, // Cambiar attribute_name a attribute_id
+                            p_attribute_id: attr.p_attribute_id,
+                            p_attribute_value_id: attr.p_attribute_value_id
                           };
                           attributeObj[`value_${attr.attribute_id}`] = attr.attribute_value_id;
                           return attributeObj;
@@ -1217,6 +1237,8 @@ const data = productData;
           return {
             attribute_id: attrId.attribute,
             attribute_value_id: attrId[`value_${attrId.attribute}`],
+            p_variant_attribute_id: ,  // COMPLETAR 
+            p_variant_attribute_value_id: , // COMPLETAR
 
           };
         });
