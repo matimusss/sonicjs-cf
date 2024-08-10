@@ -805,6 +805,18 @@ fetchConfigData();
                       variant.variant_attributes.forEach(attr => {
                         variantObj[`attribute_${attr.variant_attribute_name_id}`] = attr.variant_attribute_value_id;
                       });
+
+                                // Agregar los atributos de la variante
+                                variant.variant_attributes.forEach(attr => {
+                                  variantObj[`p_attribute_${attr.variant_attribute_name_id}`] = attr.p_variant_attribute_value_id;
+                                });
+          
+
+                      
+
+
+
+
                 
                       return variantObj;
                     });
