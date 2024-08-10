@@ -447,7 +447,7 @@ fetchConfigData();
                         components: [
                           {
                             label: 'Atributos',
-                            key: 'attributes_form',
+                            key: 'productAttributes',
                             type: 'editgrid',
                             input: true,
                             templates: {
@@ -523,7 +523,7 @@ fetchConfigData();
                     
                         form.submission = {
                           data: {
-                            attributes_form: productAttributes
+                           productAttributes: productAttributes
                           }
                         };
                       });
