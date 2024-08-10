@@ -1216,7 +1216,8 @@ const data = productData;
         const productAttributes = data.productAttributes.map(attrId => {
           return {
             attribute_id: attrId.attribute,
-            attribute_value_id: data[`value_${attrId.attribute}`]
+            attribute_value_id: attrId[`value_${attrId.attribute}`],
+
           };
         });
 
