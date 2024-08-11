@@ -1511,7 +1511,7 @@ function compareProducts(obj1, obj2) {
 }
 
 
-console.log(compareProducts(newObjobj, oldObj));
+console.log(compareProducts(newObj, oldObj));
 
 
 
