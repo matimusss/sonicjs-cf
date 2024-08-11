@@ -1321,67 +1321,88 @@ const data = productData;
 
 
 
+function compareArrays(oldArray, newArray, key, idField) {
+    const oldIds = oldArray.map(item => item[idField]);
+    const newIds = newArray.map(item => item[idField]);
 
-
-
-
-
-
-
-
-
-
-function compareObjects(obj1, obj2) {
-  const differences = {};
-
-  function compare(a, b, path = '') {
-    // Compare properties in obj1
-    Object.keys(a).forEach(key => {
-      const fullPath = path ? `${path}.${key}` : key;
-      if (b.hasOwnProperty(key)) {
-        if (Array.isArray(a[key]) && Array.isArray(b[key])) {
-          // Compare arrays
-          a[key].forEach((item, index) => {
-            if (index >= b[key].length) {
-              differences[`${fullPath}[${index}]`] = { obj1: item, obj2: undefined };
-            } else {
-              compare(item, b[key][index], `${fullPath}[${index}]`);
-            }
-          });
-          if (b[key].length > a[key].length) {
-            b[key].slice(a[key].length).forEach((item, index) => {
-              differences[`${fullPath}[${a[key].length + index}]`] = { obj1: undefined, obj2: item };
-            });
-          }
-        } else if (typeof a[key] === 'object' && a[key] !== null && typeof b[key] === 'object' && b[key] !== null) {
-          // Compare objects
-          compare(a[key], b[key], fullPath);
-        } else if (a[key] !== b[key]) {
-          // Compare primitive values
-          differences[fullPath] = { obj1: a[key], obj2: b[key] };
+    // Detect items to delete
+    oldArray.forEach(item => {
+        if (!newIds.includes(item[idField])) {
+            changes.toDelete[key].push(item);
         }
-      } else {
-        // Key is missing in obj2
-        differences[fullPath] = { obj1: a[key], obj2: undefined };
-      }
     });
 
-    // Check for keys in obj2 not present in obj1
-    Object.keys(b).forEach(key => {
-      const fullPath = path ? `${path}.${key}` : key;
-      if (!a.hasOwnProperty(key)) {
-        differences[fullPath] = { obj1: undefined, obj2: b[key] };
-      }
+    // Detect items to add and update
+    newArray.forEach(item => {
+        if (!oldIds.includes(item[idField])) {
+            changes.toAdd[key].push(item);
+        } else {
+            const oldItem = oldArray.find(it => it[idField] === item[idField]);
+            if (JSON.stringify(oldItem) !== JSON.stringify(item)) {
+                changes.toUpdate[key].push({
+                    oldValue: oldItem,
+                    newValue: item
+                });
+            }
+        }
     });
-  }
-
-  compare(obj1, obj2);
-  return differences;
 }
-    const differences = compareObjects(obj1, productData);
-    console.log(differences);
 
- 
+const changes = {
+    toAdd: {
+        product_attributes: [],
+        variant_details: [],
+        tags: [],
+        categories: [],
+        coupons: [],
+        suppliers: [],
+        product_images: []
+    },
+    toDelete: {
+        product_attributes: [],
+        variant_details: [],
+        tags: [],
+        categories: [],
+        coupons: [],
+        suppliers: [],
+        product_images: []
+    },
+    toUpdate: {
+        product_attributes: [],
+        variant_details: [],
+        tags: [],
+        categories: [],
+        coupons: [],
+        suppliers: [],
+        product_images: []
+    }
+};
+
+
+
+
+const oldObj = productData;
+const newObj = obj1;
+
+// Compare arrays with respective IDs
+compareArrays(oldObj.product_attributes, newObj.product_attributes, 'product_attributes', 'attribute_id');
+compareArrays(oldObj.variant_details, newObj.variant_details, 'variant_details', 'variant_id');
+compareArrays(oldObj.tags, newObj.tags, 'tags', 'tag_id');
+compareArrays(oldObj.categories, newObj.categories, 'categories', 'cat_id');
+compareArrays(oldObj.suppliers, newObj.suppliers, 'suppliers', 'supplier_id');
+// Compare product_images if necessary
+
+
+
+
+
+
+
+
+
+      
+
+
     }).catch((error) => {
       console.error('Error al enviar uno o más formularios', error);
     });
