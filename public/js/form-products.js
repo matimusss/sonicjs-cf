@@ -1501,31 +1501,35 @@ function compareArrayOfObjects(arr1, arr2, idField, type) {
 }
 
 
-  // Helper function to compare arrays of objects by their IDs
-  function compareArrayOfObjectsBKP(arr1, arr2, idField, type) {
-      const ids1 = new Set(arr1.map(item => item[idField]));
-      const ids2 = new Set(arr2.map(item => item[idField]));
+// Helper function to compare arrays of objects by their IDs
+function compareArrayOfObjects(arr1, arr2, idField, type) {
+  const excludedKeys = [ 'createdOn', 'updatedOn', 'published', 'disable_out_of_stock', 'note']; // Lista de claves a ignorar
 
-      // Find IDs to delete
-      ids1.forEach(id => {
-          if (!ids2.has(id)) {
-              report.DELETE.push({ id, type });
-          }
-      });
+  const ids1 = new Set(arr1.map(item => item[idField]));
+  const ids2 = new Set(arr2.map(item => item[idField]));
 
-      // Find IDs to create
-      ids2.forEach(id => {
-          if (!ids1.has(id)) {
-              report.CREATE.push({ id, type });
-          }
-      });
+  // Find IDs to delete
+  ids1.forEach(id => {
+      if (!ids2.has(id)) {
+          report.DELETE.push({ id, type });
+      }
+  });
 
-      // Compare objects with matching IDs
-      arr1.forEach(item1 => {
-          const item2 = arr2.find(item => item[idField] === item1[idField]);
-          if (item2) {
-              Object.keys(item1).forEach(key => {
-                  if (key !== idField && item1[key] !== item2[key]) {
+  // Find IDs to create
+  ids2.forEach(id => {
+      if (!ids1.has(id)) {
+          report.CREATE.push({ id, type });
+      }
+  });
+
+  // Compare objects with matching IDs
+  arr1.forEach(item1 => {
+      const item2 = arr2.find(item => item[idField] === item1[idField]);
+      if (item2) {
+          Object.keys(item1).forEach(key => {
+              if (key !== idField && !excludedKeys.includes(key)) {
+                  // Only check for updates if the key is not excluded
+                  if (item1[key] !== item2[key]) {
                       report.UPDATE.push({
                           id: item1[idField],
                           field: key,
@@ -1534,10 +1538,11 @@ function compareArrayOfObjects(arr1, arr2, idField, type) {
                           type
                       });
                   }
-              });
-          }
-      });
-  }
+              }
+          });
+      }
+  });
+}
 
   // Compare attributes
   compareArrayOfObjects(obj1.product_attributes || [], obj2.product_attributes || [], 'attribute_id', 'product_attribute');
