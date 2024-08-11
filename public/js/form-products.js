@@ -1398,6 +1398,7 @@ compareArrays(oldObj.suppliers, newObj.suppliers, 'suppliers', 'supplier_id');
 
 
 
+console.log('Changes:', changes);
 
 
       
