@@ -1443,16 +1443,66 @@ function compareProducts(obj1, obj2) {
 
   // Compare simple fields
   const simpleFields = [
-      'product_name', 'slug', 'sku', 'sale_price', 'compare_price', 
+      'product_name', 'slug',  'sale_price', 'compare_price', 
       'buying_price', 'quantity', 'short_description', 'product_description', 
-      'product_type', 'published', 'disable_out_of_stock', 'note', 
-      'created_by', 'updated_by', 'createdOn', 'updatedOn'
+      'product_type',  'disable_out_of_stock', 'note', 
+      //sacados: 'sku', 'published', 'created_by', 'updated_by', 'createdOn', 'updatedOn'
   ];
 
   simpleFields.forEach(field => compareFields(field));
 
+
+
+
+
+
+
+
+
+
+// Helper function to compare arrays of objects by their IDs
+function compareArrayOfObjects(arr1, arr2, idField, type) {
+  const excludedKeys = [ 'createdOn', 'updatedOn', 'published', 'disable_out_of_stock']; // Lista de claves a ignorar
+
+  const ids1 = new Set(arr1.map(item => item[idField]));
+  const ids2 = new Set(arr2.map(item => item[idField]));
+
+  // Find IDs to delete
+  ids1.forEach(id => {
+      if (!ids2.has(id)) {
+          report.DELETE.push({ id, type });
+      }
+  });
+
+  // Find IDs to create
+  ids2.forEach(id => {
+      if (!ids1.has(id)) {
+          report.CREATE.push({ id, type });
+      }
+  });
+
+  // Compare objects with matching IDs
+  arr1.forEach(item1 => {
+      const item2 = arr2.find(item => item[idField] === item1[idField]);
+      if (item2) {
+          Object.keys(item1).forEach(key => {
+              if (key !== idField && !excludedKeys.includes(key) && item1[key] !== item2[key]) {
+                  report.UPDATE.push({
+                      id: item1[idField],
+                      field: key,
+                      oldValue: item1[key],
+                      newValue: item2[key],
+                      type
+                  });
+              }
+          });
+      }
+  });
+}
+
+
   // Helper function to compare arrays of objects by their IDs
-  function compareArrayOfObjects(arr1, arr2, idField, type) {
+  function compareArrayOfObjectsBKP(arr1, arr2, idField, type) {
       const ids1 = new Set(arr1.map(item => item[idField]));
       const ids2 = new Set(arr2.map(item => item[idField]));
 
