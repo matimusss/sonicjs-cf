@@ -1450,7 +1450,6 @@ function compareProducts(obj1, obj2) {
   ];
 
   simpleFields.forEach(field => compareFields(field));
-
   function compareArrayOfObjects(arr1, arr2, idField, type) {
     const excludedKeys = ['createdOn', 'updatedOn', 'published', 'disable_out_of_stock', 'note'];
 
@@ -1478,12 +1477,11 @@ function compareProducts(obj1, obj2) {
             Object.keys(item1).forEach(key => {
                 // Ignorar claves que están en excludedKeys
                 if (!excludedKeys.includes(key)) {
-                    // Obtenemos los valores para comparar
                     const value1 = item1[key];
                     const value2 = item2[key];
 
-                    // Comprobamos si uno de los valores es vacío o undefined
-                    if ((value1 || value1 === '') && (value2 || value2 === '')) {
+                    // Comprobamos si los valores son undefined o vacíos y que no sean claves excluidas
+                    if (value1 !== undefined && value2 !== undefined) {
                         // Si los valores son diferentes, agregar al reporte
                         if (value1 !== value2) {
                             report.UPDATE.push({
@@ -1500,9 +1498,6 @@ function compareProducts(obj1, obj2) {
         }
     });
 }
-
-
-
   // Compare attributes
   compareArrayOfObjects(obj1.product_attributes || [], obj2.product_attributes || [], 'attribute_id', 'product_attribute');
 
