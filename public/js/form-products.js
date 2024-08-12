@@ -1330,13 +1330,7 @@ const data = productData;
         return true;
     }
     
-    // Modifica la parte de la función compareArrays:
-    if (!deepEqual(oldItem, item)) {
-        changes.toUpdate[key].push({
-            oldValue: oldItem,
-            newValue: item
-        });
-    }
+
     
 
 
@@ -1357,6 +1351,17 @@ function compareArrays(oldArray, newArray, key, idField) {
             changes.toAdd[key].push(item);
         } else {
             const oldItem = oldArray.find(it => it[idField] === item[idField]);
+
+
+
+
+
+
+
+
+
+
+            
             if (!deepEqual(oldItem, item)) {
                 changes.toUpdate[key].push({
                     oldValue: oldItem,
