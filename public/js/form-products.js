@@ -1318,8 +1318,6 @@ const data = productData;
 
 
 
-
-
       function customDeepDiff(obj1, obj2) {
         const result = {
           CREATE: {
@@ -1362,11 +1360,19 @@ const data = productData;
         const obj2Keys = collectKeys(obj2);
       
         const getChanges = (obj1, obj2, keyPrefix, createKey, deleteKey, updateKey) => {
-          const obj1Ids = _.map(_.get(obj1, keyPrefix, []), 'id');
-          const obj2Ids = _.map(_.get(obj2, keyPrefix, []), 'id');
+          const obj1Array = _.get(obj1, keyPrefix, []);
+          const obj2Array = _.get(obj2, keyPrefix, []);
+      
+          const obj1Ids = _.map(obj1Array, 'id');
+          const obj2Ids = _.map(obj2Array, 'id');
       
           const deletedIds = _.difference(obj1Ids, obj2Ids);
           const newIds = _.difference(obj2Ids, obj1Ids);
+      
+          // Ensure the result arrays are initialized
+          if (!result[deleteKey]) result[deleteKey] = [];
+          if (!result[createKey]) result[createKey] = [];
+          if (!result[updateKey]) result[updateKey] = [];
       
           result[deleteKey].push(...deletedIds);
           result[createKey].push(...newIds);
@@ -1374,8 +1380,8 @@ const data = productData;
           // For updates
           _.forEach(obj1Ids, id => {
             if (_.includes(obj2Ids, id)) {
-              const value1 = _.find(_.get(obj1, keyPrefix, []), { id });
-              const value2 = _.find(_.get(obj2, keyPrefix, []), { id });
+              const value1 = _.find(obj1Array, { id });
+              const value2 = _.find(obj2Array, { id });
       
               if (!_.isEqual(value1, value2)) {
                 result[updateKey].push({ id, from: value1, to: value2 });
@@ -1419,6 +1425,7 @@ const data = productData;
               const value2 = obj2Keys[key];
       
               if (!_.isEqual(value1, value2)) {
+                if (!result.UPDATE.SIMPLE_FIELDS) result.UPDATE.SIMPLE_FIELDS = [];
                 result.UPDATE.SIMPLE_FIELDS.push({ path: key, from: value1, to: value2 });
               }
             }
@@ -1428,14 +1435,11 @@ const data = productData;
         return result;
       }
       
-  
+
+
       
-      console.log(customDeepDiff(productData, obj1));
-
-
-
-
-
+      console.log(customDeepDiff(productData,obj1));
+      
 
 
 
