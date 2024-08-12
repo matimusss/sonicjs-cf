@@ -1432,14 +1432,17 @@ function compareProducts(obj1, obj2) {
       'product_name', 'slug',  'sale_price', 'compare_price', 
       'buying_price', 'quantity', 'short_description', 'product_description', 
       'product_type'
-      //sacados: 'sku', 'published', 'created_by', 'updated_by', 'createdOn', 'updatedOn'
+      //sacados: 'sku', 'published', 'created_by', 'updated_by', 'createdOn', 'updatedOn', note, disable out of stock
   ];
 
   simpleFields.forEach(field => compareFields(field));
 
 
   function compareArrayOfObjects(arr1, arr2, idField, type) {
-    const excludedKeys = ['createdOn', 'tag_name', 'cat_name', 'disable_out_of_stock', 'note'];
+    const excludedKeys = ['tag_name', 'cat_name', 'cat_name', 'supplier_name', 'tag_icon'];
+
+    // Agrega los campos 'variant_attribute_name' y 'variant_attribute_value' a la lista de exclusión
+    const variantExcludedKeys = ['variant_attribute_name', 'variant_attribute_value'];
 
     const ids1 = new Set(arr1.map(item => item[idField]));
     const ids2 = new Set(arr2.map(item => item[idField]));
@@ -1463,8 +1466,8 @@ function compareProducts(obj1, obj2) {
         const item2 = arr2.find(item => item[idField] === item1[idField]);
         if (item2) {
             Object.keys(item1).forEach(key => {
-                // Ignorar claves que están en excludedKeys
-                if (!excludedKeys.includes(key)) {
+                // Ignorar claves que están en excludedKeys o en variantExcludedKeys
+                if (!excludedKeys.includes(key) && !variantExcludedKeys.includes(key)) {
                     // Saltar la comparación si el campo es undefined
                     if (item1[key] === undefined || item2[key] === undefined) {
                         return;
@@ -1485,7 +1488,6 @@ function compareProducts(obj1, obj2) {
         }
     });
 }
-
 
   // Compare attributes
   compareArrayOfObjects(obj1.product_attributes || [], obj2.product_attributes || [], 'attribute_id', 'product_attribute');
