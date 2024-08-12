@@ -1454,11 +1454,6 @@ function compareProducts(obj1, obj2) {
 
 
 
-
-
-
-
-
   function compareArrayOfObjects(arr1, arr2, idField, type) {
     const excludedKeys = ['createdOn', 'updatedOn', 'published', 'disable_out_of_stock', 'note'];
 
@@ -1484,14 +1479,17 @@ function compareProducts(obj1, obj2) {
         const item2 = arr2.find(item => item[idField] === item1[idField]);
         if (item2) {
             Object.keys(item1).forEach(key => {
-                if (key !== idField && !excludedKeys.includes(key)) {
-                    // Check for deep equality if needed
-                    if (!deepEqual(item1[key], item2[key])) {
+                // Ignorar claves que están en excludedKeys
+                if (!excludedKeys.includes(key)) {
+                    // Comprobamos si uno de los valores es vacío o undefined
+                    const value1 = item1[key];
+                    const value2 = item2[key];
+                    if (value1 !== value2) {
                         report.UPDATE.push({
                             id: item1[idField],
                             field: key,
-                            oldValue: item1[key],
-                            newValue: item2[key],
+                            oldValue: value1,
+                            newValue: value2,
                             type
                         });
                     }
@@ -1499,53 +1497,6 @@ function compareProducts(obj1, obj2) {
             });
         }
     });
-}
-function compareArrayOfObjects(arr1, arr2, idField, type) {
-  const excludedKeys = ['createdOn', 'updatedOn', 'published', 'disable_out_of_stock', 'note'];
-
-  const ids1 = new Set(arr1.map(item => item[idField]));
-  const ids2 = new Set(arr2.map(item => item[idField]));
-
-  // Find IDs to delete
-  ids1.forEach(id => {
-      if (!ids2.has(id)) {
-          report.DELETE.push({ id, type });
-      }
-  });
-
-  // Find IDs to create
-  ids2.forEach(id => {
-      if (!ids1.has(id)) {
-          report.CREATE.push({ id, type });
-      }
-  });
-
-  // Compare objects with matching IDs
-  arr1.forEach(item1 => {
-      const item2 = arr2.find(item => item[idField] === item1[idField]);
-      if (item2) {
-          Object.keys(item1).forEach(key => {
-              // Ignorar claves que están en excludedKeys
-              if (!excludedKeys.includes(key)) {
-                  // Si es un objeto sin idField, simplemente continuamos
-                  if (key === idField || typeof item1[key] === 'object' && !item1[key][idField]) {
-                      return;
-                  }
-
-                  // Comparar valores
-                  if (item1[key] !== item2[key]) {
-                      report.UPDATE.push({
-                          id: item1[idField],
-                          field: key,
-                          oldValue: item1[key],
-                          newValue: item2[key],
-                          type
-                      });
-                  }
-              }
-          });
-      }
-  });
 }
 
 
