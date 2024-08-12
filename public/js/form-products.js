@@ -1501,29 +1501,46 @@ function compareProducts(obj1, obj2) {
     });
 }
 
-// Helper function for deep equality
-function deepEqual(obj1, obj2) {
-    if (obj1 === obj2) return true;
+// Helper function to compare arrays of objects by their IDs
+function compareArrayOfObjects(arr1, arr2, idField, type) {
+  const excludedKeys = [ 'createdOn', 'tag_ico', 'tag_name', 'disable_out_of_stock', 'note']; // Lista de claves a ignorar
 
-    if (typeof obj1 !== 'object' || typeof obj2 !== 'object' || obj1 == null || obj2 == null) {
-        return false;
-    }
+  const ids1 = new Set(arr1.map(item => item[idField]));
+  const ids2 = new Set(arr2.map(item => item[idField]));
 
-    const keys1 = Object.keys(obj1);
-    const keys2 = Object.keys(obj2);
+  // Find IDs to delete
+  ids1.forEach(id => {
+      if (!ids2.has(id)) {
+          report.DELETE.push({ id, type });
+      }
+  });
 
-    if (keys1.length !== keys2.length) {
-        return false;
-    }
+  // Find IDs to create
+  ids2.forEach(id => {
+      if (!ids1.has(id)) {
+          report.CREATE.push({ id, type });
+      }
+  });
 
-    for (const key of keys1) {
-        if (!keys2.includes(key) || !deepEqual(obj1[key], obj2[key])) {
-            return false;
-        }
-    }
-
-    return true;
+  // Compare objects with matching IDs
+  arr1.forEach(item1 => {
+      const item2 = arr2.find(item => item[idField] === item1[idField]);
+      if (item2) {
+          Object.keys(item1).forEach(key => {
+              if (key !== idField && !excludedKeys.includes(key) && item1[key] !== item2[key]) {
+                  report.UPDATE.push({
+                      id: item1[idField],
+                      field: key,
+                      oldValue: item1[key],
+                      newValue: item2[key],
+                      type
+                  });
+              }
+          });
+      }
+  });
 }
+
 
 
   // Compare attributes
