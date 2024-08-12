@@ -1436,13 +1436,15 @@ function compareProducts(obj1, obj2) {
   ];
 
   simpleFields.forEach(field => compareFields(field));
-
-
   function compareArrayOfObjects(arr1, arr2, idField, type) {
-    const excludedKeys = ['tag_name', 'cat_name', 'cat_name', 'supplier_name', 'tag_icon'];
-
-    // Agrega los campos 'variant_attribute_name' y 'variant_attribute_value' a la lista de exclusión
-    const variantExcludedKeys = ['variant_attribute_name', 'variant_attribute_value'];
+    const excludedKeys = [
+        'tag_name', 
+        'cat_name', 
+        'supplier_name', 
+        'tag_icon', 
+        'variant_attribute_name', 
+        'variant_attribute_value'
+    ];
 
     const ids1 = new Set(arr1.map(item => item[idField]));
     const ids2 = new Set(arr2.map(item => item[idField]));
@@ -1466,8 +1468,8 @@ function compareProducts(obj1, obj2) {
         const item2 = arr2.find(item => item[idField] === item1[idField]);
         if (item2) {
             Object.keys(item1).forEach(key => {
-                // Ignorar claves que están en excludedKeys o en variantExcludedKeys
-                if (!excludedKeys.includes(key) && !variantExcludedKeys.includes(key)) {
+                // Ignorar claves que están en excludedKeys
+                if (!excludedKeys.includes(key)) {
                     // Saltar la comparación si el campo es undefined
                     if (item1[key] === undefined || item2[key] === undefined) {
                         return;
@@ -1475,19 +1477,39 @@ function compareProducts(obj1, obj2) {
 
                     // Comparar valores y excluir campos con oldValue undefined
                     if (item1[key] !== item2[key] && item1[key] !== undefined) {
-                        report.UPDATE.push({
-                            id: item1[idField],
-                            field: key,
-                            oldValue: item1[key],
-                            newValue: item2[key],
-                            type
-                        });
+                        const filteredOldValue = filterObject(item1[key], excludedKeys);
+                        const filteredNewValue = filterObject(item2[key], excludedKeys);
+                        
+                        if (JSON.stringify(filteredOldValue) !== JSON.stringify(filteredNewValue)) {
+                            report.UPDATE.push({
+                                id: item1[idField],
+                                field: key,
+                                oldValue: filteredOldValue,
+                                newValue: filteredNewValue,
+                                type
+                            });
+                        }
                     }
                 }
             });
         }
     });
 }
+
+function filterObject(obj, excludedKeys) {
+    if (Array.isArray(obj)) {
+        return obj.map(item => filterObject(item, excludedKeys));
+    } else if (obj && typeof obj === 'object') {
+        return Object.keys(obj).reduce((acc, key) => {
+            if (!excludedKeys.includes(key)) {
+                acc[key] = filterObject(obj[key], excludedKeys);
+            }
+            return acc;
+        }, {});
+    }
+    return obj;
+}
+
 
   // Compare attributes
   compareArrayOfObjects(obj1.product_attributes || [], obj2.product_attributes || [], 'attribute_id', 'product_attribute');
