@@ -1429,6 +1429,7 @@ function compareProducts(obj1, obj2) {
       UPDATE: [],
       DELETE: []
   };
+
 // Campos a ignorar
 const IGNORE_FIELDS = ["disable_out_of_stock", "note"];
 
@@ -1486,6 +1487,26 @@ const generateDifferenceReport = (oldData, newData) => {
     return report;
 };
 
+  // Compare attributes
+  compareArrayOfObjects(obj1.product_attributes || [], obj2.product_attributes || [], 'attribute_id', 'product_attribute');
+
+  // Compare variants
+  compareArrayOfObjects(obj1.variant_details || [], obj2.variant_details || [], 'variant_id', 'variant');
+
+  // Compare tags
+  compareArrayOfObjects(obj1.tags || [], obj2.tags || [], 'tag_id', 'tag');
+
+  // Compare categories
+  compareArrayOfObjects(obj1.categories || [], obj2.categories || [], 'cat_id', 'category');
+
+  // Compare coupons
+  compareArrayOfObjects(obj1.coupons || [], obj2.coupons || [], 'coupon_id', 'coupon');
+
+  // Compare suppliers
+  compareArrayOfObjects(obj1.suppliers || [], obj2.suppliers || [], 'supplier_id', 'supplier');
+
+  return report;
+}
 
 
 console.log(compareProducts(oldObj, newObj));
