@@ -1486,7 +1486,7 @@ function compareProducts(obj1, obj2) {
                     const value2 = item2[key];
                     if (value1 !== value2) {
                         report.UPDATE.push({
-                            id: item1[idField],
+                    
                             field: key,
                             oldValue: value1,
                             newValue: value2,
