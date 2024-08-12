@@ -1305,314 +1305,125 @@ const data = productData;
       const obj1 = transformProductData(obj2);
       console.log(obj1);
 
-      function compareArrays(oldArray, newArray, key, idField) {
-        const oldIds = oldArray.map(item => item[idField]);
-        const newIds = newArray.map(item => item[idField]);
-    
-        // Detect items to delete
-        oldArray.forEach(item => {
-            if (!newIds.includes(item[idField])) {
-                changes.toDelete[key].push(item);
-            }
-        });
-    
-        // Detect items to add and update
-        newArray.forEach(item => {
-            if (!oldIds.includes(item[idField])) {
-                changes.toAdd[key].push(item);
-            } else {
-                const oldItem = oldArray.find(it => it[idField] === item[idField]);
-                if (!deepEqual(oldItem, item)) {
-                    changes.toUpdate[key].push({
-                        oldValue: oldItem,
-                        newValue: item
-                    });
-                }
-            }
-        });
-    }
 
 
+// Comparación profunda de objetos, incluyendo arrays de objetos anidados
+function deepEqual(obj1, obj2) {
+  if (obj1 === obj2) return true;
 
-
-
-
-
-    function deepEqual(obj1, obj2) {
-      if (obj1 === obj2) return true;
-  
-      if (typeof obj1 !== 'object' || typeof obj2 !== 'object' || obj1 == null || obj2 == null) {
-          return false;
-      }
-  
-      if (Array.isArray(obj1) && Array.isArray(obj2)) {
-          if (obj1.length !== obj2.length) return false;
-  
-          // Convertir cada objeto a cadena JSON y ordenar
-          const sortedObj1 = obj1.map(item => JSON.stringify(item)).sort();
-          const sortedObj2 = obj2.map(item => JSON.stringify(item)).sort();
-  
-          return sortedObj1.every((item, index) => item === sortedObj2[index]);
-      }
-  
-      const keys1 = Object.keys(obj1);
-      const keys2 = Object.keys(obj2);
-  
-      if (keys1.length !== keys2.length) {
-          return false;
-      }
-  
-      return keys1.every(key => deepEqual(obj1[key], obj2[key]));
+  if (typeof obj1 !== 'object' || typeof obj2 !== 'object' || obj1 == null || obj2 == null) {
+      return false;
   }
-  
-  // Comparación de arrays de objetos con orden de claves garantizado
-  function compareArrays(oldArray, newArray, key, idField) {
-      const oldIds = oldArray.map(item => item[idField]);
-      const newIds = newArray.map(item => item[idField]);
-  
-      // Detect items to delete
-      oldArray.forEach(item => {
-          if (!newIds.includes(item[idField])) {
-              changes.toDelete[key].push(item);
+
+  if (Array.isArray(obj1) && Array.isArray(obj2)) {
+      if (obj1.length !== obj2.length) return false;
+
+      // Convertir cada objeto a cadena JSON y ordenar
+      const sortedObj1 = obj1.map(item => JSON.stringify(item)).sort();
+      const sortedObj2 = obj2.map(item => JSON.stringify(item)).sort();
+
+      return sortedObj1.every((item, index) => item === sortedObj2[index]);
+  }
+
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) {
+      return false;
+  }
+
+  return keys1.every(key => deepEqual(obj1[key], obj2[key]));
+}
+
+// Función para comparar arrays de objetos, incluyendo atributos anidados
+function compareArrayOfObjects(oldArray, newArray, idField, key) {
+  const oldIds = oldArray.map(item => item[idField]);
+  const newIds = newArray.map(item => item[idField]);
+
+  // Detect items to delete
+  oldArray.forEach(item => {
+      if (!newIds.includes(item[idField])) {
+          changes.toDelete[key].push(item);
+      }
+  });
+
+  // Detect items to add and update
+  newArray.forEach(item => {
+      if (!oldIds.includes(item[idField])) {
+          changes.toAdd[key].push(item);
+      } else {
+          const oldItem = oldArray.find(it => it[idField] === item[idField]);
+          if (!deepEqual(oldItem, item)) {
+              changes.toUpdate[key].push({
+                  oldValue: oldItem,
+                  newValue: item
+              });
           }
-      });
-  
-      // Detect items to add and update
-      newArray.forEach(item => {
-          if (!oldIds.includes(item[idField])) {
-              changes.toAdd[key].push(item);
-          } else {
-              const oldItem = oldArray.find(it => it[idField] === item[idField]);
-              if (!deepEqual(oldItem, item)) {
-                  changes.toUpdate[key].push({
-                      oldValue: oldItem,
-                      newValue: item
-                  });
-              }
-          }
-      });
-  }
-  
-  // Ejemplo de uso
-  const changes = {
-      toAdd: {
-          product_attributes: [],
-          variant_details: [],
-          tags: [],
-          categories: [],
-          coupons: [],
-          suppliers: [],
-          product_images: []
-      },
-      toDelete: {
-          product_attributes: [],
-          variant_details: [],
-          tags: [],
-          categories: [],
-          coupons: [],
-          suppliers: [],
-          product_images: []
-      },
-      toUpdate: {
-          product_attributes: [],
-          variant_details: [],
-          tags: [],
-          categories: [],
-          coupons: [],
-          suppliers: [],
-          product_images: []
       }
-  };
-  
-  const oldObj = productData;
-  const newObj = obj1;
-  
-  // Compare arrays with respective IDs
-  compareArrays(oldObj.product_attributes, newObj.product_attributes, 'product_attributes', 'attribute_id');
-  compareArrays(oldObj.variant_details, newObj.variant_details, 'variant_details', 'variant_id');
-  compareArrays(oldObj.tags, newObj.tags, 'tags', 'tag_id');
-  compareArrays(oldObj.categories, newObj.categories, 'categories', 'cat_id');
-  compareArrays(oldObj.suppliers, newObj.suppliers, 'suppliers', 'supplier_id');
-  compareArrays(oldObj.product_images, newObj.product_images, 'product_images', 'gallery_id');
-  
-  console.log('Changes:', changes);
-  
+  });
+}
 
+// Comparar atributos dentro de los objetos
+function compareVariantDetails(oldArray, newArray) {
+  compareArrayOfObjects(oldArray, newArray, 'variant_id', 'variant');
 
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function compareProducts(obj1, obj2) {
-  const report = {
-      CREATE: [],
-      UPDATE: [],
-      DELETE: []
-  };
-
-  // Helper function to compare simple fields
-  function compareFields(fieldName) {
-      if (obj1[fieldName] !== obj2[fieldName]) {
-          report.UPDATE.push({
-              field: fieldName,
-              oldValue: obj1[fieldName],
-              newValue: obj2[fieldName]
-          });
+  oldArray.forEach(oldItem => {
+      const newItem = newArray.find(item => item.variant_id === oldItem.variant_id);
+      if (newItem && !deepEqual(oldItem, newItem)) {
+          // Comparar los atributos dentro de cada detalle de variante
+          compareArrayOfObjects(
+              oldItem.variant_attributes || [],
+              newItem.variant_attributes || [],
+              'attribute_id',
+              'variant_attribute'
+          );
       }
+  });
+}
+
+// Ejemplo de uso
+const changes = {
+  toAdd: {
+      product_attributes: [],
+      variant_details: [],
+      tags: [],
+      categories: [],
+      coupons: [],
+      suppliers: [],
+      product_images: []
+  },
+  toDelete: {
+      product_attributes: [],
+      variant_details: [],
+      tags: [],
+      categories: [],
+      coupons: [],
+      suppliers: [],
+      product_images: []
+  },
+  toUpdate: {
+      product_attributes: [],
+      variant_details: [],
+      tags: [],
+      categories: [],
+      coupons: [],
+      suppliers: [],
+      product_images: []
   }
+};
 
-  // Compare simple fields
-  const simpleFields = [
-      'product_name', 'slug',  'sale_price', 'compare_price', 
-      'buying_price', 'quantity', 'short_description', 'product_description', 
-      'product_type'
-      //sacados: 'sku', 'published', 'created_by', 'updated_by', 'createdOn', 'updatedOn', note, disable out of stock
-  ];
+const oldObj = productData;
+const newObj = obj1;
 
-  simpleFields.forEach(field => compareFields(field));
-function compareArrayOfObjects(arr1, arr2, idField, type) {
-    const excludedKeys = [
-        'tag_name', 
-        'cat_name', 
-        'supplier_name', 
-        'tag_icon', 
-        'variant_attribute_name', 
-        'variant_attribute_value'
-    ];
+// Comparar arrays con IDs respectivos
+compareArrayOfObjects(oldObj.product_attributes || [], newObj.product_attributes || [], 'attribute_id', 'product_attributes');
+compareVariantDetails(oldObj.variant_details || [], newObj.variant_details || []);
+compareArrayOfObjects(oldObj.tags || [], newObj.tags || [], 'tag_id', 'tags');
+compareArrayOfObjects(oldObj.categories || [], newObj.categories || [], 'cat_id', 'categories');
+compareArrayOfObjects(oldObj.coupons || [], newObj.coupons || [], 'coupon_id', 'coupons');
+compareArrayOfObjects(oldObj.suppliers || [], newObj.suppliers || [], 'supplier_id', 'suppliers');
 
-    const ids1 = new Set(arr1.map(item => item[idField]));
-    const ids2 = new Set(arr2.map(item => item[idField]));
-
-    // Encontrar IDs para eliminar
-    ids1.forEach(id => {
-        if (!ids2.has(id)) {
-            report.DELETE.push({ id, type });
-        }
-    });
-
-    // Encontrar IDs para crear
-    ids2.forEach(id => {
-        if (!ids1.has(id)) {
-            report.CREATE.push({ id, type });
-        }
-    });
-
-    // Comparar objetos con IDs coincidentes
-    arr1.forEach(item1 => {
-        const item2 = arr2.find(item => item[idField] === item1[idField]);
-        if (item2) {
-            Object.keys(item1).forEach(key => {
-                // Ignorar claves que están en excludedKeys
-                if (!excludedKeys.includes(key)) {
-                    // Saltar la comparación si el campo es undefined
-                    if (item1[key] === undefined || item2[key] === undefined) {
-                        return;
-                    }
-
-                    // Comparar valores y excluir campos con oldValue undefined
-                    if (item1[key] !== item2[key] && item1[key] !== undefined) {
-                        const filteredOldValue = filterObject(item1[key], excludedKeys);
-                        const filteredNewValue = filterObject(item2[key], excludedKeys);
-                        
-                        if (JSON.stringify(filteredOldValue) !== JSON.stringify(filteredNewValue)) {
-                            report.UPDATE.push({
-                                id: item1[idField],
-                                field: key,
-                                oldValue: filteredOldValue,
-                                newValue: filteredNewValue,
-                                type
-                            });
-                        }
-                    }
-                }
-            });
-        }
-    });
-}
-
-function filterObject(obj, excludedKeys) {
-    if (Array.isArray(obj)) {
-        return obj.map(item => filterObject(item, excludedKeys));
-    } else if (obj && typeof obj === 'object') {
-        return Object.keys(obj).reduce((acc, key) => {
-            if (!excludedKeys.includes(key)) {
-                acc[key] = filterObject(obj[key], excludedKeys);
-            }
-            return acc;
-        }, {});
-    }
-    return obj;
-}
-
-
-  // Compare attributes
-  compareArrayOfObjects(obj1.product_attributes || [], obj2.product_attributes || [], 'attribute_id', 'product_attribute');
-
-  // Compare variants
-  compareArrayOfObjects(obj1.variant_details || [], obj2.variant_details || [], 'variant_id', 'variant');
-
-  // Compare tags
-  compareArrayOfObjects(obj1.tags || [], obj2.tags || [], 'tag_id', 'tag');
-
-  // Compare categories
-  compareArrayOfObjects(obj1.categories || [], obj2.categories || [], 'cat_id', 'category');
-
-  // Compare coupons
-  compareArrayOfObjects(obj1.coupons || [], obj2.coupons || [], 'coupon_id', 'coupon');
-
-  // Compare suppliers
-  compareArrayOfObjects(obj1.suppliers || [], obj2.suppliers || [], 'supplier_id', 'supplier');
-
-  return report;
-}
-
-
-console.log(compareProducts(oldObj, newObj));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+console.log('Changes:', changes);
 
 
 
