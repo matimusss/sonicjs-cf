@@ -118,7 +118,7 @@ export const Script = () => {
       ></script>
 
       <script src='https://unpkg.com/gridjs/dist/gridjs.umd.js'></script>
-
+      <script src="/public/js/lodash.js"></script>
       <script src='/public/js/admin.js'></script>
       <script src='/public/js/form-content-type.js'></script>
       <script src='/public/js/form-content.js'></script>
