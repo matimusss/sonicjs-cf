@@ -1452,8 +1452,6 @@ function compareProducts(obj1, obj2) {
   simpleFields.forEach(field => compareFields(field));
 
 
-
-
   function compareArrayOfObjects(arr1, arr2, idField, type) {
     const excludedKeys = ['createdOn', 'updatedOn', 'published', 'disable_out_of_stock', 'note'];
 
@@ -1486,8 +1484,8 @@ function compareProducts(obj1, obj2) {
                         return;
                     }
 
-                    // Comparar valores
-                    if (item1[key] !== item2[key]) {
+                    // Comparar valores y excluir campos con oldValue undefined
+                    if (item1[key] !== item2[key] && item1[key] !== undefined) {
                         report.UPDATE.push({
                             id: item1[idField],
                             field: key,
