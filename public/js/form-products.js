@@ -1306,6 +1306,51 @@ const data = productData;
       console.log(obj1);
 
 
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+// Asegúrate de que `changes` esté correctamente inicializado
+const changes = {
+  toAdd: {
+      product_attributes: [],
+      variant_details: [],
+      tags: [],
+      categories: [],
+      coupons: [],
+      suppliers: [],
+      product_images: []
+  },
+  toDelete: {
+      product_attributes: [],
+      variant_details: [],
+      tags: [],
+      categories: [],
+      coupons: [],
+      suppliers: [],
+      product_images: []
+  },
+  toUpdate: {
+      product_attributes: [],
+      variant_details: [],
+      tags: [],
+      categories: [],
+      coupons: [],
+      suppliers: [],
+      product_images: []
+  }
+};
 
 // Comparación profunda de objetos, incluyendo arrays de objetos anidados
 function deepEqual(obj1, obj2) {
@@ -1343,6 +1388,7 @@ function compareArrayOfObjects(oldArray, newArray, idField, key) {
   // Detect items to delete
   oldArray.forEach(item => {
       if (!newIds.includes(item[idField])) {
+          if (!changes.toDelete[key]) changes.toDelete[key] = [];
           changes.toDelete[key].push(item);
       }
   });
@@ -1350,10 +1396,12 @@ function compareArrayOfObjects(oldArray, newArray, idField, key) {
   // Detect items to add and update
   newArray.forEach(item => {
       if (!oldIds.includes(item[idField])) {
+          if (!changes.toAdd[key]) changes.toAdd[key] = [];
           changes.toAdd[key].push(item);
       } else {
           const oldItem = oldArray.find(it => it[idField] === item[idField]);
           if (!deepEqual(oldItem, item)) {
+              if (!changes.toUpdate[key]) changes.toUpdate[key] = [];
               changes.toUpdate[key].push({
                   oldValue: oldItem,
                   newValue: item
@@ -1365,7 +1413,7 @@ function compareArrayOfObjects(oldArray, newArray, idField, key) {
 
 // Comparar atributos dentro de los objetos
 function compareVariantDetails(oldArray, newArray) {
-  compareArrayOfObjects(oldArray, newArray, 'variant_id', 'variant');
+  compareArrayOfObjects(oldArray, newArray, 'variant_id', 'variant_details');
 
   oldArray.forEach(oldItem => {
       const newItem = newArray.find(item => item.variant_id === oldItem.variant_id);
@@ -1375,43 +1423,13 @@ function compareVariantDetails(oldArray, newArray) {
               oldItem.variant_attributes || [],
               newItem.variant_attributes || [],
               'attribute_id',
-              'variant_attribute'
+              'variant_attributes'
           );
       }
   });
 }
 
 // Ejemplo de uso
-const changes = {
-  toAdd: {
-      product_attributes: [],
-      variant_details: [],
-      tags: [],
-      categories: [],
-      coupons: [],
-      suppliers: [],
-      product_images: []
-  },
-  toDelete: {
-      product_attributes: [],
-      variant_details: [],
-      tags: [],
-      categories: [],
-      coupons: [],
-      suppliers: [],
-      product_images: []
-  },
-  toUpdate: {
-      product_attributes: [],
-      variant_details: [],
-      tags: [],
-      categories: [],
-      coupons: [],
-      suppliers: [],
-      product_images: []
-  }
-};
-
 const oldObj = productData;
 const newObj = obj1;
 
@@ -1424,11 +1442,6 @@ compareArrayOfObjects(oldObj.coupons || [], newObj.coupons || [], 'coupon_id', '
 compareArrayOfObjects(oldObj.suppliers || [], newObj.suppliers || [], 'supplier_id', 'suppliers');
 
 console.log('Changes:', changes);
-
-
-
-
-
 
       
 
