@@ -1277,7 +1277,7 @@ const data = productData;
           product_type: data.product_type,
           published: data.published,
           disable_out_of_stock: data.disable_out_of_stock,
-          note: data.note,
+
           created_by: data.created_by,
           updated_by: data.updated_by,
           createdOn: data.createdOn,
@@ -1431,7 +1431,7 @@ function compareProducts(obj1, obj2) {
   const simpleFields = [
       'product_name', 'slug',  'sale_price', 'compare_price', 
       'buying_price', 'quantity', 'short_description', 'product_description', 
-      'product_type',  'disable_out_of_stock', 'note', 
+      'product_type'
       //sacados: 'sku', 'published', 'created_by', 'updated_by', 'createdOn', 'updatedOn'
   ];
 
