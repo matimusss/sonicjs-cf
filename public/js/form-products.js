@@ -1500,10 +1500,8 @@ function compareProducts(obj1, obj2) {
         }
     });
 }
-
-// Helper function to compare arrays of objects by their IDs
 function compareArrayOfObjects(arr1, arr2, idField, type) {
-  const excludedKeys = [ 'createdOn', 'tag_ico', 'tag_name', 'disable_out_of_stock', 'note']; // Lista de claves a ignorar
+  const excludedKeys = ['createdOn', 'updatedOn', 'published', 'disable_out_of_stock', 'note'];
 
   const ids1 = new Set(arr1.map(item => item[idField]));
   const ids2 = new Set(arr2.map(item => item[idField]));
@@ -1527,20 +1525,28 @@ function compareArrayOfObjects(arr1, arr2, idField, type) {
       const item2 = arr2.find(item => item[idField] === item1[idField]);
       if (item2) {
           Object.keys(item1).forEach(key => {
-              if (key !== idField && !excludedKeys.includes(key) && item1[key] !== item2[key]) {
-                  report.UPDATE.push({
-                      id: item1[idField],
-                      field: key,
-                      oldValue: item1[key],
-                      newValue: item2[key],
-                      type
-                  });
+              // Ignorar claves que están en excludedKeys
+              if (!excludedKeys.includes(key)) {
+                  // Si es un objeto sin idField, simplemente continuamos
+                  if (key === idField || typeof item1[key] === 'object' && !item1[key][idField]) {
+                      return;
+                  }
+
+                  // Comparar valores
+                  if (item1[key] !== item2[key]) {
+                      report.UPDATE.push({
+                          id: item1[idField],
+                          field: key,
+                          oldValue: item1[key],
+                          newValue: item2[key],
+                          type
+                      });
+                  }
               }
           });
       }
   });
 }
-
 
 
   // Compare attributes
