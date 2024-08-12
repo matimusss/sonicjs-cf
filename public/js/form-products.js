@@ -1149,21 +1149,7 @@ const data = productData;
         input: true,
         defaultValue: data.published
       },
-      {
-        type: 'textfield',
-        key: 'disable_out_of_stock',
-        label: 'Disable Out Of Stock',
-        input: true,
-        defaultValue: data.disable_out_of_stock
-      },
-      {
-        type: 'textfield',
-        key: 'note',
-        label: 'Note',
-        input: true,
-        defaultValue: data.note
-      },
-      {
+     {
         type: 'textfield',
         key: 'created_by',
         label: 'Created By',
@@ -1453,7 +1439,7 @@ function compareProducts(obj1, obj2) {
 
 
   function compareArrayOfObjects(arr1, arr2, idField, type) {
-    const excludedKeys = ['createdOn', 'updatedOn', 'published', 'disable_out_of_stock', 'note'];
+    const excludedKeys = ['createdOn', 'tag_name', 'cat_name', 'disable_out_of_stock', 'note'];
 
     const ids1 = new Set(arr1.map(item => item[idField]));
     const ids2 = new Set(arr2.map(item => item[idField]));
