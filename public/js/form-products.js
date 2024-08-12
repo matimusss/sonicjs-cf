@@ -1429,95 +1429,63 @@ function compareProducts(obj1, obj2) {
       UPDATE: [],
       DELETE: []
   };
+// Campos a ignorar
+const IGNORE_FIELDS = ["disable_out_of_stock", "note"];
 
-  // Helper function to compare simple fields
-  function compareFields(fieldName) {
-      if (obj1[fieldName] !== obj2[fieldName]) {
-          report.UPDATE.push({
-              field: fieldName,
-              oldValue: obj1[fieldName],
-              newValue: obj2[fieldName]
-          });
-      }
-  }
+// Comparar dos objetos y generar un reporte de diferencias
+const generateDifferenceReport = (oldData, newData) => {
+    const report = {
+        UPDATE: [],
+        CREATE: [],
+        DELETE: []
+    };
 
-  // Compare simple fields
-  const simpleFields = [
-      'product_name', 'slug',  'sale_price', 'compare_price', 
-      'buying_price', 'quantity', 'short_description', 'product_description', 
-      'product_type',  'disable_out_of_stock', 'note', 
-      //sacados: 'sku', 'published', 'created_by', 'updated_by', 'createdOn', 'updatedOn'
-  ];
+    // Convertir oldData y newData a Map para facilitar la comparación
+    const oldMap = new Map(oldData.map(item => [item.id, item]));
+    const newMap = new Map(newData.map(item => [item.id, item]));
 
-  simpleFields.forEach(field => compareFields(field));
-  function compareArrayOfObjects(arr1, arr2, idField, type) {
-    const excludedKeys = ['createdOn', 'updatedOn', 'published', 'disable_out_of_stock', 'note'];
+    // Encontrar IDs en oldData y newData
+    const allIds = new Set([...oldMap.keys(), ...newMap.keys()]);
 
-    const ids1 = new Set(arr1.map(item => item[idField]));
-    const ids2 = new Set(arr2.map(item => item[idField]));
+    allIds.forEach(id => {
+        const oldItem = oldMap.get(id);
+        const newItem = newMap.get(id);
 
-    // Find IDs to delete
-    ids1.forEach(id => {
-        if (!ids2.has(id)) {
-            report.DELETE.push({ id, type });
-        }
-    });
+        if (oldItem && newItem) {
+            // Comparar los campos de oldItem y newItem
+            Object.keys(newItem).forEach(key => {
+                const value1 = oldItem[key];
+                const value2 = newItem[key];
 
-    // Find IDs to create
-    ids2.forEach(id => {
-        if (!ids1.has(id)) {
-            report.CREATE.push({ id, type });
-        }
-    });
+                // Ignorar campos que están en IGNORE_FIELDS
+                if (IGNORE_FIELDS.includes(key)) {
+                    return;
+                }
 
-    // Compare objects with matching IDs
-    arr1.forEach(item1 => {
-        const item2 = arr2.find(item => item[idField] === item1[idField]);
-        if (item2) {
-            Object.keys(item1).forEach(key => {
-                // Ignorar claves que están en excludedKeys
-                if (!excludedKeys.includes(key)) {
-                    const value1 = item1[key];
-                    const value2 = item2[key];
-
-                    // Comprobamos si los valores son undefined o vacíos y que no sean claves excluidas
-                    if (value1 !== undefined && value2 !== undefined) {
-                        // Si los valores son diferentes, agregar al reporte
-                        if (value1 !== value2) {
-                            report.UPDATE.push({
-                                id: item1[idField],
-                                field: key,
-                                oldValue: value1,
-                                newValue: value2,
-                                type
-                            });
-                        }
+                // Solo considerar cambios si los valores no son undefined o vacíos
+                if (value2 !== undefined && value2 !== "") {
+                    if (value1 === undefined || value1 === "" || value1 !== value2) {
+                        report.UPDATE.push({
+                            id,
+                            field: key,
+                            oldValue: value1,
+                            newValue: value2
+                        });
                     }
                 }
             });
+        } else if (oldItem && !newItem) {
+            // Elemento fue eliminado en newData
+            report.DELETE.push(oldItem);
+        } else if (!oldItem && newItem) {
+            // Nuevo elemento en newData
+            report.CREATE.push(newItem);
         }
     });
-}
-  // Compare attributes
-  compareArrayOfObjects(obj1.product_attributes || [], obj2.product_attributes || [], 'attribute_id', 'product_attribute');
 
-  // Compare variants
-  compareArrayOfObjects(obj1.variant_details || [], obj2.variant_details || [], 'variant_id', 'variant');
+    return report;
+};
 
-  // Compare tags
-  compareArrayOfObjects(obj1.tags || [], obj2.tags || [], 'tag_id', 'tag');
-
-  // Compare categories
-  compareArrayOfObjects(obj1.categories || [], obj2.categories || [], 'cat_id', 'category');
-
-  // Compare coupons
-  compareArrayOfObjects(obj1.coupons || [], obj2.coupons || [], 'coupon_id', 'coupon');
-
-  // Compare suppliers
-  compareArrayOfObjects(obj1.suppliers || [], obj2.suppliers || [], 'supplier_id', 'supplier');
-
-  return report;
-}
 
 
 console.log(compareProducts(oldObj, newObj));
