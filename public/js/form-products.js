@@ -1307,6 +1307,39 @@ const data = productData;
 
 
 
+      function deepEqual(obj1, obj2) {
+        if (obj1 === obj2) return true;
+    
+        if (typeof obj1 !== 'object' || typeof obj2 !== 'object' || obj1 == null || obj2 == null) {
+            return false;
+        }
+    
+        let keys1 = Object.keys(obj1);
+        let keys2 = Object.keys(obj2);
+    
+        if (keys1.length !== keys2.length) {
+            return false;
+        }
+    
+        for (let key of keys1) {
+            if (!keys2.includes(key) || !deepEqual(obj1[key], obj2[key])) {
+                return false;
+            }
+        }
+    
+        return true;
+    }
+    
+    // Modifica la parte de la función compareArrays:
+    if (!deepEqual(oldItem, item)) {
+        changes.toUpdate[key].push({
+            oldValue: oldItem,
+            newValue: item
+        });
+    }
+    
+
+
 function compareArrays(oldArray, newArray, key, idField) {
     const oldIds = oldArray.map(item => item[idField]);
     const newIds = newArray.map(item => item[idField]);
@@ -1324,7 +1357,7 @@ function compareArrays(oldArray, newArray, key, idField) {
             changes.toAdd[key].push(item);
         } else {
             const oldItem = oldArray.find(it => it[idField] === item[idField]);
-            if (JSON.stringify(oldItem) !== JSON.stringify(item)) {
+            if (!deepEqual(oldItem, item)) {
                 changes.toUpdate[key].push({
                     oldValue: oldItem,
                     newValue: item
@@ -1436,6 +1469,8 @@ function compareProducts(obj1, obj2) {
   ];
 
   simpleFields.forEach(field => compareFields(field));
+
+
   function compareArrayOfObjects(arr1, arr2, idField, type) {
     const excludedKeys = [
         'tag_name', 
@@ -1508,7 +1543,7 @@ function filterObject(obj, excludedKeys) {
         }, {});
     }
     return obj;
-}
+  }
 
 
   // Compare attributes
