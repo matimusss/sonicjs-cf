@@ -1503,7 +1503,7 @@ function compareArrayOfObjects(arr1, arr2, idField, type) {
 
 // Helper function to compare arrays of objects by their IDs
 function compareArrayOfObjects(arr1, arr2, idField, type) {
-  const excludedKeys = [ 'createdOn', 'updatedOn', 'disable_out_of_stock', 'note']; // Lista de claves a ignorar
+  const excludedKeys = [  'disable_out_of_stock', 'note']; // Lista de claves a ignorar
 
   const ids1 = new Set(arr1.map(item => item[idField]));
   const ids2 = new Set(arr2.map(item => item[idField]));
