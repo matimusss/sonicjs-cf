@@ -1331,87 +1331,128 @@ const data = productData;
             }
         });
     }
-    
-    // Función de comparación profunda
+
+
+
+
+
+
+
     function deepEqual(obj1, obj2) {
-        if (obj1 === obj2) return true;
-    
-        if (typeof obj1 !== 'object' || typeof obj2 !== 'object' || obj1 == null || obj2 == null) {
-            return false;
-        }
-    
-        if (Array.isArray(obj1) && Array.isArray(obj2)) {
-            if (obj1.length !== obj2.length) return false;
-    
-            // Ordenar y comparar arrays
-            const sortedObj1 = obj1.map(item => JSON.stringify(item)).sort();
-            const sortedObj2 = obj2.map(item => JSON.stringify(item)).sort();
-    
-            return deepEqual(sortedObj1, sortedObj2);
-        }
-    
-        const keys1 = Object.keys(obj1);
-        const keys2 = Object.keys(obj2);
-    
-        if (keys1.length !== keys2.length) {
-            return false;
-        }
-    
-        for (const key of keys1) {
-            if (!keys2.includes(key) || !deepEqual(obj1[key], obj2[key])) {
-                return false;
-            }
-        }
-    
-        return true;
-    }
-    
-    const changes = {
-        toAdd: {
-            product_attributes: [],
-            variant_details: [],
-            tags: [],
-            categories: [],
-            coupons: [],
-            suppliers: [],
-            product_images: []
-        },
-        toDelete: {
-            product_attributes: [],
-            variant_details: [],
-            tags: [],
-            categories: [],
-            coupons: [],
-            suppliers: [],
-            product_images: []
-        },
-        toUpdate: {
-            product_attributes: [],
-            variant_details: [],
-            tags: [],
-            categories: [],
-            coupons: [],
-            suppliers: [],
-            product_images: []
-        }
-    };
-    
-    const oldObj = productData;
-    const newObj = obj1;
-    
-    // Compare arrays with respective IDs
-    compareArrays(oldObj.product_attributes, newObj.product_attributes, 'product_attributes', 'attribute_id');
-    compareArrays(oldObj.variant_details, newObj.variant_details, 'variant_details', 'variant_id');
-    compareArrays(oldObj.tags, newObj.tags, 'tags', 'tag_id');
-    compareArrays(oldObj.categories, newObj.categories, 'categories', 'cat_id');
-    compareArrays(oldObj.suppliers, newObj.suppliers, 'suppliers', 'supplier_id');
-    compareArrays(oldObj.product_images, newObj.product_images, 'product_images', 'gallery_id');
-    
-    console.log('Changes:', changes);
+      if (obj1 === obj2) return true;
+  
+      if (typeof obj1 !== 'object' || typeof obj2 !== 'object' || obj1 == null || obj2 == null) {
+          return false;
+      }
+  
+      if (Array.isArray(obj1) && Array.isArray(obj2)) {
+          if (obj1.length !== obj2.length) return false;
+  
+          // Convertir cada objeto a cadena JSON y ordenar
+          const sortedObj1 = obj1.map(item => JSON.stringify(item)).sort();
+          const sortedObj2 = obj2.map(item => JSON.stringify(item)).sort();
+  
+          return sortedObj1.every((item, index) => item === sortedObj2[index]);
+      }
+  
+      const keys1 = Object.keys(obj1);
+      const keys2 = Object.keys(obj2);
+  
+      if (keys1.length !== keys2.length) {
+          return false;
+      }
+  
+      return keys1.every(key => deepEqual(obj1[key], obj2[key]));
+  }
+  
+  // Comparación de arrays de objetos con orden de claves garantizado
+  function compareArrays(oldArray, newArray, key, idField) {
+      const oldIds = oldArray.map(item => item[idField]);
+      const newIds = newArray.map(item => item[idField]);
+  
+      // Detect items to delete
+      oldArray.forEach(item => {
+          if (!newIds.includes(item[idField])) {
+              changes.toDelete[key].push(item);
+          }
+      });
+  
+      // Detect items to add and update
+      newArray.forEach(item => {
+          if (!oldIds.includes(item[idField])) {
+              changes.toAdd[key].push(item);
+          } else {
+              const oldItem = oldArray.find(it => it[idField] === item[idField]);
+              if (!deepEqual(oldItem, item)) {
+                  changes.toUpdate[key].push({
+                      oldValue: oldItem,
+                      newValue: item
+                  });
+              }
+          }
+      });
+  }
+  
+  // Ejemplo de uso
+  const changes = {
+      toAdd: {
+          product_attributes: [],
+          variant_details: [],
+          tags: [],
+          categories: [],
+          coupons: [],
+          suppliers: [],
+          product_images: []
+      },
+      toDelete: {
+          product_attributes: [],
+          variant_details: [],
+          tags: [],
+          categories: [],
+          coupons: [],
+          suppliers: [],
+          product_images: []
+      },
+      toUpdate: {
+          product_attributes: [],
+          variant_details: [],
+          tags: [],
+          categories: [],
+          coupons: [],
+          suppliers: [],
+          product_images: []
+      }
+  };
+  
+  const oldObj = productData;
+  const newObj = obj1;
+  
+  // Compare arrays with respective IDs
+  compareArrays(oldObj.product_attributes, newObj.product_attributes, 'product_attributes', 'attribute_id');
+  compareArrays(oldObj.variant_details, newObj.variant_details, 'variant_details', 'variant_id');
+  compareArrays(oldObj.tags, newObj.tags, 'tags', 'tag_id');
+  compareArrays(oldObj.categories, newObj.categories, 'categories', 'cat_id');
+  compareArrays(oldObj.suppliers, newObj.suppliers, 'suppliers', 'supplier_id');
+  compareArrays(oldObj.product_images, newObj.product_images, 'product_images', 'gallery_id');
+  
+  console.log('Changes:', changes);
+  
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+    
+    
 
 
 
