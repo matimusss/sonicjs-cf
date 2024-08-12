@@ -1430,62 +1430,78 @@ function compareProducts(obj1, obj2) {
       DELETE: []
   };
 
-// Campos a ignorar
-const IGNORE_FIELDS = ["disable_out_of_stock", "note"];
+  // Helper function to compare simple fields
+  function compareFields(fieldName) {
+      if (obj1[fieldName] !== obj2[fieldName]) {
+          report.UPDATE.push({
+              field: fieldName,
+              oldValue: obj1[fieldName],
+              newValue: obj2[fieldName]
+          });
+      }
+  }
 
-// Comparar dos objetos y generar un reporte de diferencias
-const generateDifferenceReport = (oldData, newData) => {
-    const report = {
-        UPDATE: [],
-        CREATE: [],
-        DELETE: []
-    };
+  // Compare simple fields
+  const simpleFields = [
+      'product_name', 'slug',  'sale_price', 'compare_price', 
+      'buying_price', 'quantity', 'short_description', 'product_description', 
+      'product_type',  'disable_out_of_stock', 'note', 
+      //sacados: 'sku', 'published', 'created_by', 'updated_by', 'createdOn', 'updatedOn'
+  ];
 
-    // Convertir oldData y newData a Map para facilitar la comparación
-    const oldMap = new Map(oldData.map(item => [item.id, item]));
-    const newMap = new Map(newData.map(item => [item.id, item]));
+  simpleFields.forEach(field => compareFields(field));
 
-    // Encontrar IDs en oldData y newData
-    const allIds = new Set([...oldMap.keys(), ...newMap.keys()]);
 
-    allIds.forEach(id => {
-        const oldItem = oldMap.get(id);
-        const newItem = newMap.get(id);
 
-        if (oldItem && newItem) {
-            // Comparar los campos de oldItem y newItem
-            Object.keys(newItem).forEach(key => {
-                const value1 = oldItem[key];
-                const value2 = newItem[key];
 
-                // Ignorar campos que están en IGNORE_FIELDS
-                if (IGNORE_FIELDS.includes(key)) {
-                    return;
-                }
+  function compareArrayOfObjects(arr1, arr2, idField, type) {
+    const excludedKeys = ['createdOn', 'updatedOn', 'published', 'disable_out_of_stock', 'note'];
 
-                // Solo considerar cambios si los valores no son undefined o vacíos
-                if (value2 !== undefined && value2 !== "") {
-                    if (value1 === undefined || value1 === "" || value1 !== value2) {
+    const ids1 = new Set(arr1.map(item => item[idField]));
+    const ids2 = new Set(arr2.map(item => item[idField]));
+
+    // Encontrar IDs para eliminar
+    ids1.forEach(id => {
+        if (!ids2.has(id)) {
+            report.DELETE.push({ id, type });
+        }
+    });
+
+    // Encontrar IDs para crear
+    ids2.forEach(id => {
+        if (!ids1.has(id)) {
+            report.CREATE.push({ id, type });
+        }
+    });
+
+    // Comparar objetos con IDs coincidentes
+    arr1.forEach(item1 => {
+        const item2 = arr2.find(item => item[idField] === item1[idField]);
+        if (item2) {
+            Object.keys(item1).forEach(key => {
+                // Ignorar claves que están en excludedKeys
+                if (!excludedKeys.includes(key)) {
+                    // Saltar la comparación si el campo es undefined
+                    if (item1[key] === undefined || item2[key] === undefined) {
+                        return;
+                    }
+
+                    // Comparar valores
+                    if (item1[key] !== item2[key]) {
                         report.UPDATE.push({
-                            id,
+                            id: item1[idField],
                             field: key,
-                            oldValue: value1,
-                            newValue: value2
+                            oldValue: item1[key],
+                            newValue: item2[key],
+                            type
                         });
                     }
                 }
             });
-        } else if (oldItem && !newItem) {
-            // Elemento fue eliminado en newData
-            report.DELETE.push(oldItem);
-        } else if (!oldItem && newItem) {
-            // Nuevo elemento en newData
-            report.CREATE.push(newItem);
         }
     });
+}
 
-    return report;
-};
 
   // Compare attributes
   compareArrayOfObjects(obj1.product_attributes || [], obj2.product_attributes || [], 'attribute_id', 'product_attribute');
