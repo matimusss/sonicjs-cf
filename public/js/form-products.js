@@ -1314,8 +1314,9 @@ const data = productData;
 
 
 
-console.log(_.isEqual(obj1, productData));
+console.log(_.isEqual(obj1.buying_price, productData.buying_price));
 
+console.log(_.isEqual(obj1.variant_details[0].variant_attributes[0], productData.variant_details[0].variant_attributes[0]));
 
 
 
