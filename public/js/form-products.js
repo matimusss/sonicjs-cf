@@ -1305,7 +1305,6 @@ const data = productData;
       const obj1 = transformProductData(obj2);
       console.log(obj1);
 
-    
 
 
 
@@ -1313,128 +1312,152 @@ const data = productData;
 
 
 
-      function customDiff(obj1, obj2) {
+
+
+
+
+
+
+
+
+      function customDeepDiff(obj1, obj2) {
         const result = {
-            CREATE: {
-                VARIANTS: [],
-                VARIANT_ATTRIBUTES: [],
-                ATTRIBUTES: [],
-                COUPONS: [],
-                CATEGORIES: [],
-                SUPPLIERS: [],
-                TAGS: [],
-            },
-            DELETE: {
-                VARIANTS: [],
-                VARIANT_ATTRIBUTES: [],
-                ATTRIBUTES: [],
-                COUPONS: [],
-                CATEGORIES: [],
-                SUPPLIERS: [],
-                TAGS: [],
-            },
-            UPDATE: {
-                VARIANT_ATTRIBUTES: [],
-                ATTRIBUTES: [],
-                SIMPLE_FIELDS: []
-            }
+          CREATE: {
+            VARIANTS: [],
+            VARIANT_ATTRIBUTES: [],
+            ATTRIBUTES: [],
+            COUPONS: [],
+            CATEGORIES: [],
+            SUPPLIERS: [],
+            TAGS: [],
+          },
+          DELETE: {
+            VARIANTS: [],
+            VARIANT_ATTRIBUTES: [],
+            ATTRIBUTES: [],
+            COUPONS: [],
+            CATEGORIES: [],
+            SUPPLIERS: [],
+            TAGS: [],
+          },
+          UPDATE: {
+            VARIANT_ATTRIBUTES: [],
+            ATTRIBUTES: [],
+            SIMPLE_FIELDS: []
+          }
         };
-    
+      
         const collectKeys = (obj, prefix = '') => {
-            return _.transform(obj, (result, value, key) => {
-                const path = prefix ? `${prefix}.${key}` : key;
-                if (_.isObject(value) && !_.isArray(value)) {
-                    _.assign(result, collectKeys(value, path));
-                } else {
-                    result[path] = value;
-                }
-            }, {});
+          return _.transform(obj, (result, value, key) => {
+            const path = prefix ? `${prefix}.${key}` : key;
+            if (_.isObject(value) && !_.isArray(value)) {
+              _.assign(result, collectKeys(value, path));
+            } else {
+              result[path] = value;
+            }
+          }, {});
         };
-    
+      
         const obj1Keys = collectKeys(obj1);
         const obj2Keys = collectKeys(obj2);
-    
+      
         const getChanges = (obj1, obj2, keyPrefix, createKey, deleteKey, updateKey) => {
-            const obj1Ids = _.keys(collectKeys(obj1, keyPrefix));
-            const obj2Ids = _.keys(collectKeys(obj2, keyPrefix));
-    
-            const deletedIds = _.difference(obj1Ids, obj2Ids);
-            const newIds = _.difference(obj2Ids, obj1Ids);
-    
-            // Ensure the arrays exist in the result object before pushing
-            if (result[deleteKey] && Array.isArray(result[deleteKey])) {
-                result[deleteKey].push(...deletedIds);
+          const obj1Ids = _.map(_.get(obj1, keyPrefix, []), 'id');
+          const obj2Ids = _.map(_.get(obj2, keyPrefix, []), 'id');
+      
+          const deletedIds = _.difference(obj1Ids, obj2Ids);
+          const newIds = _.difference(obj2Ids, obj1Ids);
+      
+          result[deleteKey].push(...deletedIds);
+          result[createKey].push(...newIds);
+      
+          // For updates
+          _.forEach(obj1Ids, id => {
+            if (_.includes(obj2Ids, id)) {
+              const value1 = _.find(_.get(obj1, keyPrefix, []), { id });
+              const value2 = _.find(_.get(obj2, keyPrefix, []), { id });
+      
+              if (!_.isEqual(value1, value2)) {
+                result[updateKey].push({ id, from: value1, to: value2 });
+              }
             }
-    
-            if (result[createKey] && Array.isArray(result[createKey])) {
-                result[createKey].push(...newIds);
-            }
-    
-            // For updates
-            _.forEach(obj1Ids, id => {
-                if (_.includes(obj2Ids, id)) {
-                    const value1 = _.get(obj1, id);
-                    const value2 = _.get(obj2, id);
-    
-                    if (!_.isEqual(value1, value2)) {
-                        if (result[updateKey] && Array.isArray(result[updateKey])) {
-                            result[updateKey].push({ path: id, from: value1, to: value2 });
-                        }
-                    }
-                }
-            });
+          });
         };
-    
+      
         // Handling variants
-        getChanges(obj1, obj2, 'VARIANT_ID', 'VARIANTS', 'VARIANTS', 'UPDATE.VARIANT_ATTRIBUTES');
-        
+        getChanges(obj1, obj2, 'variant_details', 'VARIANTS', 'VARIANTS', 'UPDATE.VARIANT_ATTRIBUTES');
+      
         // Handling variant attributes
-        getChanges(obj1, obj2, 'P_VARIANT_ATTRIBUTE_ID', 'VARIANT_ATTRIBUTES', 'VARIANT_ATTRIBUTES', 'UPDATE.VARIANT_ATTRIBUTES');
-        
+        getChanges(obj1, obj2, 'variant_attributes', 'VARIANT_ATTRIBUTES', 'VARIANT_ATTRIBUTES', 'UPDATE.VARIANT_ATTRIBUTES');
+      
         // Handling attributes
-        getChanges(obj1, obj2, 'P_ATTRIBUTE_ID', 'ATTRIBUTES', 'ATTRIBUTES', 'UPDATE.ATTRIBUTES');
-        
+        getChanges(obj1, obj2, 'product_attributes', 'ATTRIBUTES', 'ATTRIBUTES', 'UPDATE.ATTRIBUTES');
+      
         // Handling coupons
-        getChanges(obj1, obj2, 'P_COUPON_ID', 'COUPONS', 'COUPONS', 'UPDATE');
-        
+        getChanges(obj1, obj2, 'coupons', 'COUPONS', 'COUPONS', 'UPDATE');
+      
         // Handling categories
-        getChanges(obj1, obj2, 'P_CATEGORIES_ID', 'CATEGORIES', 'CATEGORIES', 'UPDATE');
-        
+        getChanges(obj1, obj2, 'categories', 'CATEGORIES', 'CATEGORIES', 'UPDATE');
+      
         // Handling suppliers
-        getChanges(obj1, obj2, 'SUPPLIER_ID', 'SUPPLIERS', 'SUPPLIERS', 'UPDATE');
-        
+        getChanges(obj1, obj2, 'suppliers', 'SUPPLIERS', 'SUPPLIERS', 'UPDATE');
+      
         // Handling tags
-        getChanges(obj1, obj2, 'TAG_ID', 'TAGS', 'TAGS', 'UPDATE');
-    
+        getChanges(obj1, obj2, 'tags', 'TAGS', 'TAGS', 'UPDATE');
+      
         // Handling simple fields
         _.forEach(obj1Keys, (value, key) => {
-            if (!_.includes(key, 'VARIANT_ID') && !_.includes(key, 'P_VARIANT_ATTRIBUTE_ID') &&
-                !_.includes(key, 'P_ATTRIBUTE_ID') && !_.includes(key, 'P_COUPON_ID') &&
-                !_.includes(key, 'P_CATEGORIES_ID') && !_.includes(key, 'SUPPLIER_ID') &&
-                !_.includes(key, 'TAG_ID')) {
-                if (_.has(obj2Keys, key)) {
-                    const value1 = obj1Keys[key];
-                    const value2 = obj2Keys[key];
-    
-                    if (!_.isEqual(value1, value2)) {
-                        if (result.UPDATE.SIMPLE_FIELDS && Array.isArray(result.UPDATE.SIMPLE_FIELDS)) {
-                            result.UPDATE.SIMPLE_FIELDS.push({ path: key, from: value1, to: value2 });
-                        }
-                    }
-                }
-            }
-        });
-    
-        return result;
-    }
-    
-    // Example usage
-    const obj11 = productData;
-    const obj22 = obj1;
-    
-    console.log(customDiff(obj11, obj22));
-    
+          if (!_.includes(key, 'variant_details') &&
+              !_.includes(key, 'variant_attributes') &&
+              !_.includes(key, 'product_attributes') &&
+              !_.includes(key, 'coupons') &&
+              !_.includes(key, 'categories') &&
+              !_.includes(key, 'suppliers') &&
+              !_.includes(key, 'tags')) {
+            if (_.has(obj2Keys, key)) {
+              const value1 = obj1Keys[key];
+              const value2 = obj2Keys[key];
       
+              if (!_.isEqual(value1, value2)) {
+                result.UPDATE.SIMPLE_FIELDS.push({ path: key, from: value1, to: value2 });
+              }
+            }
+          }
+        });
+      
+        return result;
+      }
+      
+  
+      
+      console.log(customDeepDiff(productData, obj1));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
     }).catch((error) => {
