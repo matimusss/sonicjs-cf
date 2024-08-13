@@ -1215,7 +1215,7 @@ const data = productData;
       categoriesForm.submit(),
     ]).then((results) => {
       const results1 = results.reduce((acc, result) => Object.assign(acc, result.data), {});
-      const obj2 = results1;
+      const obj3 = results1;
 
       function transformProductData(data) {
         // Aquí puedes usar la variable productData global
@@ -1302,26 +1302,57 @@ const data = productData;
         };
       }
 
-      const obj1 = transformProductData(obj2);
+      const obj1 = transformProductData(obj3);
       console.log(obj1);
 
 
-
-
-
-
-
-
-
-
 console.log(_.isEqual(obj1.buying_price, productData.buying_price));
-
 console.log(_.isEqual(obj1.variant_details[0].variant_attributes[0], productData.variant_details[0].variant_attributes[0]));
 console.log(_.isEqual(obj1.variant_details[0].variant_attributes[0].p_variant_attribute_id, productData.variant_details[0].variant_attributes[0].p_variant_attribute_id));
 console.log(_.isEqual(obj1.variant_details[0].variant_attributes[0].p_variant_attribute_value_id, productData.variant_details[0].variant_attributes[0].p_variant_attribute_value_id));
 console.log(_.isEqual(obj1.variant_details[0].variant_attributes[0].variant_attribute_name_id, productData.variant_details[0].variant_attributes[0].variant_attribute_name_id));
 console.log(_.isEqual(obj1.variant_details[0].variant_attributes[0].variant_attribute_value_id, productData.variant_details[0].variant_attributes[0].variant_attribute_value_id));
 
+
+
+
+function getNewItems(obj1, obj2, key) {
+  return _.filter(obj2, item2 => 
+      !_.includes(_.map(obj1, item1 => _.get(item1, key)), _.get(item2, key))
+  );
+}
+
+
+function getDeletedItems(obj1, obj2, key) {
+  return _.filter(obj1, item1 => 
+      !_.includes(_.map(obj2, item2 => _.get(item2, key)), _.get(item1, key))
+  );
+}
+
+
+function getEditedItems(obj1, obj2, key) {
+  return _.filter(obj2, item2 => {
+      const originalItem = _.find(obj1, item1 => _.get(item1, key) === _.get(item2, key));
+      return originalItem && !_.isEqual(originalItem, item2);
+  });
+}
+
+
+
+
+const obj2 = obj1;
+
+// Detectar objetos nuevos
+const newItems = getNewItems(productData, obj2, 'variant_id');
+console.log('Nuevos:', newItems);
+
+// Detectar objetos eliminados
+const deletedItems = getDeletedItems(productData, obj2, 'variant_id');
+console.log('Eliminados:', deletedItems);
+
+// Detectar objetos editados
+const editedItems = getEditedItems(productData, obj2, 'variant_id');
+console.log('Editados:', editedItems);
 
 
 
