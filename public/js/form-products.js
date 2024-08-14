@@ -1353,60 +1353,119 @@ function doesValueExistDeep(obj, key, value) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+//FUNCION QUE CHEKEA 
+// SI LAS IDS DE OBJ1 ESTAN EN OBJ2
+// SI LOS DATOS DE ESAS IDS SON IGUALES EN OBJ2
+
+
+
+
+// Función para comparar los objetos campo por campo
 const compareObjectsFieldByField = (obj1, obj2) => {
   const differences = {};
-  
+
   const compareFields = (key, value1, value2) => {
       if (_.isObject(value1) && _.isObject(value2)) {
-          // Si ambos son objetos, compara recursivamente
+          // Comparar recursivamente si ambos son objetos
           const nestedDiffs = compareObjectsFieldByField(value1, value2);
           if (Object.keys(nestedDiffs).length > 0) {
               differences[key] = nestedDiffs;
           }
       } else if (value1 !== value2) {
-          // Si los valores no son iguales, guarda la diferencia
+          // Si los valores no son iguales, guardamos la diferencia
           differences[key] = { obj1: value1, obj2: value2 };
       }
   };
 
-  // Comparar campos de obj1 que están en obj2
+  // Comparar los campos de obj1 que estén en obj2
   for (let key in obj1) {
       if (obj2.hasOwnProperty(key)) {
           compareFields(key, obj1[key], obj2[key]);
       }
   }
 
-  // Devolver las diferencias
   return differences;
 };
 
-// Reemplaza el uso de _.isEqual con la comparación campo a campo
+// Comparar atributos dentro de "variant_attributes"
+const compareVariantAttributes = (attributes1, attributes2) => {
+  const differences = [];
+
+  attributes1.forEach((attr1) => {
+      const matchingAttr2 = attributes2.find(
+          (attr2) => attr2.p_variant_attribute_id === attr1.p_variant_attribute_id
+      );
+
+      if (matchingAttr2) {
+          // Comparar campo por campo los atributos encontrados
+          const attrDifferences = compareObjectsFieldByField(attr1, matchingAttr2);
+          if (Object.keys(attrDifferences).length > 0) {
+              differences.push(attrDifferences);
+          }
+      } else {
+          // Si el atributo no existe en obj2, lo consideramos una diferencia
+          differences.push({ missingInObj2: attr1 });
+      }
+  });
+
+  return differences;
+};
+
+// Comparar variantes incluyendo "variant_attributes"
 const compareVariants = (variantObj, variantInObj2) => {
   const differences = compareObjectsFieldByField(variantObj, variantInObj2);
-  
-  if (Object.keys(differences).length > 0) {
-      console.log('Hay diferencias:', differences);
-  } else {
-      console.log('Los objetos son iguales');
+
+  // Comparar "variant_attributes"
+  if (variantObj.variant_attributes && variantInObj2.variant_attributes) {
+      const attributeDifferences = compareVariantAttributes(
+          variantObj.variant_attributes,
+          variantInObj2.variant_attributes
+      );
+      if (attributeDifferences.length > 0) {
+          differences['variant_attributes'] = attributeDifferences;
+      }
   }
 
   return differences;
 };
 
-// Función de búsqueda de variantes y comparación
+// Función principal de búsqueda y comparación
 const checkAndCompareVariants = (obj1, obj2) => {
   obj1.variant_details.forEach((variantObj) => {
       const variantId = variantObj.variant_id;
       const variantInObj2 = doesValueExistDeep(obj2, 'variant_details', variantId);
-      
+
       if (variantInObj2) {
-          // Si existe la variante en obj2, compara campo a campo
-          compareVariants(variantObj, variantInObj2);
+          // Comparar la variante completa (incluyendo "variant_attributes")
+          const differences = compareVariants(variantObj, variantInObj2);
+          if (Object.keys(differences).length > 0) {
+              console.log(`Diferencias encontradas para variant_id ${variantId}:`, differences);
+          } else {
+              console.log(`No hay diferencias para variant_id ${variantId}`);
+          }
       } else {
           console.log(`No se encontró la variante con ID ${variantId} en obj2`);
       }
   });
 };
+
+
+
+
+
+
+
+
 
 // Ejecutar la comparación
 checkAndCompareVariants(productData, obj1);
