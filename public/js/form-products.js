@@ -1311,28 +1311,24 @@ const data = productData;
 
 
       function doesValueExistDeep(obj, path, valueToCheck) {
-        const part = _.get(obj, path);
-        if (!part) return null;
       
-        function deepSearch(value) {
-            if (_.isEqual(value, valueToCheck)) {
-                return value; // Devuelve el valor encontrado
-            }
-            if (_.isObjectLike(value) || _.isArray(value)) {
-                for (let key in value) {
-                    const result = deepSearch(value[key]);
-                    if (result !== null) {
-                        return value; // Devuelve la rama donde se encuentra el valor
-                    }
-                }
-            }
-            return null;
+          const part = _.get(obj, path);
+          if (!part) return null;
+        
+          function deepSearch(value) {
+              if (_.isEqual(value, valueToCheck)) {
+                  return true; // Si se encuentra el valor, se devuelve true
+              }
+              if (_.isObjectLike(value) || _.isArray(value)) {
+                  return _.find(value, deepSearch); // Busca recursivamente dentro de objetos y arrays
+              }
+              return false;
+          }
+        
+          // Si se encuentra la coincidencia, devuelve el objeto que la contiene
+          return _.find(part, deepSearch);
         }
-      
-        return deepSearch(part);
-      }
-
-
+        
 
 
 
