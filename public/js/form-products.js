@@ -1310,7 +1310,7 @@ const data = productData;
 
 
 
-      function findValueDeep(obj, path, valueToCheck) {
+      function doesValueExistDeep(obj, path, valueToCheck) {
         const part = _.get(obj, path);
         if (!part) return null;
       
