@@ -1332,13 +1332,78 @@ const data = productData;
 
 
 
+
+
+
 const valueExistsInVariants = doesValueExistDeep(obj1, 'variant_details' , '6e914a16-deae-4dce-bb2c-41f1b84aacb6'); //foreach de cada ID a chekear existencia
-console.log(valueExistsInVariants); // true si existe el valor, false si no
-const valueExistsInVariants2 = doesValueExistDeep(obj1, 'variant_details' , '0db3104d-2d22-429b-90c8-748434cs');
-console.log(valueExistsInVariants2); // true si existe el valor, false si no
+console.log(valueExistsInVariants);
 
 
-    
+
+
+
+
+function doesValueExistDeep(obj, key, value) {
+  // Recorre profundamente el objeto buscando coincidencias de valor
+  if (Array.isArray(obj[key])) {
+      const found = obj[key].find(item => item.variant_id === value);
+      return found || false;
+  }
+  return false;
+}
+
+
+
+function compareVariantDetails(obj1, obj2) {
+  // Iteramos sobre los variant_details del primer objeto
+  const results = obj1.variant_details.map(variantObj => {
+      // Utilizamos variant_id de cada variante
+      const variantId = variantObj.variant_id;
+
+      // Usamos la función para buscar en obj2
+      const variantInObj2 = doesValueExistDeep(obj2, 'variant_details', variantId);
+
+      // Si existe el valor en obj2
+      if (variantInObj2) {
+          // Comparar los objetos de variant_details usando isEqual de lodash
+          const areEqual = _.isEqual(variantObj, variantInObj2);
+
+          // Si no son iguales, encontrar las diferencias
+          if (!areEqual) {
+              // Usamos la función de lodash _.differenceWith para mostrar las diferencias
+              const differences = _.reduce(variantObj, (result, value, key) => {
+                  if (!_.isEqual(value, variantInObj2[key])) {
+                      result[key] = { original: variantInObj2[key], updated: value };
+                  }
+                  return result;
+              }, {});
+              
+              return {
+                  variant_id: variantId,
+                  equal: false,
+                  differences: differences
+              };
+          } else {
+              return {
+                  variant_id: variantId,
+                  equal: true,
+                  differences: null
+              };
+          }
+      } else {
+          return {
+              variant_id: variantId,
+              equal: false,
+              message: `Variant with id ${variantId} not found in second object`
+          };
+      }
+  });
+
+  return results;
+}
+
+    console.log(compareVariantDetails(productData, obj1));
+
 
 
     }).catch((error) => {
