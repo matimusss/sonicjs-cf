@@ -1353,56 +1353,63 @@ function doesValueExistDeep(obj, key, value) {
 }
 
 
-
-function compareVariantDetails(obj1, obj2) {
-  // Iteramos sobre los variant_details del primer objeto
-  const results = obj1.variant_details.map(variantObj => {
-      // Utilizamos variant_id de cada variante
-      const variantId = variantObj.variant_id;
-
-      // Usamos la función para buscar en obj2
-      const variantInObj2 = doesValueExistDeep(obj2, 'variant_details', variantId);
-
-      // Si existe el valor en obj2
-      if (variantInObj2) {
-          // Comparar los objetos de variant_details usando isEqual de lodash
-          const areEqual = _.isEqual(variantObj, variantInObj2);
-
-          // Si no son iguales, encontrar las diferencias
-          if (!areEqual) {
-              // Usamos la función de lodash _.differenceWith para mostrar las diferencias
-              const differences = _.reduce(variantObj, (result, value, key) => {
-                  if (!_.isEqual(value, variantInObj2[key])) {
-                      result[key] = { original: variantInObj2[key], updated: value };
-                  }
-                  return result;
-              }, {});
-              
-              return {
-                  variant_id: variantId,
-                  equal: false,
-                  differences: differences
-              };
-          } else {
-              return {
-                  variant_id: variantId,
-                  equal: true,
-                  differences: null
-              };
+const compareObjectsFieldByField = (obj1, obj2) => {
+  const differences = {};
+  
+  const compareFields = (key, value1, value2) => {
+      if (_.isObject(value1) && _.isObject(value2)) {
+          // Si ambos son objetos, compara recursivamente
+          const nestedDiffs = compareObjectsFieldByField(value1, value2);
+          if (Object.keys(nestedDiffs).length > 0) {
+              differences[key] = nestedDiffs;
           }
+      } else if (value1 !== value2) {
+          // Si los valores no son iguales, guarda la diferencia
+          differences[key] = { obj1: value1, obj2: value2 };
+      }
+  };
+
+  // Comparar campos de obj1 que están en obj2
+  for (let key in obj1) {
+      if (obj2.hasOwnProperty(key)) {
+          compareFields(key, obj1[key], obj2[key]);
+      }
+  }
+
+  // Devolver las diferencias
+  return differences;
+};
+
+// Reemplaza el uso de _.isEqual con la comparación campo a campo
+const compareVariants = (variantObj, variantInObj2) => {
+  const differences = compareObjectsFieldByField(variantObj, variantInObj2);
+  
+  if (Object.keys(differences).length > 0) {
+      console.log('Hay diferencias:', differences);
+  } else {
+      console.log('Los objetos son iguales');
+  }
+
+  return differences;
+};
+
+// Función de búsqueda de variantes y comparación
+const checkAndCompareVariants = (obj1, obj2) => {
+  obj1.variant_details.forEach((variantObj) => {
+      const variantId = variantObj.variant_id;
+      const variantInObj2 = doesValueExistDeep(obj2, 'variant_details', variantId);
+      
+      if (variantInObj2) {
+          // Si existe la variante en obj2, compara campo a campo
+          compareVariants(variantObj, variantInObj2);
       } else {
-          return {
-              variant_id: variantId,
-              equal: false,
-              message: `Variant with id ${variantId} not found in second object`
-          };
+          console.log(`No se encontró la variante con ID ${variantId} en obj2`);
       }
   });
+};
 
-  return results;
-}
-
-    console.log(compareVariantDetails(productData, obj1));
+// Ejecutar la comparación
+checkAndCompareVariants(productData, obj1);
 
 
 
