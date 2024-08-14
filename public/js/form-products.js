@@ -1316,133 +1316,33 @@ console.log(_.isEqual(obj1.variant_details[0].variant_attributes[0].variant_attr
 
 
 
-function getNewItems(obj1, obj2, key) {
-  return _.filter(obj2, item2 => 
-      !_.includes(_.map(obj1, item1 => _.get(item1, key)), _.get(item2, key))
-  );
+
+//foreach "ID A CHEKEAR"
+//lodash _.includes
+//chekear si la lista de ids de obj 2,
+// incluye esta id de obj1?
+
+
+
+function doesValueExistDeep(obj, path, valueToCheck) {
+  const part = _.get(obj, path);
+  if (!part) return false;
+
+  function deepSearch(value) {
+      if (_.isEqual(value, valueToCheck)) return true;
+      if (_.isObjectLike(value) || _.isArray(value)) {
+          return _.some(value, deepSearch);
+      }
+      return false;
+  }
+
+  return deepSearch(part);
 }
 
 
-function getDeletedItems(obj1, obj2, key) {
-  return _.filter(obj1, item1 => 
-      !_.includes(_.map(obj2, item2 => _.get(item2, key)), _.get(item1, key))
-  );
-}
-  
 
-function getEditedItems(obj1, obj2, key) {
-  return _.filter(obj2, item2 => {
-      const originalItem = _.find(obj1, item1 => _.get(item1, key) === _.get(item2, key));
-      return originalItem && !_.isEqual(originalItem, item2);
-  });
-}
-
-
-
-
-const obj2 = obj1;
-
-
-
-
-
-
-
-
-
-
-
-// 1. Filtrar Campos `undefined`
-function cleanObject(obj) {
-    return _.omitBy(obj, _.isUndefined);
-}
-
-// 2. Comparación Simple de Propiedades
-function compareSimpleProps(obj1, obj2) {
-    const diff = {};
-    const allKeys = _.union(_.keys(obj1), _.keys(obj2));
-
-    allKeys.forEach((key) => {
-        if (!_.isEqual(obj1[key], obj2[key])) {
-            diff[key] = { oldValue: obj1[key], newValue: obj2[key] };
-        }
-    });
-
-    return diff;
-}
-
-// 3. Comparación de Arrays de Objetos
-function compareArrays(arr1, arr2, idField) {
-    const diff = {
-        added: [],
-        removed: [],
-        modified: []
-    };
-
-    const arr1ById = _.keyBy(arr1, idField);
-    const arr2ById = _.keyBy(arr2, idField);
-
-    _.forEach(arr1ById, (value, key) => {
-        if (!arr2ById[key]) {
-            diff.removed.push(value);
-        } else {
-            const changes = compareSimpleProps(value, arr2ById[key]);
-            if (!_.isEmpty(changes)) {
-                diff.modified.push({ id: key, changes });
-            }
-        }
-    });
-
-    _.forEach(arr2ById, (value, key) => {
-        if (!arr1ById[key]) {
-            diff.added.push(value);
-        }
-    });
-
-    return diff;
-}
-
-// 4. Función Principal para Comparar Objetos Complejos
-function compareComplexObjects(obj1, obj2) {
-    const cleanObj1 = cleanObject(obj1);
-    const cleanObj2 = cleanObject(obj2);
-
-    const diffs = {};
-
-    // Comparación de propiedades simples
-    const simpleDiff = compareSimpleProps(cleanObj1, cleanObj2);
-    if (!_.isEmpty(simpleDiff)) {
-        diffs.simpleProps = simpleDiff;
-    }
-
-    // Comparación de arrays anidados
-    const arrayFields = ['product_attributes', 'tags', 'categories', 'coupons', 'product_images', 'variant_details'];
-
-    arrayFields.forEach((field) => {
-        const diff = compareArrays(cleanObj1[field] || [], cleanObj2[field] || [], `${field.slice(0, -1)}_id`);
-        if (!_.isEmpty(diff.added) || !_.isEmpty(diff.removed) || !_.isEmpty(diff.modified)) {
-            diffs[field] = diff;
-        }
-    });
-
-    return diffs;
-}
-
-
-const differences = compareComplexObjects(productData, obj2);
-console.log(differences);
-
-
-
-
-
-
-
-
-
-
-
-
+const valueExistsInVariants = doesValueExistDeep(obj1, 'tags', '3b6be53c-0efb-449f-b1ee-3d7f19076e16');
+console.log(valueExistsInVariants); // true si existe el valor, false si no
 
 
     
