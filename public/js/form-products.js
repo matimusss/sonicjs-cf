@@ -1343,7 +1343,8 @@ function doesValueExistDeep(obj, path, valueToCheck) {
 
 const valueExistsInVariants = doesValueExistDeep(obj1, 'tags', '3b6be53c-0efb-449f-b1ee-3d7f19076e16');
 console.log(valueExistsInVariants); // true si existe el valor, false si no
-
+const valueExistsInVariants2 = doesValueExistDeep(obj1, 'tags', '3b6be53c-0efb-449f-b1ee-3d7f19076se16');
+console.log(valueExistsInVariants2); // true si existe el valor, false si no
 
     
 
