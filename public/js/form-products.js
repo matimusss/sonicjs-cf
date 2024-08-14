@@ -1306,46 +1306,41 @@ const data = productData;
       console.log(obj1);
 
 
-console.log(_.isEqual(obj1.buying_price, productData.buying_price));
-console.log(_.isEqual(obj1.variant_details[0].variant_attributes[0], productData.variant_details[0].variant_attributes[0]));
-console.log(_.isEqual(obj1.variant_details[0].variant_attributes[0].p_variant_attribute_id, productData.variant_details[0].variant_attributes[0].p_variant_attribute_id));
-console.log(_.isEqual(obj1.variant_details[0].variant_attributes[0].p_variant_attribute_value_id, productData.variant_details[0].variant_attributes[0].p_variant_attribute_value_id));
-console.log(_.isEqual(obj1.variant_details[0].variant_attributes[0].variant_attribute_name_id, productData.variant_details[0].variant_attributes[0].variant_attribute_name_id));
-console.log(_.isEqual(obj1.variant_details[0].variant_attributes[0].variant_attribute_value_id, productData.variant_details[0].variant_attributes[0].variant_attribute_value_id));
 
 
 
 
-
-//foreach "ID A CHEKEAR"
-//lodash _.includes
-//chekear si la lista de ids de obj 2,
-// incluye esta id de obj1?
-
-
-
-function doesValueExistDeep(obj, path, valueToCheck) {
-  const part = _.get(obj, path);
-  if (!part) return false;
-
-  function deepSearch(value) {
-      if (_.isEqual(value, valueToCheck)) return true;
-      if (_.isObjectLike(value) || _.isArray(value)) {
-          return _.some(value, deepSearch);
+      function findValueDeep(obj, path, valueToCheck) {
+        const part = _.get(obj, path);
+        if (!part) return null;
+      
+        function deepSearch(value) {
+            if (_.isEqual(value, valueToCheck)) {
+                return value; // Devuelve el valor encontrado
+            }
+            if (_.isObjectLike(value) || _.isArray(value)) {
+                for (let key in value) {
+                    const result = deepSearch(value[key]);
+                    if (result !== null) {
+                        return value; // Devuelve la rama donde se encuentra el valor
+                    }
+                }
+            }
+            return null;
+        }
+      
+        return deepSearch(part);
       }
-      return false;
-  }
-
-  return deepSearch(part);
-}
 
 
 
 
-const valueExistsInVariants = doesValueExistDeep(obj1, 'variant_details' , '6e914a16-deae-4dce-bb2c-41f1b84aacb6');
+
+const valueExistsInVariants = doesValueExistDeep(obj1, 'variant_details' , '6e914a16-deae-4dce-bb2c-41f1b84aacb6'); //foreach de cada ID a chekear existencia
 console.log(valueExistsInVariants); // true si existe el valor, false si no
 const valueExistsInVariants2 = doesValueExistDeep(obj1, 'variant_details' , '0db3104d-2d22-429b-90c8-748434cs');
 console.log(valueExistsInVariants2); // true si existe el valor, false si no
+
 
     
 
