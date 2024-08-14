@@ -1359,13 +1359,24 @@ function doesValueExistDeep(obj, key, value) {
 
 
 
+//hacer lsitas de ids de tags etc y comparar aca, tendriamos las nuevas y las viejas
+function compareLists(list1, list2) {
+  // Elementos que están en list1 pero no en list2
+  const onlyInList1 = list1.filter(item => !list2.includes(item));
+
+  // Elementos que están en list2 pero no en list1
+  const onlyInList2 = list2.filter(item => !list1.includes(item));
+
+  return {
+    onlyInList1,  // Elementos únicos de list1
+    onlyInList2   // Elementos únicos de list2
+  };
+}
 
 
 
 
-//FUNCION QUE CHEKEA 
-// SI LAS IDS DE OBJ1 ESTAN EN OBJ2
-// SI LOS DATOS DE ESAS IDS SON IGUALES EN OBJ2
+
 
 
 
@@ -1397,6 +1408,64 @@ const compareObjectsFieldByField = (obj1, obj2) => {
   return differences;
 };
 
+
+
+
+
+
+
+
+// Función para comparar los "product_attributes"
+const compareProductAttributes = (attributes1, attributes2) => {
+  const differences = [];
+
+  attributes1.forEach((attr1) => {
+      // Buscar si el atributo existe en la otra lista de atributos
+      const matchingAttr2 = attributes2.find(
+          (attr2) => attr2.p_attribute_id === attr1.p_attribute_id
+      );
+
+      if (matchingAttr2) {
+          // Comparar campo por campo los atributos encontrados
+          const attrDifferences = compareObjectsFieldByField(attr1, matchingAttr2);
+          if (Object.keys(attrDifferences).length > 0) {
+              differences.push({
+                  attribute: attr1.attribute_name,
+                  differences: attrDifferences
+              });
+          }
+      } else {
+          // Si el atributo no existe en la segunda lista, lo consideramos una diferencia
+          differences.push({ missingInSecond: attr1 });
+      }
+  });
+
+  // También revisamos si hay atributos en la segunda lista que no estén en la primera
+  attributes2.forEach((attr2) => {
+      const matchingAttr1 = attributes1.find(
+          (attr1) => attr1.p_attribute_id === attr2.p_attribute_id
+      );
+      if (!matchingAttr1) {
+          differences.push({ missingInFirst: attr2 });
+      }
+  });
+
+  return differences;
+};
+
+
+
+console.log(compareProductAttributes(productData.product_attributes, obj1.product_attributes));
+
+
+
+
+
+
+
+
+
+
 // Comparar atributos dentro de "variant_attributes"
 const compareVariantAttributes = (attributes1, attributes2) => {
   const differences = [];
@@ -1421,6 +1490,15 @@ const compareVariantAttributes = (attributes1, attributes2) => {
   return differences;
 };
 
+
+
+
+
+
+
+
+
+
 // Comparar variantes incluyendo "variant_attributes"
 const compareVariants = (variantObj, variantInObj2) => {
   const differences = compareObjectsFieldByField(variantObj, variantInObj2);
@@ -1438,6 +1516,9 @@ const compareVariants = (variantObj, variantInObj2) => {
 
   return differences;
 };
+
+
+
 
 // Función principal de búsqueda y comparación
 const checkAndCompareVariants = (obj1, obj2) => {
@@ -1460,15 +1541,15 @@ const checkAndCompareVariants = (obj1, obj2) => {
 };
 
 
-
-
-
-
-
-
-
 // Ejecutar la comparación
 checkAndCompareVariants(productData, obj1);
+
+
+
+
+
+
+
 
 
 
