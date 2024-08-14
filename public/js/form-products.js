@@ -1328,7 +1328,7 @@ function getDeletedItems(obj1, obj2, key) {
       !_.includes(_.map(obj2, item2 => _.get(item2, key)), _.get(item1, key))
   );
 }
-
+  
 
 function getEditedItems(obj1, obj2, key) {
   return _.filter(obj2, item2 => {
@@ -1342,17 +1342,97 @@ function getEditedItems(obj1, obj2, key) {
 
 const obj2 = obj1;
 
-// Detectar objetos nuevos
-const newItems = getNewItems(productData, obj2, 'variant_id');
-console.log('Nuevos:', newItems);
 
-// Detectar objetos eliminados
-const deletedItems = getDeletedItems(productData, obj2, 'variant_id');
-console.log('Eliminados:', deletedItems);
 
-// Detectar objetos editados
-const editedItems = getEditedItems(productData, obj2, 'variant_id');
-console.log('Editados:', editedItems);
+
+
+
+
+
+
+
+
+// 1. Filtrar Campos `undefined`
+function cleanObject(obj) {
+    return _.omitBy(obj, _.isUndefined);
+}
+
+// 2. Comparación Simple de Propiedades
+function compareSimpleProps(obj1, obj2) {
+    const diff = {};
+    const allKeys = _.union(_.keys(obj1), _.keys(obj2));
+
+    allKeys.forEach((key) => {
+        if (!_.isEqual(obj1[key], obj2[key])) {
+            diff[key] = { oldValue: obj1[key], newValue: obj2[key] };
+        }
+    });
+
+    return diff;
+}
+
+// 3. Comparación de Arrays de Objetos
+function compareArrays(arr1, arr2, idField) {
+    const diff = {
+        added: [],
+        removed: [],
+        modified: []
+    };
+
+    const arr1ById = _.keyBy(arr1, idField);
+    const arr2ById = _.keyBy(arr2, idField);
+
+    _.forEach(arr1ById, (value, key) => {
+        if (!arr2ById[key]) {
+            diff.removed.push(value);
+        } else {
+            const changes = compareSimpleProps(value, arr2ById[key]);
+            if (!_.isEmpty(changes)) {
+                diff.modified.push({ id: key, changes });
+            }
+        }
+    });
+
+    _.forEach(arr2ById, (value, key) => {
+        if (!arr1ById[key]) {
+            diff.added.push(value);
+        }
+    });
+
+    return diff;
+}
+
+// 4. Función Principal para Comparar Objetos Complejos
+function compareComplexObjects(obj1, obj2) {
+    const cleanObj1 = cleanObject(obj1);
+    const cleanObj2 = cleanObject(obj2);
+
+    const diffs = {};
+
+    // Comparación de propiedades simples
+    const simpleDiff = compareSimpleProps(cleanObj1, cleanObj2);
+    if (!_.isEmpty(simpleDiff)) {
+        diffs.simpleProps = simpleDiff;
+    }
+
+    // Comparación de arrays anidados
+    const arrayFields = ['product_attributes', 'tags', 'categories', 'coupons', 'product_images', 'variant_details'];
+
+    arrayFields.forEach((field) => {
+        const diff = compareArrays(cleanObj1[field] || [], cleanObj2[field] || [], `${field.slice(0, -1)}_id`);
+        if (!_.isEmpty(diff.added) || !_.isEmpty(diff.removed) || !_.isEmpty(diff.modified)) {
+            diffs[field] = diff;
+        }
+    });
+
+    return diffs;
+}
+
+
+const differences = compareComplexObjects(productData, obj2);
+console.log(differences);
+
+
 
 
 
