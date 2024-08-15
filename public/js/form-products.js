@@ -1254,6 +1254,12 @@ fetchConfigData();
             };
           });
 
+
+
+
+
+
+
           const coupons = Object.keys(data.coupons).map(key => {
             const coupon = data.coupons[key];
             return {
@@ -1670,8 +1676,8 @@ console.log('Cupones presentes en ambos pero cambiaron:', couponComparisons.chan
         
         const productDataSimpleValues = filterProductFields(productData);
         const obj1SimpleValues = filterProductFields(obj1);
-        
-        console.log("comparacion de valores de campos simples "  + compareObjectsFieldByField(productDataSimpleValues, obj1SimpleValues) + ".")
+        const comparacion = JSON.stringify(compareObjectsFieldByField(productDataSimpleValues, obj1SimpleValues)); 
+        console.log("comparacion de valores de campos simples "  + comparacion + ".")
         
         
         
