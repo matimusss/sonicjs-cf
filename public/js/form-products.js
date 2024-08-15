@@ -1048,446 +1048,608 @@ fetchConfigData();
 
 
 
-function createProductsForm(configData, productData) {
+  function createProductsForm(configData, productData) {
 
 
-const data = productData;
+  const data = productData;
 
-  // Create the form
-  Formio.createForm(document.getElementById('formio-product'), {
-    components: [
-      {
-        type: 'textfield',
-        key: 'id',
-        label: 'ID',
-        input: true,
-        defaultValue: data.product_id,      
-        disabled: true
-      },
-      {
-        type: 'textfield',
-        key: 'slug',
-        label: 'Slug',
-        input: true,
-        defaultValue: data.slug
-      },
-      {
-        type: 'textfield',
-        key: 'product_name',
-        label: 'Product Name',
-        input: true,
-        defaultValue: data.product_name
-      },
-      {
-        type: 'textfield',
-        key: 'sku',
-        label: 'SKU',
-        input: true,
-        defaultValue: data.sku
-      },
-      {
-        type: 'number',
-        key: 'sale_price',
-        label: 'Sale Price',
-        input: true,
-        defaultValue: data.sale_price
-      },
-      {
-        type: 'number',
-        key: 'compare_price',
-        label: 'Compare Price',
-        input: true,
-        defaultValue: data.compare_price
-      },
-      {
-        type: 'number',
-        key: 'buying_price',
-        label: 'Buying Price',
-        input: true,
-        defaultValue: data.buying_price
-      },
-      {
-        type: 'number',
-        key: 'quantity',
-        label: 'Quantity',
-        input: true,
-        defaultValue: data.quantity
-      },
-      {
-        type: 'textfield',
-        key: 'short_description',
-        label: 'Short Description',
-        input: true,
-        defaultValue: data.short_description
-      },
-
-      {
-        type: 'textarea',
-        label: 'Product Description',
-        wysiwyg: {
-          theme: 'snow',
-          modules: {
-            toolbar: ['bold', 'italic', 'underline', 'strike']
-          }
+    // Create the form
+    Formio.createForm(document.getElementById('formio-product'), {
+      components: [
+        {
+          type: 'textfield',
+          key: 'id',
+          label: 'ID',
+          input: true,
+          defaultValue: data.product_id,      
+          disabled: true
         },
-        key: 'product_description',
-        input: true,
-        inputType: 'text',
-        defaultValue: data.product_description
-      },
+        {
+          type: 'textfield',
+          key: 'slug',
+          label: 'Slug',
+          input: true,
+          defaultValue: data.slug
+        },
+        {
+          type: 'textfield',
+          key: 'product_name',
+          label: 'Product Name',
+          input: true,
+          defaultValue: data.product_name
+        },
+        {
+          type: 'textfield',
+          key: 'sku',
+          label: 'SKU',
+          input: true,
+          defaultValue: data.sku
+        },
+        {
+          type: 'number',
+          key: 'sale_price',
+          label: 'Sale Price',
+          input: true,
+          defaultValue: data.sale_price
+        },
+        {
+          type: 'number',
+          key: 'compare_price',
+          label: 'Compare Price',
+          input: true,
+          defaultValue: data.compare_price
+        },
+        {
+          type: 'number',
+          key: 'buying_price',
+          label: 'Buying Price',
+          input: true,
+          defaultValue: data.buying_price
+        },
+        {
+          type: 'number',
+          key: 'quantity',
+          label: 'Quantity',
+          input: true,
+          defaultValue: data.quantity
+        },
+        {
+          type: 'textfield',
+          key: 'short_description',
+          label: 'Short Description',
+          input: true,
+          defaultValue: data.short_description
+        },
+
+        {
+          type: 'textarea',
+          label: 'Product Description',
+          wysiwyg: {
+            theme: 'snow',
+            modules: {
+              toolbar: ['bold', 'italic', 'underline', 'strike']
+            }
+          },
+          key: 'product_description',
+          input: true,
+          inputType: 'text',
+          defaultValue: data.product_description
+        },
+        {
+          type: 'textfield',
+          key: 'product_type',
+          label: 'Product Type',
+          input: true,
+          defaultValue: data.product_type
+        },
+        {
+          type: 'textfield',
+          key: 'published',
+          label: 'Published',
+          input: true,
+          defaultValue: data.published
+        },
       {
-        type: 'textfield',
-        key: 'product_type',
-        label: 'Product Type',
-        input: true,
-        defaultValue: data.product_type
-      },
-      {
-        type: 'textfield',
-        key: 'published',
-        label: 'Published',
-        input: true,
-        defaultValue: data.published
-      },
-     {
-        type: 'textfield',
-        key: 'created_by',
-        label: 'Created By',
-        input: true,
-        defaultValue: data.created_by
-      },
-      {
-        type: 'textfield',
-        key: 'updated_by',
-        label: 'Updated By',
-        input: true,
-        defaultValue: data.updated_by
-      },
-      {
-        type: 'textfield',
-        key: 'createdOn',
-        label: 'Created On',
-        input: true,
-        defaultValue: new Date(data.createdOn).toLocaleString(),
-        disabled: true
-      },
-      {
-        type: 'textfield',
-        key: 'updatedOn',
-        label: 'Updated On',
-        input: true,
-        defaultValue: new Date(data.updatedOn).toLocaleString(),
-        disabled: true
-      }
-    ]
-  })
-  
-  
-  
-  
-  
-  .then(function(form) {
-    productsForm = form;
- 
+          type: 'textfield',
+          key: 'created_by',
+          label: 'Created By',
+          input: true,
+          defaultValue: data.created_by
+        },
+        {
+          type: 'textfield',
+          key: 'updated_by',
+          label: 'Updated By',
+          input: true,
+          defaultValue: data.updated_by
+        },
+        {
+          type: 'textfield',
+          key: 'createdOn',
+          label: 'Created On',
+          input: true,
+          defaultValue: new Date(data.createdOn).toLocaleString(),
+          disabled: true
+        },
+        {
+          type: 'textfield',
+          key: 'updatedOn',
+          label: 'Updated On',
+          input: true,
+          defaultValue: new Date(data.updatedOn).toLocaleString(),
+          disabled: true
+        }
+      ]
+    })
     
+    
+    
+    
+    
+    .then(function(form) {
+      productsForm = form;
+  
+      
 
-  });
+    });
 
-};
+  };
 
- 
+  
 
 
 
-// Tu función con setTimeout
- function submitActions(productData) {
-  const globalSubmitButton = document.getElementById('globalSubmit');
+  // Tu función con setTimeout
+  function submitActions(productData) {
+    const globalSubmitButton = document.getElementById('globalSubmit');
 
-  globalSubmitButton.addEventListener('click', () => {
-    // Enviar todos los formularios
-    Promise.all([
-      productsForm.submit(),
-      attributesForm.submit(),
-      variantsForm.submit(),
-      tagsForm.submit(),
-      suppliersForm.submit(),
-      couponsForm.submit(),
-      categoriesForm.submit(),
-    ]).then((results) => {
-      const results1 = results.reduce((acc, result) => Object.assign(acc, result.data), {});
-      const obj3 = results1;
+    globalSubmitButton.addEventListener('click', () => {
+      // Enviar todos los formularios
+      Promise.all([
+        productsForm.submit(),
+        attributesForm.submit(),
+        variantsForm.submit(),
+        tagsForm.submit(),
+        suppliersForm.submit(),
+        couponsForm.submit(),
+        categoriesForm.submit(),
+      ]).then((results) => {
+        const results1 = results.reduce((acc, result) => Object.assign(acc, result.data), {});
+        const obj3 = results1;
 
-      function transformProductData(data) {
-        // Aquí puedes usar la variable productData global
-        const productAttributes = data.productAttributes.map(attrId => {
-          return {
-            attribute_id: attrId.attribute,
-            attribute_value_id: attrId[`value_${attrId.attribute}`],
-            p_attribute_id: attrId.p_attribute_id,  // COMPLETAR 
-            p_attribute_value_id: attrId.p_attribute_value_id , // COMPLETAR
-
-          };
-        });
-
-        const variantDetails = data.variants_form.map(variant => {
-          const variantAttributes = variant.variantAttribute.map(attrId => {
+        function transformProductData(data) {
+          // Aquí puedes usar la variable productData global
+          const productAttributes = data.productAttributes.map(attrId => {
             return {
-              variant_attribute_name_id: attrId,
-              variant_attribute_value_id: variant[`attribute_${attrId}`],
-              p_variant_attribute_value_id: variant[`p_attribute_value_${attrId}`],
-              p_variant_attribute_id: variant[`p_attribute_${attrId}`],
+              attribute_id: attrId.attribute,
+              attribute_value_id: attrId[`value_${attrId.attribute}`],
+              p_attribute_id: attrId.p_attribute_id,  // COMPLETAR 
+              p_attribute_value_id: attrId.p_attribute_value_id , // COMPLETAR
+
+            };
+          });
+
+          const variantDetails = data.variants_form.map(variant => {
+            const variantAttributes = variant.variantAttribute.map(attrId => {
+              return {
+                variant_attribute_name_id: attrId,
+                variant_attribute_value_id: variant[`attribute_${attrId}`],
+                p_variant_attribute_value_id: variant[`p_attribute_value_${attrId}`],
+                p_variant_attribute_id: variant[`p_attribute_${attrId}`],
+              };
+            });
+
+            return {
+              variant_id: variant.variant_id,
+              variant_option: variant.variant_option,
+              variant_title: variant.variant_title,
+              variant_option_id: variant.variant_option_id,
+              variant_image_id: '',
+              variant_sale_price: variant.variant_sale_price,
+              variant_compare_price: variant.variant_compare_price,
+              variant_buying_price: variant.variant_buying_price,
+              variant_quantity: variant.variant_quantity,
+              variant_active: variant.variant_active,
+              variant_attributes: variantAttributes
+            };
+          });
+
+          const coupons = Object.keys(data.coupons).map(key => {
+            const coupon = data.coupons[key];
+            return {
+              coupon_code: coupon[`coupon_code_${key}`],
+              discount_value: coupon[`discount_value_${key}`],
+              discount_type: coupon[`discount_type_${key}`]
             };
           });
 
           return {
-            variant_id: variant.variant_id,
-            variant_option: variant.variant_option,
-            variant_title: variant.variant_title,
-            variant_option_id: variant.variant_option_id,
-            variant_image_id: '',
-            variant_sale_price: variant.variant_sale_price,
-            variant_compare_price: variant.variant_compare_price,
-            variant_buying_price: variant.variant_buying_price,
-            variant_quantity: variant.variant_quantity,
-            variant_active: variant.variant_active,
-            variant_attributes: variantAttributes
-          };
-        });
+            product_id: data.id,
+            slug: data.slug,
+            product_name: data.product_name,
+            sku: data.sku,
+            sale_price: data.sale_price,
+            compare_price: data.compare_price,
+            buying_price: data.buying_price,
+            quantity: data.quantity,
+            short_description: data.short_description,
+            product_description: data.product_description.replace(/<[^>]*>/g, ''),
+            product_type: data.product_type,
+            published: data.published,
+            disable_out_of_stock: data.disable_out_of_stock,
 
-        const coupons = Object.keys(data.coupons).map(key => {
-          const coupon = data.coupons[key];
+            created_by: data.created_by,
+            updated_by: data.updated_by,
+            createdOn: data.createdOn,
+            updatedOn: data.updatedOn,
+            product_attributes: productAttributes,
+            variant_details: variantDetails,
+            tags: data.tags.map(tagId => ({
+              tag_id: tagId,
+              tag_name: '',
+              tag_icon: ''
+            })),
+            categories: data.categories.map(catId => ({
+              cat_id: catId,
+              cat_name: ''
+            })),
+            coupons: coupons,
+            suppliers: data.suppliers.map(supplierId => ({
+              supplier_id: supplierId,
+              supplier_name: ''
+            })),
+            product_images: []
+          };
+        }
+
+        const obj1 = transformProductData(obj3);
+        console.log(obj1);
+
+
+
+
+        const valueExistsInVariants = doesValueExistDeep(obj1, 'variant_details', '6e914a16-deae-4dce-bb2c-41f1b84aacb6'); //foreach de cada ID a chequear existencia
+        console.log(valueExistsInVariants);
+        
+
+
+
+
+        // Comparar los "tags"
+        const tagComparisons = compareLists(productData.tags, obj1.tags, 'tag_id');
+        console.log('Tags en productData pero no en obj1:', tagComparisons.onlyInList1);
+        console.log('Tags en obj1 pero no en productData:', tagComparisons.onlyInList2);
+
+        // Comparar las "categories"
+        const categoryComparisons = compareLists(productData.categories, obj1.categories, 'cat_id');
+        console.log('Categorías en productData pero no en obj1:', categoryComparisons.onlyInList1);
+        console.log('Categorías en obj1 pero no en productData:', categoryComparisons.onlyInList2);
+
+        // Comparar los "suppliers"
+        const supplierComparisons = compareLists(productData.suppliers, obj1.suppliers, 'supplier_id');
+        console.log('Proveedores en productData pero no en obj1:', supplierComparisons.onlyInList1);
+        console.log('Proveedores en obj1 pero no en productData:', supplierComparisons.onlyInList2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function doesValueExistDeep(obj, key, value) {
+          // Recorre profundamente el objeto buscando coincidencias de valor
+          if (Array.isArray(obj[key])) {
+            const found = obj[key].find(item => item.variant_id === value);
+            return found || false;
+          }
+          return false;
+        }
+        
+        // Hacer listas de IDs de tags, etc., y comparar acá
+        function compareLists(list1, list2) {
+          // Elementos que están en list1 pero no en list2
+          const onlyInList1 = list1.filter(item => !list2.includes(item));
+        
+          // Elementos que están en list2 pero no en list1
+          const onlyInList2 = list2.filter(item => !list1.includes(item));
+        
           return {
-            coupon_code: coupon[`coupon_code_${key}`],
-            discount_value: coupon[`discount_value_${key}`],
-            discount_type: coupon[`discount_type_${key}`]
+            onlyInList1,  // Elementos únicos de list1
+            onlyInList2   // Elementos únicos de list2
           };
-        });
-
-        return {
-          product_id: data.id,
-          slug: data.slug,
-          product_name: data.product_name,
-          sku: data.sku,
-          sale_price: data.sale_price,
-          compare_price: data.compare_price,
-          buying_price: data.buying_price,
-          quantity: data.quantity,
-          short_description: data.short_description,
-          product_description: data.product_description.replace(/<[^>]*>/g, ''),
-          product_type: data.product_type,
-          published: data.published,
-          disable_out_of_stock: data.disable_out_of_stock,
-
-          created_by: data.created_by,
-          updated_by: data.updated_by,
-          createdOn: data.createdOn,
-          updatedOn: data.updatedOn,
-          product_attributes: productAttributes,
-          variant_details: variantDetails,
-          tags: data.tags.map(tagId => ({
-            tag_id: tagId,
-            tag_name: '',
-            tag_icon: ''
-          })),
-          categories: data.categories.map(catId => ({
-            cat_id: catId,
-            cat_name: ''
-          })),
-          coupons: coupons,
-          suppliers: data.suppliers.map(supplierId => ({
-            supplier_id: supplierId,
-            supplier_name: ''
-          })),
-          product_images: []
-        };
-      }
-
-      const obj1 = transformProductData(obj3);
-      console.log(obj1);
-
-
-
-
-      const valueExistsInVariants = doesValueExistDeep(obj1, 'variant_details', '6e914a16-deae-4dce-bb2c-41f1b84aacb6'); //foreach de cada ID a chequear existencia
-      console.log(valueExistsInVariants);
-      
-      function doesValueExistDeep(obj, key, value) {
-        // Recorre profundamente el objeto buscando coincidencias de valor
-        if (Array.isArray(obj[key])) {
-          const found = obj[key].find(item => item.variant_id === value);
-          return found || false;
         }
-        return false;
-      }
-      
-      // Hacer listas de IDs de tags, etc., y comparar acá
-      function compareLists(list1, list2) {
-        // Elementos que están en list1 pero no en list2
-        const onlyInList1 = list1.filter(item => !list2.includes(item));
-      
-        // Elementos que están en list2 pero no en list1
-        const onlyInList2 = list2.filter(item => !list1.includes(item));
-      
-        return {
-          onlyInList1,  // Elementos únicos de list1
-          onlyInList2   // Elementos únicos de list2
-        };
-      }
-      
-      // Función para comparar los objetos campo por campo
-      const compareObjectsFieldByField = (obj1, obj2) => {
-        const differences = {};
-      
-        const compareFields = (key, value1, value2) => {
-          if (_.isObject(value1) && _.isObject(value2)) {
-            // Comparar recursivamente si ambos son objetos
-            const nestedDiffs = compareObjectsFieldByField(value1, value2);
-            if (Object.keys(nestedDiffs).length > 0) {
-              differences[key] = nestedDiffs;
+        
+        // Función para comparar los objetos campo por campo
+        const compareObjectsFieldByField = (obj1, obj2) => {
+          const differences = {};
+        
+          const compareFields = (key, value1, value2) => {
+            if (_.isObject(value1) && _.isObject(value2)) {
+              // Comparar recursivamente si ambos son objetos
+              const nestedDiffs = compareObjectsFieldByField(value1, value2);
+              if (Object.keys(nestedDiffs).length > 0) {
+                differences[key] = nestedDiffs;
+              }
+            } else if (value1 !== value2) {
+              // Si los valores no son iguales, guardamos la diferencia
+              differences[key] = { obj1: value1, obj2: value2 };
             }
-          } else if (value1 !== value2) {
-            // Si los valores no son iguales, guardamos la diferencia
-            differences[key] = { obj1: value1, obj2: value2 };
+          };
+        
+          // Comparar los campos de obj1 que estén en obj2
+          for (let key in obj1) {
+            if (obj2.hasOwnProperty(key)) {
+              compareFields(key, obj1[key], obj2[key]);
+            }
           }
+        
+          return differences;
         };
-      
-        // Comparar los campos de obj1 que estén en obj2
-        for (let key in obj1) {
-          if (obj2.hasOwnProperty(key)) {
-            compareFields(key, obj1[key], obj2[key]);
-          }
+        
+        // Función para comparar los "product_attributes"
+        const compareProductAttributes = (attributes1, attributes2) => {
+          const differences = [];
+        
+          attributes1.forEach((attr1) => {
+            // Buscar si el atributo existe en la otra lista de atributos
+            const matchingAttr2 = attributes2.find(
+              (attr2) => attr2.p_attribute_id === attr1.p_attribute_id
+            );
+        
+            if (matchingAttr2) {
+              // Comparar campo por campo los atributos encontrados
+              const attrDifferences = compareObjectsFieldByField(attr1, matchingAttr2);
+              if (Object.keys(attrDifferences).length > 0) {
+                differences.push({
+                  attribute: attr1.attribute_name,
+                  differences: attrDifferences
+                });
+              }
+            } else {
+              // Si el atributo no existe en la segunda lista, lo consideramos una diferencia
+              differences.push({ missingInSecond: attr1 });
+            }
+          });
+        
+          // También revisamos si hay atributos en la segunda lista que no estén en la primera
+          attributes2.forEach((attr2) => {
+            const matchingAttr1 = attributes1.find(
+              (attr1) => attr1.p_attribute_id === attr2.p_attribute_id
+            );
+            if (!matchingAttr1) {
+              differences.push({ missingInFirst: attr2 });
+            }
+          });
+        
+          return differences;
+        };
+        
+  // Función para comparar los atributos dentro de "variant_attributes"
+  const compareVariantAttributes = (attributes1, attributes2) => {
+    const differences = [];
+
+    // Usar un conjunto para hacer la búsqueda más eficiente
+    const attr1Ids = new Set(attributes1.map(attr => attr.p_variant_attribute_id));
+    const attr2Ids = new Set(attributes2.map(attr => attr.p_variant_attribute_id));
+    
+    // Comparar atributos en attributes1 con attributes2
+    attributes1.forEach((attr1) => {
+      const matchingAttr2 = attributes2.find(
+        (attr2) => attr2.p_variant_attribute_id === attr1.p_variant_attribute_id
+      );
+
+      if (matchingAttr2) {
+        // Comparar campo por campo los atributos encontrados
+        const attrDifferences = compareObjectsFieldByField(attr1, matchingAttr2);
+        if (Object.keys(attrDifferences).length > 0) {
+          differences.push({
+            attribute: attr1.attribute_name,
+            differences: attrDifferences
+          });
         }
-      
-        return differences;
-      };
-      
-      // Función para comparar los "product_attributes"
-      const compareProductAttributes = (attributes1, attributes2) => {
-        const differences = [];
-      
-        attributes1.forEach((attr1) => {
-          // Buscar si el atributo existe en la otra lista de atributos
-          const matchingAttr2 = attributes2.find(
-            (attr2) => attr2.p_attribute_id === attr1.p_attribute_id
-          );
-      
-          if (matchingAttr2) {
-            // Comparar campo por campo los atributos encontrados
-            const attrDifferences = compareObjectsFieldByField(attr1, matchingAttr2);
-            if (Object.keys(attrDifferences).length > 0) {
-              differences.push({
-                attribute: attr1.attribute_name,
-                differences: attrDifferences
-              });
+      } else {
+        // Si el atributo no existe en attributes2, lo consideramos una diferencia
+        differences.push({ missingInObj2: attr1 });
+      }
+    });
+
+    // También revisamos si hay atributos en attributes2 que no estén en attributes1
+    attributes2.forEach((attr2) => {
+      if (!attr1Ids.has(attr2.p_variant_attribute_id)) {
+        differences.push({ addedInObj2: attr2 });
+      }
+    });
+
+    return differences;
+  };
+
+        
+        // Comparar variantes incluyendo "variant_attributes"
+        const compareVariants = (variantObj, variantInObj2) => {
+          const differences = compareObjectsFieldByField(variantObj, variantInObj2);
+        
+          // Comparar "variant_attributes"
+          if (variantObj.variant_attributes && variantInObj2.variant_attributes) {
+            const attributeDifferences = compareVariantAttributes(
+              variantObj.variant_attributes,
+              variantInObj2.variant_attributes
+            );
+            if (attributeDifferences.length > 0) {
+              differences['variant_attributes'] = attributeDifferences;
             }
-          } else {
-            // Si el atributo no existe en la segunda lista, lo consideramos una diferencia
-            differences.push({ missingInSecond: attr1 });
           }
-        });
-      
-        // También revisamos si hay atributos en la segunda lista que no estén en la primera
-        attributes2.forEach((attr2) => {
-          const matchingAttr1 = attributes1.find(
-            (attr1) => attr1.p_attribute_id === attr2.p_attribute_id
-          );
-          if (!matchingAttr1) {
-            differences.push({ missingInFirst: attr2 });
-          }
-        });
-      
-        return differences;
-      };
-      
-// Función para comparar los atributos dentro de "variant_attributes"
-const compareVariantAttributes = (attributes1, attributes2) => {
+        
+          return differences;
+        };
+        
+        // Función principal de búsqueda y comparación
+        const checkAndCompareVariants = (obj1, obj2) => {
+          obj1.variant_details.forEach((variantObj) => {
+            const variantId = variantObj.variant_id;
+            const variantInObj2 = doesValueExistDeep(obj2, 'variant_details', variantId);
+        
+            if (variantInObj2) {
+              // Comparar la variante completa (incluyendo "variant_attributes")
+              const differences = compareVariants(variantObj, variantInObj2);
+              if (Object.keys(differences).length > 0) {
+                console.log(`Diferencias encontradas para variant_id ${variantId}:`, differences);
+              } else {
+                console.log(`No hay diferencias para variant_id ${variantId}`);
+              }
+            } else {
+              console.log(`No se encontró la variante con ID ${variantId} en obj2`);
+            }
+          });
+        };
+        
+        // Ejecutar la comparación
+        checkAndCompareVariants(productData, obj1);
+        
+        // Comparar los "product_attributes"
+        const productAttributeDifferences = compareProductAttributes(productData.product_attributes, obj1.product_attributes);
+        if (productAttributeDifferences.length > 0) {
+          console.log('Diferencias encontradas en product_attributes:', productAttributeDifferences);
+        } else {
+          console.log('No hay diferencias en product_attributes');
+        }
+
+
+
+
+
+
+
+
+
+// Función para verificar si un cupón existe en una lista
+function doesCouponExistDeep(obj, key, couponId) {
+  if (Array.isArray(obj[key])) {
+    return obj[key].find(item => item.p_coupon_id === couponId) || false;
+  }
+  return false;
+}
+
+// Función para comparar los objetos campo por campo
+const compareObjectsFieldByField = (obj1, obj2) => {
+  const differences = {};
+
+  const compareFields = (key, value1, value2) => {
+    if (_.isObject(value1) && _.isObject(value2)) {
+      // Comparar recursivamente si ambos son objetos
+      const nestedDiffs = compareObjectsFieldByField(value1, value2);
+      if (Object.keys(nestedDiffs).length > 0) {
+        differences[key] = nestedDiffs;
+      }
+    } else if (value1 !== value2) {
+      // Si los valores no son iguales, guardamos la diferencia
+      differences[key] = { obj1: value1, obj2: value2 };
+    }
+  };
+
+  // Comparar los campos de obj1 que estén en obj2
+  for (let key in obj1) {
+    if (obj2.hasOwnProperty(key)) {
+      compareFields(key, obj1[key], obj2[key]);
+    }
+  }
+
+  return differences;
+};
+
+// Función para comparar los cupones
+const compareCoupons = (coupons1, coupons2) => {
   const differences = [];
 
-  // Usar un conjunto para hacer la búsqueda más eficiente
-  const attr1Ids = new Set(attributes1.map(attr => attr.p_variant_attribute_id));
-  const attr2Ids = new Set(attributes2.map(attr => attr.p_variant_attribute_id));
-  
-  // Comparar atributos en attributes1 con attributes2
-  attributes1.forEach((attr1) => {
-    const matchingAttr2 = attributes2.find(
-      (attr2) => attr2.p_variant_attribute_id === attr1.p_variant_attribute_id
+  coupons1.forEach((coupon1) => {
+    // Buscar si el cupón existe en la otra lista de cupones
+    const matchingCoupon2 = coupons2.find(
+      (coupon2) => coupon2.p_coupon_id === coupon1.p_coupon_id
     );
 
-    if (matchingAttr2) {
-      // Comparar campo por campo los atributos encontrados
-      const attrDifferences = compareObjectsFieldByField(attr1, matchingAttr2);
-      if (Object.keys(attrDifferences).length > 0) {
+    if (matchingCoupon2) {
+      // Comparar campo por campo los cupones encontrados
+      const couponDifferences = compareObjectsFieldByField(coupon1, matchingCoupon2);
+      if (Object.keys(couponDifferences).length > 0) {
         differences.push({
-          attribute: attr1.attribute_name,
-          differences: attrDifferences
+          coupon: coupon1.code,
+          differences: couponDifferences
         });
       }
     } else {
-      // Si el atributo no existe en attributes2, lo consideramos una diferencia
-      differences.push({ missingInObj2: attr1 });
+      // Si el cupón no existe en la segunda lista, lo consideramos una diferencia
+      differences.push({ missingInSecond: coupon1 });
     }
   });
 
-  // También revisamos si hay atributos en attributes2 que no estén en attributes1
-  attributes2.forEach((attr2) => {
-    if (!attr1Ids.has(attr2.p_variant_attribute_id)) {
-      differences.push({ addedInObj2: attr2 });
+  // También revisamos si hay cupones en la segunda lista que no estén en la primera
+  coupons2.forEach((coupon2) => {
+    const matchingCoupon1 = coupons1.find(
+      (coupon1) => coupon1.p_coupon_id === coupon2.p_coupon_id
+    );
+    if (!matchingCoupon1) {
+      differences.push({ missingInFirst: coupon2 });
     }
   });
 
   return differences;
 };
 
-      
-      // Comparar variantes incluyendo "variant_attributes"
-      const compareVariants = (variantObj, variantInObj2) => {
-        const differences = compareObjectsFieldByField(variantObj, variantInObj2);
-      
-        // Comparar "variant_attributes"
-        if (variantObj.variant_attributes && variantInObj2.variant_attributes) {
-          const attributeDifferences = compareVariantAttributes(
-            variantObj.variant_attributes,
-            variantInObj2.variant_attributes
-          );
-          if (attributeDifferences.length > 0) {
-            differences['variant_attributes'] = attributeDifferences;
-          }
-        }
-      
-        return differences;
-      };
-      
-      // Función principal de búsqueda y comparación
-      const checkAndCompareVariants = (obj1, obj2) => {
-        obj1.variant_details.forEach((variantObj) => {
-          const variantId = variantObj.variant_id;
-          const variantInObj2 = doesValueExistDeep(obj2, 'variant_details', variantId);
-      
-          if (variantInObj2) {
-            // Comparar la variante completa (incluyendo "variant_attributes")
-            const differences = compareVariants(variantObj, variantInObj2);
-            if (Object.keys(differences).length > 0) {
-              console.log(`Diferencias encontradas para variant_id ${variantId}:`, differences);
-            } else {
-              console.log(`No hay diferencias para variant_id ${variantId}`);
-            }
-          } else {
-            console.log(`No se encontró la variante con ID ${variantId} en obj2`);
-          }
-        });
-      };
-      
-      // Ejecutar la comparación
-      checkAndCompareVariants(productData, obj1);
-      
-      // Comparar los "product_attributes"
-      const productAttributeDifferences = compareProductAttributes(productData.product_attributes, obj1.product_attributes);
-      if (productAttributeDifferences.length > 0) {
-        console.log('Diferencias encontradas en product_attributes:', productAttributeDifferences);
+// Función principal de búsqueda y comparación
+const checkAndCompareCoupons = (obj1, obj2) => {
+  obj1.coupons.forEach((coupon1) => {
+    const couponId = coupon1.p_coupon_id;
+    const couponInObj2 = doesCouponExistDeep(obj2, 'coupons', couponId);
+
+    if (couponInObj2) {
+      // Comparar el cupón completo
+      const differences = compareObjectsFieldByField(coupon1, couponInObj2);
+      if (Object.keys(differences).length > 0) {
+        console.log(`Diferencias encontradas para coupon_id ${couponId}:`, differences);
       } else {
-        console.log('No hay diferencias en product_attributes');
+        console.log(`No hay diferencias para coupon_id ${couponId}`);
       }
-          }).catch((error) => {
-      console.error('Error al enviar uno o más formularios', error);
-    });
-  });}
+    } else {
+      console.log(`No se encontró el cupón con ID ${couponId} en obj2`);
+    }
+  });
+
+  // Comparar cupones en ambas listas
+  const couponDifferences = compareCoupons(obj1.coupons, obj2.coupons);
+  if (couponDifferences.length > 0) {
+    console.log('Diferencias encontradas en coupons:', couponDifferences);
+  } else {
+    console.log('No hay diferencias en coupons');
+  }
+};
+checkAndCompareCoupons({ coupons: productData.coupons }, { coupons: obj1.coupons });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }).catch((error) => {
+        console.error('Error al enviar uno o más formularios', error);
+      });
+    });}
