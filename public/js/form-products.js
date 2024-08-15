@@ -1332,15 +1332,15 @@ fetchConfigData();
             const differences = {};
             
             const fieldsToCompare = [
-              'PRODUCT_NAME',
-              'PRODUCT_PRICE',
-              'SALE_PRICE',
-              'COMPARE_PRICE',
-              'PRODUCT_DESCRIPTION',
-              'SHORT_DESCRIPTION',
-              'SLUG',
-              'PRODUCT_TYPE',
-              'QUANTITY'
+              'product_name',
+              'product_price',
+              'sale_price',
+              'compare_price',
+              'product_description',
+              'short_description',
+              'slug',
+              'product_type',
+              'quantity'
             ];
             
             fieldsToCompare.forEach(field => {
