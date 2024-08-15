@@ -1316,6 +1316,106 @@ fetchConfigData();
 
 
 
+
+
+
+
+
+
+
+
+
+
+        function compareProductFields(list1, list2) {
+          // Función para comparar los campos de un producto
+          function compareProductFieldsById(product1, product2) {
+            const differences = {};
+            
+            const fieldsToCompare = [
+              'PRODUCT_NAME',
+              'PRODUCT_PRICE',
+              'SALE_PRICE',
+              'COMPARE_PRICE',
+              'PRODUCT_DESCRIPTION',
+              'SHORT_DESCRIPTION',
+              'SLUG',
+              'PRODUCT_TYPE',
+              'QUANTITY'
+            ];
+            
+            fieldsToCompare.forEach(field => {
+              if (product1[field] !== product2[field]) {
+                differences[field] = { product1: product1[field], product2: product2[field] };
+              }
+            });
+            
+            return differences;
+          }
+        
+          const onlyInList1 = [];  // Productos que están en list1 pero no en list2
+          const onlyInList2 = [];  // Productos que están en list2 pero no en list1
+          const changedInBoth = []; // Productos presentes en ambos pero con diferencias en los campos especificados
+        
+          // Comparar productos en list1 con list2
+          list1.forEach(product1 => {
+            const match = list2.find(product2 => product2.product_id === product1.product_id);
+            if (!match) {
+              // Producto presente en list1 pero no en list2
+              onlyInList1.push(product1);
+            } else {
+              // Comparar campos específicos si el producto está en ambos
+              const differences = compareProductFieldsById(product1, match);
+              if (Object.keys(differences).length > 0) {
+                changedInBoth.push({
+                  product_id: product1.product_id,
+                  differences
+                });
+              }
+            }
+          });
+        
+          // Productos que están en list2 pero no en list1
+          list2.forEach(product2 => {
+            if (!list1.some(product1 => product1.product_id === product2.product_id)) {
+              onlyInList2.push(product2);
+            }
+          });
+        
+          return {
+            onlyInList1,
+            onlyInList2,
+            changedInBoth
+          };
+        }
+
+        
+        const productFieldComparisons = compareProductFields(productData.products, obj1.products);
+
+console.log('Productos en productData pero no en obj1:', productFieldComparisons.onlyInList1);
+console.log('Productos en obj1 pero no en productData:', productFieldComparisons.onlyInList2);
+console.log('Productos presentes en ambos pero cambiaron:', productFieldComparisons.changedInBoth);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         function compareById(list1, list2, idField) {
 
           // Verifica si un id específico existe en el array de objetos
