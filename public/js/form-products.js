@@ -1465,28 +1465,6 @@ console.log('Cupones presentes en ambos pero cambiaron:', couponComparisons.chan
 
 
 
-const filterProductFields = (product) => {
-  return {
-    product_name: product.product_name,
-    sale_price: product.sale_price,
-    compare_price: product.compare_price,
-    buying_price: product.buying_price,
-    product_description: product.product_description,
-    short_description: product.short_description,
-    slug: product.slug,
-    product_type: product.product_type,
-    quantity: product.quantity
-  };
-};
-
-
-const productDataSimpleValues = filterProductFields(productData);
-const obj1SimpleValues = filterProductFields(obj1);
-
-console.log("comparacion de valores de campos simples "  + compareObjectsFieldByField(productDataSimpleValues, obj1SimpleValues) + ".")
-
-
-
 
 
 
@@ -1675,7 +1653,29 @@ console.log("comparacion de valores de campos simples "  + compareObjectsFieldBy
 
 
 
-
+        const filterProductFields = (product) => {
+          return {
+            product_name: product.product_name,
+            sale_price: product.sale_price,
+            compare_price: product.compare_price,
+            buying_price: product.buying_price,
+            product_description: product.product_description,
+            short_description: product.short_description,
+            slug: product.slug,
+            product_type: product.product_type,
+            quantity: product.quantity
+          };
+        };
+        
+        
+        const productDataSimpleValues = filterProductFields(productData);
+        const obj1SimpleValues = filterProductFields(obj1);
+        
+        console.log("comparacion de valores de campos simples "  + compareObjectsFieldByField(productDataSimpleValues, obj1SimpleValues) + ".")
+        
+        
+        
+        
 
 
 
