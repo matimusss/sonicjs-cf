@@ -1308,54 +1308,48 @@ const data = productData;
 
 
 
+
+
+
+
 // Función para verificar si un valor existe profundamente en un objeto
 function doesValueExistDeep(obj, key, value) {
-  console.log(`Buscando en el objeto por el key: ${key} y el valor: ${value}`);
-  
   if (Array.isArray(obj[key])) {
-    const found = obj[key].find(item => item.variant_id === value);
-    console.log(`Resultado de búsqueda para variant_id ${value}:`, found);
-    return found || false;
+    return obj[key].find(item => item.variant_id === value) || false;
   }
-
-  console.log(`No se encontró el array en la clave: ${key}`);
   return false;
 }
 
-// Función para comparar listas y ver las diferencias
-function compareLists(list1, list2) {
-  console.log('Comparando listas:');
-  console.log('Lista 1:', list1);
-  console.log('Lista 2:', list2);
-  
-  const onlyInList1 = list1.filter(item => !list2.includes(item));
-  const onlyInList2 = list2.filter(item => !list1.includes(item));
-
-  console.log('Elementos únicos en Lista 1:', onlyInList1);
-  console.log('Elementos únicos en Lista 2:', onlyInList2);
-
-  return {
-    onlyInList1,  // Elementos únicos de list1
-    onlyInList2   // Elementos únicos de list2
-  };
+// Función para generar el reporte de diferencias en un formato de lista
+function generateReport(differences, title = '') {
+  console.log(`\n===== ${title} Report =====`);
+  if (Object.keys(differences).length === 0) {
+    console.log('No hay diferencias. Los objetos son iguales.');
+  } else {
+    Object.entries(differences).forEach(([key, value]) => {
+      if (typeof value === 'object' && !Array.isArray(value)) {
+        console.log(`- Diferencias en ${key}:`);
+        Object.entries(value).forEach(([subKey, subValue]) => {
+          console.log(`  * ${subKey}: Objeto 1: ${subValue.obj1}, Objeto 2: ${subValue.obj2}`);
+        });
+      } else {
+        console.log(`- Diferencia en ${key}: Objeto 1: ${value.obj1}, Objeto 2: ${value.obj2}`);
+      }
+    });
+  }
 }
 
 // Función para comparar los objetos campo por campo
 const compareObjectsFieldByField = (obj1, obj2) => {
   const differences = {};
-  
-  console.log(`Comparando los objetos:\nObjeto 1:`, obj1, `\nObjeto 2:`, obj2);
 
   const compareFields = (key, value1, value2) => {
     if (_.isObject(value1) && _.isObject(value2)) {
-      console.log(`Comparando objetos anidados en el campo: ${key}`);
-      
       const nestedDiffs = compareObjectsFieldByField(value1, value2);
       if (Object.keys(nestedDiffs).length > 0) {
         differences[key] = nestedDiffs;
       }
     } else if (value1 !== value2) {
-      console.log(`Diferencia encontrada en el campo ${key}: Objeto 1: ${value1}, Objeto 2: ${value2}`);
       differences[key] = { obj1: value1, obj2: value2 };
     }
   };
@@ -1363,6 +1357,14 @@ const compareObjectsFieldByField = (obj1, obj2) => {
   for (let key in obj1) {
     if (obj2.hasOwnProperty(key)) {
       compareFields(key, obj1[key], obj2[key]);
+    } else {
+      differences[key] = { obj1: obj1[key], obj2: 'No existe en Objeto 2' };
+    }
+  }
+
+  for (let key in obj2) {
+    if (!obj1.hasOwnProperty(key)) {
+      differences[key] = { obj1: 'No existe en Objeto 1', obj2: obj2[key] };
     }
   }
 
@@ -1374,8 +1376,6 @@ const compareProductAttributes = (attributes1, attributes2) => {
   const differences = [];
 
   attributes1.forEach((attr1) => {
-    console.log(`Comparando el atributo con p_attribute_id ${attr1.p_attribute_id}`);
-    
     const matchingAttr2 = attributes2.find(
       (attr2) => attr2.p_attribute_id === attr1.p_attribute_id
     );
@@ -1389,7 +1389,6 @@ const compareProductAttributes = (attributes1, attributes2) => {
         });
       }
     } else {
-      console.log(`Atributo faltante en la segunda lista:`, attr1);
       differences.push({ missingInSecond: attr1 });
     }
   });
@@ -1399,7 +1398,6 @@ const compareProductAttributes = (attributes1, attributes2) => {
       (attr1) => attr1.p_attribute_id === attr2.p_attribute_id
     );
     if (!matchingAttr1) {
-      console.log(`Atributo faltante en la primera lista:`, attr2);
       differences.push({ missingInFirst: attr2 });
     }
   });
@@ -1422,7 +1420,6 @@ const compareVariantAttributes = (attributes1, attributes2) => {
         differences.push(attrDifferences);
       }
     } else {
-      console.log(`Atributo de variante faltante en obj2:`, attr1);
       differences.push({ missingInObj2: attr1 });
     }
   });
@@ -1432,8 +1429,6 @@ const compareVariantAttributes = (attributes1, attributes2) => {
 
 // Función para comparar variantes, incluyendo "variant_attributes"
 const compareVariants = (variantObj, variantInObj2) => {
-  console.log(`Comparando variantes con variant_id ${variantObj.variant_id}`);
-  
   const differences = compareObjectsFieldByField(variantObj, variantInObj2);
 
   if (variantObj.variant_attributes && variantInObj2.variant_attributes) {
@@ -1449,33 +1444,39 @@ const compareVariants = (variantObj, variantInObj2) => {
   return differences;
 };
 
-// Función principal de búsqueda y comparación
+// Función principal de búsqueda y comparación de variantes
 const checkAndCompareVariants = (obj1, obj2) => {
+  const report = {};
+
   obj1.variant_details.forEach((variantObj) => {
     const variantId = variantObj.variant_id;
-    console.log(`Buscando variante con ID ${variantId} en obj2`);
-    
     const variantInObj2 = doesValueExistDeep(obj2, 'variant_details', variantId);
 
     if (variantInObj2) {
       const differences = compareVariants(variantObj, variantInObj2);
-      if (Object.keys(differences).length > 0) {
-        console.log(`Diferencias encontradas para variant_id ${variantId}:`, differences);
-      } else {
-        console.log(`No hay diferencias para variant_id ${variantId}`);
-      }
+      report[`variant_id ${variantId}`] = differences;
     } else {
-      console.log(`No se encontró la variante con ID ${variantId} en obj2`);
+      report[`variant_id ${variantId}`] = `No se encontró la variante en Objeto 2`;
     }
   });
+
+  return report;
 };
 
-// Ejecutar la comparación
-console.log("Comparando atributos del producto:");
-console.log(compareProductAttributes(productData.product_attributes, obj1.product_attributes));
+// Ejecutar la comparación y generar el reporte
+const productAttributesReport = compareProductAttributes(productData.product_attributes, obj1.product_attributes);
+const variantsReport = checkAndCompareVariants(productData, obj1);
 
-console.log("\nComparando variantes:");
-checkAndCompareVariants(productData, obj1);
+// Generar reporte para atributos de productos
+generateReport(productAttributesReport, 'Product Attributes');
+
+// Generar reporte para variantes
+generateReport(variantsReport, 'Variants');
+
+
+
+
+
 
 
 
