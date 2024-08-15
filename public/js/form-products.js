@@ -1537,32 +1537,6 @@ function doesCouponExistDeep(obj, key, couponId) {
   return false;
 }
 
-// Función para comparar los objetos campo por campo
-const compareObjectsFieldByField = (obj1, obj2) => {
-  const differences = {};
-
-  const compareFields = (key, value1, value2) => {
-    if (_.isObject(value1) && _.isObject(value2)) {
-      // Comparar recursivamente si ambos son objetos
-      const nestedDiffs = compareObjectsFieldByField(value1, value2);
-      if (Object.keys(nestedDiffs).length > 0) {
-        differences[key] = nestedDiffs;
-      }
-    } else if (value1 !== value2) {
-      // Si los valores no son iguales, guardamos la diferencia
-      differences[key] = { obj1: value1, obj2: value2 };
-    }
-  };
-
-  // Comparar los campos de obj1 que estén en obj2
-  for (let key in obj1) {
-    if (obj2.hasOwnProperty(key)) {
-      compareFields(key, obj1[key], obj2[key]);
-    }
-  }
-
-  return differences;
-};
 
 // Función para comparar los cupones
 const compareCoupons = (coupons1, coupons2) => {
