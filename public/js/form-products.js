@@ -1315,10 +1315,57 @@ fetchConfigData();
 
 
 
-        // Comparar los "tags"
-        const tagComparisons = compareLists(productData.tags, obj1.tags, 'tag_id');
-        console.log('Tags en productData pero no en obj1:', tagComparisons.onlyInList1);
-        console.log('Tags en obj1 pero no en productData:', tagComparisons.onlyInList2);
+     // Verifica si un tag_id existe en el array de tags
+function doesTagExist(tagsArray, tagId) {
+  return tagsArray.some(tag => tag.tag_id === tagId);
+}
+
+// Compara dos listas de tags: verifica si hay nuevos, eliminados o modificados
+function compareTags(list1, list2) {
+  const onlyInList1 = [];  // Tags que están en list1 pero no en list2
+  const onlyInList2 = [];  // Tags que están en list2 pero no en list1
+  const changedInBoth = []; // Tags que están en ambos pero con diferencias
+
+  // Recorrer la lista 1 (list1 -> productData)
+  list1.forEach(tag1 => {
+    const match = list2.find(tag2 => tag2.tag_id === tag1.tag_id);
+    if (match) {
+      // Si el ID está en ambos, comparamos el resto de los campos
+      if (!_.isEqual(tag1, match)) {
+        changedInBoth.push({
+          id: tag1.tag_id,
+          oldValue: tag1,
+          newValue: match
+        });
+      }
+    } else {
+      onlyInList1.push(tag1); // Si el tag_id no está en list2
+    }
+  });
+
+  // Tags que están en list2 pero no en list1
+  list2.forEach(tag2 => {
+    if (!doesTagExist(list1, tag2.tag_id)) {
+      onlyInList2.push(tag2);
+    }
+  });
+
+  return {
+    onlyInList1,  // Tags presentes solo en list1
+    onlyInList2,  // Tags presentes solo en list2
+    changedInBoth // Tags presentes en ambos pero con diferencias
+  };
+}
+
+
+// Comparar ambas listas de tags
+const tagComparisons = compareTags(productData.tags, obj1.tags);
+
+// Imprimir los resultados de la comparación
+console.log('Tags en productData pero no en obj1:', tagComparisons.onlyInList1);
+console.log('Tags en obj1 pero no en productData:', tagComparisons.onlyInList2);
+console.log('Tags presentes en ambos pero cambiaron:', tagComparisons.changedInBoth);
+
 
         // Comparar las "categories"
         const categoryComparisons = compareLists(productData.categories, obj1.categories, 'cat_id');
@@ -1335,6 +1382,22 @@ fetchConfigData();
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
 
 
