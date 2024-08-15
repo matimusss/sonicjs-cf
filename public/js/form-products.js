@@ -1399,29 +1399,45 @@ const data = productData;
         return differences;
       };
       
-      // Comparar atributos dentro de "variant_attributes"
-      const compareVariantAttributes = (attributes1, attributes2) => {
-        const differences = [];
-      
-        attributes1.forEach((attr1) => {
-          const matchingAttr2 = attributes2.find(
-            (attr2) => attr2.p_variant_attribute_id === attr1.p_variant_attribute_id
-          );
-      
-          if (matchingAttr2) {
-            // Comparar campo por campo los atributos encontrados
-            const attrDifferences = compareObjectsFieldByField(attr1, matchingAttr2);
-            if (Object.keys(attrDifferences).length > 0) {
-              differences.push(attrDifferences);
-            }
-          } else {
-            // Si el atributo no existe en obj2, lo consideramos una diferencia
-            differences.push({ missingInObj2: attr1 });
-          }
+// Función para comparar los atributos dentro de "variant_attributes"
+const compareVariantAttributes = (attributes1, attributes2) => {
+  const differences = [];
+
+  // Usar un conjunto para hacer la búsqueda más eficiente
+  const attr1Ids = new Set(attributes1.map(attr => attr.p_variant_attribute_id));
+  const attr2Ids = new Set(attributes2.map(attr => attr.p_variant_attribute_id));
+  
+  // Comparar atributos en attributes1 con attributes2
+  attributes1.forEach((attr1) => {
+    const matchingAttr2 = attributes2.find(
+      (attr2) => attr2.p_variant_attribute_id === attr1.p_variant_attribute_id
+    );
+
+    if (matchingAttr2) {
+      // Comparar campo por campo los atributos encontrados
+      const attrDifferences = compareObjectsFieldByField(attr1, matchingAttr2);
+      if (Object.keys(attrDifferences).length > 0) {
+        differences.push({
+          attribute: attr1.attribute_name,
+          differences: attrDifferences
         });
-      
-        return differences;
-      };
+      }
+    } else {
+      // Si el atributo no existe en attributes2, lo consideramos una diferencia
+      differences.push({ missingInObj2: attr1 });
+    }
+  });
+
+  // También revisamos si hay atributos en attributes2 que no estén en attributes1
+  attributes2.forEach((attr2) => {
+    if (!attr1Ids.has(attr2.p_variant_attribute_id)) {
+      differences.push({ addedInObj2: attr2 });
+    }
+  });
+
+  return differences;
+};
+
       
       // Comparar variantes incluyendo "variant_attributes"
       const compareVariants = (variantObj, variantInObj2) => {
