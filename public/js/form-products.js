@@ -1389,7 +1389,7 @@ fetchConfigData();
         }
 
         
-        const productFieldComparisons = compareProductFields(productData.products, obj1.products);
+        const productFieldComparisons = compareProductFields(productData, obj1);
 
 console.log('Productos en productData pero no en obj1:', productFieldComparisons.onlyInList1);
 console.log('Productos en obj1 pero no en productData:', productFieldComparisons.onlyInList2);
