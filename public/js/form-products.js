@@ -1314,17 +1314,30 @@ fetchConfigData();
 
 
 
+        // Comparar las "categories"
+        const categoryComparisons = compareLists(productData.categories, obj1.categories, 'cat_id');
+        console.log('Categorías en productData pero no en obj1:', categoryComparisons.onlyInList1);
+        console.log('Categorías en obj1 pero no en productData:', categoryComparisons.onlyInList2);
 
-     // Verifica si un tag_id existe en el array de tags
-function doesTagExist(tagsArray, tagId) {
-  return tagsArray.some(tag => tag.tag_id === tagId);
-}
+        // Comparar los "suppliers"
+        const supplierComparisons = compareLists(productData.suppliers, obj1.suppliers, 'supplier_id');
+        console.log('Proveedores en productData pero no en obj1:', supplierComparisons.onlyInList1);
+        console.log('Proveedores en obj1 pero no en productData:', supplierComparisons.onlyInList2);
+
+
+
 
 // Compara dos listas de tags: verifica si hay nuevos, eliminados o modificados
 function compareTags(list1, list2) {
   const onlyInList1 = [];  // Tags que están en list1 pero no en list2
   const onlyInList2 = [];  // Tags que están en list2 pero no en list1
   const changedInBoth = []; // Tags que están en ambos pero con diferencias
+
+
+     // Verifica si un tag_id existe en el array de tags
+  function doesTagExist(tagsArray, tagId) {
+    return tagsArray.some(tag => tag.tag_id === tagId);
+  }
 
   // Recorrer la lista 1 (list1 -> productData)
   list1.forEach(tag1 => {
@@ -1358,6 +1371,8 @@ function compareTags(list1, list2) {
 }
 
 
+
+
 // Comparar ambas listas de tags
 const tagComparisons = compareTags(productData.tags, obj1.tags);
 
@@ -1367,15 +1382,37 @@ console.log('Tags en obj1 pero no en productData:', tagComparisons.onlyInList2);
 console.log('Tags presentes en ambos pero cambiaron:', tagComparisons.changedInBoth);
 
 
-        // Comparar las "categories"
-        const categoryComparisons = compareLists(productData.categories, obj1.categories, 'cat_id');
-        console.log('Categorías en productData pero no en obj1:', categoryComparisons.onlyInList1);
-        console.log('Categorías en obj1 pero no en productData:', categoryComparisons.onlyInList2);
 
-        // Comparar los "suppliers"
-        const supplierComparisons = compareLists(productData.suppliers, obj1.suppliers, 'supplier_id');
-        console.log('Proveedores en productData pero no en obj1:', supplierComparisons.onlyInList1);
-        console.log('Proveedores en obj1 pero no en productData:', supplierComparisons.onlyInList2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
