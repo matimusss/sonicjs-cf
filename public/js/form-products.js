@@ -1659,28 +1659,46 @@ console.log('Cupones presentes en ambos pero cambiaron:', couponComparisons.chan
 
 
 
-        const filterProductFields = (product) => {
-          return {
-            product_name: product.product_name,
-            sale_price: product.sale_price,
-            compare_price: product.compare_price,
-            buying_price: product.buying_price,
-            product_description: product.product_description,
-            short_description: product.short_description,
-            slug: product.slug,
-            product_type: product.product_type,
-            quantity: product.quantity
-          };
-        };
         
+        // Definir los campos a comparar
+const fieldsToCompare = [
+  'product_name',
+  'product_price',
+  'sale_price',
+  'compare_price',
+  'product_description',
+  'short_description',
+  'slug',
+  'product_type',
+  'quantity'
+];
+
+// Función para comparar los valores de los campos entre dos objetos
+function compareFields(obj1, obj2, fields) {
+  const differences = {};
+
+  fields.forEach(field => {
+    if (obj1[field] !== obj2[field]) {
+      differences[field] = {
+        obj1: obj1[field],
+        obj2: obj2[field]
+      };
+    }
+  });
+
+  return differences;
+}
+
+
+
+// Comparar los campos y obtener diferencias
+const differences = compareFields(productData, obj1, fieldsToCompare);
+
+// Imprimir los resultados para ver la salida
+console.log('Diferencias encontradas:', differences);
+  
         
-        const productDataSimpleValues = filterProductFields(productData);
-        const obj1SimpleValues = filterProductFields(obj1);
-        const comparacion = JSON.stringify(compareObjectsFieldByField(productDataSimpleValues, obj1SimpleValues)); 
-        console.log("comparacion de valores de campos simples "  + comparacion + ".")
-        
-        
-        
+
         
 
 
