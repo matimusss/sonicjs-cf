@@ -1411,7 +1411,7 @@ const compareVariantAttributes = (attributes1, attributes2) => {
 
   attributes1.forEach((attr1) => {
     const matchingAttr2 = attributes2.find(
-      (attr2) => attr2.p_variant_attribute_id === attr1.p_variant_attribute_id
+      (attr2) => attr2.variant_id === attr1.variant_id
     );
 
     if (matchingAttr2) {
