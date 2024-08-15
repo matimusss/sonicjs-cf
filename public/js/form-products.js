@@ -1308,7 +1308,6 @@ const data = productData;
 
 
 
-
       const valueExistsInVariants = doesValueExistDeep(obj1, 'variant_details', '6e914a16-deae-4dce-bb2c-41f1b84aacb6'); //foreach de cada ID a chequear existencia
       console.log(valueExistsInVariants);
       
@@ -1472,14 +1471,7 @@ const data = productData;
       } else {
         console.log('No hay diferencias en product_attributes');
       }
-      
-
-
-
-
-
-
-    }).catch((error) => {
+          }).catch((error) => {
       console.error('Error al enviar uno o más formularios', error);
     });
   });}
