@@ -1404,6 +1404,11 @@ console.log('Suppliers en obj1 pero no en productData:', supplierComparisons.onl
 
 function compareCoupons(list1, list2) {
 
+  // Verifica si un p_coupon_id existe en el array de cupones
+  function doesCouponExist(couponsArray, couponId) {
+    return couponsArray.some(coupon => coupon.coupon_id === couponId);
+  }
+
 
   const onlyInList1 = [];  // Cupones que están en list1 pero no en list2
   const onlyInList2 = [];  // Cupones que están en list2 pero no en list1
@@ -1429,7 +1434,7 @@ function compareCoupons(list1, list2) {
 
   // Cupones que están en list2 pero no en list1
   list2.forEach(coupon2 => {
-    if (!doesCouponExist(list1, coupon2.p_coupon_id)) {
+    if (!doesCouponExist(list1, coupon2.coupon_id)) {
       onlyInList2.push(coupon2);
     }
   });
