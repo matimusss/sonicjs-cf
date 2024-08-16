@@ -206,45 +206,16 @@ fetchConfigData();
 
 
                           function createCouponsForm(configData, productData) {
-                            console.log(productData);
-                            console.log(configData);
+                           // console.log(productData);
+                          //  console.log(configData);
                             
                             // Generar los objetos de coupons
                             const coupons = configData.coupons;
-                          
-                            // Crear los objetos para los campos del formulario
-                            const couponComponents = coupons.map(coupon => ({
-                              label: `Coupon: ${coupon.code}`,
-                              key: `coupon_${coupon.id}`,
-                              type: 'container',
-                              input: false,
-                              components: [
-                                {
-                                  label: 'Code',
-                                  key: `coupon_code_${coupon.id}`,
-                                  type: 'textfield',
-                                  input: true,
-                                  defaultValue: coupon.code,
-                                  placeholder: 'Coupon Code',
-                                  disabled: true  // Disabled if you don't want users to change it
-                                },
-                                {
-                                  label: 'Discount Value',
-                                  key: `discount_value_${coupon.id}`,
-                                  type: 'number',
-                                  input: true,
-                                  defaultValue: coupon.discount_value,
-                                  placeholder: 'Discount Value'
-                                },
-                                {
-                                  label: 'Discount Type',
-                                  key: `discount_type_${coupon.id}`,
-                                  type: 'textfield',
-                                  input: true,
-                                  defaultValue: coupon.discount_type,
-                                  placeholder: 'Discount Type'
-                                }
-                              ]
+                        
+                            // Crear los nombres de categories para el select, pero con los valores como IDs
+                            const couponsNames = coupons.map(coupon => ({
+                              value: coupon.id,
+                              label: coupon.code
                             }));
                           
                             // Crear el formulario usando Formio
@@ -253,11 +224,22 @@ fetchConfigData();
                                 {
                                   label: 'Coupons',
                                   key: 'coupons',
-                                  type: 'container',
-                                  input: false,
-                                  components: couponComponents
+                                  placeholder: 'Elige las cupònes',
+                                  type: 'select',
+                                  input: true,
+                                  multiple: true,
+                                  data: {
+                                    values: couponsNames
+                                  },
+                                  dataSrc: 'values',
+                                  template: '<span>{{ item.label }}</span>',
+                                  defaultValue: productData.coupons.map(coupon => coupon.coupon_id), // Valores iniciales
+                                  customClass: "choto"
                                 }
                               ]
+
+
+
                             }).then(form => {
                               // Aquí, si es necesario, puedes ajustar los valores después de que el formulario haya sido creado
                               couponsForm = form;
@@ -1218,14 +1200,23 @@ fetchConfigData();
         const obj3 = results1;
 
         function transformProductData(data) {
+
+
+
           // Aquí puedes usar la variable productData global
+
+
+
+
+
+
+
           const productAttributes = data.productAttributes.map(attrId => {
             return {
               attribute_id: attrId.attribute,
               attribute_value_id: attrId[`value_${attrId.attribute}`],
               p_attribute_id: attrId.p_attribute_id,  // COMPLETAR 
               p_attribute_value_id: attrId.p_attribute_value_id , // COMPLETAR
-
             };
           });
 
@@ -1260,14 +1251,9 @@ fetchConfigData();
 
 
 
-          const coupons = Object.keys(data.coupons).map(key => {
-            const coupon = data.coupons[key];
-            return {
-              coupon_code: coupon[`coupon_code_${key}`],
-              discount_value: coupon[`discount_value_${key}`],
-              discount_type: coupon[`discount_type_${key}`]
-            };
-          });
+         
+
+
 
           return {
             product_id: data.id,
@@ -1283,7 +1269,6 @@ fetchConfigData();
             product_type: data.product_type,
             published: data.published,
             disable_out_of_stock: data.disable_out_of_stock,
-
             created_by: data.created_by,
             updated_by: data.updated_by,
             createdOn: data.createdOn,
@@ -1299,7 +1284,13 @@ fetchConfigData();
               cat_id: catId,
               cat_name: ''
             })),
-            coupons: coupons,
+            coupons: data.coupons.map(coupId => ({
+              coup_id: coupId,
+              coup_code: ''
+            })),
+
+
+
             suppliers: data.suppliers.map(supplierId => ({
               supplier_id: supplierId,
               supplier_name: ''
