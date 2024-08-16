@@ -469,7 +469,7 @@ export const Layout: FC<{
            
                 </ul>
            
-           
+             <button id="uppyModalOpener">Open Modal</button>
               </div>
             </nav>
 
