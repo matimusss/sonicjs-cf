@@ -1401,28 +1401,34 @@ console.log('Suppliers en obj1 pero no en productData:', supplierComparisons.onl
 
 
 
-
 function compareCoupons(list1, list2) {
 
-  // Verifica si un p_coupon_id existe en el array de cupones
+  // Verifica si un coupon_id existe en el array de cupones
   function doesCouponExist(couponsArray, couponId) {
     return couponsArray.some(coupon => coupon.coupon_id === couponId);
   }
 
+  // Compara campos específicos en lugar de todos los campos
+  function compareFields(coupon1, coupon2, fieldsToCheck) {
+    return fieldsToCheck.every(field => coupon1[field] === coupon2[field]);
+  }
 
   const onlyInList1 = [];  // Cupones que están en list1 pero no en list2
   const onlyInList2 = [];  // Cupones que están en list2 pero no en list1
   const changedInBoth = []; // Cupones presentes en ambos pero con diferencias en sus campos
 
+  // Especifica los campos a comparar (por ejemplo, solo "coupon_id")
+  const fieldsToCheck = ['coupon_id'];
+
   // Recorrer la lista 1 (productData -> list1)
   list1.forEach(coupon1 => {
     const match = list2.find(coupon2 => coupon2.coupon_id === coupon1.coupon_id);
     if (!match) {
-      // Si el p_coupon_id no está en list2
+      // Si el coupon_id no está en list2
       onlyInList1.push(coupon1);
     } else {
-      // Si el ID está en ambos, comparamos el resto de los campos
-      if (!_.isEqual(coupon1, match)) {
+      // Si el ID está en ambos, comparamos solo los campos especificados
+      if (!compareFields(coupon1, match, fieldsToCheck)) {
         changedInBoth.push({
           id: coupon1.coupon_id,
           oldValue: coupon1,
@@ -1442,9 +1448,10 @@ function compareCoupons(list1, list2) {
   return {
     onlyInList1,  // Cupones presentes solo en list1
     onlyInList2,  // Cupones presentes solo en list2
-    changedInBoth // Cupones presentes en ambos pero con cambios
+    changedInBoth // Cupones presentes en ambos pero con cambios en campos seleccionados
   };
 }
+
 
 
 
