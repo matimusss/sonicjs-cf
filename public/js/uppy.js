@@ -12,9 +12,9 @@ import {
 } from 'https://releases.transloadit.com/uppy/v4.1.1/uppy.min.mjs';
 
 // Configuración Cloudinary
-const cloudName = 'tu_cloud_name'; // Reemplaza con tu cloud name de Cloudinary
-const uploadPreset = 'tu_upload_preset'; // Reemplaza con tu upload preset de Cloudinary
-const apiKey = 'tu_api_key'; // Reemplaza con tu API key de Cloudinary
+const cloudName = 'dmyt0fswa'; // Reemplaza con tu cloud name de Cloudinary
+const uploadPreset = 'ml_default'; // Reemplaza con tu upload preset de Cloudinary
+const apiKey = '152897242549548'; // Reemplaza con tu API key de Cloudinary
 
 // Simulación de firma de Cloudinary (esto debe venir de tu servidor o preconfigurado)
 async function generateSignature(params) {
