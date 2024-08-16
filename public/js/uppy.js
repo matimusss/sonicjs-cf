@@ -1,4 +1,3 @@
-<script type="module">
       import {
         Uppy,
         Dashboard,
@@ -55,4 +54,4 @@
         console.log(`File ${file.name} uploaded successfully`);
         console.log('Cloudinary URL:', response.uploadURL);
       });
-    </script>
+   
