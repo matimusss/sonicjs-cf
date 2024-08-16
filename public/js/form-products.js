@@ -455,7 +455,7 @@ fetchConfigData();
                                 '    </div>' +
                                 '  </div>' +
                                 '</div>',
-                              footer: '  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">  Open Form.io Modal  </button>'
+                              footer: '  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">  Open Form.io Modal  </button> //  <button id="uppyModalOpener">Open Modal</button>'
                             },
                             components: [
                               {

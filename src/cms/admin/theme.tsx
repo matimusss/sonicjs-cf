@@ -17,7 +17,20 @@ export const Head = () => {
       <meta name='viewport' content='width=device-width, initial-scale=1' />
       <meta name='description' content='' />
 
+
+
+
+
+
+
       <title>SonicJs Admin</title>
+
+
+
+      <link
+      href="https://releases.transloadit.com/uppy/v4.1.1/uppy.min.css"
+      rel="stylesheet"
+    />
       <link rel='icon' type='image/x-icon' href='/public/images/favicon.ico' />
 
 
@@ -60,6 +73,7 @@ export const Head = () => {
 
     
 
+      <script type="module"> import { Uppy } from "https://releases.transloadit.com/uppy/v4.1.0/uppy.min.mjs"</script>
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/public/js/toastr.min.js"></script>
