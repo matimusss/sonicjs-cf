@@ -480,7 +480,7 @@ export const Layout: FC<{
               </div>
 
               {props.children}
-
+              <div id="uppyDashboard"></div>
    
             </main>
             
