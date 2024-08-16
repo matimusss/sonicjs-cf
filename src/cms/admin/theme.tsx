@@ -71,9 +71,8 @@ export const Head = () => {
       <link href='/public/css/uppy.css' rel='stylesheet' />
       <link href='/public/css/gallery.css' rel='stylesheet' />
 
-    
+      <script type="module" src="/public/js/uppy.js"></script>
 
-      <script src="/public/js/uppy.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/public/js/toastr.min.js"></script>
     <script src="/public/js/grapes.min.js?v0.21.10"></script>
