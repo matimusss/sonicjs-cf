@@ -499,6 +499,29 @@ export const Layout: FC<{
               {props.children}
               <div id="uppyDashboard"></div>
    
+              <form method="POST" name="form-example-2" id="form-example-2" enctype="multipart/form-data">
+
+<div class="input-field">
+    <input type="text" name="name-2" id="name-2" value="John Doe">
+    <label for="name-2" class="active">Name</label>
+</div>
+
+<div class="input-field">
+    <input type="text" name="description-2" id="description-2"
+    value="This form is already filed with some data, including images!">
+    <label for="description-2" class="active">Description</label>
+</div>
+
+<div class="input-field">
+    <label class="active">Photos</label>
+    <div class="input-images-2" style="padding-top: .5rem;"></div>
+</div>
+
+<button>Submit and display data</button>
+
+</form>
+
+
             </main>
             
           </div>
