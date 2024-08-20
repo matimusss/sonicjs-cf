@@ -39,14 +39,14 @@ const cloudName =  "dmyt0fswa";
 const uppy = new Uppy({ debug: true, autoProceed: false })
   .use(Dashboard, { target: '#uppyDashboard', inline: true })
   .use(XHRUpload, {
-    endpoint: `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
+    endpoint: `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
     fieldName: 'file',
     formData: true,
     getUploadParameters(file) {
       return generateSignature().then((signatureData) => {
         return {
           method: 'POST',
-          url: `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
+          url: `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
           fields: {
             api_key: "152897242549548",
             timestamp: signatureData.timestamp,
