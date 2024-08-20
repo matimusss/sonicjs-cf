@@ -539,7 +539,7 @@ export const Layout: FC<{
 export const Top = (props: {
   items: object[];
   screenTitle: string;
-  newItemButtonText: string;
+  newItemButtonText: string;  
   username?: string;
   env: Bindings;
 }) => {
