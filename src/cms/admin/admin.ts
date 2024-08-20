@@ -1,18 +1,10 @@
+
+import crypto from 'crypto';
+import { v2 as cloudinary } from 'cloudinary'
 /** @jsx jsx */
 /** @jsxImportSource hono/jsx */
 import type { FC } from 'hono/jsx'
 import { jsx } from 'hono/jsx'
-
-
-
-
-
-import crypto from 'crypto';
-import { v2 as cloudinary } from 'cloudinary'
-
-
-
-
 
 // import { Hono } from 'hono'
 // const app = new Hono()
@@ -68,7 +60,7 @@ import { getTestingContext } from '../util/testing';
 
 const admin = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
-admin.use('*ync (ctx, next) => {
+admin.use('*', async (ctx, next) => {
   const path = ctx.req.path;
   let canUseAdmin = await config.adminAccessControl(ctx);
   if (!canUseAdmin) {
@@ -120,11 +112,6 @@ admin.get('/content/new/:route', async (ctx) => {
 });
 
 
-
-
-
-
-
 //cloudinary signature
 
 admin.get('/signature', async (ctx) => {
@@ -144,12 +131,6 @@ admin.get('/signature', async (ctx) => {
     return ctx.json({ error: 'Error generating signature' }, 500);
   }
 });
-
-
-
-
-
-
 
 
 
@@ -357,7 +338,7 @@ admin.get('/api/kv-cache', async (ctx) => {
       key: item.name,
       viewLink: `<a href="/admin/cache/kv/${itemEncoded}">${item.name}</a>`,
       createdOn: item.metadata.createdOn
-        ? format(item.metadata.createdOn, 'MM/dd/yyyy h:mm b')', as
+        ? format(item.metadata.createdOn, 'MM/dd/yyyy h:mm b')
         : ''
     };
   });
