@@ -112,30 +112,28 @@ admin.get('/content/new/:route', async (ctx) => {
 
 //cloudinary signature
 
-
 async function generateSignature(timestamp: number, apiSecret: string): Promise<string> {
-
-
-
   // 1. Crear la cadena a firmar con solo el timestamp
   const dataToSign = `timestamp=${timestamp}`;
   
   // 2. Concatenar el apiSecret al final del string
   const stringToSign = `${dataToSign}${apiSecret}`;
-  console.log(stringToSign);
+  console.log("String to Sign:", stringToSign);
+  
   // 3. Convertir la cadena a formato Uint8Array
   const encoder = new TextEncoder();
   const data = encoder.encode(stringToSign);
   const key = encoder.encode(apiSecret);
 
-  console.log(key);
+  console.log("Key (Uint8Array):", key);
+
   // 4. Importar la clave criptográfica
   const cryptoKey = await crypto.subtle.importKey(
-        'raw',
-      key,
-      { name: 'HMAC', hash: 'SHA-1' },
-      false,
-      ['sign']
+    'raw',
+    key,
+    { name: 'HMAC', hash: 'SHA-1' },
+    false,
+    ['sign']
   );
 
   // 5. Firmar los datos con HMAC-SHA1
@@ -146,28 +144,19 @@ async function generateSignature(timestamp: number, apiSecret: string): Promise<
   return signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-
+// Ruta en el endpoint de Hono.js
 admin.get('/signature', async (ctx) => {
-
-
-
-
-
-
-
-
   const apiSecret = 'gs3Ovvm5FBFltuTKC6Fx8M4_ng0'; // Reemplaza esto con tu secreto de Cloudinary
-const timestamp = Math.round(Date.now() / 1000);
-try {
-  const signature = await generateSignature(timestamp, apiSecret);
-  return ctx.json({ signature, timestamp });
-} catch (error) {
-  console.error('Error generating signature:', error);
-  return ctx.json({ error: 'Error generating signature' }, 500);
-}
+  const timestamp = Math.round(Date.now() / 1000);
+
+  try {
+    const signature = await generateSignature(timestamp, apiSecret);
+    return ctx.json({ signature, timestamp });
+  } catch (error) {
+    console.error('Error generating signature:', error);
+    return ctx.json({ error: 'Error generating signature' }, 500);
+  }
 });
-
-
 
 
 
