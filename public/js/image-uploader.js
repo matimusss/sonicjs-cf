@@ -1,6 +1,4 @@
-/*! Image Uploader - v1.2.3 - 26/11/2019
- * Copyright (c) 2019 Christian Bayer; Licensed MIT */
-function myFunction() {
+
 (function ($) {
 
     $.fn.imageUploader = function (options) {
@@ -390,7 +388,3 @@ $('.input-images-2').imageUploader({
   maxFiles: 10
 });
 
-}
-
-// Configura el timeout para que ejecute la función después de 1 segundo
-setTimeout(myFunction, 1000);
