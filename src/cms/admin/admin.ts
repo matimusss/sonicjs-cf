@@ -111,6 +111,14 @@ admin.get('/content/new/:route', async (ctx) => {
 
 
 //cloudinary signature
+async function digest(message: string, algo: string = 'SHA-1'): Promise<string> {
+  return Array.from(
+    new Uint8Array(
+      await crypto.subtle.digest(algo, new TextEncoder().encode(message))
+    ),
+    (byte) => byte.toString(16).padStart(2, '0')
+  ).join('');
+}
 
 async function generateSignature(timestamp: number, apiSecret: string): Promise<string> {
   // 1. Crear la cadena a firmar con solo el timestamp
@@ -120,28 +128,10 @@ async function generateSignature(timestamp: number, apiSecret: string): Promise<
   const stringToSign = `${dataToSign}${apiSecret}`;
   console.log("String to Sign:", stringToSign);
   
-  // 3. Convertir la cadena a formato Uint8Array
-  const encoder = new TextEncoder();
-  const data = encoder.encode(stringToSign);
-  const key = encoder.encode(apiSecret);
-
-  console.log("Key (Uint8Array):", key);
-
-  // 4. Importar la clave criptográfica
-  const cryptoKey = await crypto.subtle.importKey(
-    'raw',
-    key,
-    { name: 'HMAC', hash: 'SHA-1' },
-    false,
-    ['sign']
-  );
-
-  // 5. Firmar los datos con HMAC-SHA1
-  const signatureBuffer = await crypto.subtle.sign('HMAC', cryptoKey, data);
-  const signatureArray = Array.from(new Uint8Array(signatureBuffer));
-
-  // 6. Convertir la firma a hexadecimal
-  return signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  // 3. Calcular el hash SHA-1 de la cadena
+  const signature = await digest(stringToSign, 'SHA-1');
+  
+  return signature;
 }
 
 // Ruta en el endpoint de Hono.js
@@ -155,9 +145,8 @@ admin.get('/signature', async (ctx) => {
   } catch (error) {
     console.error('Error generating signature:', error);
     return ctx.json({ error: 'Error generating signature' }, 500);
-  }
+  }         
 });
-
 
 
 //CRUDS
