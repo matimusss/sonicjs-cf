@@ -1,9 +1,11 @@
+import {
+  Uppy,
+  Dashboard,
+  XHRUpload
+} from 'https://releases.transloadit.com/uppy/v4.1.1/uppy.min.mjs';
 import Uppy from '@uppy/core';
 import Dashboard from '@uppy/dashboard';
 import XHRUpload from '@uppy/xhr-upload';
-
-import '@uppy/core/dist/style.min.css';
-import '@uppy/dashboard/dist/style.min.css';
 
 // Función para generar la firma
 async function generateSignature() {
