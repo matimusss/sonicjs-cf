@@ -7,7 +7,7 @@ import {
 async function generateSignature() {
   try {
     // Realizar una solicitud GET al endpoint que has creado
-    const response = await fetch('/signature');
+    const response = await fetch('https://sonicjs-cf2.pages.dev/admin/signature');
     
     // Verificar si la respuesta es exitosa
     if (!response.ok) {
