@@ -38,18 +38,21 @@ const cloudName =  "dmyt0fswa";
 // Inicialización de Uppy con varios plugins
 const uppy = new Uppy({ debug: true, autoProceed: false })
   .use(Dashboard, { target: '#uppyDashboard', inline: true })
+
+
   .use(XHRUpload, {
     endpoint: `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+    withCredentials: true,
     fieldName: 'file',
     formData: true,
-    getUploadParameters(file) {
+    getUploadParameters(file) { 
       return generateSignature().then((signatureData) => {
         return {
           method: 'POST',
           url: `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
           fields: {
-            api_key: 152897242549548,
             timestamp: signatureData.timestamp,
+            api_key: "152897242549548",
             signature: signatureData.signature,
           },
         };
