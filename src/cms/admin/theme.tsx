@@ -27,10 +27,7 @@ export const Head = () => {
 
 
 
-      <link
-      href="https://releases.transloadit.com/uppy/v4.1.1/uppy.min.css"
-      rel="stylesheet"
-    />
+ 
       <link rel='icon' type='image/x-icon' href='/public/images/favicon.ico' />
 
 
@@ -84,10 +81,10 @@ export const Head = () => {
 
   
       <link href='/public/css/gridjs.css' rel='stylesheet' />
-      <link href='/public/css/uppy.css' rel='stylesheet' />
+ 
       <link href='/public/css/gallery.css' rel='stylesheet' />
 
-      <script type="module" src="/public/js/uppy.js"></script>
+
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/public/js/toastr.min.js"></script>
@@ -485,7 +482,6 @@ export const Layout: FC<{
            
                 </ul>
            
-             <button id="uppyModalOpener">Open Modal</button>
               </div>
             </nav>
 
@@ -496,31 +492,8 @@ export const Layout: FC<{
               </div>
 
               {props.children}
-              <div id="uppyDashboard"></div>
+          
    
-       
-              <form method="POST" name="form-example-2" id="form-example-2" enctype="multipart/form-data">
-
-<div class="input-field">
-    <input type="text" name="name-2" id="name-2" value="John Doe"></input>
-    <label for="name-2" class="active">Name</label>
-</div>
-
-<div class="input-field">
-    <input type="text" name="description-2" id="description-2"
-    value="This form is already filed with some data, including images!"></input>
-    <label for="description-2" class="active">Description</label>
-</div>
-
-<div class="input-field">
-    <label class="active">Photos</label>
-    <div class="input-images-2" style="padding-top: .5rem;"></div>
-</div>
-
-<button>Submit and display data</button>
-
-</form>
-       
 
 
             </main>
