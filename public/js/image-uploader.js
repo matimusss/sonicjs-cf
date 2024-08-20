@@ -366,7 +366,7 @@ const $ = jQuery;
 
 };
 
-imgUpload();}
+imgUpload();
 
 
 function myFunction2() {
@@ -387,13 +387,10 @@ $('.input-images-2').imageUploader({
   maxFiles: 10
 });
 
-$('.input-images-2').imageUploader({
-  preloaded: preloaded,
-  imagesInputName: 'photos',
-  preloadedInputName: 'old',
-  maxSize: 2 * 1024 * 1024,
-  maxFiles: 10
-});
+
+}
+myFunction2();
+
 
 }
 
