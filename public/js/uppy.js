@@ -1,7 +1,6 @@
 import {
   Uppy,
-  Dashboard,
-  XHRUpload
+  Dashboard
 } from 'https://releases.transloadit.com/uppy/v4.1.1/uppy.min.mjs';
 
 // Función para generar la firma
@@ -25,6 +24,35 @@ async function generateSignature() {
   }
 }
 
+// Función para subir archivos manualmente
+async function uploadFiles(files) {
+  const { signature, timestamp } = await generateSignature();
+  
+  for (const file of files) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('timestamp', timestamp);
+    formData.append('signature', signature);
+    formData.append('api_key', '152897242549548');
+
+    try {
+      const response = await fetch('https://api.cloudinary.com/v1_1/dmyt0fswa/image/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      console.log('Upload successful:', result);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  }
+}
+
 // Inicialización de Uppy
 const uppy = new Uppy({
   debug: true,
@@ -33,28 +61,11 @@ const uppy = new Uppy({
   .use(Dashboard, { 
     target: '#uppyDashboard', 
     inline: true 
-  })
-  .use(XHRUpload, {
-    endpoint: 'https://api.cloudinary.com/v1_1/dmyt0fswa/image/upload',
-    formData: true,
-    fieldName: 'file',
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest'
-    },
-    async getParameters(file) {
-      const { signature, timestamp } = await generateSignature();
-      console.log(signature);
-      console.log(timestamp);
-      return {
-        timestamp: timestamp,
-        signature: signature,
-        api_key: '152897242549548'
-      };
-    }
   });
 
 // Manejar el evento de carga completa
 uppy.on('complete', (result) => {
   console.log('Upload complete! We’ve uploaded these files:', result.successful);
-  // Puedes manejar los resultados aquí, como mostrar un mensaje de éxito
+  // Subir archivos manualmente
+  uploadFiles(result.successful.map(file => file.data));
 });
