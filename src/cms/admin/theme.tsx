@@ -12,7 +12,7 @@ export const Head = () => {
   return (
     <head>
       <script src='/public/js/color-modes.js'></script>
-      <script src='/public/js/imageUploaderInit.js'></script>
+
       <meta charset='utf-8' />
       <meta name='viewport' content='width=device-width, initial-scale=1' />
       <meta name='description' content='' />
@@ -34,10 +34,6 @@ export const Head = () => {
       <link rel='icon' type='image/x-icon' href='/public/images/favicon.ico' />
 
 
-      <link type="text/css" rel="stylesheet" href="/public/css/image-uploader.min.css">
-
-
-
 
       <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link>
       <link rel="stylesheet" href="/public/css/toastr.min.css"></link>
@@ -55,6 +51,22 @@ export const Head = () => {
         integrity='sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN'
         crossorigin='anonymous'
       ></link>
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/public/css/image-uploader.min.css"></link>
+
+
+
+
+
+
+
+
+
+
+
 
 
       <link
@@ -93,9 +105,9 @@ export const Head = () => {
     <script src="https://unpkg.com/grapesjs-tui-image-editor@0.1.3"></script>
     <script src="https://unpkg.com/grapesjs-typed@1.0.5"></script>
     <script src="https://unpkg.com/grapesjs-style-bg@2.0.1"></script>
-    <script type="text/javascript" src="/public/js/image-uploader.js"></script>
-      
 
+    <script type="text/javascript" src="/public/js/image-uploader.js"></script>
+    <script type="text/javascript" src="/public/js/imageUploaderInit.js"></script>
     <link href='/public/css/admin.css' rel='stylesheet' />
 
     </head>
@@ -487,36 +499,6 @@ export const Layout: FC<{
               {props.children}
               <div id="uppyDashboard"></div>
    
-
-              <form method="POST" name="form-example-2" id="form-example-2" enctype="multipart/form-data">
-
-<div class="input-field">
-    <input type="text" name="name-2" id="name-2" value="John Doe">
-    <label for="name-2" class="active">Name</label>
-</div>
-
-<div class="input-field">
-    <input type="text" name="description-2" id="description-2"
-    value="This form is already filed with some data, including images!">
-    <label for="description-2" class="active">Description</label>
-</div>
-
-<div class="input-field">
-    <label class="active">Photos</label>
-    <div class="input-images-2" style="padding-top: .5rem;"></div>
-</div>
-
-<button>Submit and display data</button>
-
-</form>
-
-
-
-
-
-
-
-
             </main>
             
           </div>
