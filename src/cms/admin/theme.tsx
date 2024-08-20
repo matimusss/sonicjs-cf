@@ -499,16 +499,17 @@ export const Layout: FC<{
               {props.children}
               <div id="uppyDashboard"></div>
    
+       
               <form method="POST" name="form-example-2" id="form-example-2" enctype="multipart/form-data">
 
 <div class="input-field">
-    <input type="text" name="name-2" id="name-2" value="John Doe">
+    <input type="text" name="name-2" id="name-2" value="John Doe"></input>
     <label for="name-2" class="active">Name</label>
 </div>
 
 <div class="input-field">
     <input type="text" name="description-2" id="description-2"
-    value="This form is already filed with some data, including images!">
+    value="This form is already filed with some data, including images!"></input>
     <label for="description-2" class="active">Description</label>
 </div>
 
@@ -520,6 +521,7 @@ export const Layout: FC<{
 <button>Submit and display data</button>
 
 </form>
+       
 
 
             </main>
