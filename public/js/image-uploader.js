@@ -1,8 +1,10 @@
 /*! Image Uploader - v1.2.3 - 26/11/2019
  * Copyright (c) 2019 Christian Bayer; Licensed MIT */
 function myFunction() {
-(function ($) {
 
+
+function imgUpload() {
+const $ = jQuery;
     $.fn.imageUploader = function (options) {
 
         // Default settings
@@ -362,9 +364,12 @@ function myFunction() {
         return this;
     };
 
-}(jQuery));
+};
+
+imgUpload();}
 
 
+function myFunction2() {
 let preloaded = [
   {id: 1, src: 'https://picsum.photos/500/500?random=1'},
   {id: 2, src: 'https://picsum.photos/500/500?random=2'},
@@ -394,3 +399,4 @@ $('.input-images-2').imageUploader({
 
 // Configura el timeout para que ejecute la función después de 1 segundo
 setTimeout(myFunction, 1000);
+setTimeout(myFunction2, 1400);
