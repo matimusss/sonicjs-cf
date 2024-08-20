@@ -48,7 +48,7 @@ const uppy = new Uppy({ debug: true, autoProceed: false })
           method: 'POST',
           url: `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
           fields: {
-            api_key: "152897242549548",
+            api_key: 152897242549548,
             timestamp: signatureData.timestamp,
             signature: signatureData.signature,
           },
