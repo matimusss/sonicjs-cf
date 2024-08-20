@@ -1,0 +1,440 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React from "react";
+import useSWR from "swr";
+
+
+const fetcher = (key) => {
+  const value = localStorage.getItem(key);
+  return value ? JSON.parse(value) : null;
+};
+
+
+const CheckUserComponent = () => {
+  const { data, error, mutate } = useSWR("user-info", fetcher);
+
+
+  const handleSetUser = () => {
+    const userInfo = { name: "John Doe", role: "user" };
+    localStorage.setItem("user-info", JSON.stringify(userInfo));
+    mutate(userInfo, false); // Optimistic update
+  };
+
+
+  const handleClearUser = () => {
+    localStorage.removeItem("user-info");
+    mutate(null, false); // Optimistic update
+  };
+
+
+  if (error) {
+    console.error("Error fetching user info:", error);
+    return <div>Error fetching user info</div>;
+  }
+
+
+  return (
+    <div>
+      {data ? (
+        <div>
+          <GreetingComponent userInfo={data} />
+          <button onClick={handleClearUser}>Clear User Info</button>
+        </div>
+      ) : (
+        <div>
+          <LoginComponent />
+          <button onClick={handleSetUser}>Set User Info</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+const GreetingComponent = ({ userInfo }) => {
+  return (
+    <div>
+      <h3>Hola {userInfo.name}</h3>
+      <p>Rol: {userInfo.role}</p>
+    </div>
+  );
+};
+
+
+const LoginComponent = () => {
+  return <div>Componente de Login</div>;
+};
+
+
+const fetchDataFunction = async (
+  searchTerm,
+  filterColor,
+  sortBy,
+  minPrice,
+  maxPrice,
+  page,
+  itemsPerPage
+) => {
+  const data = [
+    {
+      id: 1,
+      title: "Laptop Dell",
+      description: "Powerful laptop for work.",
+      color: "blue",
+      price: 1200,
+    },
+    {
+      id: 2,
+      title: "Laptop HP",
+      description: "Affordable laptop for students.",
+      color: "red",
+      price: 800,
+    },
+    {
+      id: 3,
+      title: "Laptop Lenovo",
+      description: "Versatile laptop for everyday use.",
+      color: "blue",
+      price: 1000,
+    },
+    {
+      id: 4,
+      title: "Tablet Samsung",
+      description: "Compact tablet for entertainment.",
+      color: "red",
+      price: 600,
+    },
+    {
+      id: 5,
+      title: "Desktop PC",
+      description: "High-performance desktop for gaming.",
+      color: "blue",
+      price: 1500,
+    },
+    {
+      id: 6,
+      title: "Monitor LG",
+      description: "High-resolution monitor.",
+      color: "black",
+      price: 300,
+    },
+    {
+      id: 7,
+      title: "Keyboard",
+      description: "Mechanical keyboard.",
+      color: "black",
+      price: 100,
+    },
+    {
+      id: 8,
+      title: "Mouse",
+      description: "Wireless mouse.",
+      color: "black",
+      price: 50,
+    },
+    {
+      id: 9,
+      title: "Printer",
+      description: "All-in-one printer.",
+      color: "white",
+      price: 200,
+    },
+    {
+      id: 10,
+      title: "Webcam",
+      description: "HD webcam.",
+      color: "black",
+      price: 80,
+    },
+    {
+      id: 11,
+      title: "Headphones",
+      description: "Noise-canceling headphones.",
+      color: "black",
+      price: 150,
+    },
+    {
+      id: 12,
+      title: "Speakers",
+      description: "Bluetooth speakers.",
+      color: "blue",
+      price: 120,
+    },
+    {
+      id: 13,
+      title: "Smartphone",
+      description: "Latest model smartphone.",
+      color: "black",
+      price: 1000,
+    },
+    {
+      id: 14,
+      title: "Tablet Apple",
+      description: "New Apple tablet.",
+      color: "white",
+      price: 900,
+    },
+    {
+      id: 15,
+      title: "Smartwatch",
+      description: "Fitness smartwatch.",
+      color: "black",
+      price: 250,
+    },
+    {
+      id: 16,
+      title: "Camera",
+      description: "DSLR camera.",
+      color: "black",
+      price: 1200,
+    },
+    {
+      id: 17,
+      title: "Game Console",
+      description: "Next-gen game console.",
+      color: "white",
+      price: 500,
+    },
+    {
+      id: 18,
+      title: "Router",
+      description: "Wi-Fi router.",
+      color: "white",
+      price: 100,
+    },
+    {
+      id: 19,
+      title: "External Hard Drive",
+      description: "1TB external hard drive.",
+      color: "black",
+      price: 80,
+    },
+    {
+      id: 20,
+      title: "Microphone",
+      description: "Studio microphone.",
+      color: "black",
+      price: 150,
+    },
+    {
+      id: 21,
+      title: "Drone",
+      description: "Camera drone.",
+      color: "white",
+      price: 600,
+    },
+    {
+      id: 22,
+      title: "VR Headset",
+      description: "Virtual reality headset.",
+      color: "black",
+      price: 400,
+    },
+    {
+      id: 23,
+      title: "Fitness Tracker",
+      description: "Health and fitness tracker.",
+      color: "black",
+      price: 120,
+    },
+    {
+      id: 24,
+      title: "Smart Light",
+      description: "Smart home light.",
+      color: "white",
+      price: 60,
+    },
+    {
+      id: 25,
+      title: "Robot Vacuum",
+      description: "Automatic robot vacuum.",
+      color: "white",
+      price: 300,
+    },
+  ];
+
+
+  let filteredData = data.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+
+  if (filterColor) {
+    filteredData = filteredData.filter((item) => item.color === filterColor);
+  }
+
+
+  filteredData = filteredData.filter(
+    (item) =>
+      (!minPrice || item.price >= minPrice) &&
+      (!maxPrice || item.price <= maxPrice)
+  );
+
+
+  if (sortBy === "asc") {
+    filteredData.sort((a, b) => a.price - b.price);
+  } else if (sortBy === "desc") {
+    filteredData.sort((a, b) => b.price - a.price);
+  }
+
+
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+
+
+  await new Promise((resolve) => setTimeout(resolve, 600));
+
+
+  return {
+    items: filteredData.slice(start, end),
+    total: filteredData.length,
+  };
+};
+
+
+export default function App() {
+  const [keepPreviousData, setKeepPreviousData] = React.useState(false);
+  const [search, setSearch] = React.useState("");
+  const [filterColor, setFilterColor] = React.useState("");
+  const [sortBy, setSortBy] = React.useState(""); // asc, desc
+  const [minPrice, setMinPrice] = React.useState("");
+  const [maxPrice, setMaxPrice] = React.useState("");
+  const [page, setPage] = React.useState(1);
+  const itemsPerPage = 10;
+
+
+  const { data, error, isValidating } = useSWR(
+    [search, filterColor, sortBy, minPrice, maxPrice, page, itemsPerPage],
+    () =>
+      fetchDataFunction(
+        search,
+        filterColor,
+        sortBy,
+        minPrice,
+        maxPrice,
+        page,
+        itemsPerPage
+      ),
+    { keepPreviousData }
+  );
+
+
+  const isLoading = !data && !error;
+
+
+  const totalPages = data ? Math.ceil(data.total / itemsPerPage) : 1;
+
+
+  // Effect to reset the page to 1 when filters or search terms change
+  React.useEffect(() => {
+    setPage(1);
+  }, [search, filterColor, sortBy, minPrice, maxPrice]);
+
+
+  return (
+    <div>
+      <CheckUserComponent />
+
+
+      <h1>SWR Search, Filter & Sort Example</h1>
+      <div className="search-container">
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search Products..."
+          autoFocus
+        />
+        <select
+          value={filterColor}
+          onChange={(e) => setFilterColor(e.target.value)}
+        >
+          <option value="">All Colors</option>
+          <option value="blue">Blue</option>
+          <option value="red">Red</option>
+        </select>
+        <br />
+        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <option value="">Sort by</option>
+          <option value="asc">Price Ascending</option>
+          <option value="desc">Price Descending</option>
+        </select>
+        <input
+          type="number"
+          value={minPrice}
+          onChange={(e) =>
+            setMinPrice(e.target.value ? parseInt(e.target.value) : "")
+          }
+          placeholder="Min Price"
+        />
+        <input
+          type="number"
+          value={maxPrice}
+          onChange={(e) =>
+            setMaxPrice(e.target.value ? parseInt(e.target.value) : "")
+          }
+          placeholder="Max Price"
+        />
+        <label>
+          <input
+            type="checkbox"
+            checked={keepPreviousData}
+            onChange={(e) => setKeepPreviousData(e.target.checked)}
+          />{" "}
+          Keep Previous Data
+        </label>
+      </div>
+
+
+      <div className={isLoading ? "loading" : ""}>
+        {data &&
+          data.items.map((item) => (
+            <div className="item" key={item.id}>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <p>Color: {item.color}</p>
+              <p>Price: ${item.price}</p>
+            </div>
+          ))}
+      </div>
+
+
+      <div>
+        <button
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <span>
+          Page {page} of {totalPages}
+        </span>
+        <button
+          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={page === totalPages}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+}
+
+
+
+

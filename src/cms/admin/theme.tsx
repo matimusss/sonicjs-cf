@@ -34,6 +34,10 @@ export const Head = () => {
       <link rel='icon' type='image/x-icon' href='/public/images/favicon.ico' />
 
 
+      <link type="text/css" rel="stylesheet" href="/public/css/image-uploader.min.css">
+
+
+
 
       <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link>
       <link rel="stylesheet" href="/public/css/toastr.min.css"></link>
@@ -89,6 +93,7 @@ export const Head = () => {
     <script src="https://unpkg.com/grapesjs-tui-image-editor@0.1.3"></script>
     <script src="https://unpkg.com/grapesjs-typed@1.0.5"></script>
     <script src="https://unpkg.com/grapesjs-style-bg@2.0.1"></script>
+    <script type="text/javascript" src="/public/js/image-uploader.js"></script>
 
 
     <link href='/public/css/admin.css' rel='stylesheet' />
