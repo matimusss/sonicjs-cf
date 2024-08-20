@@ -399,4 +399,3 @@ $('.input-images-2').imageUploader({
 
 // Configura el timeout para que ejecute la función después de 1 segundo
 setTimeout(myFunction, 1000);
-setTimeout(myFunction2, 1400);
