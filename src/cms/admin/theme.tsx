@@ -107,7 +107,6 @@ export const Head = () => {
     <script src="https://unpkg.com/grapesjs-style-bg@2.0.1"></script>
 
     <script type="text/javascript" src="/public/js/image-uploader.js"></script>
-    <script type="text/javascript" src="/public/js/imageUploaderInit.js"></script>
     <link href='/public/css/admin.css' rel='stylesheet' />
 
     </head>
