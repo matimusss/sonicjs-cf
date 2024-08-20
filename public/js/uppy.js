@@ -43,6 +43,8 @@ const uppy = new Uppy({
     },
     async getParameters(file) {
       const { signature, timestamp } = await generateSignature();
+      console.log(signature);
+      console.log(timestamp);
       return {
         timestamp: timestamp,
         signature: signature,
