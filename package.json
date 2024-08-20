@@ -37,6 +37,7 @@
     "wrangler": "^3.25.0"
   },
   "dependencies": {
+    "@capsureit/uppy-cloudinary": "^0.1.4",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@grapesjs/react": "^1.0.0",

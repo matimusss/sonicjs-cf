@@ -1,28 +1,21 @@
-import {
-  Uppy,
-  Dashboard,
-  XHRUpload
-} from 'https://releases.transloadit.com/uppy/v4.1.1/uppy.min.mjs';
+import Uppy from '@uppy/core';
+import Dashboard from '@uppy/dashboard';
+import XHRUpload from '@uppy/xhr-upload';
 
+import '@uppy/core/dist/style.min.css';
+import '@uppy/dashboard/dist/style.min.css';
+
+// Función para generar la firma
 async function generateSignature() {
   try {
-    // Realizar una solicitud GET al endpoint que has creado
     const response = await fetch('https://sonicjs-cf2.pages.dev/admin/signature');
-    
-    // Verificar si la respuesta es exitosa
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    
-    // Extraer los datos JSON de la respuesta
     const data = await response.json();
-    
-    // Verificar si la respuesta contiene los campos necesarios
     if (!data.signature || !data.timestamp) {
       throw new Error('Invalid response data');
     }
-    
-    // Retornar los datos necesarios
     return {
       signature: data.signature,
       timestamp: data.timestamp
@@ -33,39 +26,34 @@ async function generateSignature() {
   }
 }
 
-const cloudName =  "dmyt0fswa";
-
-// Inicialización de Uppy con varios plugins
-const uppy = new Uppy({ debug: true, autoProceed: false })
-  .use(Dashboard, { target: '#uppyDashboard', inline: true })
-
-
+// Inicialización de Uppy
+const uppy = Uppy({
+  debug: true,
+  autoProceed: false
+})
+  .use(Dashboard, { 
+    target: '#uppyDashboard', 
+    inline: true 
+  })
   .use(XHRUpload, {
-    endpoint: `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-    withCredentials: true,
-    fieldName: 'file',
+    endpoint: 'https://api.cloudinary.com/v1_1/dmyt0fswa/image/upload',
     formData: true,
-    getUploadParameters(file) { 
-      return generateSignature().then((signatureData) => {
-        return {
-          method: 'POST',
-          url: `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-          fields: {
-            timestamp: signatureData.timestamp,
-            api_key: "152897242549548",
-            signature: signatureData.signature,
-          },
-        };
-      });
+    fieldName: 'file',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest'
     },
+    async getParameters(file) {
+      const { signature, timestamp } = await generateSignature();
+      return {
+        timestamp: timestamp,
+        signature: signature,
+        api_key: '152897242549548'
+      };
+    }
   });
 
-// Monitoreo de subida
-uppy.on('upload-progress', (file, progress) => {
-  console.log(`Uploading ${file.name}: ${progress.bytesUploaded} / ${progress.bytesTotal}`);
-});
- 
-uppy.on('upload-success', (file, response) => {
-  console.log(`File ${file.name} uploaded successfully`);
-  console.log('Cloudinary URL:', response.uploadURL);
+// Manejar el evento de carga completa
+uppy.on('complete', (result) => {
+  console.log('Upload complete! We’ve uploaded these files:', result.successful);
+  // Puedes manejar los resultados aquí, como mostrar un mensaje de éxito
 });
