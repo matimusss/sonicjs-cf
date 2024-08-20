@@ -26,7 +26,7 @@ async function generateSignature() {
 }
 
 // Inicialización de Uppy
-const uppy = Uppy({
+const uppy = new Uppy({
   debug: true,
   autoProceed: false
 })
