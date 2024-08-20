@@ -55,7 +55,7 @@ export const Head = () => {
 
 
 
-<link type="text/css" rel="stylesheet" href="/public/css/image-uploader.min.css"></link>
+<link type="text/css" rel="stylesheet" href="/public/css/image-uploader.css"></link>
 
 
 
