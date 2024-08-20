@@ -1,4 +1,3 @@
-import { v2 as cloudinary } from 'cloudinary'
 /** @jsx jsx */
 /** @jsxImportSource hono/jsx */
 import type { FC } from 'hono/jsx'
@@ -110,26 +109,43 @@ admin.get('/content/new/:route', async (ctx) => {
 });
 
 
+
 //cloudinary signature
 
+
+
+async function generateSignature(timestamp: number, apiSecret: string): Promise<string> {
+  const dataToSign = `timestamp=${timestamp}`;
+  const encoder = new TextEncoder();
+  const key = encoder.encode(apiSecret);
+  const data = encoder.encode(dataToSign);
+
+  // Importar la clave
+  const cryptoKey = await crypto.subtle.importKey(
+    'raw',
+    key,
+    { name: 'HMAC', hash: 'SHA-1' },
+    false,
+    ['sign']
+  );
+
+  // Firmar los datos
+  const signatureBuffer = await crypto.subtle.sign('HMAC', cryptoKey, data);
+  const signatureArray = Array.from(new Uint8Array(signatureBuffer));
+  return signatureArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 admin.get('/signature', async (ctx) => {
-  const apiSecret = 'gs3Ovvm5FBFltuTKC6Fx8M4_ng0';
-
+  const apiSecret = 'gs3Ovvm5FBFltuTKC6Fx8M4_ng0'; // Reemplaza esto con tu secreto de Cloudinary
+  const timestamp = Math.round(Date.now() / 1000);
   try {
-
-  const timestamp = Math.round((new Date).getTime()/1000);
-
-  const signature = cloudinary.utils.api_sign_request({
-    timestamp: timestamp}, apiSecret);
-
-    return ctx.json({ signature, timestamp });}
-
-  catch (error) {
+    const signature = await generateSignature(timestamp, apiSecret);
+    return ctx.json({ signature, timestamp });
+  } catch (error) {
     console.error('Error generating signature:', error);
     return ctx.json({ error: 'Error generating signature' }, 500);
   }
 });
-
 
 
 
