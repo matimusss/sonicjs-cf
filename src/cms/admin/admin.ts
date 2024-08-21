@@ -102,7 +102,7 @@ admin.get('/content/edit/:route/:id', async (ctx) => {
 
 admin.get('/content/new/:route', async (ctx) => {
   const route = ctx.req.param('route');
-  if (route === 'users') {
+    if (route === 'users') {
     return ctx.redirect('/admin/content/new/auth/users', 301);
   }
   return ctx.html(await loadNewContent(ctx, route));
@@ -110,7 +110,7 @@ admin.get('/content/new/:route', async (ctx) => {
 
 
 
-//cloudinary signature
+//cloudinary signature    
 async function digest(message: string, algo: string = 'SHA-1'): Promise<string> {
   return Array.from(
     new Uint8Array(

@@ -369,8 +369,12 @@ const $ = jQuery;
 imgUpload();
 
 
+
+
 function myFunction2() {
-let preloaded = [
+
+//imagenes que ya tenia el producto
+  let preloaded = [
   {id: 1, src: 'https://picsum.photos/500/500?random=1'},
   {id: 2, src: 'https://picsum.photos/500/500?random=2'},
   {id: 3, src: 'https://picsum.photos/500/500?random=3'},

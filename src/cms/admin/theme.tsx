@@ -249,6 +249,40 @@ export const ToggleTheme = () => {
 
 
 
+const MyComponent = ({ tables }) => {
+  // Estado para controlar la visibilidad de la lista
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Función para alternar la visibilidad
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
+
+  return (
+    <div>
+      {/* Botón para mostrar/ocultar la lista */}
+      <button onClick={toggleVisibility}>
+        {isVisible ? 'Ocultar Lista' : 'Mostrar Lista'}
+      </button>
+
+      {/* Renderizado condicional de la lista */}
+      {isVisible && (
+        <ul>
+          {tables
+            .filter((t) => t.route !== 'users')
+            .map((item) => (
+              <li key={item.route} className='nav-item'>
+                <a className='nav-link' href={'/admin/tables/' + item.route}>
+                  {item.route}
+                </a>
+              </li>
+            ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
 
 export const Layout: FC<{
   formComponents?: any[];
@@ -355,20 +389,7 @@ export const Layout: FC<{
                   <h6 class='sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'>
                     <span>Tables</span>
                   </h6>
-                  {tables
-                    .filter((t) => t.route !== 'users')
-                    .map((item: ApiConfig) => {
-                      return (
-                        <li class='nav-item'>
-                          <a
-                            class='nav-link'
-                            href={'/admin/tables/' + item.route}
-                          >
-                            {item.route}
-                          </a>
-                        </li>
-                      );
-                    })}
+         <MyComponent />
                   <>
 
 
