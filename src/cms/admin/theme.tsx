@@ -249,31 +249,6 @@ export const ToggleTheme = () => {
 
 
 
-const MyComponent = ({ tables }) => {
-  // Estado para controlar la visibilidad de la lista
-
-
-
-  return (
-    <div>
-
-
-        <ul>
-          {tables
-            .filter((t) => t.route !== 'users')
-            .map((item) => (
-              <li key={item.route} className='nav-item'>
-                <a className='nav-link' href={'/admin/tables/' + item.route}>
-                  {item.route}
-                </a>
-              </li>
-            ))}
-        </ul>
-   
-    </div>
-  );
-};
-
 
 export const Layout: FC<{
   formComponents?: any[];
@@ -368,19 +343,8 @@ export const Layout: FC<{
                 <ul class='nav flex-column'>
 
                   
-                  <li class='nav-item'>
-                   
-                   
-                    <a class='nav-link' href='/admin'>
-                      API
-                    </a>
-                  </li>
-
-                  
-                  <h6 class='sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'>
-                    <span>Tables</span>
-                  </h6>
-         <MyComponent />
+          
+              
                   <>
 
 
