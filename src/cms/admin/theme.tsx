@@ -251,22 +251,13 @@ export const ToggleTheme = () => {
 
 const MyComponent = ({ tables }) => {
   // Estado para controlar la visibilidad de la lista
-  const [isVisible, setIsVisible] = useState(false);
 
-  // Función para alternar la visibilidad
-  const toggleVisibility = () => {
-    setIsVisible(!isVisible);
-  };
+
 
   return (
     <div>
-      {/* Botón para mostrar/ocultar la lista */}
-      <button onClick={toggleVisibility}>
-        {isVisible ? 'Ocultar Lista' : 'Mostrar Lista'}
-      </button>
 
-      {/* Renderizado condicional de la lista */}
-      {isVisible && (
+
         <ul>
           {tables
             .filter((t) => t.route !== 'users')
@@ -278,7 +269,7 @@ const MyComponent = ({ tables }) => {
               </li>
             ))}
         </ul>
-      )}
+   
     </div>
   );
 };
