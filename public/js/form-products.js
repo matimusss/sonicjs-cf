@@ -90,8 +90,8 @@ fetchConfigData();
 
               function processConfigData(data) {
                 // Extraer los atributos y valores de atributos
-                const attributes = data.attributes;
-                const attributeValues = data.attribute_values;
+                const attributes = data[0].data[0].attributes;
+                const attributeValues = data[0].data[0].attribute_values;
               
                 // Crear un objeto para agrupar los atributos con sus valores
                 const groupedAttributes = attributes.map(attribute => {
