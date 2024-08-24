@@ -90,7 +90,7 @@ fetchConfigData();
               const productData = productBinding;
               const configData = configBinding;
               
-console.log(configDataFETCH());
+console.log(configDataFETCH);                         
 
                         createTagsForm(configData, productData);
                     createVariantsForm(configData, productData);
