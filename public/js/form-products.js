@@ -733,7 +733,7 @@ fetchConfigData();
                       const tags = configData.tags;
                     
                       // Crear los nombres de tags para el select, pero con los valores como IDs
-                      const tagNames = tags.map(tag => ({
+                        const tagNames = tags.map(tag => ({
                         value: tag.id,
                         label: tag.tag_name,
                       }));
