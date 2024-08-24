@@ -817,9 +817,9 @@ export async function ProductFORM(ctx, id) {
 
 
     const cfgData = await getConfig(ctx.env.D1DATA, '');
-    if (data && data.length > 0) {
+    if (cfgData && cfgData.length > 0) {
       // Parsear la propiedad data de cada elemento del array
-      const parsedData = data.map(item => {
+      const parsedData = cfgData.map(item => {
         return {
           ...item,
           data: JSON.parse(item.data)
@@ -843,7 +843,7 @@ export async function ProductFORM(ctx, id) {
   const codigoJS = `
     console.log('Hola desde el código JavaScript');
     const productBinding = ${JSON.stringify(filteredData)};
-        const configBinding = ${JSON.stringify(cfgData)};
+        const configBinding = ${JSON.stringify(parsedData)};
   `;
 
   return (
