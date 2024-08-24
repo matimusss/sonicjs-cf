@@ -88,7 +88,7 @@ fetchConfigData();
 
               //NEW: BINDING
               const productData = productBinding;
-              const configData = configBinding;
+              const configData = configBinding[0].data[0];
               
 console.log(configDataFETCH);                         
 
@@ -802,7 +802,6 @@ console.log(configDataFETCH);
  // Reacomodo de configData para agrupar atributos y sus valores
  const attributesREMAP = configData.attributes;
  const attributeValuesREMAP = configData.attribute_values;
-
  const groupedAttributes = attributesREMAP.map(attribute => {
    return {
      attribute_id: attribute.id,
