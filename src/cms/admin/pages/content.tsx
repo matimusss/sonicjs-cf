@@ -841,7 +841,7 @@ const parsedData = cfgData.map(item => {
   const codigoJS = `
     console.log('Hola desde el código JavaScript');
     const productBinding = ${JSON.stringify(filteredData)};
-        const configBinding = ${JSON.stringify(parsedData)};
+const configBinding = ${JSON.stringify(parsedData[0].data[0])};
   `;
 
   return (
