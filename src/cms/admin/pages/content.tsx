@@ -14,6 +14,7 @@ import CustomAssetManager from './../components/CustomAssetManager';
 import Topbar from './../components/Topbar';
 import RightSidebar from './../components/RightSidebar';
 import './../style.css';
+import { getD1DataByTable, getD1ByTableAndSlug_view , getProduct, getConfig, getProductBySlug, getProductMinDetails  } from '../../data/d1-data';
 
 import React, { useEffect } from 'react';
 import $ from 'jquery'; // Importa jQuery si lo estás utilizando
@@ -619,23 +620,17 @@ export const TopContentTable = (props: {
 
 
 export async function edit_html(ctx, route, id, tbl?: string) {
-  
 
   //sacamos parte de la ruta q no sirve DEPRECATED
-  const ruta = JSON.stringify(route).replace("admin/edit_html/", "");
-  const ide = JSON.stringify(id);
-    
-  const ctxString = ctx._var.session.sessionId.replace(/"/g, "");
-
-
- const codigoJS = `
+const ruta = JSON.stringify(route).replace("admin/edit_html/", "");
+const ide = JSON.stringify(id);
+const ctxString = ctx._var.session.sessionId.replace(/"/g, "");
+const codigoJS = `
  // Tu código JavaScript aquí
  console.log('Hola desde el código JavaScript');
  const routes = ${ruta};
  const id = ${ide};
  const auth = "${ctxString}";
-
-
  // Función para obtener el valor de una cookie por su nombre
  function getCookie(name) {
    // Añadimos el signo "=" al nombre de la cookie para buscar solo la coincidencia exacta
@@ -661,18 +656,15 @@ export async function edit_html(ctx, route, id, tbl?: string) {
  
  // Imprimir el valor en la consola
  console.log(tusSupportValue);
- 
-
-
  `;
     return (
       <Layout>  
-   <script dangerouslySetInnerHTML={{ __html: codigoJS }} />
+       <script dangerouslySetInnerHTML={{ __html: codigoJS }} />
         <script src="https://unpkg.com/grapesjs-component-twitch"></script>
         <script src="https://unpkg.com/grapesjs-tailwind"></script>
         <script src="https://unpkg.com/grapesjs-ga"></script>
         <script src="https://unpkg.com/grapesjs-plugin-forms"></script>
-      <script src='/public/js/grapes.js'></script>
+        <script src='/public/js/grapes.js'></script>
         <script src='/public/js/resultados.js'></script>
         <div id="gjs" class="gjs-editor-cont">
       </div>  
@@ -686,9 +678,23 @@ export async function edit_html(ctx, route, id, tbl?: string) {
 
 
 
+
+
+
+
+
+
+
+
+//SACAR  DE ACA PABAJO
+
+
 function editScript() {
   return console.log('hello');
 }
+
+
+
 
 
 
@@ -749,68 +755,108 @@ export async function OrdersCRUD(ctx) {
     </Layout>
   );
 };
-
+import React from 'react'; // Ensure React is imported
+import Layout from './Layout'; // Import Layout if not done elsewhere
 
 export async function ProductFORM(ctx) {
+  // Fetch product data
+  const data = await getProduct(ctx.env.D1DATA, "ec2f94ae-7642-4ea2-8eec-422bb6913ae5");
+  let transformedData = { ...data[0] }; // Access the first object in the array
+
+  try {
+    // Parse JSON fields if they exist
+    if (data[0].product_attributes) {
+      transformedData.product_attributes = JSON.parse(data[0].product_attributes);
+    }
+    if (data[0].tags) {
+      transformedData.tags = JSON.parse(data[0].tags);
+    }
+    if (data[0].coupons) {
+      transformedData.coupons = JSON.parse(data[0].coupons);
+    }
+    if (data[0].product_images) {
+      transformedData.product_images = JSON.parse(data[0].product_images);
+    }
+    if (data[0].suppliers) {
+      transformedData.suppliers = JSON.parse(data[0].suppliers);
+    }
+    if (data[0].categories) {
+      transformedData.categories = JSON.parse(data[0].categories);
+    }
+    if (data[0].variant_details) {
+      const variantDetails = JSON.parse(data[0].variant_details);
+      transformedData.variant_details = variantDetails.map(variant => JSON.parse(variant));
+    }
+  } catch (parseError) {
+    console.error('Error parsing JSON fields:', parseError);
+    return ctx.text('Error parsing product details', 500);
+  }
+
+  // Attribute Filtering
+  const variantAttributeNames = new Set();
+  transformedData.variant_details.forEach(variant => {
+    variant.variant_attributes.forEach(attr => {
+      variantAttributeNames.add(attr.variant_attribute_name);
+    });
+  });
+
+  const filteredProductAttributes = transformedData.product_attributes.filter(attr =>
+    !variantAttributeNames.has(attr.attribute_name)
+  );
+
+  const filteredData = {
+    ...transformedData,
+    product_attributes: filteredProductAttributes
+  };
+
+  // JavaScript code to be injected
+  const codigoJS = `
+    console.log('Hola desde el código JavaScript');
+    const routes = ${JSON.stringify(filteredData)};
+  `;
+
   return (
     <Layout
       env={ctx.env}
       username={ctx.get('user')?.email}
-      screenTitle={'productos'}>
-       
-       <div id='formio-product'></div>
-       <br></br>
-       <hr className="my-5"/>
-       <br></br>
-       <div id='formio-tags'></div>
-       <br></br>
-       <div id='formio-categories'></div>
-       <br></br>
-       <div id='formio-suppliers'></div>
-       <br></br>
-       <div id='formio-coupons'></div>
-       <br></br>
-       
-       <form method="POST" name="form-example-2" id="form-example-2" enctype="multipart/form-data">
-
-<div class="input-field">
-    <input type="text" name="name-2" id="name-2" value="John Doe"></input>
-    <label for="name-2" class="active">Name</label>
-</div>
-
-<div class="input-field">
-    <input type="text" name="description-2" id="description-2"
-    value="This form is already filed with some data, including images!"></input>
-    <label for="description-2" class="active">Description</label>
-</div>
-
-<div class="input-field">
-    <label class="active">Photos</label>
-    <div class="input-images-2" style="padding-top: .5rem;"></div>
-</div>
-
-<button>Submit and display data</button>
-
-</form>
-       
-
-       <hr className="my-5"/>
-       <br></br>
-       <div id='formio-attributes'></div>
-       <br></br>       
-       <hr className="my-4"/>
-<br></br>
-<hr className="my-5"/>
-<br></br>
-       <div id='formio-variants'></div>
-       <br></br>
-       <hr className="my-4"/>
-       <br></br>
-       <button id="globalSubmit" className="btn btn-primary">Submit All Forms</button>
-
+      screenTitle={'productos'}
+    >
+      <script dangerouslySetInnerHTML={{ __html: codigoJS }} />
+      <div id='formio-product'></div>
+      <hr className="my-5" />
+      <div id='formio-tags'></div>
+      <div id='formio-categories'></div>
+      <div id='formio-suppliers'></div>
+      <div id='formio-coupons'></div>
+      <form method="POST" name="form-example-2" id="form-example-2" encType="multipart/form-data">
+        <div className="input-field">
+          <input type="text" name="name-2" id="name-2" defaultValue="John Doe" />
+          <label htmlFor="name-2" className="active">Name</label>
+        </div>
+        <div className="input-field">
+          <input type="text" name="description-2" id="description-2"
+            defaultValue="This form is already filed with some data, including images!" />
+          <label htmlFor="description-2" className="active">Description</label>
+        </div>
+        <div className="input-field">
+          <label className="active">Photos</label>
+          <div className="input-images-2" style={{ paddingTop: '.5rem' }}></div>
+        </div>
+        <button>Submit and display data</button>
+      </form>
+      <hr className="my-5" />
+      <div id='formio-attributes'></div>
+      <hr className="my-4" />
+      <div id='formio-variants'></div>
+      <hr className="my-4" />
+      <button id="globalSubmit" className="btn btn-primary">Submit All Forms</button>
     </Layout>
   );
 };
+
+
+
+
 
 
 export async function ProductCRUD(ctx) {
@@ -914,8 +960,7 @@ export  function editor() {
       // Pass the core GrapesJS library to the wrapper (required).
       // You can also pass the CDN url (eg. "https://unpkg.com/grapesjs")
       grapesjs={grapesjs}
-      // Load the GrapesJS CSS file asynchronously from URL.
-      // This is an optional prop, you can always import the CSS directly in your JS if you wish.
+ 
       grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
       // GrapesJS init options
       options={{

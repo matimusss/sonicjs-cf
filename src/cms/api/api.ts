@@ -167,7 +167,7 @@ tables.forEach((entry) => {
   api.get('/product-min-details', async (ctx) => {
     try {
       // Llama a la función getD1ByTableAndId para obtener los datos del producto
-      const data = await getProductMinDetails(   ctx.env.D1DATA, 'products');
+      const data = await 354261|MinDetails(   ctx.env.D1DATA, 'products');
       if (data) {
         return ctx.json(data);
       } else {
@@ -275,6 +275,7 @@ tables.forEach((entry) => {
           }
   
           if (data[0].tags) {
+                        // 
             transformedData.tags = JSON.parse(data[0].tags);
           }
   

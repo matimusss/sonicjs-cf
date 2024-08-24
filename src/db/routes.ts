@@ -37,6 +37,9 @@ import * as variant_values from './schema/variant_values';
 import * as variants from './schema/variants';
 import * as categories from './schema/categories';
 
+
+
+
 export type SonicJSConfig = {
   apiConfig: ApiConfig[];
   adminAccessControl: (ctx: AppContext) => boolean;
