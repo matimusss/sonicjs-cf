@@ -153,26 +153,19 @@ admin.get('/signature', async (ctx) => {
 
   admin.get('/CategoriesCRUD',async (ctx) => {
     return ctx.html(await CategoriesCRUD(ctx) );});
-
     admin.get('/AttributesCRUD',async (ctx) => {
       return ctx.html(await AttributesCRUD(ctx) );});
-
       admin.get('/OrdersCRUD',async (ctx) => {
         return ctx.html(await OrdersCRUD(ctx) );});
-
         admin.get('/TagsCRUD',async (ctx) => {
           return ctx.html(await TagsCRUD(ctx) );});
-
           admin.get('/ProductCRUD',async (ctx) => {
             return ctx.html(await ProductCRUD(ctx) );});
-
             admin.get('/CouponsCRUD',async (ctx) => {
               return ctx.html(await CouponsCRUD(ctx) );});
-
-
-              admin.get('/ProductFORM',async (ctx) => {
-                return ctx.html(await ProductFORM(ctx) );});
-
+              admin.get('/ProductFORM/:id',async (ctx) => {
+                const id = ctx.req.param('id');
+                return ctx.html(await ProductFORM(ctx,id) );});
 //
 
 

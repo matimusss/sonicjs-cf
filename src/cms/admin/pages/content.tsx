@@ -757,9 +757,9 @@ export async function OrdersCRUD(ctx) {
 };
 
 
-export async function ProductFORM(ctx) {
+export async function ProductFORM(ctx, id) {
   // Fetch product data
-  const data = await getProduct(ctx.env.D1DATA, "ec2f94ae-7642-4ea2-8eec-422bb6913ae5");
+  const data = await getProduct(ctx.env.D1DATA, id);
   let transformedData = { ...data[0] }; // Access the first object in the array
 
   try {
