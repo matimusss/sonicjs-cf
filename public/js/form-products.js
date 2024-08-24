@@ -86,11 +86,41 @@ fetchConfigData();
               const productDataFETCH = await fetchProductData();
               const configDataFETCH = await fetchConfigData();
 
-              //NEW: BINDING
-              const productData = productBinding;
-              const configData = configBinding[0].data[0];
+          
+
+              function processConfigData(data) {
+                // Extraer los atributos y valores de atributos
+                const attributes = data.attributes;
+                const attributeValues = data.attribute_values;
               
-console.log(configDataFETCH);                         
+                // Crear un objeto para agrupar los atributos con sus valores
+                const groupedAttributes = attributes.map(attribute => {
+                  return {
+                    attribute_id: attribute.id,  // Incluir el ID del atributo
+                    attribute_name: attribute.attribute_name,
+                    values: attributeValues
+                      .filter(value => value.attribute_id === attribute.id)
+                      .map(value => ({
+                        value_id: value.id,  // Incluir el ID del valor del atributo
+                        attribute_value: value.attribute_value
+                      }))
+                  };
+                });
+              
+                // Eliminar los attributes y attribute_values del objeto principal
+                delete data.attributes;
+                delete data.attribute_values;
+              
+                // Añadir el nuevo arreglo de atributos agrupados al objeto principal
+                data.attributes = groupedAttributes;
+              
+                return data;
+              }
+                  //NEW: BINDING
+              const productData = productBinding;
+              const configData = processConfigData(configBinding);
+              
+
 
                         createTagsForm(configData, productData);
                     createVariantsForm(configData, productData);
@@ -730,10 +760,10 @@ console.log(configDataFETCH);
                       console.log(configData);
                       
                       // Generar los objetos de tags (TAGS)
-                      const tags = configData[0].data[0].tags;
+                      const tags = configData.tags;
                     
                       // Crear los nombres de tags para el select, pero con los valores como IDs
-                        const tagNames = tags.map(tag => ({
+                      const tagNames = tags.map(tag => ({
                         value: tag.id,
                         label: tag.tag_name,
                       }));
@@ -798,38 +828,10 @@ console.log(configDataFETCH);
 
                 function createVariantsForm
                 (configData, productData) {
-
- // Reacomodo de configData para agrupar atributos y sus valores
- const attributesREMAP = configData.attributes;
- const attributeValuesREMAP = configData.attribute_values;
- const groupedAttributes = attributesREMAP.map(attribute => {
-   return {
-     attribute_id: attribute.id,
-     attribute_name: attribute.attribute_name,
-     values: attributeValuesREMAP
-       .filter(value => value.attribute_id === attribute.id)
-       .map(value => ({
-         value_id: value.id,
-         attribute_value: value.attribute_value
-       }))
-   };
- });
-
- // Eliminar los atributos originales y los valores de atributos de configData
- delete configData.attributes;
- delete configData.attribute_values;
-
- // Reasignar el arreglo de atributos agrupados a configData
- configData.attributes = groupedAttributes;
-
-
-
-
-                  
                   const variants = productData.variant_details;
-                console.log(configData);
+                
                   // Obtener los atributos del objeto configData
-                  const attributes = groupedAttributes;
+                  const attributes = configData.attributes;
                 
                   // Generar los nombres de atributos para el select principal
                   const attributeNames = attributes.map(attr => ({
