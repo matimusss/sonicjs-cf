@@ -90,7 +90,7 @@ fetchConfigData();
               const productData = productBinding;
               const configData = configBinding;
               
-
+console.log(configDataFETCH());
 
                         createTagsForm(configData, productData);
                     createVariantsForm(configData, productData);
@@ -800,7 +800,6 @@ fetchConfigData();
                 (configData, productData) {
                   const variants = productData.variant_details;
                 console.log(configData);
-                console.log(configDataFetch);
                   // Obtener los atributos del objeto configData
                   const attributes = configData.attributes;
                 
