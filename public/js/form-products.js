@@ -8,6 +8,19 @@ let suppliersForm;
 
 
 
+
+
+
+
+
+
+
+
+//fetchs deprecate , usamos d1 bindings,
+//siempre que se pueda, usar bindings, disminuimos superficie de ataque/abuso/bots etc
+//cuanto menos endpoints mejor, 
+
+
 //FETCHS 
 async function fetchProductData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getProduct/ec2f94ae-7642-4ea2-8eec-422bb6913ae5');
@@ -15,19 +28,21 @@ async function fetchProductData() {
   return productData;
 }
 
-
 async function fetchConfigData() {
   const response = await fetch('https://sonicjs-cf2.pages.dev/v1/getConfig');
   const productData = await response.json();
   const data = productData[0].data[0];
 
+
+
+
+
+
   // Extraer los atributos y valores de atributos
   const attributes = data.attributes;
   const attributeValues = data.attribute_values;
 
-
-  
-  // Crear un objeto para agrupar los atributos con sus valores
+ // Crear un objeto para agrupar los atributos con sus valores
   const groupedAttributes = attributes.map(attribute => {
     return {
       attribute_id: attribute.id,  // Incluir el ID del atributo
@@ -59,11 +74,24 @@ async function fetchConfigData() {
 fetchConfigData();
 
 
+
+
+
+
+
 // EJECUCION DE LAS FUNCIONES DE FORM.IO //
              async function main() {
-            const productData = await fetchProductData();
-              const configData = await fetchConfigData();
-                  
+
+              ///DEPRECATED: FETCH
+              const productDataFETCH = await fetchProductData();
+              const configDataFETCH = await fetchConfigData();
+
+              //NEW: BINDING
+              const productData = productBinding;
+              const configData = configBinding;
+              
+
+
                         createTagsForm(configData, productData);
                     createVariantsForm(configData, productData);
                     createProductsForm(configData, productData);

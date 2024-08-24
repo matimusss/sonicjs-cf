@@ -808,10 +808,42 @@ export async function ProductFORM(ctx, id) {
     product_attributes: filteredProductAttributes
   };
 
+
+
+
+
+
+//config
+
+
+    const cfgData = await getConfig(ctx.env.D1DATA, '');
+    if (data && data.length > 0) {
+      // Parsear la propiedad data de cada elemento del array
+      const parsedData = data.map(item => {
+        return {
+          ...item,
+          data: JSON.parse(item.data)
+        };
+      });}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // JavaScript code to be injected
   const codigoJS = `
     console.log('Hola desde el código JavaScript');
-    const routes = ${JSON.stringify(filteredData)};
+    const productBinding = ${JSON.stringify(filteredData)};
+        const configBinding = ${JSON.stringify(cfgData)};
   `;
 
   return (
