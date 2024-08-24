@@ -814,8 +814,6 @@ export async function ProductFORM(ctx, id) {
 
 
 //config
-
-
 const cfgData = await getConfig(ctx.env.D1DATA, '');
 
 // Parse the `data` property of each element in the array
@@ -826,32 +824,37 @@ const parsedData = cfgData.map(item => {
   };
 });
 
+// Process each item in `parsedData`
+const processedData = parsedData.map(item => {
+  // Extract the attributes and attribute values
+  const attributes = item.data.attributes;
+  const attributeValues = item.data.attribute_values;
 
-// Extraer los atributos y valores de atributos
-const attributes = parsedData.attributes;
-const attributeValues = parsedData.attribute_values;
+  // Create an object to group attributes with their values
+  const groupedAttributes = attributes.map(attribute => {
+    return {
+      attribute_id: attribute.id,  // Include the attribute ID
+      attribute_name: attribute.attribute_name,
+      values: attributeValues
+        .filter(value => value.attribute_id === attribute.id)
+        .map(value => ({
+          value_id: value.id,  // Include the attribute value ID
+          attribute_value: value.attribute_value
+        }))
+    };
+  });
 
-// Crear un objeto para agrupar los atributos con sus valores
-const groupedAttributes = attributes.map(attribute => {
-  return {
-    attribute_id: attribute.id,  // Incluir el ID del atributo
-    attribute_name: attribute.attribute_name,
-    values: attributeValues
-      .filter(value => value.attribute_id === attribute.id)
-      .map(value => ({
-        value_id: value.id,  // Incluir el ID del valor del atributo
-        attribute_value: value.attribute_value
-      }))
-  };
+  // Remove the original attributes and attribute_values from the item
+  delete item.data.attributes;
+  delete item.data.attribute_values;
+
+  // Add the new grouped attributes array to the item
+  item.data.attributes = groupedAttributes;
+
+  return item;
 });
 
-// Eliminar los attributes y attribute_values del objeto principal
-delete parsedData.attributes;
-delete parsedData.attribute_values;
-
-// Añadir el nuevo arreglo de atributos agrupados al objeto principal
-parsedData.attributes = groupedAttributes;
-
+// `processedData` now contains the updated structure
 
 
 
