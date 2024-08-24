@@ -827,6 +827,30 @@ const parsedData = cfgData.map(item => {
 });
 
 
+// Extraer los atributos y valores de atributos
+const attributes = parsedData.attributes;
+const attributeValues = parsedData.attribute_values;
+
+// Crear un objeto para agrupar los atributos con sus valores
+const groupedAttributes = attributes.map(attribute => {
+  return {
+    attribute_id: attribute.id,  // Incluir el ID del atributo
+    attribute_name: attribute.attribute_name,
+    values: attributeValues
+      .filter(value => value.attribute_id === attribute.id)
+      .map(value => ({
+        value_id: value.id,  // Incluir el ID del valor del atributo
+        attribute_value: value.attribute_value
+      }))
+  };
+});
+
+// Eliminar los attributes y attribute_values del objeto principal
+delete parsedData.attributes;
+delete parsedData.attribute_values;
+
+// Añadir el nuevo arreglo de atributos agrupados al objeto principal
+parsedData.attributes = groupedAttributes;
 
 
 
@@ -841,7 +865,7 @@ const parsedData = cfgData.map(item => {
   const codigoJS = `
     console.log('Hola desde el código JavaScript');
     const productBinding = ${JSON.stringify(filteredData)};
-const configBinding = ${JSON.stringify(parsedData[0].data[0])};
+const configBinding = ${JSON.stringify(parsedData)};
   `;
 
   return (
