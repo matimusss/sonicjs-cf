@@ -799,7 +799,8 @@ fetchConfigData();
                 function createVariantsForm
                 (configData, productData) {
                   const variants = productData.variant_details;
-                
+                console.log(configData);
+                console.log(configDataFetch);
                   // Obtener los atributos del objeto configData
                   const attributes = configData.attributes;
                 
