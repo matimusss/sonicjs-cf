@@ -755,8 +755,7 @@ export async function OrdersCRUD(ctx) {
     </Layout>
   );
 };
-import React from 'react'; // Ensure React is imported
-import Layout from './Layout'; // Import Layout if not done elsewhere
+
 
 export async function ProductFORM(ctx) {
   // Fetch product data
