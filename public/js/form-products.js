@@ -798,10 +798,39 @@ console.log(configDataFETCH);
 
                 function createVariantsForm
                 (configData, productData) {
+
+ // Reacomodo de configData para agrupar atributos y sus valores
+ const attributesREMAP = configData.attributes;
+ const attributeValuesREMAP = configData.attribute_values;
+
+ const groupedAttributes = attributesREMAP.map(attribute => {
+   return {
+     attribute_id: attribute.id,
+     attribute_name: attribute.attribute_name,
+     values: attributeValuesREMAP
+       .filter(value => value.attribute_id === attribute.id)
+       .map(value => ({
+         value_id: value.id,
+         attribute_value: value.attribute_value
+       }))
+   };
+ });
+
+ // Eliminar los atributos originales y los valores de atributos de configData
+ delete configData.attributes;
+ delete configData.attribute_values;
+
+ // Reasignar el arreglo de atributos agrupados a configData
+ configData.attributes = groupedAttributes;
+
+
+
+
+                  
                   const variants = productData.variant_details;
                 console.log(configData);
                   // Obtener los atributos del objeto configData
-                  const attributes = configData.attributes;
+                  const attributes = groupedAttributes;
                 
                   // Generar los nombres de atributos para el select principal
                   const attributeNames = attributes.map(attr => ({
