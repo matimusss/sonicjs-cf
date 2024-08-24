@@ -108,11 +108,11 @@ fetchConfigData();
                 });
               
                 // Eliminar los attributes y attribute_values del objeto principal
-                delete data.attributes;
-                delete data.attribute_values;
+                delete data[0].data[0].attributes;
+                delete data[0].data[0].attribute_values;
               
                 // Añadir el nuevo arreglo de atributos agrupados al objeto principal
-                data.attributes = groupedAttributes;
+                data[0].data[0].attributes = groupedAttributes;
               
                 return data;
               }
