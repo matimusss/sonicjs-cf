@@ -114,7 +114,7 @@ fetchConfigData();
                 // Añadir el nuevo arreglo de atributos agrupados al objeto principal
                 data[0].data[0].attributes = groupedAttributes;
               
-                return data;
+                return data[0].data[0];
               }
                   //NEW: BINDING
               const productData = productBinding;
