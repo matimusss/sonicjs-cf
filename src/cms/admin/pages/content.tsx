@@ -816,17 +816,15 @@ export async function ProductFORM(ctx, id) {
 //config
 
 
-    const cfgData = await getConfig(ctx.env.D1DATA, '');
-    if (cfgData && cfgData.length > 0) {
-      // Parsear la propiedad data de cada elemento del array
-      const parsedData = cfgData.map(item => {
-        return {
-          ...item,
-          data: JSON.parse(item.data)
-        };
-      });}
+const cfgData = await getConfig(ctx.env.D1DATA, '');
 
-
+// Parse the `data` property of each element in the array
+const parsedData = cfgData.map(item => {
+  return {
+    ...item,
+    data: JSON.parse(item.data)
+  };
+});
 
 
 
