@@ -730,7 +730,7 @@ console.log(configDataFETCH);
                       console.log(configData);
                       
                       // Generar los objetos de tags (TAGS)
-                      const tags = configData.tags;
+                      const tags = configData[0].data[0].tags;
                     
                       // Crear los nombres de tags para el select, pero con los valores como IDs
                         const tagNames = tags.map(tag => ({
