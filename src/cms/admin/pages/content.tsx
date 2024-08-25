@@ -848,7 +848,6 @@ const configBinding = ${JSON.stringify(parsedData)};
       <script dangerouslySetInnerHTML={{ __html: codigoJS }} />
 
       
-      <script  src='/public/js/image-uploader.js'></script>
 
       <div id='formio-product'></div>
       <hr className="my-5" />
