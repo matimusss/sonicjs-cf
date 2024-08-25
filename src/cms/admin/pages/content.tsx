@@ -700,7 +700,7 @@ function editScript() {
 
 
 
-export async function prueba(ctx) {
+export async function prueba123123(ctx) {
 
   
   const codigoJS = `
@@ -761,10 +761,6 @@ export async function OrdersCRUD(ctx) {
 export async function ProductFORM(ctx, id) {
 
 
-  const initialImages = [
-    { src: 'https://picsum.photos/200/200?random=1', file: null },
-    { src: 'https://picsum.photos/200/200?random=2', file: null },
-  ];
 
 
   // Fetch product data
@@ -865,11 +861,6 @@ const configBinding = ${JSON.stringify(parsedData)};
       <div id='formio-suppliers'></div>
       <div id='formio-coupons'></div>
 
-<ImageUploader 
-        initialImages={initialImages} 
-        maxFileSize={2 * 1024 * 1024} // 2MB
-        allowedTypes={['image/jpeg', 'image/png']} 
-      />
       <form method="POST" name="form-example-2" id="form-example-2" encType="multipart/form-data">
         <div className="input-field">
           <input type="text" name="name-2" id="name-2" defaultValue="John Doe" />
@@ -979,14 +970,23 @@ export async function TagsCRUD(ctx) {
 
 
 
-export async function pruebaReact(ctx) {
+export async function prueba(ctx) {
   
-  const sess = ctx._var.session.sessionId;
-  const ctxString = JSON.stringify(sess).replace(/"/g, "");
+  const initialImages = [
+    { src: 'https://picsum.photos/200/200?random=1', file: null },
+    { src: 'https://picsum.photos/200/200?random=2', file: null },
+  ];
+
 
   return (  
     <Layout>  
-{ctxString}
+
+<ImageUploader 
+        initialImages={initialImages} 
+        maxFileSize={2 * 1024 * 1024} // 2MB
+        allowedTypes={['image/jpeg', 'image/png']} 
+      />
+
     </Layout>
   );
 };
