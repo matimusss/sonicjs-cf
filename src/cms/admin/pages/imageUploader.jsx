@@ -1,12 +1,12 @@
-import { useState } from 'hono/jsx'
-
+/** @jsx jsx */
+/** @jsxImportSource hono/jsx */
 
 export function ImageUploader() {
-  const [count, setCount] = useState(0)
+
   return (
     <div>
-      <p>Count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
+asd
+
     </div>
   )
 }
