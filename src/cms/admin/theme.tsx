@@ -12,25 +12,11 @@ export const Head = () => {
   return (
     <head>
       <script src='/public/js/color-modes.js'></script>
-
       <meta charset='utf-8' />
       <meta name='viewport' content='width=device-width, initial-scale=1' />
       <meta name='description' content='' />
-
-
-
-
-
-
-
       <title>SonicJs Admin</title>
-
-
-
- 
       <link rel='icon' type='image/x-icon' href='/public/images/favicon.ico' />
-
-
 
       <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"></link>
       <link rel="stylesheet" href="/public/css/toastr.min.css"></link>
@@ -38,10 +24,8 @@ export const Head = () => {
     <link rel="stylesheet" href="/public/css/grapesjs-preset-webpage.min.css"></link>
     <link rel="stylesheet" href="/public/css/demos.css?v3"></link>
     <link rel="stylesheet" href="/public/css/tooltip.css"></link>
-
-   
+  
     <link href="https://unpkg.com/grapick/dist/grapick.min.css" rel="stylesheet"></link>
-
       <link
         href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css'
         rel='stylesheet'
@@ -49,21 +33,7 @@ export const Head = () => {
         crossorigin='anonymous'
       ></link>
 
-
-
-
 <link type="text/css" rel="stylesheet" href="/public/css/image-uploader.css"></link>
-
-
-
-
-
-
-
-
-
-
-
 
 
       <link
@@ -103,7 +73,7 @@ export const Head = () => {
     <script src="https://unpkg.com/grapesjs-typed@1.0.5"></script>
     <script src="https://unpkg.com/grapesjs-style-bg@2.0.1"></script>
 
-
+    <script src='/public/js/image-uploader.js'></script>
     <link href='/public/css/admin.css' rel='stylesheet' />
 
     </head>
@@ -119,7 +89,6 @@ export const Script = () => {
     <>
 
 <script src='/public/js/sluger.js'></script>
-
       <script
         src='https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js'
         integrity='sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE'

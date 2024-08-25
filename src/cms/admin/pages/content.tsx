@@ -18,6 +18,7 @@ import { getD1DataByTable, getD1ByTableAndSlug_view , getProduct, getConfig, get
 
 import React, { useEffect } from 'react';
 import $ from 'jquery'; // Importa jQuery si lo estás utilizando
+import {ImageUploader} from './imageUploader.jsx';
 import { json } from 'drizzle-orm/mysql-core';
 
 
@@ -758,6 +759,14 @@ export async function OrdersCRUD(ctx) {
 
 
 export async function ProductFORM(ctx, id) {
+
+
+  const initialImages = [
+    { src: 'https://picsum.photos/200/200?random=1', file: null },
+    { src: 'https://picsum.photos/200/200?random=2', file: null },
+  ];
+
+
   // Fetch product data
   const data = await getProduct(ctx.env.D1DATA, id);
   let transformedData = { ...data[0] }; // Access the first object in the array
@@ -856,7 +865,11 @@ const configBinding = ${JSON.stringify(parsedData)};
       <div id='formio-suppliers'></div>
       <div id='formio-coupons'></div>
 
-
+<ImageUploader 
+        initialImages={initialImages} 
+        maxFileSize={2 * 1024 * 1024} // 2MB
+        allowedTypes={['image/jpeg', 'image/png']} 
+      />
       <form method="POST" name="form-example-2" id="form-example-2" encType="multipart/form-data">
         <div className="input-field">
           <input type="text" name="name-2" id="name-2" defaultValue="John Doe" />
