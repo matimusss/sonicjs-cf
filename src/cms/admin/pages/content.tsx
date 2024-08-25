@@ -979,7 +979,6 @@ export async function pruebaReact(ctx) {
 
 
   return (  
-    <Layout>  
 
 <ImageUploader 
         initialImages={initialImages} 
@@ -987,7 +986,6 @@ export async function pruebaReact(ctx) {
         allowedTypes={['image/jpeg', 'image/png']} 
       />
 
-    </Layout>
   );
 };
 
