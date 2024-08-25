@@ -700,7 +700,7 @@ function editScript() {
 
 
 
-export async function prueba123123(ctx) {
+export async function prueba(ctx) {
 
   
   const codigoJS = `
