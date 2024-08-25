@@ -976,7 +976,7 @@ export async function pruebaReact(ctx) {
 
 
   return (  
-
+<div>asdasd</div>
 
 
   );
