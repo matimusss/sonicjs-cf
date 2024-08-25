@@ -110,7 +110,7 @@ admin.get('/content/new/:route', async (ctx) => {
 
 
 
-//cloudinary signature    
+// signature    
 async function digest(message: string, algo: string = 'SHA-1'): Promise<string> {
   return Array.from(
     new Uint8Array(
