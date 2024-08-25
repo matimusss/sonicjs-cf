@@ -958,6 +958,7 @@ export async function TagsCRUD(ctx) {
       env={ctx.env}
       username={ctx.get('user')?.email}
       screenTitle={'tags'}>
+
           <div class='row'>
           <div class='col-md-12'>
       <div id='grid-tags'></div>
@@ -970,20 +971,14 @@ export async function TagsCRUD(ctx) {
 
 
 
-export function pruebaReact(ctx) {
+export async function pruebaReact(ctx) {
   
-  const initialImages = [
-    { src: 'https://picsum.photos/200/200?random=1', file: null },
-    { src: 'https://picsum.photos/200/200?random=2', file: null },
-  ];
+
 
 
   return (  
 
 <ImageUploader 
-        initialImages={initialImages} 
-        maxFileSize={2 * 1024 * 1024} // 2MB
-        allowedTypes={['image/jpeg', 'image/png']} 
       />
 
   );
