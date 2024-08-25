@@ -5,7 +5,6 @@ import GjsEditor from '@grapesjs/react';
 import './style.css';
 import grapesjs, { Editor } from 'grapesjs';
 var Slugify = require('slugifyjs');
-import React, { useState } from 'react';
 
 
 export const Head = () => {
