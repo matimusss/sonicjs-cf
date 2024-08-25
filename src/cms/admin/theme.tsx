@@ -158,7 +158,6 @@ https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
       <script src='/public/js/grid_orders.js'></script>
       <script src='/public/js/grid_coupons.js'></script>
       <script src='/public/js/grid_attributes.js'></script>
-      <script src='/public/js/image-uploader.js'></script>
 
       <script src='/public/js/grid.js'></script>
       <script src='/public/js/grid-in-memory-cache.js'></script>
@@ -266,6 +265,7 @@ export const Layout: FC<{
     <html lang='en' data-bs-theme='auto'>
       <Head />
       <body>
+      <script src='/public/js/image-uploader.js'></script>
 
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
