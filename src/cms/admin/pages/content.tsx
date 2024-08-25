@@ -18,7 +18,6 @@ import { getD1DataByTable, getD1ByTableAndSlug_view , getProduct, getConfig, get
 
 import React, { useEffect } from 'react';
 import $ from 'jquery'; // Importa jQuery si lo estás utilizando
-import  ImageUploader from './imageUploader.jsx';
 import { json } from 'drizzle-orm/mysql-core';
 
 
@@ -978,8 +977,7 @@ export async function pruebaReact(ctx) {
 
   return (  
 
-<ImageUploader 
-      />
+
 
   );
 };
