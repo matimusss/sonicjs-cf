@@ -8,6 +8,7 @@
     "sourceMap": true,
     "types": ["@cloudflare/workers-types", "jest"],
     "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
     "skipLibCheck": true
   },
   "include": ["src"],
