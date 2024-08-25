@@ -1,6 +1,6 @@
 setTimeout(async function() {
  
-
+console.log("EJECUTAD");
 
 function imgUpload() {
 const $ = jQuery;
