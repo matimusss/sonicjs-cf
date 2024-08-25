@@ -846,8 +846,10 @@ const configBinding = ${JSON.stringify(parsedData)};
       screenTitle={'productos'}
     >
       <script dangerouslySetInnerHTML={{ __html: codigoJS }} />
-      <script  src="/public/js/image-uploader.js"></script>
+
       
+      <script  src='/public/js/image-uploader.js'></script>
+
       <div id='formio-product'></div>
       <hr className="my-5" />
       <div id='formio-tags'></div>
