@@ -970,7 +970,7 @@ export async function TagsCRUD(ctx) {
 
 
 
-export async function prueba(ctx) {
+export async function pruebaReact(ctx) {
   
   const initialImages = [
     { src: 'https://picsum.photos/200/200?random=1', file: null },
