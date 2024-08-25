@@ -11,6 +11,7 @@ import { getDataListByPrefix } from '../data/kv-data';
 import { Layout } from './theme';
 import { Editor } from 'grapesjs';
 import grapesjs  from 'grapesjs';
+import ReactDOMServer from 'react-dom/server';
 import * as React from 'react';
 import { Bindings } from '../types/bindings';
 import GjsEditor from '@grapesjs/react';
