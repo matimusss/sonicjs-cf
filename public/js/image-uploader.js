@@ -1,6 +1,5 @@
-/*! Image Uploader - v1.2.3 - 26/11/2019
- * Copyright (c) 2019 Christian Bayer; Licensed MIT */
-function myFunction() {
+setTimeout(async function() {
+ 
 
 
 function imgUpload() {
@@ -395,8 +394,6 @@ $('.input-images-2').imageUploader({
 }
 myFunction2();
 
-
-}
-
-// Configura el timeout para que ejecute la función después de 1 segundo
-setTimeout(myFunction, 1000);
+  
+}, 1000);
+//}
