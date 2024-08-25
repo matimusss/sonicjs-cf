@@ -1,5 +1,5 @@
 import { useState } from 'hono/jsx'
-import { render } from 'hono/jsx/dom'
+import { render } from 'hono/jsx'
 
 function Counter() {
   const [count, setCount] = useState(0)
