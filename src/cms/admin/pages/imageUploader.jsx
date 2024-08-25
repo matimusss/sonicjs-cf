@@ -1,7 +1,7 @@
 import { useState } from 'hono/jsx'
-import { render } from 'hono/jsx'
 
-function Counter() {
+
+export function ImageUploader() {
   const [count, setCount] = useState(0)
   return (
     <div>
@@ -10,16 +10,3 @@ function Counter() {
     </div>
   )
 }
-
-function App() {
-  return (
-    <html>
-      <body>
-        <Counter />
-      </body>
-    </html>
-  )
-}
-
-const root = document.getElementById('root')
-render(<App />, root)
