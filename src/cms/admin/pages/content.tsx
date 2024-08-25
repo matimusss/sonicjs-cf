@@ -855,6 +855,8 @@ const configBinding = ${JSON.stringify(parsedData)};
       <div id='formio-categories'></div>
       <div id='formio-suppliers'></div>
       <div id='formio-coupons'></div>
+
+
       <form method="POST" name="form-example-2" id="form-example-2" encType="multipart/form-data">
         <div className="input-field">
           <input type="text" name="name-2" id="name-2" defaultValue="John Doe" />
@@ -871,6 +873,8 @@ const configBinding = ${JSON.stringify(parsedData)};
         </div>
         <button>Submit and display data</button>
       </form>
+      
+      
       <hr className="my-5" />
       <div id='formio-attributes'></div>
       <hr className="my-4" />

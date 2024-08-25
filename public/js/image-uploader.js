@@ -3,7 +3,7 @@ setTimeout(async function() {
 console.log("EJECUTAD");
 
 function imgUpload() {
-
+const $ = jQuery;
     $.fn.imageUploader = function (options) {
 
         // Default settings
